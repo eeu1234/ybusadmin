@@ -7,13 +7,24 @@
 	<!-- org.springframework.jdbc.datasource.DriverManagerDataSource -->
 	<bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://eeu1234.iptime.org:3306/camsns" />
+		<property name="url" value="jdbc:mysql://eeu1234.iptime.org:3306/ybusadmin" />
 		<property name="username" value="eeu1234" />
 		<property name="password" value="thskxk4889" />
 	</bean>
-
+	
+	<!-- log4j -->
+	<bean id="log4jSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="dataSourceMySQL"></constructor-arg>
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE"></property>
+				<property name="sqlPrefix" value="[SQL]"></property>
+			</bean>
+		</property>
+	</bean>
+	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSourceMySQL" />
+		<property name="dataSource" ref="log4jSource" />
 		<property name="mapperLocations" value="classpath*:com/test/spring/mapper/*.xml"></property>
 		<property name="configLocation" value="/WEB-INF/config.xml" />
 	</bean>

@@ -6,7 +6,7 @@
 
    
    
-   <select id ="m1" resultType="Integer">
+<!--    <select id ="m1" resultType="Integer">
       SELECT COUNT(*) FROM USER
    </select>
    
@@ -14,7 +14,7 @@
       SELECT USER_EMAIL_ID AS USEREMAILID FROM USER 
    </select>
    
-   
+    -->
    
 </mapper>
 
