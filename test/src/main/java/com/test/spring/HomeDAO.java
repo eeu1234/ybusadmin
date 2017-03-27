@@ -17,22 +17,7 @@ public class HomeDAO {
 	      return session.selectOne("m1");
 	   }
 	
-	public void test() {
-		String temp="";
-		try {
-			temp = session.getConnection().isClosed() + "";
-
-			System.out.println(temp);
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("exception : " + e.toString());
-		}
-	}
-
-	public List<HomeDTO> m2() {
-		// TODO Auto-generated method stub
-		return session.selectList("m2");
-	}
+	
 
 
 }

@@ -1,12 +1,14 @@
 package com.test.spring;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,27 +20,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("homecontroller2")
 public class HomeController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	HomeDAO dao; 
 	
-	@RequestMapping(value = "/home.action", method = RequestMethod.GET)
-	public String home(HttpServletRequest request,HttpServletResponse response) {
+	@RequestMapping(value = "/index.action", method = {RequestMethod.GET})
+	public String home(HttpServletRequest request,HttpServletResponse response,String deviceId) throws IOException {
+		System.out.println(deviceId);
 		
-		int temp = dao.m1();
-		List<HomeDTO> list = dao.m2();
-		System.out.println(temp);
+		JSONObject obj = new JSONObject();
+		JSONArray businfo = new JSONArray();
+		
+		String busSeq = "1";
+		String intervalTime = "1000";
+		String newUrl = "http://eeu1234.iptime.org:8080/";
+		System.out.println(busSeq);
+		
+		obj.put("busSeq", busSeq);
+		obj.put("intervalTime", intervalTime);
+		obj.put("newUrl", newUrl);
+		
+		
+		businfo.add(obj);
+		response.setCharacterEncoding("utf-8");
+		System.out.println(businfo.toJSONString());
+		response.getWriter().print(businfo.toJSONString());
+				
 		
 		
 		
-		request.setAttribute("temp", temp);
-		request.setAttribute("list", list);
-		
-		
-		
-		
-		return "home";
+		return "index";
 	}
+	
 	
 }

@@ -6,14 +6,14 @@
 </head>
 <body>
 <h1>
-	${temp}
+
+	<form action="/spring/home.action">
+	<input type="text" />
+	<input type="text" />
+	<input type="text" />
+	<input type="text" />
 	
-	
-	
-	<c:forEach items="${list}" var="dto">
-	${dto.userEmailId}
-	
-	</c:forEach>
+	</form>
 </h1>
 
 </body>

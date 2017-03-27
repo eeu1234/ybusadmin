@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="test">
+
+   
+   
+   <select id ="deviceSeq" parameterType="String" resultType="String">
+      SELECT * FROM DEVICE WHERE DEVICEMODEL = #{deviceId};
+   </select>
+   
+   <select id ="deviceIntervalTime" parameterType="String" resultType="String">
+      SELECT A.DEVICESEQ as deviceSeq, E.BUSSTOPDETAILCATEGORYINTERVAL as busStopDetailCategoryInterval FROM DEVICE  A 
+		INNER JOIN DEVICE_BUS B ON B.DEVICESEQ = A.DEVICESEQ
+			INNER JOIN BUS_INFO C ON B.BUSINFOSEQ = C.BUSINFOSEQ
+				INNER JOIN BUS_INTERVAL D ON C.BUSINFOSEQ = D.BUSINFOSEQ
+					INNER JOIN BUSSTOP_DETAIL_CATEGORY E ON D.BUSSTOPDETAILCATEGORYSEQ = E.BUSSTOPDETAILCATEGORYSEQ
+						WHERE A.DEVICEMODEL=#{deviceId};
+   </select>
+   
+
+   
+</mapper>
+
+
+
+
+
+
+
+
