@@ -22,13 +22,29 @@
     </select>
     
     <!-- 계정 가져오는 쿼리 -->
-    <select id="adminList" resultType="com.test.spring.DTO.AdminDTO">
-    	SELECT A.ADMINID AS adminID, A.ADMINNAME AS adminName, A.ADMINDEPARTMENT AS adminDepartment, A.ADMINLEVEL AS adminLevel, A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYNAME AS universityName
-    		FROM ADMIN A
-    			INNER JOIN UNIVERSITY U
-    				ON A.UNIVERSITYSEQ = U.UNIVERSITYSEQ
-    					WHERE A.UNIVERSITYSEQ != 9999
+    <select id="adminList" resultType="com.test.spring.DTO.AdminDTO" parameterType="Integer">
+    	SELECT A.* FROM 
+(SELECT A.ADMINID AS adminID, A.ADMINNAME AS adminName, A.ADMINDEPARTMENT AS adminDepartment, A.ADMINLEVEL AS adminLevel, A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYNAME AS universityName
+	FROM ADMIN A
+		INNER JOIN UNIVERSITY U
+			ON A.UNIVERSITYSEQ = U.UNIVERSITYSEQ
+				
+					ORDER BY U.UNIVERSITYSEQ ASC) A
+						LIMIT #{start}, 10
     </select>
+    
+    <!-- 총 계정 수 가져오는 쿼리 -->
+    <select id="totaladmin" resultType="Integer">
+    	SELECT COUNT(*) FROM ADMIN WHERE UNIVERSITYSEQ != 9999
+    </select>
+    
+    <!-- 계정 수정 할 데이터 가져오는 쿼리 -->
+    <select id="getadmin" resultType="com.test.spring.DTO.AdminDTO" parameterType="String">
+    	SELECT ADMINID AS adminID, ADMINNAME AS adminName, ADMINDEPARTMENT AS adminDepartment, ADMINLEVEL AS adminLevel, UNIVERSITYSEQ AS universitySeq 
+    		FROM ADMIN 
+    			WHERE ADMINID = #{adminID}
+    </select>
+    
     
     <!-- 계정 생성 시 대학 카테고리 가져오는 쿼리 -->
     <select id="universityList" resultType="com.test.spring.DTO.UniversityDTO">
