@@ -1,4 +1,4 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 //관리자 정보 DTO + 대학교 이름
 public class AdminDTO {

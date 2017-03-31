@@ -8,6 +8,8 @@
 <meta charset=UTF-8">
 <title>Insert title here</title>
 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
 
 <script>
 

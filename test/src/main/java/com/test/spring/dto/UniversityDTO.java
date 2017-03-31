@@ -1,7 +1,7 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 	//대학교 DTO
-	public class UniversityDTO {
+public class UniversityDTO {
 	private String universitySeq;      //대학교 번호
 	private String universityName;      //대학교 명
 	private String universityTel;      //대학교 연락처

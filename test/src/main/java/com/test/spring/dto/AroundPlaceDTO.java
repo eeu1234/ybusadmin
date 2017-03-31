@@ -1,4 +1,4 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 //정류장 주변 명소 DTO
 public class AroundPlaceDTO {

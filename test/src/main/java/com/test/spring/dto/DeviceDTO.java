@@ -1,4 +1,4 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 //장치 DTO
 public class DeviceDTO {

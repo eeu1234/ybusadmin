@@ -1,4 +1,4 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 //장치-버스 관계 DTO
 public class DeviceBusDTO {

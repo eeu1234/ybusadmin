@@ -1,4 +1,4 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 public class DriverBusDTO {
 	

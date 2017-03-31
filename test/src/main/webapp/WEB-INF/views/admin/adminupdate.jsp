@@ -9,32 +9,46 @@
 <%@include file="/inc/asset.jsp" %>
 </head>
 <body>
-		
-	<form action="">
-		<h1>계정 수정</h1>
-		<table>
-			<tr>
-				<th>아이디</th>
-				<td><input type="text" value="${dto.adminID}"/></td>
-			</tr>
-			<tr>
-				<th></th>
-				<td><input type="text" value="${dto.adminID}"/></td>
-			</tr>
-			<tr>
-				<th>아이디</th>
-				<td><input type="text" value="${dto.adminID}"/></td>
-			</tr>
-			<tr>
-				<th>아이디</th>
-				<td><input type="text" value="${dto.adminID}"/></td>
-			</tr>
-			<tr>
-				<th>아이디</th>
-				<td><input type="text" value="${dto.adminID}"/></td>
-			</tr>
-		</table>
-	</form>
+	<!-- content 몸통부분 -->
+	<div id="content">
+		<form action="/spring/admin/adminupdateok.action" method="POST">
+			<h1>계정 수정</h1>
+			<table>
+				<tr>
+					<th>아이디</th>
+					<td>${dto.adminID}
+						<input type="hidden" value="${dto.adminID}" name="adminID"/>
+					</td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td><input type="password" value="${dto.adminPassword}" id="pw1"/></td>
+				</tr>
+				<tr>
+					<th>비밀번호 확인</th>
+					<td><input type="password" value="${dto.adminPassword}" id="pw2" name="adminPassword"/></td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td><input type="text" value="${dto.adminName}" name="adminName"/></td>
+				</tr>
+				<tr>
+					<th>부서</th>
+					<td><input type="text" value="${dto.adminDepartment}" name="adminDepartment"/></td>
+				</tr>
+				<tr>
+					<th>직급</th>
+					<td><input type="text" value="${dto.adminLevel}" name="adminLevel"/></td>
+				</tr>
+				<tr>
+					<td rowspan="2">
+						<input type="submit" value="수정하기"/>
+						<input type="button" value="되돌아가기" onclick="history.back();"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div><!-- content -->
 	
 </body>
 </html>

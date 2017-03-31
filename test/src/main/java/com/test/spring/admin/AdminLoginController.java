@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.DTO.AdminDTO;
+import com.test.spring.dto.AdminDTO;
 
 @Controller("adminLoginController")
 public class AdminLoginController {

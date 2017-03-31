@@ -10,8 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.DTO.AdminDTO;
-import com.test.spring.DTO.SearchDTO;
+import com.test.spring.dto.AdminDTO;
+import com.test.spring.dto.SearchDTO;
+import com.test.spring.dto.UniversityDTO;
 
 @Controller("adminManageController")
 public class AdminManageController {
@@ -24,7 +25,8 @@ public class AdminManageController {
 					, value="/admin/adminmanage.action")
 	public String adminmanagelist(HttpServletRequest request
 								,HttpSession session
-								,String page){
+								,String page
+								,SearchDTO sdto){
 		
 		//페이징 -> 게시판의 꽃
 		int nowpage = 0;			//현재 페이지 번호
@@ -44,15 +46,31 @@ public class AdminManageController {
 		
 		//nowpage -> start 범위 계산
 		//1page -> 0, 10(LIMIT)
-		//2page -> 11 ~ 20
-		//..
-		//9page -> 91 ~ 100
+		//2page -> 10, 10
 		start = ((nowpage - 1) * pageSize);
+		//dto 에 시작값 넣기
+		sdto.setStart(start);
 		
-		totalCount = dao.getTotal();
+		//검색했는지 확인
+		String column = sdto.getColumn();
+		String word = sdto.getWord();
+		System.out.println("컬럼 : "+column+" 워드 : "+word);
+		
+		//페이징 때문에 검색이 없으면 null 로 넘어감.
+		if ((column != null && word != null) &&
+				(!column.equals("null") && !word.equals("null"))) {
+			
+			String where = String.format("WHERE %s like '%%%s%%'", column, word);
+			sdto.setWhereWord(where);
+			
+		}
+		
+		//페이징 하기위한 토탈 수
+		totalCount = dao.getTotal(sdto);
 		totalPage = (int)Math.ceil((double)totalCount / pageSize);
 		
-		List<AdminDTO> alist = dao.alist(start);
+		//검색+시작값 DTO 넘김
+		List<AdminDTO> alist = dao.alist(sdto);
 		
 		//페이지바 만들기
 		String pagebar = "";
@@ -64,7 +82,7 @@ public class AdminManageController {
 		if(n == 1) {
 			pagebar += String.format("<li class='disabled'><a href='#' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>");
 		} else {
-			pagebar += String.format("<li><a href='/spring/admin/adminmanage.action?page=%d' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>", n-1);
+			pagebar += String.format("<li><a href='/spring/admin/adminmanage.action?page=%d&column=%s&word=%s' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>", n-1, column, word);
 		}
 		
 		while (!(loop > blockSize || n > totalPage)) {
@@ -72,7 +90,7 @@ public class AdminManageController {
 			if (n == nowpage) {
 				pagebar += String.format("<li class='active'><a href='#'>%d</a></li>", n);
 			} else {
-				pagebar += String.format("<li><a href='/spring/admin/adminmanage.action?page=%d'>%d</a></li>", n, n);
+				pagebar += String.format("<li><a href='/spring/admin/adminmanage.action?page=%d&column=%s&word=%s'>%d</a></li>", n, column, word, n);
 			}
 			
 			n++;
@@ -83,41 +101,99 @@ public class AdminManageController {
 		if (n > totalPage) {
 			pagebar += String.format("<li class='disabled'><a href='#' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
 		} else {
-			pagebar += String.format("<li><a href='/spring/admin/adminmanage.action?page=%d' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>", n);
+			pagebar += String.format("<li><a href='/spring/admin/adminmanage.action?page=%d&column=%s&word=%s' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>", n, column, word);
 		}
 		
 		pagebar += "</ul></nav>";
 		
 		request.setAttribute("alist", alist);
+		request.setAttribute("sdto", sdto);
 		request.setAttribute("pagebar", pagebar);
 		
 		return "admin/adminmanage";
 	}
+	
 	//admin 계정 수정 시 정보 가져오기
 	@RequestMapping(method={RequestMethod.GET}
 		, value="/admin/adminupdate.action")
-	public String getUniversityList(HttpServletRequest request
+	public String adminupdate(HttpServletRequest request
 					,HttpSession session
 					,String adminID){
 		
-		List<Object> dto = dao.getadmin(adminID);
+		AdminDTO dto = dao.getadmin(adminID);
 		
 		request.setAttribute("dto", dto);
 		
 		return "admin/adminupdate";
 	}
 	
+	//admin 계정 수정 내용 업데이트
+	@RequestMapping(method={RequestMethod.POST}
+		, value="/admin/adminupdateok.action")
+	public String adminupdateok(HttpServletRequest request
+					,HttpSession session
+					,AdminDTO dto){
+		
+		int result = dao.getupdate(dto);
+		
+		request.setAttribute("result", result);
+		
+		return "admin/adminupdateok";
+	}
+	
+	//admin 계정 삭제
+	@RequestMapping(method={RequestMethod.GET}
+		, value="/admin/admindelete.action")
+	public String admindelete(HttpServletRequest request
+					,HttpSession session
+					,String adminID){
+		
+		int result = dao.admindelete(adminID);
+		
+		request.setAttribute("result", result);
+		
+		return "admin/admindelete";
+	}
+	
 	//admin 계정 생성 시 대학 카테고리 가져오기
 	@RequestMapping(method={RequestMethod.GET}
-		, value="/admin/getUniversityList.action")
-	public String getUniversityList(HttpServletRequest request
+		, value="/admin/adminadd.action")
+	public String adminadd(HttpServletRequest request
 					,HttpSession session){
 		
-		//List<AdminDTO> alist = dao.alist();
+		List<UniversityDTO> ulist = dao.universitylist();
 		
-		//request.setAttribute("alist", alist);
+		request.setAttribute("ulist", ulist);
 		
-		return "admin/adminmanage";
+		return "admin/adminadd";
+	}
+	
+	//계정 생성 아이디 유효성 확인
+	@RequestMapping(method={RequestMethod.GET}
+		, value="/admin/adminidcheck.action")
+	public String adminidcheck(HttpServletRequest request
+					,HttpSession session
+					,String adminID){
+		
+		int result = dao.checkid(adminID);
+		
+		request.setAttribute("result", result);
+		
+		return "admin/adminidcheck";
+	}
+	
+	//계정 생성 아이디 유효성 확인
+	@RequestMapping(method={RequestMethod.POST}
+		, value="/admin/adminaddok.action")
+	public String adminaddok(HttpServletRequest request
+					,HttpSession session
+					,AdminDTO dto){
+		
+		int result = dao.adminadd(dto);
+		
+		request.setAttribute("result", result);
+		
+		return "admin/adminaddok";
 	}
 	
 }

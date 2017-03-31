@@ -1,4 +1,4 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 //버스별 인터벌 DTO
 public class BusIntervalDTO {

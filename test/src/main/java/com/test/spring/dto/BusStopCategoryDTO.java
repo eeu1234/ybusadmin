@@ -1,4 +1,4 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 //정류장분류
 public class BusStopCategoryDTO {

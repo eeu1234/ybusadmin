@@ -1,4 +1,4 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 //버스기사 정보 DTO
 public class DriverInfoDTO {

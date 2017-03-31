@@ -1,4 +1,4 @@
-package com.test.spring.DTO;
+package com.test.spring.dto;
 
 //버스 카테고리 DTO
 public class BusCategoryDTO {
