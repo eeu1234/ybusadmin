@@ -1,4 +1,4 @@
-package com.ybus.spring.map;
+package com.test.spring.map;
 
 //대학교 DTO
 public class UniversityDTO {

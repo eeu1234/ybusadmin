@@ -402,23 +402,7 @@ zoom: 13
 	});
 		
 </c:forEach>
-	<c:forEach items="${cblList}" var="cbldto">
-		var infowindowCBL${cbldto.businfoSeq} = new google.maps.InfoWindow({
-			content:'${cbldto.businfoName}',
-		});
-		
-		markerCBL${cbldto.businfoSeq} = new google.maps.Marker({
-		    map: mapAP,
-		    draggable: true,
-		    animation: google.maps.Animation.DROP,
-		    icon:'/spring/images/timeLine/busIcon.png',
-		    title: '${cbldto.businfoName}',
-		    position: {lat: ${cbldto.locationLatitude}, lng: ${cbldto.locationLongitude}}
-		});
-		markerCBL${cbldto.businfoSeq}.addListener('click', function(){
-			infowindowCBL${cbldto.businfoSeq}.open(mapAP,markerCBL${cbldto.businfoSeq});
-		});		
-	</c:forEach>
+
 }
 
 

@@ -80,16 +80,15 @@ body, html {
 	max-width: 480px;
 	height: 568px;
 	margin: 0 auto;
-
+	background-color: yellow;
 }
 
 #top {
 	position: fixed;
 	max-width: 480px;
 	width: 100%;
-	height: 5%;
+	height: 25%;
 	z-index: 3;
-	
 }
 
 #header {
@@ -330,6 +329,7 @@ body, html {
 	 margin-right:17%;
 	 top:10%;
 	 right:0;
+	 cursor:pointer;
 	 
 }#refreshBtn{
 	position:absolute;
@@ -340,15 +340,8 @@ body, html {
 	 margin-right:5%;
 	 top:10%;
 	 right:0;
-	 
+	 cursor:pointer;
 }
-
-      
-      #mapAP { 
-	      height: 75%;
-	      width:100%;
-	
-	  }
 </style>
 
 
@@ -358,7 +351,7 @@ body, html {
 		<div id="top">
 			<div id="header">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;	onclick="history.back()" />
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
 					<div id="txtLogo">
 					
 					셔틀버스 위치조회
@@ -367,65 +360,118 @@ body, html {
 					<img src="/spring/images/timeLine/header_logo.png" id="logo" />
 				</div>
 			</div>
-			
+
+			<div id="btnArea">
+				<div id="btnGroup">
+					<div id="upBtn" class="goBtn">터미널 방면</div>
+					<div id="downBtn" class="goBtn">용인대 방면</div>
+				</div>
+			</div>
+					<div id="footer">
+					<div style= "position:relative;width:85%;height:100%;padding-top:3%;">● 정류장을 터치하시면 위치 정보를 보실 수 있습니다.</div>
+					<img src="/spring/images/timeLine/naverMap.png" id="changeMap" onclick="location.href='/spring/getBusStopLocation.action'" />
+					<img src="/spring/images/timeLine/refreshBtn.png" id="refreshBtn" onclick="window.location.reload();" />
+				
+					</div>
 		</div>
-		<div id="mapAP"></div>
-<script type="text/javascript">
+		<div id="contents">
+			<div id="lineArea">
 
-var mapAP;
-var marker;
+				<c:forEach items="${bsList}" var="dto" varStatus="status">	
+					<c:choose>
+						<c:when test="${status.first}">
+							
+							<div class="busStop">
+								<div class="way">
+									<div id="startPoint">
+										<img src="/spring/images/timeLine/startImg.png" class="lineImg" />
+									</div>
+			
+								<c:forEach items='${cblList}' var='cbldto'>
+									<c:if test="${cbldto.busStopSeq==status.count}">
+										<div class="busNum">
+											<div class="busTxt">${cbldto.businfoName} </div>
+											<img src="/spring/images/timeLine/busNum.png" alt="" />
+										</div>
+										<div class="busIcon">
+											<img src="/spring/images/timeLine/busIcon.png" alt="" />
+										</div>
+									</c:if>
+								</c:forEach>
+								</div>
+								<div class="stopName">
+									<div class="txtName">${dto.busStop}</div>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</c:when>
+						<c:when test="${status.last}">
+							<div class="busStop">
+								<div class="way">
+									<div id="endPoint">
+									<img src="/spring/images/timeLine/endImg.png" class="lineImg" />
+									</div>
+									<c:forEach items='${cblList }' var='cbldto'>
+									<c:if test="${cbldto.busStopSeq==status.count}">
+										<div class="busNum">
+											<div class="busTxt">${cbldto.businfoName} </div>
+											<img src="/spring/images/timeLine/busNum.png" alt="" />
+										</div>
+										<div class="busIcon">
+											<img src="/spring/images/timeLine/busIcon.png" alt="" />
+										</div>
+									</c:if>
+								</c:forEach>
+								</div>
+								<div class="stopName">
+									<div class="txtName">${dto.busStop}</div>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</c:when>
+						<c:otherwise>
+							<div class="busStop">
+								<div class="way">
+									<c:if test="${dto.busStopLine == 'up'}">
+										<div class="upLine">
+										<img src="/spring/images/timeLine/upImg.png" class="lineImg" />
+										</div>
+									</c:if>
+									<c:if test="${dto.busStopLine == 'down'}">
+										<div class="downLine">
+										<img src="/spring/images/timeLine/downImg.png" class="lineImg" />
+										</div>
+									</c:if>
+									<c:if test="${dto.busStopLine == 'turn'}">
+										<div class="turnLine">
+										<img src="/spring/images/timeLine/turnImg.png" class="lineImg" />
+										</div>
+									</c:if>
+								<c:forEach items='${cblList }' var='cbldto'>
+									<c:if test="${cbldto.busStopSeq==status.count}">
+										<div class="busNum">
+											<div class="busTxt">${cbldto.businfoName} </div>
+											<img src="/spring/images/timeLine/busNum.png" alt="" />
+										</div>
+										<div class="busIcon">
+											<img src="/spring/images/timeLine/busIcon.png" alt="" />
+										</div>
+									</c:if>
+								</c:forEach>
+								</div>
+								<div class="stopName">
+									<div class="txtName">${dto.busStop}</div>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>	
+					
+			</div>
+			<!-- lineArea  -->
 
-function initMap() {
-
-mapAP = new google.maps.Map(document.getElementById('mapAP'), {
-
-center: {lat: ${avgBSdto.avgLat}, lng: ${avgBSdto.avgLon}},
-zoom: 13
-	});
-
-
-<c:forEach items="${bsList}" var="bsdto">
-	var infowindowBS${bsdto.busStopSeq} = new google.maps.InfoWindow({
-		content:'${bsdto.busStop}',
-	});
-	
-	markerBS${bsdto.busStopSeq} = new google.maps.Marker({
-	    map: mapAP,
-	    draggable: true,
-	    animation: google.maps.Animation.DROP,
-	    info: '${bsdto.busStop}',
-	    title: '${bsdto.busStop}',
-	    position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}}
-	});
-	markerBS${bsdto.busStopSeq}.addListener('click', function(){
-		infowindowBS${bsdto.busStopSeq}.open(mapAP,markerBS${bsdto.busStopSeq});
-	});
-		
-</c:forEach>
-	<c:forEach items="${cblList}" var="cbldto">
-		var infowindowCBL${cbldto.businfoSeq} = new google.maps.InfoWindow({
-			content:'${cbldto.businfoName}',
-		});
-		
-		markerCBL${cbldto.businfoSeq} = new google.maps.Marker({
-		    map: mapAP,
-		    draggable: true,
-		    animation: google.maps.Animation.DROP,
-		    icon:'/spring/images/timeLine/busIcon.png',
-		    title: '${cbldto.businfoName}',
-		    position: {lat: ${cbldto.locationLatitude}, lng: ${cbldto.locationLongitude}}
-		});
-		markerCBL${cbldto.businfoSeq}.addListener('click', function(){
-			infowindowCBL${cbldto.businfoSeq}.open(mapAP,markerCBL${cbldto.businfoSeq});
-		});		
-	</c:forEach>
-}
-
-
-    </script>
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk_ju7pwO5Gb-Q49o6-t2KvJ8erqmfgiY&callback=initMap">
-    </script>
+		</div>
 		
 	</div>
 </body>

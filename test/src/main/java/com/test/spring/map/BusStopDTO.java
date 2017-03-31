@@ -1,4 +1,4 @@
-package com.ybus.spring.map;
+package com.test.spring.map;
 
 /*******************************
  * 
@@ -14,8 +14,14 @@ public class BusStopDTO {
 	String busStopLatitude;					//정류장 위도
 	String busStopLongitude;				//정류장 경도
 	String busStopDetailCategorySeq;		//소유노선 고유코드
+	String busStopLine;
 	
-	
+	public String getBusStopLine() {
+		return busStopLine;
+	}
+	public void setBusStopLine(String busStopLine) {
+		this.busStopLine = busStopLine;
+	}
 	public String getBusStopSeq() {
 		return busStopSeq;
 	}
