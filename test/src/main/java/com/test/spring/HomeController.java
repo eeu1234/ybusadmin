@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -16,39 +17,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Handles requests for the application home page.
  */
-@Controller("homecontroller2")
+@Controller("main")
 public class HomeController {
 	
 	
 	@Autowired
 	HomeDAO dao; 
 	
-	@RequestMapping(value = "/home.action", method = RequestMethod.POST)
-	public String home(HttpServletRequest request,HttpServletResponse response,String deviceId) throws IOException {
-		
-		
-		System.out.println(deviceId);
-		JSONObject obj = new JSONObject();
-		JSONArray businfo = new JSONArray();
-		
-		String busSeq = "1";
-		String intervalTime = "1000";
-		String newUrl = "http://eeu1234.iptime.org:8080/";
-		System.out.println(busSeq);
-		
-		obj.put("busSeq", busSeq);
-		obj.put("intervalTime", intervalTime);
-		obj.put("newUrl", newUrl);
-		
-		
-		businfo.add(obj);
-		response.setCharacterEncoding("utf-8");
-		response.getWriter().print(businfo);
-				
+	@RequestMapping(value = "/adminMain.action", method = {RequestMethod.GET})
+	public String home(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		
 		
 		
-		return "home";
+		return "adminMain";
 	}
+	
 	
 }

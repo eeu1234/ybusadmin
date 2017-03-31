@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="busStop">
+	<select id="getBusStop" parameterType="String" resultType="com.ybus.spring.map.BusStopDTO">
+		SELECT A.* FROM (SELECT A.*,B.BUSSTOPSEQ AS busStopSeq, B.BUSSTOP AS busStop, B.BUSSTOPLATITUDE AS busStopLatitude, B.BUSSTOPLONGITUDE AS busStopLongitude FROM (SELECT A.*,B.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, B.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName, B.BUSSTOPDETAILCATEGORYINTERVAL AS busStopDetailCategoryInterval FROM (SELECT B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq,B.BUSSTOPCATEGORY AS busStopCategory, A.UNIVERSITYSEQ AS universitySeq, A.UNIVERSITYNAME AS universityName, A.UNIVERSITYTEL AS universityTel FROM UNIVERSITY A INNER JOIN BUSSTOP_CATEGORY B ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ) A INNER JOIN BUSSTOP_DETAIL_CATEGORY B ON A.busStopCategorySeq = B.BUSSTOPCATEGORYSEQ) A INNER JOIN BUSSTOP B ON A.busStopDetailCategorySeq = B.BUSSTOPDETAILCATEGORYSEQ) A WHERE universitySeq=#{universitySeq} 
+	</select>
+	<select id="university" parameterType="String" resultType="com.ybus.spring.map.UniversityDTO">
+		SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName, UNIVERSITYTEL AS universityTel, UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude FROM UNIVERSITY WHERE universitySeq = #{universitySeq}
+	</select>
+	<select id="busStop" parameterType="String" resultType="com.ybus.spring.map.BusStopDTO">
+		SELECT BUSSTOPSEQ AS busStopSeq, BUSSTOP AS busStop, BUSSTOPLATITUDE AS busStopLatitude, BUSSTOPLONGITUDE AS busStopLongitude FROM BUSSTOP WHERE busStopSeq=#{busStopSeq}
+	</select>
+</mapper>

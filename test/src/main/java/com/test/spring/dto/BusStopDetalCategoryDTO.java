@@ -4,34 +4,40 @@ package com.test.spring.dto;
 public class BusStopDetalCategoryDTO {
 	
 	private String busStopDetalCategorySeq;				//세부분류SEQ
-	private String busStopDetalCategoryName;			//세부분류명
-	private String busStopDetalCategoryInterval;		//인터벌타임
+	private String busStopDetailCategoryName;			//세부분류명
+	private String busStopDetailCategoryInterval;		//인터벌타임
+	private String busStopDetailCategoryIntervalDistance;		//인터벌거리
 	private String busStopCategorySeq;					//정류장분류SEQ
 	
-	
+	public String getBusStopCategorySeq() {
+		return busStopCategorySeq;
+	}
+	public void setBusStopCategorySeq(String busStopCategorySeq) {
+		this.busStopCategorySeq = busStopCategorySeq;
+	}
 	public String getBusStopDetalCategorySeq() {
 		return busStopDetalCategorySeq;
 	}
 	public void setBusStopDetalCategorySeq(String busStopDetalCategorySeq) {
 		this.busStopDetalCategorySeq = busStopDetalCategorySeq;
 	}
-	public String getBusStopDetalCategoryName() {
-		return busStopDetalCategoryName;
+	public String getBusStopDetailCategoryName() {
+		return busStopDetailCategoryName;
 	}
-	public void setBusStopDetalCategoryName(String busStopDetalCategoryName) {
-		this.busStopDetalCategoryName = busStopDetalCategoryName;
+	public void setBusStopDetailCategoryName(String busStopDetailCategoryName) {
+		this.busStopDetailCategoryName = busStopDetailCategoryName;
 	}
-	public String getBusStopDetalCategoryInterval() {
-		return busStopDetalCategoryInterval;
+	public String getBusStopDetailCategoryInterval() {
+		return busStopDetailCategoryInterval;
 	}
-	public void setBusStopDetalCategoryInterval(String busStopDetalCategoryInterval) {
-		this.busStopDetalCategoryInterval = busStopDetalCategoryInterval;
+	public void setBusStopDetailCategoryInterval(String busStopDetailCategoryInterval) {
+		this.busStopDetailCategoryInterval = busStopDetailCategoryInterval;
 	}
-	public String getBusStopCategorySeq() {
-		return busStopCategorySeq;
+	public String getBusStopDetailCategoryIntervalDistance() {
+		return busStopDetailCategoryIntervalDistance;
 	}
-	public void setBusStopCategorySeq(String busStopCategorySeq) {
-		this.busStopCategorySeq = busStopCategorySeq;
+	public void setBusStopDetailCategoryIntervalDistance(String busStopDetailCategoryIntervalDistance) {
+		this.busStopDetailCategoryIntervalDistance = busStopDetailCategoryIntervalDistance;
 	}
 	
 

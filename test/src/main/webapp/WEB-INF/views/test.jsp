@@ -7,6 +7,13 @@
 <body>
 <h1>
 
+	<form action="/spring/home.action">
+	<input type="text" />
+	<input type="text" />
+	<input type="text" />
+	<input type="text" />
+	
+	</form>
 </h1>
 
 </body>

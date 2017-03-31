@@ -1,16 +1,13 @@
 package com.test.spring.dto;
 
-//관리자 정보 DTO + 대학교 이름
+//관리자 정보 DTO
 public class AdminDTO {
-	
 	private String adminID;						//관리자 아이디
 	private String adminPassword;				//관리자 비밀번호
 	private String adminName;					//관리자 이름
 	private String adminDepartment;				//관리자 부서
 	private String adminLevel;					//관리자 레벨
 	private String universitySeq;				//대학교 seq
-	//admin 관리를 위해 대학명 변수 하나 추가
-	private String universityName;				//대학교 이름
 	
 	public String getAdminID() {
 		return adminID;
@@ -47,12 +44,6 @@ public class AdminDTO {
 	}
 	public void setUniversitySeq(String universitySeq) {
 		this.universitySeq = universitySeq;
-	}
-	public String getUniversityName() {
-		return universityName;
-	}
-	public void setUniversityName(String universityName) {
-		this.universityName = universityName;
 	}
 	
 }
