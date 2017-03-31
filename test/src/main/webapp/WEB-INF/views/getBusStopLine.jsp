@@ -344,6 +344,16 @@ body, html {
 }
 </style>
 
+<script>
+$(document).ready(function(){
+	$(".stopName").click(function(){
+		
+		location.href="/spring/getBusStopRoadView.action?busStopSeq="+$(this).attr("busStopSeq");
+	});
+});
+	
+	
+</script>
 
 </head>
 <body>
@@ -399,7 +409,7 @@ body, html {
 									</c:if>
 								</c:forEach>
 								</div>
-								<div class="stopName">
+								<div class="stopName" busStopSeq='${dto.busStopSeq}'>
 									<div class="txtName">${dto.busStop}</div>
 								</div>
 							</div>
@@ -423,7 +433,7 @@ body, html {
 									</c:if>
 								</c:forEach>
 								</div>
-								<div class="stopName">
+								<div class="stopName" busStopSeq='${dto.busStopSeq}'>
 									<div class="txtName">${dto.busStop}</div>
 								</div>
 							</div>
@@ -459,7 +469,7 @@ body, html {
 									</c:if>
 								</c:forEach>
 								</div>
-								<div class="stopName">
+								<div class="stopName" busStopSeq='${dto.busStopSeq}'>
 									<div class="txtName">${dto.busStop}</div>
 								</div>
 							</div>

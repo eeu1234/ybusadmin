@@ -42,12 +42,12 @@
 <style>
 @font-face {
 	font-family: "notoFont-medium";
-	src: url(../fonts/NotoSansCJKkr-Medium.woff) format("truetype");
+	src: url(/spring/css/fonts/NotoSansCJKkr-Medium.woff) format("truetype");
 }
 
 @font-face {
 	font-family: "notoFont-bold";
-	src: url(../fonts/NotoSansCJKsc-Bold.woff) format("truetype");
+	src: url(/spring/css/fonts/NotoSansCJKsc-Bold.woff) format("truetype");
 }
 
 body, p, div, li, ul, span, img {
@@ -329,6 +329,7 @@ body, html {
 	 margin-right:17%;
 	 top:10%;
 	 right:0;
+	 cursor:pointer;
 	 
 }#refreshBtn{
 	position:absolute;
@@ -339,7 +340,7 @@ body, html {
 	 margin-right:5%;
 	 top:10%;
 	 right:0;
-	 
+	 cursor:pointer;
 }
 </style>
 
@@ -350,7 +351,7 @@ body, html {
 		<div id="top">
 			<div id="header">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;	onclick="history.back()" />
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
 					<div id="txtLogo">
 					
 					셔틀버스 위치조회
@@ -368,8 +369,8 @@ body, html {
 			</div>
 					<div id="footer">
 					<div style= "position:relative;width:85%;height:100%;padding-top:3%;">● 정류장을 터치하시면 위치 정보를 보실 수 있습니다.</div>
-					<img src="/spring/images/timeLine/naverMap.png" id="changeMap"  />
-					<img src="/spring/images/timeLine/refreshBtn.png" id="refreshBtn"  />
+					<img src="/spring/images/timeLine/naverMap.png" id="changeMap" onclick="location.href='/spring/getBusStopLocation.action'" />
+					<img src="/spring/images/timeLine/refreshBtn.png" id="refreshBtn" onclick="window.location.reload();" />
 				
 					</div>
 		</div>
@@ -379,12 +380,24 @@ body, html {
 				<c:forEach items="${bsList}" var="dto" varStatus="status">	
 					<c:choose>
 						<c:when test="${status.first}">
+							
 							<div class="busStop">
 								<div class="way">
 									<div id="startPoint">
 										<img src="/spring/images/timeLine/startImg.png" class="lineImg" />
 									</div>
 			
+								<c:forEach items='${cblList}' var='cbldto'>
+									<c:if test="${cbldto.busStopSeq==status.count}">
+										<div class="busNum">
+											<div class="busTxt">${cbldto.businfoName} </div>
+											<img src="/spring/images/timeLine/busNum.png" alt="" />
+										</div>
+										<div class="busIcon">
+											<img src="/spring/images/timeLine/busIcon.png" alt="" />
+										</div>
+									</c:if>
+								</c:forEach>
 								</div>
 								<div class="stopName">
 									<div class="txtName">${dto.busStop}</div>
@@ -398,7 +411,17 @@ body, html {
 									<div id="endPoint">
 									<img src="/spring/images/timeLine/endImg.png" class="lineImg" />
 									</div>
-			
+									<c:forEach items='${cblList }' var='cbldto'>
+									<c:if test="${cbldto.busStopSeq==status.count}">
+										<div class="busNum">
+											<div class="busTxt">${cbldto.businfoName} </div>
+											<img src="/spring/images/timeLine/busNum.png" alt="" />
+										</div>
+										<div class="busIcon">
+											<img src="/spring/images/timeLine/busIcon.png" alt="" />
+										</div>
+									</c:if>
+								</c:forEach>
 								</div>
 								<div class="stopName">
 									<div class="txtName">${dto.busStop}</div>
@@ -424,9 +447,17 @@ body, html {
 										<img src="/spring/images/timeLine/turnImg.png" class="lineImg" />
 										</div>
 									</c:if>
-									
-									
-			
+								<c:forEach items='${cblList }' var='cbldto'>
+									<c:if test="${cbldto.busStopSeq==status.count}">
+										<div class="busNum">
+											<div class="busTxt">${cbldto.businfoName} </div>
+											<img src="/spring/images/timeLine/busNum.png" alt="" />
+										</div>
+										<div class="busIcon">
+											<img src="/spring/images/timeLine/busIcon.png" alt="" />
+										</div>
+									</c:if>
+								</c:forEach>
 								</div>
 								<div class="stopName">
 									<div class="txtName">${dto.busStop}</div>

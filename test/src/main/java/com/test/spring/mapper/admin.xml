@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+
+   
+   
+<!--    <select id ="m1" resultType="Integer">
+      SELECT COUNT(*) FROM USER
+   </select>
+   
+   <select id ="m2" resultType="com.test.spring.HomeDTO">
+      SELECT USER_EMAIL_ID AS USEREMAILID FROM USER 
+   </select>
+   
+    -->
+    
+    <!-- 로그인 쿼리 -->
+    <select id = "checkAdmin" parameterType="String" resultType = "com.test.spring.dto.AdminDTO">
+    	SELECT ADMINID AS adminID, ADMINNAME AS adminName, ADMINDEPARTMENT AS adminDepartment, ADMINLEVEL AS adminLevel, UNIVERSITYSEQ AS universitySeq FROM ADMIN WHERE ADMINID=#{adminID} AND ADMINPASSWORD=#{adminPassword}
+    </select>
+    
+    <!-- 계정 가져오는 쿼리 - 검색 있음 -->
+    <select id="adminList" resultType="com.test.spring.dto.AdminDTO" parameterType="com.test.spring.dto.SearchDTO">
+    	SELECT A.* FROM 
+(SELECT A.ADMINID AS adminID, A.ADMINNAME AS adminName, A.ADMINDEPARTMENT AS adminDepartment, A.ADMINLEVEL AS adminLevel, A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYNAME AS universityName
+	FROM ADMIN A
+		INNER JOIN UNIVERSITY U
+			ON A.UNIVERSITYSEQ = U.UNIVERSITYSEQ
+				${whereWord}
+					ORDER BY U.UNIVERSITYSEQ ASC) A
+						LIMIT #{start}, 10
+    </select>
+    
+    <!-- 총 계정 수 가져오는 쿼리, 검색 때문에 대학과 inner join 함 -->
+    <select id="totaladmin" resultType="Integer" parameterType="String">
+    	SELECT COUNT(*) from ADMIN A
+			INNER JOIN UNIVERSITY U
+				ON A.UNIVERSITYSEQ = U.UNIVERSITYSEQ
+    				${whereWord}
+    </select>
+    
+    <!-- 계정 수정 할 데이터 가져오는 쿼리 -->
+    <select id="getadmin" resultType="com.test.spring.dto.AdminDTO" parameterType="String">
+    	SELECT ADMINPASSWORD AS adminPassword, ADMINID AS adminID, ADMINNAME AS adminName, ADMINDEPARTMENT AS adminDepartment, ADMINLEVEL AS adminLevel, UNIVERSITYSEQ AS universitySeq 
+    		FROM ADMIN 
+    			WHERE ADMINID = #{adminID}
+    </select>
+    
+    <update id="adminupdate" parameterType="com.test.spring.dto.AdminDTO">
+    	UPDATE ADMIN SET
+    		ADMINPASSWORD = #{adminPassword},
+    		ADMINNAME = #{adminName},
+    		ADMINDEPARTMENT = #{adminDepartment},
+    		ADMINLEVEL = #{adminLevel}
+    			WHERE ADMINID = #{adminID}
+    </update>
+    
+    <!-- 계정 삭제하는 쿼리 -->
+    <delete id="admindelete" parameterType="String">
+    	DELETE FROM ADMIN WHERE ADMINID = #{adminID}
+    </delete>
+    
+    <!-- 계정 생성 시 대학 카테고리 가져오는 쿼리 -->
+    <select id="universitylist" resultType="com.test.spring.dto.UniversityDTO">
+    	SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName
+    		FROM UNIVERSITY
+    			WHERE UNIVERSITYSEQ != 9999
+    </select>
+    
+    <!-- 계정 아이디 유효성 쿼리 -->
+    <select id="checkid" resultType="Integer" parameterType="String">
+    	SELECT COUNT(*) FROM ADMIN
+    		WHERE ADMINID = #{adminID}
+    </select>
+    
+    <!-- 계정 추가하는 쿼리 -->
+    <insert id="adminadd" parameterType="com.test.spring.dto.AdminDTO">
+    	INSERT INTO ADMIN VALUES (#{adminID},#{adminPassword},#{adminName},#{adminDepartment},#{adminLevel},#{universitySeq})
+    </insert>
+   
+</mapper>

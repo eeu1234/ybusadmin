@@ -55,7 +55,7 @@ public class BusStopMapController {
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopRoadView.action")
 	public String getBusStopRoadView(HttpServletRequest request, HttpServletResponse response, String universitySeq,String busStopSeq){
 		universitySeq = "1";
-		busStopSeq="4";
+		//busStopSeq="4";
 		
 		List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
 		BusStopDTO bsdto= dao.busStop(busStopSeq);
@@ -74,7 +74,7 @@ public class BusStopMapController {
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopMapView.action")
 	public String getBusStopMapView(HttpServletRequest request, HttpServletResponse response, String universitySeq,String busStopSeq){
 		universitySeq = "1";
-		busStopSeq="4";
+		//busStopSeq="4";
 		
 		List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
 		BusStopDTO bsdto= dao.busStop(busStopSeq);
