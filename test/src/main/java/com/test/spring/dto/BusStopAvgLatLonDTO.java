@@ -1,4 +1,4 @@
-package com.test.spring.map;
+package com.test.spring.dto;
 
 public class BusStopAvgLatLonDTO {
 	String avgLat;

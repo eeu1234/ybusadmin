@@ -84,10 +84,10 @@ body, html {
 }
 
 #top {
-	position: fixed;
+	position: relative;
 	max-width: 480px;
 	width: 100%;
-	height: 5%;
+	height: 15%;
 	z-index: 3;
 	
 }
@@ -166,10 +166,10 @@ body, html {
 #contents {
 	position: relative;
 	width: 100%;
-	height: 90%;
+	height: 75%;
 	margin: 0;
 	padding: 0;
-	padding-top:55%;
+	padding-top:4%;
 
 	background-color: white;
 }
@@ -314,7 +314,7 @@ body, html {
 #footer {
 	position: relative;
 	width: 95%;
-	height: 25%;
+	height: 65%;
 	background-color: #bfbfbf;
 	text-align: left;
 	color: #272727;
@@ -330,6 +330,7 @@ body, html {
 	 margin-right:17%;
 	 top:10%;
 	 right:0;
+	 cursor:pointer;
 	 
 }#refreshBtn{
 	position:absolute;
@@ -340,17 +341,50 @@ body, html {
 	 margin-right:5%;
 	 top:10%;
 	 right:0;
-	 
+	 cursor:pointer;
 }
 
       
-      #mapAP { 
-	      height: 75%;
-	      width:100%;
-	
-	  }
-</style>
+    #mapAP { 
+     height: 100%;
+     width:100%;
 
+ }
+ 
+#detailLocationSel{
+
+	 width:50%;
+	 height:80%;
+	 margin:0;
+	 padding:0;
+	 margin-right:5%;
+	 margin-top:1%;
+
+
+}
+</style>
+<script>
+
+	$(document).ready(function(){
+		
+		$("#detailLocationSel").change(function(){
+			var bsdcSeq = $(this).val();
+			location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
+		});
+		
+	})
+
+	function refresh(){
+		var bsdcSeq = $("#detailLocationSel").val();
+		location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
+	}
+	
+	function back(){
+		var bsdcSeq = $("#detailLocationSel").val();
+		location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
+	}
+	
+</script>
 
 </head>
 <body>
@@ -358,7 +392,7 @@ body, html {
 		<div id="top">
 			<div id="header">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="back();" />
 					<div id="txtLogo">
 					
 					셔틀버스 위치조회
@@ -367,9 +401,28 @@ body, html {
 					<img src="/spring/images/timeLine/header_logo.png" id="logo" />
 				</div>
 			</div>
-			
+			<div id="footer">
+					
+				<select id = "detailLocationSel" class="form-Control">
+					<c:forEach items="${bsdcList}" var="bsdcDto">
+						<c:choose>
+
+							<c:when test="${bsdcDto.busStopDetailCategorySeq==busStopDetailCategorySeq}">
+								<option value="${bsdcDto.busStopDetailCategorySeq}" selected>${bsdcDto.busStopDetailCategoryName}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${bsdcDto.busStopDetailCategorySeq}">${bsdcDto.busStopDetailCategoryName}</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</select>
+				<img src="/spring/images/timeLine/refreshBtn.png" id="refreshBtn" onclick="refresh();"/>
+				
+			</div>
 		</div>
-		<div id="mapAP"></div>
+		<div id="contents">
+			<div id="mapAP"></div>
+		</div>
 <script type="text/javascript">
 
 var mapAP;
@@ -391,7 +444,7 @@ zoom: 13
 	
 	markerBS${bsdto.busStopSeq} = new google.maps.Marker({
 	    map: mapAP,
-	    draggable: true,
+	    draggable: false,
 	    animation: google.maps.Animation.DROP,
 	    info: '${bsdto.busStop}',
 	    title: '${bsdto.busStop}',
@@ -409,7 +462,7 @@ zoom: 13
 		
 		markerCBL${cbldto.businfoSeq} = new google.maps.Marker({
 		    map: mapAP,
-		    draggable: true,
+		    draggable: false,
 		    animation: google.maps.Animation.DROP,
 		    icon:'/spring/images/timeLine/busIcon.png',
 		    title: '${cbldto.businfoName}',

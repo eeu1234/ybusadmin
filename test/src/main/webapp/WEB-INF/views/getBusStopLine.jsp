@@ -342,6 +342,18 @@ body, html {
 	 right:0;
 	 cursor:pointer;
 }
+
+#detailLocationSel{
+
+	 width:50%;
+	 height:80%;
+	 margin:0;
+	 padding:0;
+	 margin-right:5%;
+	 margin-top:1%;
+
+
+}
 </style>
 
 <script>
@@ -350,8 +362,22 @@ $(document).ready(function(){
 		
 		location.href="/spring/getBusStopRoadView.action?busStopSeq="+$(this).attr("busStopSeq");
 	});
-});
 	
+	$("#detailLocationSel").change(function(){
+		var bsdcSeq = $(this).val();
+		location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
+	});
+});
+
+function refresh(){
+	var bsdcSeq = $("#detailLocationSel").val();
+	location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
+}
+
+function moveMap(){
+	var bsdcSeq = $("#detailLocationSel").val();
+	location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
+}
 	
 </script>
 
@@ -378,8 +404,20 @@ $(document).ready(function(){
 				</div>
 			</div>
 					<div id="footer">
-					<div style= "position:relative;width:85%;height:100%;padding-top:3%;">● 정류장을 터치하시면 위치 정보를 보실 수 있습니다.</div>
-					<img src="/spring/images/timeLine/naverMap.png" id="changeMap" onclick="location.href='/spring/getBusStopLocation.action'" />
+						<select id = "detailLocationSel" class="form-Control">
+							<c:forEach items="${bsdcList}" var="bsdcDto">
+								<c:choose>
+		
+									<c:when test="${bsdcDto.busStopDetailCategorySeq==busStopDetailCategorySeq}">
+										<option value="${bsdcDto.busStopDetailCategorySeq}" selected>${bsdcDto.busStopDetailCategoryName}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${bsdcDto.busStopDetailCategorySeq}">${bsdcDto.busStopDetailCategoryName}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					<img src="/spring/images/timeLine/naverMap.png" id="changeMap" onclick="moveMap();" />
 					<img src="/spring/images/timeLine/refreshBtn.png" id="refreshBtn" onclick="window.location.reload();" />
 				
 					</div>

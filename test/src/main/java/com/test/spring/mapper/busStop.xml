@@ -3,22 +3,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="busStop">
-	<select id="getBusStop" parameterType="String" resultType="com.test.spring.map.BusStopDTO">
+	<select id="getBusStop" parameterType="String" resultType="com.test.spring.dto.BusStopDTO">
 		SELECT A.* FROM (SELECT A.*,B.BUSSTOPSEQ AS busStopSeq, B.BUSSTOP AS busStop, B.BUSSTOPLATITUDE AS busStopLatitude, B.BUSSTOPLONGITUDE AS busStopLongitude FROM (SELECT A.*,B.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, B.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName, B.BUSSTOPDETAILCATEGORYINTERVAL AS busStopDetailCategoryInterval FROM (SELECT B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq,B.BUSSTOPCATEGORY AS busStopCategory, A.UNIVERSITYSEQ AS universitySeq, A.UNIVERSITYNAME AS universityName, A.UNIVERSITYTEL AS universityTel FROM UNIVERSITY A INNER JOIN BUSSTOP_CATEGORY B ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ) A INNER JOIN BUSSTOP_DETAIL_CATEGORY B ON A.busStopCategorySeq = B.BUSSTOPCATEGORYSEQ) A INNER JOIN BUSSTOP B ON A.busStopDetailCategorySeq = B.BUSSTOPDETAILCATEGORYSEQ) A WHERE universitySeq=#{universitySeq} 
 	</select>
-	<select id="university" parameterType="String" resultType="com.test.spring.map.UniversityDTO">
+	<select id="university" parameterType="String" resultType="com.test.spring.dto.UniversityDTO">
 		SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName, UNIVERSITYTEL AS universityTel, UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude FROM UNIVERSITY WHERE universitySeq = #{universitySeq}
 	</select>
-	<select id="busStop" parameterType="String" resultType="com.test.spring.map.BusStopDTO">
+	<select id="busStop" parameterType="String" resultType="com.test.spring.dto.BusStopDTO">
 		SELECT BUSSTOPSEQ AS busStopSeq, BUSSTOP AS busStop, BUSSTOPLATITUDE AS busStopLatitude, BUSSTOPLONGITUDE AS busStopLongitude FROM BUSSTOP WHERE busStopSeq=#{busStopSeq}
 	</select>
 	<select id="getAroundPlace" parameterType="String" resultType="com.test.spring.dto.AroundPlaceDTO">
-		SELECT AROUNDPLACESEQ AS aroundPlaceSeq,AROUNDPLACENAME AS aroundPlaceName,AROUNDPLACELATITUDE AS aroundPlaceLatitude,AROUNDPLACELONGITUDE AS aroundPlaceLongitude,AROUNDPLACESTAT AS aroundPlaceStat,BUSSTOPSEQ AS busStopSeq FROM AROUND_PLACE;
+		SELECT AROUNDPLACESEQ AS aroundPlaceSeq,AROUNDPLACENAME AS aroundPlaceName,AROUNDPLACELATITUDE AS aroundPlaceLatitude,AROUNDPLACELONGITUDE AS aroundPlaceLongitude,AROUNDPLACESTAT AS aroundPlaceStat FROM AROUND_PLACE;
 	</select>
-	<select id="getAllBusStop" parameterType="map" resultType="com.test.spring.map.BusStopDTO">
+	<select id="getAllBusStop" parameterType="map" resultType="com.test.spring.dto.BusStopDTO">
 		SELECT A.* FROM (SELECT A.*, B.UNIVERSITYNAME AS universityName, B.UNIVERSITYTEL AS universityTel, B.UNIVERSITYLATITUDE AS universityLatitude, B.UNIVERSITYLONGITUDE AS universityLongitude FROM (SELECT A.*, B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, B.BUSSTOPCATEGORY AS busStopCategory, B.UNIVERSITYSEQ AS universitySeq FROM (SELECT B.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName ,A.BUSSTOPSEQ AS busStopSeq, A.BUSSTOP AS busStop, A.BUSSTOPLATITUDE AS busStopLatitude, A.BUSSTOPLONGITUDE AS busStopLongitude, A.BUSSTOPLINE AS busStopLine FROM BUSSTOP A INNER JOIN  BUSSTOP_DETAIL_CATEGORY B ON A.BUSSTOPDETAILCATEGORYSEQ = B.BUSSTOPDETAILCATEGORYSEQ) A INNER JOIN BUSSTOP_CATEGORY B) A INNER JOIN UNIVERSITY B ON A.universitySeq = B.UNIVERSITYSEQ) A WHERE universitySeq = #{universitySeq} and busStopCategorySeq = #{busStopCategorySeq}
 	</select>
-	<select id="getCurrBusStopLocation" parameterType="map" resultType="com.test.spring.map.CurrBusLocationDTO">
+	<select id="getCurrBusStopLocation" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
 		SELECT H.*,I.BUSINFOSEQ AS busInfoSeq, I.BUSINFONUM AS businfoNum, I.BUSINFONAME AS businfoName FROM
 			(SELECT F.*,G.DEVICEBUSSEQ,G.BUSINFOSEQ AS businfoSeq FROM
 				(SELECT * FROM LOCATION WHERE LOCATIONTIME IN      
@@ -33,7 +33,7 @@
 													
 	</select>
 	
-	<select id="getCurrBusLocation" parameterType="map" resultType="com.test.spring.map.CurrBusLocationDTO">
+	<select id="getCurrBusLocation" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
 		SELECT A.*,B.*,C.*,D.*,E.*,F.* FROM UNIVERSITY A                        
          INNER JOIN BUSSTOP_CATEGORY   B ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ
             INNER JOIN BUS_INFO C ON B.BUSSTOPCATEGORYSEQ = C.BUSSTOPCATEGORYSEQ
@@ -52,8 +52,49 @@
 		                        WHERE A.UNIVERSITYSEQ = #{universitySeq} AND B.BUSSTOPCATEGORYSEQ = #{busStopCategorySeq} GROUP BY E.DEVICESEQ ORDER BY LOCATIONTIME DESC LIMIT 0,50) AS MAX_TIME);
 	</select>
 	
-	<select id="getAvgBusStopLanLon" parameterType="map" resultType="com.test.spring.map.BusStopAvgLatLonDTO">
+	<select id="getAvgBusStopLanLon" parameterType="map" resultType="com.test.spring.dto.BusStopAvgLatLonDTO">
 		SELECT AVG(busStoplatitude) AS avgLat,AVG(busStoplongitude) AS avgLon FROM(SELECT A.*,B.BUSSTOPSEQ AS busStopSeq, B.BUSSTOP AS busStop, B.BUSSTOPLATITUDE AS busStopLatitude, B.BUSSTOPLONGITUDE AS busStopLongitude FROM (SELECT A.*,B.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, B.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName, B.BUSSTOPDETAILCATEGORYINTERVAL AS busStopDetailCategoryInterval FROM (SELECT B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq,B.BUSSTOPCATEGORY AS busStopCategory, A.UNIVERSITYSEQ AS universitySeq, A.UNIVERSITYNAME AS universityName, A.UNIVERSITYTEL AS universityTel FROM UNIVERSITY A INNER JOIN BUSSTOP_CATEGORY B ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ) A INNER JOIN BUSSTOP_DETAIL_CATEGORY B ON A.busStopCategorySeq = B.BUSSTOPCATEGORYSEQ) A INNER JOIN BUSSTOP B ON A.busStopDetailCategorySeq = B.BUSSTOPDETAILCATEGORYSEQ) A;
+	</select>
+	
+	<select id="getSpecipicAvgBusStopLanLon" parameterType="map" resultType="com.test.spring.dto.BusStopAvgLatLonDTO">
+		SELECT AVG(busStoplatitude) AS avgLat,AVG(busStoplongitude) AS avgLon FROM
+			(SELECT * FROM
+				(SELECT Y.*,D.BUSSTOPSEQ AS busStopSeq, D.BUSSTOP AS busStop, D.BUSSTOPLATITUDE AS busStopLatitude, D.BUSSTOPLONGITUDE AS busStopLongitude,D.BUSSTOPLINE AS busStopLine  FROM
+					(SELECT X.* FROM
+						(SELECT B.UNIVERSITYSEQ AS universitySeq, B.BUSSTOPCATEGORYSEQ, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, A.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName FROM BUSSTOP_DETAIL_CATEGORY A 
+							INNER JOIN BUSSTOP_CATEGORY B ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ) X
+								INNER JOIN UNIVERSITY C ON X.universitySeq=C.UNIVERSITYSEQ) Y
+									INNER JOIN BUSSTOP D ON Y.busStopDetailCategorySeq = D.BUSSTOPDETAILCATEGORYSEQ ) Z
+										WHERE universitySeq = #{universitySeq} AND BUSSTOPCATEGORYSEQ=#{busStopCategorySeq} AND busStopDetailCategorySeq = #{busStopDetailCategorySeq}) A;
+	</select>
+	
+	<select id="getDefaultBusStopDetailCategory" parameterType="map" resultType="String">
+		SELECT Y.* FROM
+			(SELECT X.* FROM
+				(SELECT B.UNIVERSITYSEQ AS universitySeq, B.BUSSTOPCATEGORYSEQ, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, A.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName FROM BUSSTOP_DETAIL_CATEGORY A 
+					INNER JOIN BUSSTOP_CATEGORY B ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ) X
+						INNER JOIN UNIVERSITY C ON X.universitySeq=C.UNIVERSITYSEQ) Y
+							WHERE universitySeq = #{universitySeq} AND BUSSTOPCATEGORYSEQ = #{busStopCategorySeq} limit 0,1 
+	</select>
+	
+	<select id="getSpecipicBusStopDetailCategory" parameterType="map" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
+		SELECT * FROM
+			(SELECT X.* FROM
+				(SELECT B.UNIVERSITYSEQ AS universitySeq, B.BUSSTOPCATEGORYSEQ, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, A.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName FROM BUSSTOP_DETAIL_CATEGORY A 
+					INNER JOIN BUSSTOP_CATEGORY B ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ) X
+						INNER JOIN UNIVERSITY C ON X.universitySeq=C.UNIVERSITYSEQ) Y
+							WHERE UNIVERSITYSEQ = #{universitySeq} AND BUSSTOPCATEGORYSEQ=#{busStopCategorySeq};
+	</select>
+	
+	<select id="getSpecipicBusStop" parameterType="map" resultType="com.test.spring.dto.BusStopDTO">
+		SELECT * FROM
+			(SELECT Y.*,D.BUSSTOPSEQ AS busStopSeq, D.BUSSTOP AS busStop, D.BUSSTOPLATITUDE AS busStopLatitude, D.BUSSTOPLONGITUDE AS busStopLongitude,D.BUSSTOPLINE AS busStopLine  FROM
+				(SELECT X.* FROM
+					(SELECT B.UNIVERSITYSEQ AS universitySeq, B.BUSSTOPCATEGORYSEQ, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, A.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName FROM BUSSTOP_DETAIL_CATEGORY A 
+						INNER JOIN BUSSTOP_CATEGORY B ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ) X
+							INNER JOIN UNIVERSITY C ON X.universitySeq=C.UNIVERSITYSEQ) Y
+								INNER JOIN BUSSTOP D ON Y.busStopDetailCategorySeq = D.BUSSTOPDETAILCATEGORYSEQ ) Z
+									WHERE universitySeq = #{universitySeq} AND BUSSTOPCATEGORYSEQ=#{busStopCategorySeq} AND busStopDetailCategorySeq = #{busStopDetailCategorySeq}
 	</select>
 	
 </mapper>

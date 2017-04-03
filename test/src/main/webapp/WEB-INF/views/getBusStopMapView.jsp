@@ -195,7 +195,7 @@ function initMap() {
 		
 		marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
 		    map: mapAP,
-		    draggable: true,
+		    draggable: false,
 		    animation: google.maps.Animation.DROP,
 		    info: '${apdto.aroundPlaceName}',
 		    title: '${apdto.aroundPlaceName}',
@@ -211,7 +211,7 @@ function initMap() {
 	
 	markerNormal = new google.maps.Marker({
 	    map: mapNormal,
-	    draggable: true,
+	    draggable: false,
 	    animation: google.maps.Animation.DROP,
 	    position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}}
 	});

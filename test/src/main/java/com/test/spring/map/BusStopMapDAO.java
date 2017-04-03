@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.test.spring.dto.AroundPlaceDTO;
+import com.test.spring.dto.BusStopAvgLatLonDTO;
+import com.test.spring.dto.BusStopDTO;
+import com.test.spring.dto.BusStopDetailCategoryDTO;
+import com.test.spring.dto.CurrBusLocationDTO;
+import com.test.spring.dto.UniversityDTO;
 
 @Repository
 public class BusStopMapDAO {
@@ -64,6 +69,26 @@ public class BusStopMapDAO {
 		return sql.selectList("busStop.getCurrBusStopLocation",map);
 	}
 	
+	//해당학교의 기본값 노선번호 한개를 불러옴
+	public String getDefaultBusStopDetailCategory(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("busStop.getDefaultBusStopDetailCategory",map);
+	}
 	
+	//해당학교의 버스분류에 따른 노선 전부를 불러옴
+	public List<BusStopDetailCategoryDTO> getAllBusStopDetailCategory(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sql.selectList("busStop.getSpecipicBusStopDetailCategory",map);
+	}
+
+	public List<BusStopDTO> getSpecipicBusStop(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sql.selectList("busStop.getSpecipicBusStop",map);
+	}
+
 	
+	public BusStopAvgLatLonDTO getSpecipicAvgBusStopLatLon(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("busStop.getSpecipicAvgBusStopLanLon",map);
+	}
 }

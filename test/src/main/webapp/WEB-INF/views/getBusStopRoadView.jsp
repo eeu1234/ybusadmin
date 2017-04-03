@@ -165,7 +165,7 @@ function initMap() {
 		
 		marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
 		    map: mapAP,
-		    draggable: true,
+		    draggable: false,
 		    animation: google.maps.Animation.DROP,
 		    info: '${apdto.aroundPlaceName}',
 		    title: '${apdto.aroundPlaceName}',

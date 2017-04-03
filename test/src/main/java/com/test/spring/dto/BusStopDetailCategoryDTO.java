@@ -1,9 +1,9 @@
 package com.test.spring.dto;
 
 //정류장세부분류
-public class BusStopDetalCategoryDTO {
+public class BusStopDetailCategoryDTO {
 	
-	private String busStopDetalCategorySeq;				//세부분류SEQ
+	private String busStopDetailCategorySeq;			//세부분류SEQ
 	private String busStopDetailCategoryName;			//세부분류명
 	private String busStopDetailCategoryInterval;		//인터벌타임
 	private String busStopDetailCategoryIntervalDistance;		//인터벌거리
@@ -15,11 +15,11 @@ public class BusStopDetalCategoryDTO {
 	public void setBusStopCategorySeq(String busStopCategorySeq) {
 		this.busStopCategorySeq = busStopCategorySeq;
 	}
-	public String getBusStopDetalCategorySeq() {
-		return busStopDetalCategorySeq;
+	public String getBusStopDetailCategorySeq() {
+		return busStopDetailCategorySeq;
 	}
-	public void setBusStopDetalCategorySeq(String busStopDetalCategorySeq) {
-		this.busStopDetalCategorySeq = busStopDetalCategorySeq;
+	public void setBusStopDetailCategorySeq(String busStopDetailCategorySeq) {
+		this.busStopDetailCategorySeq = busStopDetailCategorySeq;
 	}
 	public String getBusStopDetailCategoryName() {
 		return busStopDetailCategoryName;
