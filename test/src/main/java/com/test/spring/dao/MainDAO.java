@@ -1,4 +1,4 @@
-package com.test.spring.android.DAO;
+package com.test.spring.dao;
 
 import java.util.HashMap;
 import java.util.List;

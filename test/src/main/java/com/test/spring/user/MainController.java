@@ -1,4 +1,4 @@
-package com.test.spring.main;
+package com.test.spring.user;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.android.DAO.MainDAO;
+import com.test.spring.dao.MainDAO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.WeatherStatDTO;

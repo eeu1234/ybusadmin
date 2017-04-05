@@ -1,4 +1,4 @@
-package com.test.spring.map;
+package com.test.spring.user;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.test.spring.dao.BusStopMapDAO;
 import com.test.spring.dto.AroundPlaceDTO;
 import com.test.spring.dto.BusStopAvgLatLonDTO;
 import com.test.spring.dto.BusStopDTO;
