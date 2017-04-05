@@ -33,9 +33,8 @@ public class BusStopMapController {
 	@Autowired
 	BusStopMapDAO dao;
 	
-	//학교 정류장뷰
-	//학교 번호를 받아서 학교의 위경도를 들고가서 지도의 중앙을 찾아줘야함.
-	//정류장 번호를 받아서 모든 정류장의 위경도 받아다가 지도에 마커 찍어줘야함.
+	//테스트용 뷰
+	
 	@RequestMapping(method={RequestMethod.GET},value="/getAllBusStop.action")
 	public String getBusStop(HttpServletRequest request, HttpServletResponse response, String universitySeq,String busStopSeq){
 		universitySeq = "1";
@@ -50,7 +49,7 @@ public class BusStopMapController {
 		request.setAttribute("unidto", unidto);
 		request.setAttribute("bsdto", bsdto);
 		
-		return "getBusStop";
+		return "user/getBusStop";
 	}
 	
 	
@@ -69,7 +68,7 @@ public class BusStopMapController {
 		request.setAttribute("apList", apList);
 		request.setAttribute("bsdto", bsdto);
 		
-		return "getBusStopRoadView";
+		return "user/getBusStopRoadView";
 	}
 	
 	
@@ -88,7 +87,7 @@ public class BusStopMapController {
 		request.setAttribute("apList", apList);
 		request.setAttribute("bsdto", bsdto);
 		
-		return "getBusStopMapView";
+		return "user/getBusStopMapView";
 	}
 	
 	
@@ -125,7 +124,7 @@ public class BusStopMapController {
 		request.setAttribute("unidto", unidto);
 		request.setAttribute("bsList", bsList);
 		
-		return "getBusStopLine";
+		return "user/getBusStopLine";
 	}
 	
 	
@@ -165,7 +164,7 @@ public class BusStopMapController {
 		request.setAttribute("unidto", unidto);
 		request.setAttribute("bsList", bsList);
 		
-		return "getBusStopLocation";
+		return "user/getBusStopLocation";
 	}
 	
 	
