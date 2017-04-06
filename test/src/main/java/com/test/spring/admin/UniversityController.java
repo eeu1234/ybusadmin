@@ -3,6 +3,8 @@ package com.test.spring.admin;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,7 @@ public class UniversityController {
 	
 	//대학 관리 메인
 	@RequestMapping(method={RequestMethod.GET}, value="/admin/universityCrud.action")
-	public String universityMain(HttpServletRequest request){
+	public String universityMain(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
 		return "admin/universityCrud";
 	}
@@ -27,7 +29,7 @@ public class UniversityController {
 	
 	//대학교 리스트
 	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/universityList.action")
-	public String universityList(HttpServletRequest request) {
+	public String universityList(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		List<UniversityDTO> ulist = dao.universityList();
 		
@@ -40,7 +42,7 @@ public class UniversityController {
 	
 	//대학교 수정으로 이동시 필요한 정보 가져오기
 	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/universityEdit.action")
-	public String universityEdit(HttpServletRequest request, String seq) {
+	public String universityEdit(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
 		
 		UniversityDTO udto = new UniversityDTO();
 		
@@ -56,7 +58,7 @@ public class UniversityController {
 	
 	//대학교 수정
 	@RequestMapping(method = { RequestMethod.POST }, value = "/admin/universityEditOk.action")
-	public String universityEditOk(HttpServletRequest request) {
+	public String universityEditOk(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		UniversityDTO udto = new UniversityDTO();
 		
@@ -74,7 +76,7 @@ public class UniversityController {
 	
 	//대학교 추가로 이동
 	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/universityAdd.action")
-	public String universityAdd(HttpServletRequest request) {
+	public String universityAdd(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 
 		return "admin/universityAdd";
 	}
@@ -82,7 +84,7 @@ public class UniversityController {
 	
 	//대학교 추가
 	@RequestMapping(method = { RequestMethod.POST }, value = "/admin/universityAddOk.action")
-	public String universityAddOk(HttpServletRequest request) {
+	public String universityAddOk(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		
 		UniversityDTO udto = new UniversityDTO();
@@ -103,7 +105,7 @@ public class UniversityController {
 	
 	//대학교 삭제
 	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/universityDel.action")
-	public String universityDel(HttpServletRequest request, String seq) {
+	public String universityDel(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
 		
 		int result = dao.universityDel(seq);
 		

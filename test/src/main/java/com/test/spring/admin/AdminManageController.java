@@ -25,8 +25,7 @@ public class AdminManageController {
 	//admin 관리 메인 페이지로 이동, 모든 대학 관리자 내역 가져옴
 	@RequestMapping(method={RequestMethod.GET}
 					, value="/admin/adminManage.action")
-	public String adminManagelist(HttpServletRequest request
-								,HttpSession session
+	public String adminManagelist(HttpServletRequest request,HttpSession session,HttpServletResponse response
 								,String page
 								,SearchDTO sdto){
 		

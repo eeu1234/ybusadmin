@@ -8,7 +8,6 @@
 <title>Cambus</title>
 
 <%@include file="/inc/asset.jsp" %>
-<script src="./js/jquery.xdomainajax.js"></script>
 <style>
 /* iphone5 */
 @media screen and (max-width: 320px) {
@@ -310,12 +309,9 @@ ul,li{
 			<div id="notice_content">
 
 				<ul>
-					<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-						sed do eiusmod tempor</li>
-					<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco
-						laboris nisi ut</li>
-					<li>Duis aute irure dolor in reprehenderit in voluptate velit
-						esse cillum dolore</li>
+					<c:forEach items="${nList}" var="ndto">
+						<li class="nContent" value="${ndto.noticeSeq}"><a href="/spring/admin/notice/noticeView.action?noticeSeq=${ndto.noticeSeq}">${ndto.noticeSubject }</a></li>
+					</c:forEach>
 				</ul>
 
 			</div>
@@ -349,9 +345,27 @@ ul,li{
 			<div id="thirdBox" class="BSC3 busLine">세번째</div>
 			<div class="clear"></div>
 
-			<div id="forthBox" class="BSC4">네번째</div>
-			<div id="fifthBox" class="BSC5">다섯번째</div>
-			<div id="sixthBox" class="BSC6">여섯번째</div>
+			<div id="forthBox" class="BSC4" onclick="location.href='http://localhost:8090/spring/busSchedule/busTimeTable.action';">
+				<div class="iconBox">
+            	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
+               	<div class="iconInfo">시간표</div>
+	               	가...가버렷
+	            </div>
+			</div>
+			<div id="fifthBox" class="BSC5">
+				<div class="iconBox">
+            	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
+               	<div class="iconInfo"></div>
+	               	위치조회
+	            </div>
+			</div>
+			<div id="sixthBox" class="BSC6" onclick="location.href='http://localhost:8090/spring/user/makeIcon.action'">
+				<div class="iconBox">
+            	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
+               	<div class="iconInfo"></div>
+	               	How to Add
+	            </div>
+			</div>
 			<div class="clear"></div>
 		</div>
 		<div id="bottom">Copyright C. All right reserved. Servie by	CAMBUS.</div>
@@ -382,7 +396,7 @@ ul,li{
 	
 	$(".busLine").click(function(){
 		
-		alert($(this).attr("class"));
+		<%--alert($(this).attr("class"));--%>
 		var busStopCategory = $(this).attr("class");
 		busStopCategory = busStopCategory.substr(3,1);
 		location.href="http://211.63.89.34:8090/spring/getBusStopLine.action?universitySeq="+${universitySeq}+"&busStopCategory="+busStopCategory;

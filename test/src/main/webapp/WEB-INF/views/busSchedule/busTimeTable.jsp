@@ -8,7 +8,6 @@
 <meta charset=UTF-8">
 <title>Insert title here</title>
 <style>
-
 	#busTimeTable{
 		width: 900px;
 		margin:0px auto;
@@ -21,7 +20,6 @@
 		width: 270px;
 		float:left;
 	}
-	
 	.timeContent{
 		width: 850px;
 	}
@@ -40,14 +38,14 @@
 	
 </style>
 <script>
-
 $(document).ready(function(){
-	$("#weekDays").change(function(){
-		var weekDays = $("#weekDays").val();
-		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
+	   $("#weekDays").change(function(){
+	      var weekDays = $("#weekDays").val();
+	      location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
+	   });
 	});
-});
-
+	
+	
 function schedule(seq){
 	
 	var weekDays = $("#weekDays").val();
@@ -79,23 +77,30 @@ function schedule(seq){
 		</div>
 		<div style="clear:both;"></div>
 		<!-- 선택된 버스노선 시간표 -->
+		
 		<c:forEach items="${dlist}" var="dlist" varStatus="out">
 		<div class="timeContent">
 			<div class="timeHeader">
 				${dlist.busStopDetailCategoryName}  
 				<c:if test="${weekDays == 'normal' }"> 평일시간표</c:if>
 				<c:if test="${weekDays == 'weekends' }"> 주말시간표</c:if>
-			</div>
+			</div><!-- timeHeader -->
 			<div class="totalTable">
 				<div class="timeLeft">
 				<c:forEach items="${slist}" var="slist" varStatus="in">
 				<c:if test="${out.count == in.count }">
+				
+					<!-- 시간없으면 출력하는 jstl if조건문 -->
+					<c:if test="${slist.timeList.size() == 0}">
+					<div>시간표가 없습니다.</div>
+					</c:if>
+					
 					<c:forEach items="${slist.timeList}" var="dto" varStatus="stat">
 						<c:if test="${stat.index < slist.timeList.size()/2 }">
 						<div>${dto.busTime} ${dto.courseName }</div>
 						</c:if>
 					</c:forEach>
-				</div>
+				</div><!-- timeLeft -->
 				<div class="timeRight">
 					<c:forEach items="${slist.timeList}" var="dto" varStatus="stat">
 						<c:if test="${stat.index >= slist.timeList.size()/2 }">
@@ -104,11 +109,11 @@ function schedule(seq){
 					</c:forEach>
 				</c:if>
 				</c:forEach>
-				</div>
-			</div>
+				</div><!-- timeRight -->
+			</div><!-- totalTable -->
 			<div style="clear:both;"></div>
 		</div><!-- timeContent -->
-		</c:forEach>
+		</c:forEach><!-- dlist -->
 	
 	</div>
 	

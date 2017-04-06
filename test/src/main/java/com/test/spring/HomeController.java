@@ -28,6 +28,7 @@ public class HomeController {
 	@RequestMapping(value = "/home.action", method = {RequestMethod.GET})
 	public String home(HttpServletRequest request,HttpSession session) throws IOException {
 		
+		System.out.println(request.getRequestURL());
 		String referer = request.getHeader("referer");
 		System.out.println(referer);
 		

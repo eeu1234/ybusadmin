@@ -31,7 +31,7 @@
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 
-<script src="/spring/js/tabMenu.js"></script>
+
 
 <!-- ico 아이콘-->
 <link rel="apple-touch-icon" href="/mobile/images/favicon.ico">
@@ -48,9 +48,55 @@
 
 
 <style>
+
+#container {
+	position: relative;
+	width: 100%;
+	max-width: 480px;
+	height: 568px;
+	margin: 0 auto;
+
+}
 #mapAP { 
 	height: 100%;
 	width:100%;
+}
+#top{
+	position: relative;
+	width: 100%;
+	height: 7%;
+	z-index: 3;
+}
+#header {
+	position: relative;
+	width: 100%;
+	height: 50px;
+	background-color: #003d4f;
+	text-align: center;
+	color: white;
+	background-color: #003d4f;
+}
+#infoPage {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-color: #003d4f;
+}
+#txtLogo {
+	position: relative;
+	width: 60%;
+	height: 80%;
+	padding-top: 2.5%;
+	margin: 0 auto;
+	font-weight: bold;
+}
+
+#logo {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: auto;
 }
 </style>
 <script>
@@ -121,12 +167,20 @@
 </head>
 <body>
 	<div id="container">
-
-		<div id="headArea">
-
-			${bsdto.busStop} 
+		<div id ="top">
+			<div id="header">
+				<div id="infoPage">
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1%; width: 8%; height: 55%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
+					<div id="txtLogo">
+					
+						${bsdto.busStop} 
+					
+					</div>
+				
+					<img src="/spring/images/timeLine/header_logo.png" id="logo" />
+				</div>
+			</div>
 		</div>
-
 
 		<div id="contents">
 			<div class="tab">
@@ -144,50 +198,45 @@
 					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">${bsdto.busStop} </div>
 				</div>
 				<div id="mapAP"></div>
-    <script type="text/javascript">
-
-var mapAP;
-var marker;
-
-function initMap() {
-  
-	mapAP = new google.maps.Map(document.getElementById('mapAP'), {
-	
-    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
-    zoom: 15
-  	});
-	
-	
-	<c:forEach items="${apList}" var="apdto">
-		var infowindow${apdto.aroundPlaceSeq} = new google.maps.InfoWindow({
-			content:'${apdto.aroundPlaceName}',
-		});
-		
-		marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
-		    map: mapAP,
-		    draggable: false,
-		    animation: google.maps.Animation.DROP,
-		    info: '${apdto.aroundPlaceName}',
-		    title: '${apdto.aroundPlaceName}',
-		    position: {lat: ${apdto.aroundPlaceLatitude}, lng: ${apdto.aroundPlaceLongitude}}
-		});
-		marker${apdto.aroundPlaceSeq}.addListener('click', function(){
-			infowindow${apdto.aroundPlaceSeq}.open(mapAP,marker${apdto.aroundPlaceSeq});
-		});
+			    <script type="text/javascript">
 			
-	</c:forEach>
-
-}
-
-
-
-
-
-    </script>
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk_ju7pwO5Gb-Q49o6-t2KvJ8erqmfgiY&callback=initMap">
-    </script>
-				
+					var mapAP;
+					var marker;
+					
+					function initMap() {
+					  
+						mapAP = new google.maps.Map(document.getElementById('mapAP'), {
+						
+					    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
+					    zoom: 15
+					  	});
+						
+						
+						<c:forEach items="${apList}" var="apdto">
+							var infowindow${apdto.aroundPlaceSeq} = new google.maps.InfoWindow({
+								content:'${apdto.aroundPlaceName}',
+							});
+							
+							marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
+							    map: mapAP,
+							    draggable: false,
+							    animation: google.maps.Animation.DROP,
+							    info: '${apdto.aroundPlaceName}',
+							    title: '${apdto.aroundPlaceName}',
+							    position: {lat: ${apdto.aroundPlaceLatitude}, lng: ${apdto.aroundPlaceLongitude}}
+							});
+							marker${apdto.aroundPlaceSeq}.addListener('click', function(){
+								infowindow${apdto.aroundPlaceSeq}.open(mapAP,marker${apdto.aroundPlaceSeq});
+							});
+								
+						</c:forEach>
+					
+					}
+	
+			    </script>
+			    <script async defer
+			      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk_ju7pwO5Gb-Q49o6-t2KvJ8erqmfgiY&callback=initMap">
+			    </script>
 			</div>
 		</div>
 

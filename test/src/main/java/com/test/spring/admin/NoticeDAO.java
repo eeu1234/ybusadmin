@@ -38,9 +38,9 @@ public class NoticeDAO {
 	}
 
 	//공지사항 글 삭제
-	public int noticeDelete(String seq) {
+	public int noticeDelete(String noticeSeq) {
 		
-		return sql.delete("notice.noticeDelete", seq);
+		return sql.delete("notice.noticeDelete", noticeSeq);
 	}
 
 	//공지사항 글 추가
@@ -70,6 +70,19 @@ public class NoticeDAO {
 		return sql.update("notice.readCountAdd",seq);
 	}
 
+	
+	
+	
+	
+	
+	//사용자부분추가
+	//공지사항 글 정보
+	public NoticeDTO userNotice(String seq) {
+		
+		return sql.selectOne("notice.noticeContent",seq);
+	}
+
+	
 	
 
 }

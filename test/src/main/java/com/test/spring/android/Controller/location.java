@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.test.spring.android.DAO.androidDAO;
-import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetalCategoryDTO;
 import com.test.spring.dto.LocationDTO;
+import com.test.spring.dto.VirtualBusStopDTO;
 
 @Controller("location")
 public class location {
@@ -105,7 +105,7 @@ public class location {
 			 String deviceId = androidDao.findDeviceId(deviceSeq);
 			 
 			 //해당 기기 정류장 리스트 
-			 List<BusStopDTO> busStopList = androidDao.getMyBusStop(deviceId);
+			 List<VirtualBusStopDTO> busStopList = androidDao.getMyBusStop(deviceId);
 			
 			 
 			 
@@ -116,7 +116,7 @@ public class location {
 			 System.out.println(myLat+":"+myLng);
 			for(int i=0;i<busStopList.size();i++){
 				//내위치와정류장 위치사이 거리구하기
-				double distance = distance(myLat, myLng,Double.parseDouble(busStopList.get(i).getBusStopLatitude()), Double.parseDouble(busStopList.get(i).getBusStopLongitude()), "meter");
+				double distance = distance(myLat, myLng,Double.parseDouble(busStopList.get(i).getVirtualBusStopLatitude()), Double.parseDouble(busStopList.get(i).getVirtualBusStopLongitude()), "meter");
 				
 				System.out.println(i+"번째 정류장 : "+ distance);
 				
@@ -132,7 +132,7 @@ public class location {
 				//정류장 리스트 중 해당 정류장seq를 가져온다.
 				int tempNum =tempList.get(0);
 				
-				String myBusStop = busStopList.get(tempNum).getBusStopSeq();
+				String myBusStop = busStopList.get(tempNum).getVirtualBusStopSeq();
 				
 				//업데이트 한다.
 				int result = androidDao.updateBusStop(locationSeq,myBusStop);

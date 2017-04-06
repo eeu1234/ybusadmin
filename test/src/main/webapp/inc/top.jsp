@@ -40,6 +40,7 @@
 							<li><a href="/spring/admin/deviceNullList.action">디바이스 할당</a></li>
 							<li><a href="/spring/admin/busCategory.action">버스 분류 관리</a></li>
 							<li><a href="/spring/admin/notice/notice.action">공지 사항 관리</a></li>
+							<li><a href="/spring/virtual/virtualBusStop.action">가상정류장 관리</a></li>
 								
 						</ul></li>
  					</c:if>

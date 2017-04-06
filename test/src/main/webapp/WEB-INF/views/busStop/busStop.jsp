@@ -9,7 +9,7 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
 <title>학교 갈 땐 CAMBUS</title>
-<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
+<!-- <link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" /> -->
 <style>
 html, body {
    width: 100%;
@@ -106,6 +106,7 @@ html, body {
    var addMarkerCheck = false;
    var xhr;
    var deleteSeq = [];
+   var markerInfo = [];
 
    $().ready(
                function() {
@@ -310,6 +311,9 @@ html, body {
                                  }//if
                               });//$("#buscategorysel").change(function())
 
+
+					
+                              
                   //노선종류 변경시에 정류장 마커가 유동적으로 출력되어야한다.
                   $("#detailCategorySel")
                         .change(
@@ -320,82 +324,89 @@ html, body {
                                  }
                                  var b = $(this).val();
                                  //markers = [];
+								 if(addMarkerCheck==true){
+									 
+								 }else{
+									 if (b != -1) {
+		                                    //alert(b);
+		                                    //선택한 노선종류seq를 서버에 전송 -> 버스 목록 받아오기
+		                                    $
+		                                          .ajax({
+		                                             type : "GET",
+		                                             url : "/spring/busStop/universityMap.action",
+		                                             data : "bseq=" + b,
+		                                             success : function(
+		                                                   data) {
 
-                                 if (b != -1) {
-                                    //alert(b);
-                                    //선택한 노선종류seq를 서버에 전송 -> 버스 목록 받아오기
-                                    $
-                                          .ajax({
-                                             type : "GET",
-                                             url : "/spring/busStop/universityMap.action",
-                                             data : "bseq=" + b,
-                                             success : function(
-                                                   data) {
+		                                                //기존 마커 제거
+		                                                deleteAllMarkers();
 
-                                                //기존 마커 제거
-                                                deleteAllMarkers();
+		                                                //jQuery XMl제어
+		                                                //1. data : XMLDocument객체
+		                                                //2. find() : 태그검색
 
-                                                //jQuery XMl제어
-                                                //1. data : XMLDocument객체
-                                                //2. find() : 태그검색
+		                                                var list = $(
+		                                                      data)
+		                                                      .find(
+		                                                            "item");
+		                                                //alert(list.length);
+		                                                $(list)
+		                                                      .each(
+		                                                            function(
+		                                                                  index,
+		                                                                  item) {
+		                                                               seq = $(
+		                                                                     item)
+		                                                                     .find(
+		                                                                           "seq")
+		                                                                     .text();
+		                                                               order = $(
+		                                                                     item)
+		                                                                     .find(
+		                                                                           "order")
+		                                                                     .text();
+		                                                               name = $(
+		                                                                     item)
+		                                                                     .find(
+		                                                                           "name")
+		                                                                     .text();
+		                                                               lat = $(
+		                                                                     item)
+		                                                                     .find(
+		                                                                           "lat")
+		                                                                     .text();
+		                                                               lng = $(
+		                                                                     item)
+		                                                                     .find(
+		                                                                           "lng")
+		                                                                     .text();
 
-                                                var list = $(
-                                                      data)
-                                                      .find(
-                                                            "item");
-                                                //alert(list.length);
-                                                $(list)
-                                                      .each(
-                                                            function(
-                                                                  index,
-                                                                  item) {
-                                                               seq = $(
-                                                                     item)
-                                                                     .find(
-                                                                           "seq")
-                                                                     .text();
-                                                               order = $(
-                                                                     item)
-                                                                     .find(
-                                                                           "order")
-                                                                     .text();
-                                                               name = $(
-                                                                     item)
-                                                                     .find(
-                                                                           "name")
-                                                                     .text();
-                                                               lat = $(
-                                                                     item)
-                                                                     .find(
-                                                                           "lat")
-                                                                     .text();
-                                                               lng = $(
-                                                                     item)
-                                                                     .find(
-                                                                           "lng")
-                                                                     .text();
+		                                                               drawMarker(
+		                                                                     order,
+		                                                                     lat,
+		                                                                     lng);
 
-                                                               drawMarker(
-                                                                     order,
-                                                                     lat,
-                                                                     lng);
+		                                                            });
 
-                                                            });
-
-                                             },
-                                             error : function() {
-                                                alert("정류장 마커맵을 가져오는데 실패하였습니다.");
-                                             }
-                                          });//ajax
-                                 }//if
+		                                             },
+		                                             error : function() {
+		                                                alert("정류장 마커맵을 가져오는데 실패하였습니다.");
+		                                             }
+		                                          });//ajax
+		                                 }//if
+								 }
+                                 
                               });//$("#detailcategorysel").change(function())
 
-                  $("#frm")
-                        .submit(
-                              function() {
+
+            	  //저장버튼을 눌렀을시 작동
+                  $("#frm").submit(function() {
                                  var saveCheck = false;
                                  var JSONObject;
                                  var JSONArray;
+
+                                 
+                                 
                                  if (addMarkerCheck == false) {
 
                                     alert("수정버튼을 먼저 눌러주세요");
@@ -404,15 +415,8 @@ html, body {
 
                                     for (var i = 1; i <= dragMarkers.length; i++) {
                                        //console.log(i);
-                                       if ($(
-                                             "#busstopname" + i
-                                                   + "").val() == ""
-                                             || $(
-                                                   "#line"
-                                                         + i
-                                                         + "")
-                                                   .val() == "-1") {
-                                          savecheck = true;
+                                       if ($("#busstopname" + i + "").val() == "" || $("#line" + i + "").val() == "-1") {
+                                          saveCheck = true;
                                        }
                                     }
                                     if (saveCheck == true) {
@@ -515,7 +519,15 @@ html, body {
                                        $("#frm")
                                              .append(
                                                    "<input type='hidden' name='deleteSeq' value='"+ deleteSeq +"'>");
+                                       $("#frm").append("<input type='hidden' name='detailCategorySelect' value='"+ detailCategorySel +"'>");
 
+
+									   //저장버튼을 눌렀을경우 busStop테이블의 내용이 수정되어야됨
+									   //수정된 busstop의 테이블 의 모든 내용이 virtualbusstop테이블로 그대로 복사가 되야함
+									   //virtualbusstop 테이블에서 정류장 세부분류seq가 같은  모든 내용을 delete하고
+									   //busstopdml 정류장 세부분류seq가 같은 모든 행을 그대로 복사
+									    
+									   
                                        alert("저장완료");
 
                                        markers = [];
@@ -608,7 +620,7 @@ html, body {
 
       var myLatlng = new google.maps.LatLng(lat, lng);
       var myOptions = {
-         zoom : 13,
+         zoom : 15,
          center : myLatlng,
          mapTypeId : google.maps.MapTypeId.ROADMAP
       }
@@ -622,18 +634,14 @@ html, body {
       google.maps.event.addListener(map, 'click', function(event) {
          addMarker(event.latLng);
          //infowindow.setContent("latLng: " + event.latLng); // 인포윈도우 안에 클릭한 곳위 좌표값을 넣는다.
-         infowindow.setPosition(event.latLng); // 인포윈도우의 위치를 클릭한 곳으로 변경한다.
+         //infowindow.setPosition(event.latLng); // 인포윈도우의 위치를 클릭한 곳으로 변경한다.
          //markers.push(event.latLng);
          console.log(markers.length);
          console.log(event.latLng.lat());
          console.log(event.latLng.lng());
       });
 
-      //인포윈도우의 생성
-      var infowindow = new google.maps.InfoWindow({
-         size : new google.maps.Size(50, 50),
-         position : myLatlng
-      });
+      
       //infowindow.open(map); 윈도우창 열기
 
    } // function initialize() 함수 끝
@@ -641,17 +649,31 @@ html, body {
    //마커 추가 함수
    function addMarker(location) {
       if (addMarkerCheck) {
-         marker = new google.maps.Marker({
+         var marker = new google.maps.Marker({
+            orders : dragMarkers.length+1,
             position : location,
             draggable : true,
             map : map
          });
-         dragMarkers.push(marker);
+         
          //dragMarkers.push(marker);
+         
+         var infowindow = new google.maps.InfoWindow({
+	  	    content: (dragMarkers.length+1)+'번 정류장',
+	      });
+
+	      
+	 	  marker.addListener('click', function() {
+	 	    infowindow.open(map, marker);
+	 	   
+	 	  });
+         
+         
          //마커 이동 함수(이동할떄마다 해당 정류장의 위경도 수정)
          google.maps.event.addListener(marker, 'dragend', function(event) {
             console.log(this.position.lat());
             console.log(this.position.lng());
+            
             //console.log(this.orders);
             $("#tbl tbody tr:nth-child(" + dragMarkers.length + ")")
                   .children().eq(3).text(this.position.lat());
@@ -660,6 +682,10 @@ html, body {
             //console.log("end");
             initPanorama(this.position.lat(), this.position.lng());
          });
+
+         markerInfo.push(infowindow);
+         dragMarkers.push(marker);
+         
          initPanorama(location.lat(), location.lng());
          //$("#tbl tbody").append("<tr><td>"+markers.length+"</td><td><input type='text'></td><td>"+location.lat()+"</td><td>"+location.lng()+"</td></tr>");
          $("#tbl tbody")
@@ -685,27 +711,71 @@ html, body {
       clearAllMarkers();
       markers = [];
       dragMarkers = [];
+      markerInfo = [];
       $("#tbl tbody").children().remove();
    }
    //마커 전부 숨기기
    function clearAllMarkers() {
       setMapOnAll(null);
    }
+   
 
    //모든 마커 null로 초기화
    function setMapOnAll(map) {
       for (var i = 0; i < markers.length; i++) {
+         markerInfo[i].close();
          markers[i].setMap(map);
       }
+   }
+
+   //모든 마커 정보창 지우기
+   function initMarkerInfo(){
+	  for(var i=0;i<markerInfo.length;i++){
+		 markerInfo[i].close();
+	  }
    }
 
    //내가 클릭한 마커 null로 초기화
    function deleteOneMarkers(num) {
       console.log("마커갯수" + markers.length);
       if (dragMarkers.length > 0) {
-         console.log("삭제한 num : " + num);
-         clearOneMarkers(num - 1);
-         dragMarkers.splice(num - 1, 1);
+         var length = markerInfo.length;
+         //console.log("삭제한 num : " + num);
+         //console.log(markerInfo[num-1]);
+         //console.log("삭제한 정류장 content : "+markerInfo[num-1].content);
+         //clearOneMarkers(num - 1);
+         //dragMarkers.splice(num - 1, 1);
+         //markerInfo.splice(num - 1,1);
+
+		 //마커 삭제하고 다시생성
+		 //num부터 끝까지 마커제거,인포창 닫기
+		 //alert(markerInfo.length);//8
+         initMarkerInfo();//인포창 닫기
+
+         var temp = [];
+         //지운값 제외한 다음배열부터 임시배열에 넣어둠
+         for(var i=num;i<markerInfo.length;i++){
+			temp.push(dragMarkers[i]);
+         }
+         
+         for (var i = num-1; i < markerInfo.length; i++) {
+             dragMarkers[i].setMap(null);
+          }
+         //for(var i=num-1;i<length;i++){
+       	 dragMarkers.splice(num-1,length);
+       	 markerInfo.splice(num-1,length);
+         //alert(markerInfo.length);
+         //}
+         //alert(dragMarkers[num-1].orders);
+         //alert(dragMarkers[num-1].position.lat());
+         //alert(dragMarkers[num-1].position.lng());
+         
+         //마커,인포를 지우곳부터 다시 생성
+         for(var i=0;i<temp.length;i++){
+        	 drawDragMarker(temp[i].orders-1,temp[i].position.lat(),temp[i].position.lng());
+         }
+         
+         //console.log("삭제한 곳에 채워진 content : "+markerInfo[num-1].content);
          //마지막부터 삭제할때
          //$("#tbl tbody").children().last().remove();
 
@@ -780,25 +850,33 @@ html, body {
 
    function setMapOnOne(num, map) {
       dragMarkers[num].setMap(map);
+      console.log(markerInfo.length);
+      markerInfo[num].close();
    }
 
    //드래그기능없는 마커 찍기
    function drawMarker(order, blat, blng) {
 
       //드래그기능없는 마커
-      marker = new google.maps.Marker({
-
-         orders : order,
+      var marker = new google.maps.Marker({
          map : map,
          draggable : false,
          animation : google.maps.Animation.DROP,
-         position : {
-            lat : Number(blat),
-            lng : Number(blng)
-         }
+         position : {lat : Number(blat),lng : Number(blng)},
+         orders : order
       });
-      markers.push(marker);
+      console.log(blat+":"+blng);
+      //var markLocation = new google.maps.LatLng(blat,blng);
+      var infowindow = new google.maps.InfoWindow({
+  	    content: order+'번 정류장'
+      });
 
+      
+ 	  marker.addListener('click', function() {
+ 		 infowindow.open(map, marker);
+ 		initPanorama(this.position.lat(), this.position.lng());
+ 	  });
+      
       //마커 이동 함수(이동할떄마다 해당 정류장의 위경도 수정)
       google.maps.event.addListener(marker, 'dragend', function(event) {
          //console.log(this.position.lat());
@@ -811,14 +889,20 @@ html, body {
          //console.log("end");
          initPanorama(this.position.lat(), this.position.lng());
       });
+      
+      markers.push(marker);
+      markerInfo.push(infowindow);
 
-      //markers[order].addListener('click');
+
+     
+
+      
    }
 
    //드래그기능있는 마커 찍기
    function drawDragMarker(order, blat, blng) {
       //드래그 기능있는 마커
-      marker = new google.maps.Marker({
+      var marker = new google.maps.Marker({
 
          orders : order,
          map : map,
@@ -829,8 +913,20 @@ html, body {
             lng : Number(blng)
          }
       });
-      dragMarkers.push(marker);
+      
+      var infowindow = new google.maps.InfoWindow({
+    	    content: order+'번 정류장'
+    	  	
+        });
 
+        
+      marker.addListener('click', function() {
+   	    infowindow.open(map, marker);
+   	 initPanorama(this.position.lat(), this.position.lng());
+   	  });
+
+  
+	  
       //마커 이동 함수(이동할떄마다 해당 정류장의 위경도 수정)
       google.maps.event.addListener(marker, 'dragend', function(event) {
          //console.log(this.position.lat());
@@ -844,6 +940,9 @@ html, body {
          initPanorama(this.position.lat(), this.position.lng());
       });
 
+
+      dragMarkers.push(marker);
+      markerInfo.push(infowindow);
       //markers[order].addListener('click');
    }
 
@@ -853,23 +952,44 @@ html, body {
       //alert($("#buscategorysel").val());
       //alert($("#detailcategorysel").val());
       //카테고리를 하나라도 선택하지 않았다면
-      if ($("#universitySel").val() == -1 || $("#busCategorySel").val() == -1
+      clearAllMarkers();
+      for (var i = 0; i < dragMarkers.length; i++) {
+          dragMarkers[i].setMap(null);
+       }
+      $("#tbl tbody").html("");
+
+      $("#updateBtn").attr("value","초기화");
+	      
+	  if(addMarkerCheck == true){
+	    	  $("#detailCategorySel").removeAttr("disabled");
+	          $("#universitySel").removeAttr("disabled");
+	          $("#busCategorySel").removeAttr("disabled");
+	          addMarkerCheck = false;
+	          $("#saveBtn").hide(); 
+	          $("#updateBtn").attr("value","정류장 수정");
+	          
+	  }else if ($("#universitySel").val() == -1 || $("#busCategorySel").val() == -1
             || $("#detailCategorySel").val() == -1) {
          alert("선택하지않은 항목이 있습니다.");
       } else {
       
          
-            $("#saveBtn").show();
+         $("#saveBtn").show();
          //지도에 마커 추가 기능 on
          addMarkerCheck = true;
-
+         //버스카테고리 선택못하게 막음
+         $("#detailCategorySel").attr("disabled","disabled");
+         $("#universitySel").attr("disabled","disabled");
+         $("#busCategorySel").attr("disabled","disabled");
          clearAllMarkers();
+         //deleteAllMarkers();
+         //clearAllInfo();
          for (var i = 0; i < dragMarkers.length; i++) {
             dragMarkers[i].setMap(null);
          }
          var b = $("#detailCategorySel").val();
          //markers = [];
-
+		 //markerInfo = [];
          if (b != -1) {
             //alert(b);
             //선택한 노선종류seq를 서버에 전송 -> 버스 목록 받아오기

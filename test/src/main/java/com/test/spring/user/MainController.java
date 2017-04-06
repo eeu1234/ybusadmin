@@ -21,9 +21,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.test.spring.admin.NoticeDAO;
 import com.test.spring.dao.MainDAO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
+import com.test.spring.dto.NoticeDTO;
 import com.test.spring.dto.WeatherStatDTO;
 
 @Controller("MainController")
@@ -31,6 +33,11 @@ public class MainController {
 	
 	@Autowired
 	private MainDAO dao;
+	
+	@Autowired
+	private NoticeDAO noticeDao;
+	
+	
 	
 	@RequestMapping(method={RequestMethod.GET}, value="/mainIndex.action")
 	public String mainIndex(HttpServletRequest request,HttpServletResponse response,HttpSession session, String universitySeq,String busStopCategorySeq){
@@ -47,9 +54,12 @@ public class MainController {
 		map.put("universitySeq", universitySeq);
 		//이학교에 있는 노선을 메인 화면에 띄워주어야함
 		//노선목록 들고옴.
+		//공지사항목록 들고옴.
+		List<NoticeDTO> nList = dao.getAllNotice();
 		List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
 		List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
 		
+		request.setAttribute("nList", nList);
 		request.setAttribute("wsdto", wsdto);
 		request.setAttribute("bsdcList", bsdcList);
 		request.setAttribute("bscList", bscList);
@@ -271,5 +281,47 @@ public class MainController {
 	    }
 		return wsdto;
 	}//end apiExporler
+	
+	
+	
+	//공지사항 내용 가져옴
+		@RequestMapping(method={RequestMethod.GET}
+						, value="/admin/notice/noticeView.action")
+		public String noticeContent(HttpServletRequest request, HttpSession session, HttpServletResponse response
+					,String noticeSeq){
+			
+			System.out.println(noticeSeq);
+		
+			// 공지사항 게시글 정보 가져오기
+			NoticeDTO noticeDto = noticeDao.userNotice(noticeSeq);
+			
+
+			request.setAttribute("noticeDto", noticeDto);
+			
+			
+		   //readcount 값 바꾸기, 조회수 추가
+		   if(session.getAttribute("readcount")==null 
+		            || session.getAttribute("readcount").equals("n")){
+			   noticeDao.addReadCount(noticeSeq);
+		         session.setAttribute("readcount","y");
+		         
+		    System.out.println(session.getAttribute("readcount"));
+		      }
+			
+			
+			return "user/noticeView";
+		}
+	
+	
+	
+	
+	@RequestMapping(method={RequestMethod.GET},value="/user/makeIcon.action")
+	public String makeIcon(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		
+		
+		
+		return "user/makeIcon";
+	}
+	
 	
 }

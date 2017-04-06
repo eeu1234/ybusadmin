@@ -28,9 +28,7 @@ public class NoticeController {
 	//공지사항 글 출력
 	@RequestMapping(method={RequestMethod.GET}
 					, value="/admin/notice/notice.action")
-	public String notice(HttpServletRequest request
-								,HttpSession session
-								,HttpServletResponse response
+	public String notice(HttpServletRequest request,HttpSession session,HttpServletResponse response
 								,String page
 								,SearchDTO sdto){
 		
@@ -125,10 +123,12 @@ public class NoticeController {
 	
 	
 	//공지사항 내용 가져옴
-	@RequestMapping(method={RequestMethod.POST}
+	@RequestMapping(method={RequestMethod.GET}
 					, value="/admin/notice/noticeContent.action")
 	public String noticeContent(HttpServletRequest request, HttpSession session, HttpServletResponse response
 				,String seq){
+		
+		System.out.println(seq);
 	
 		// 공지사항 게시글 정보 가져오기
 		List<NoticeDTO> noticeCount = dao.notice(seq);
@@ -231,15 +231,15 @@ public class NoticeController {
 	}
 	
 	//공지사항 내용 삭제
-	@RequestMapping(method={RequestMethod.POST}
+	@RequestMapping(method={RequestMethod.GET}
 					, value="/admin/notice/noticeDelete.action")
 	@Transactional
 	public String noticeDelete(HttpServletRequest request, HttpSession session, HttpServletResponse response
-				,String seq){
+				,String noticeSeq){
 		
-		System.out.println(seq);
+		System.out.println(noticeSeq);
 		
-		int result = dao.noticeDelete(seq);
+		int result = dao.noticeDelete(noticeSeq);
 		
 		request.setAttribute("result", result);
 		

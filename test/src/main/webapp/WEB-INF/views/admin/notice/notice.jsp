@@ -17,7 +17,8 @@
 	#tbl1 th:nth-child(2) { width: 50%; }
 	#tbl1 th:nth-child(3) { width: 20%; } 
 	#tbl1 th:nth-child(4) { width: 5%; }
-	#tbl1 th:nth-child(5) { width: 20%; }
+	#tbl1 th:nth-child(5) { width: 5%; }
+	#tbl1 th:nth-child(6) { width: 15%; }
 	
 	#tbl2 { width: 500px; margin: 20px auto; margin-bottom: 100px;}
 	
@@ -37,7 +38,7 @@
 		border: 0px solid black;
 		width: 150px;
 		height: 30px;
-		margin-left: 55px;
+		margin-left: 20px;
 		text-align: center;
 	}
 	
@@ -58,7 +59,7 @@
 </style>
 <script>
 	
-
+	
 	//로그인 한 level 이 9999 이면 추가 함수 생성
 	<c:if test="${adto.adminLevel == 9999}">
 	function noticeAdd(){
@@ -66,14 +67,15 @@
 	}
 	</c:if>
 
-	
 	//로그인 한 level 이 9999 이면 삭제 함수 생성
 	<c:if test="${adto.adminLevel == 9999}">
-	function noticeDelete(){
+	function noticeDelete(noticeSeq){
 		if(confirm("삭제하시겠습니까?")){
-			
-		}
-	}
+			location.href="/spring/admin/notice/noticeDelete.action?noticeSeq="+noticeSeq;
+		} else {
+
+			}
+	};
 	</c:if>
 
 </script>
@@ -90,6 +92,7 @@
 				<th>제목</th>
 				<th>작성일자</th>
 				<th>조회수</th>
+				<th>상태값</th>
 				<th>관리</th>
 			</tr>
 			<c:if test="${empty alist || alist.size() == 0}">
@@ -100,27 +103,26 @@
 
 					<c:forEach items="${alist}" var="dto" varStatus="stat">
 					<tr>
-						<td>${dto.noticeSeq}</td>
-			<form method="POST" action="/spring/admin/notice/noticeContent.action">
+						<td>${stat.count}</td>
+			<form method="GET" action="/spring/admin/notice/noticeContent.action">
 						<td ><input type="submit" value="${dto.noticeSubject}" name="subject" readonly id="btnSubject"></td>
 						<input type="hidden" value="${dto.noticeSeq}" name="seq">
 			</form>
 						<td>${dto.noticeRegdate}</td>
 						<td>${dto.noticeReadCount}</td>
+						<td>${dto.notisStatus}</td>
 						
-						<c:if test="${adto.adminLevel == 9999}">
+						<c:if test="${adto.adminLevel == '9999'}">
 						<td>
 							<div id="btnSel">
 							<form method="POST" action="/spring/admin/notice/noticeUpdate.action">
-								<input type="submit" value="수정" onclick="noticeUpdate()" class="btn btn-info" id="btnEdit"/>
+								<input type="submit" value="수정" class="btn btn-info" id="btnEdit"/>
 								<input type="hidden" value="${dto.noticeSeq}" name="seq">
 							</form>
 							
+	
+								<input type="button" value="삭제" onclick="noticeDelete(${dto.noticeSeq});" class="btn btn-danger" id="btnDel"/>
 							
-							<form method="POST" action="/spring/admin/notice/noticeDelete.action">
-								<input type="submit" value="삭제" onclick="noticeDelete()" class="btn btn-danger" id="btnDel"/>
-								<input type="hidden" value="${dto.noticeSeq}" name="seq">
-							</form>
 							</div>
 						</td>
 						</c:if>
@@ -128,7 +130,7 @@
 					</c:forEach>
 			
 		</table>
-		<c:if test="${adto.adminLevel == 9999}">
+		<c:if test="${adto.adminLevel == '9999'}">
 				<div style="width:100%;text-align:right;">
 								<input type="button" value="글쓰기" onclick="noticeAdd();" class="btn btn-primary"/>
 			</div>

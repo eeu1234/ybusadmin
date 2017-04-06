@@ -36,18 +36,19 @@ public class AuthCheck {
    		+ "|| execution(String *.BusStopController.busStopOK(..))"
    		+ "|| execution(String *.PolyLineController.*(..))"  )*/
 	
-	//일반관리자
+	//일반관리자 - AdminLoginController는 제외할 것. 로그인창 자체를 접근못함.
    @Pointcut("execution(String *.BusStopController.*(..)) "
 		   + "|| execution(String *.PolyLineController.*(..))"  
 		   + "|| execution(String *.AdminMainController.adminMain(..))"  
-		   + "|| execution(String *.AdminMainController.adminMain1(..))"  
-		   + "|| execution(String *.AdminManageController.adminMypage(..))"  )
+		   + "|| execution(String *.AdminMainController.adminMain1(..))"
+		   + "|| execution(String *.AdminBusScheduleManage.*(..))"
+		   + "|| execution(String *.DeviceManageController.*(..))"
+		   + "|| execution(String *.NoticeController.*(..))"
+		   + "|| execution(String *.UniversityController.*(..))")
    public void member(){}
    
    @Before("member()")
    public void check(JoinPoint joinPoint){
-	   
-	   
 	   
 	  // adto = (AdminUniversityDTO)session.getAttribute("adto");
       //System.out.println("회원 전용 페이지입니다. 로그인 유무를 확인합니다.");
@@ -97,13 +98,11 @@ public class AuthCheck {
    
    
    //최고관리자
-   @Pointcut("execution(String *.NoticeController.notice(..)) "
-		   + "|| execution(String *.NoticeController.noticeAdd(..))"  
-		   + "|| execution(String *.NoticeController.noticeAddOk(..))"  
-		   + "|| execution(String *.NoticeController.noticeDelete(..))"  
-		   + "|| execution(String *.NoticeController.noticeUpdate(..))" 
-		   + "|| execution(String *.NoticeController.noticeUpdateOk(..))"  
-		   + "|| execution(String *.AdminBusScheduleManage.*(..))"  )
+   @Pointcut("execution(String *.NoticeController.*(..)) "//공지사항
+		   + "|| execution(String *.AdminBusScheduleManage.*(..))"  //버스스케쥴관리
+		   + "|| execution(String *.AdminMainController.adminMain(..))"  //관리자메인
+		   + "|| execution(String *.AdminMainController.adminMain1(..))"
+		   + "|| execution(String *.AdminManageController.*(..))"  )
    public void root(){}
    
    @Before("root()")
@@ -119,8 +118,9 @@ public class AuthCheck {
       HttpServletResponse response = (HttpServletResponse)args[2];
       	
       AdminUniversityDTO adto = (AdminUniversityDTO) session.getAttribute("adto");
-      //보조 업무
-      if((session == null || session.getAttribute("adto") == null) && !adto.getAdminLevel().equals("9999")){
+      //보조 업무 9999 아닌 얘들
+      System.out.println("로그인 된 직급은 "+adto.getAdminLevel());
+      if(!adto.getAdminLevel().equals("9999")){
          
          try {
             

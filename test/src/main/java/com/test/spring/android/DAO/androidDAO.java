@@ -6,9 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetalCategoryDTO;
 import com.test.spring.dto.LocationDTO;
+import com.test.spring.dto.VirtualBusStopDTO;
 
 @Repository
 public class androidDAO {
@@ -64,7 +64,7 @@ public class androidDAO {
 		}
 
 
-		public List<BusStopDTO> getMyBusStop(String deviceId) {
+		public List<VirtualBusStopDTO> getMyBusStop(String deviceId) {
 			
 			
 			

@@ -8,6 +8,7 @@
     	SELECT N.* FROM 
 (SELECT N.NOTICESEQ AS noticeSeq, N.NOTICESUBJECT AS noticeSubject, N.NOTICECONTENT AS noticeContent, 
 SUBSTR(N.NOTICEREGDATE,1,16) AS noticeRegdate, N.NOTICEREADCOUNT AS noticeReadCount, N.ADMINID AS adminID,
+N.NOTICESTATUS AS notisStatus,
 A.ADMINNAME AS adminName, A.ADMINDEPARTMENT AS adminDepartment, A.ADMINLEVEL AS adminLevel, 
 A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
 	FROM NOTICE N
@@ -48,7 +49,7 @@ A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
     
     <!-- 공지사항 글 삭제하는  쿼리 -->
     <delete id="noticeDelete" parameterType="String">
-    	DELETE FROM NOTICE WHERE noticeSeq = #{seq}
+    	DELETE FROM NOTICE WHERE noticeSeq = #{noticeSeq}
     </delete>
     
     <!-- 공지사항 글 추가하기  -->

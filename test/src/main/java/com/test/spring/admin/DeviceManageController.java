@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class DeviceManageController {
 	
 	
 	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/deviceNullList.action")
-	public String deviceNullList(HttpServletRequest request) {
+	public String deviceNullList(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		List<DeviceDTO> dlist= dao.deviceNullList();
 		List<UniversityDTO> ulist = dao.universityList();
@@ -40,7 +41,7 @@ public class DeviceManageController {
 	}
 	
 	@RequestMapping(method= {RequestMethod.GET}, value="/admin/deviceAddUniv.action")
-	public String deviceAddUniv(HttpServletRequest request, String seq, String universityName) {
+	public String deviceAddUniv(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq, String universityName) {
 		
 		HashMap<String, String> dmap = new HashMap<String, String>();
 		
@@ -67,14 +68,14 @@ public class DeviceManageController {
 	
 	//단말기 관리 출력	
 	@RequestMapping(method={RequestMethod.GET}, value="/admin/deviceBusManage.action")
-	public String deviceManage(HttpServletRequest request){
+	public String deviceManage(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
 		return "admin/deviceBusManage";
 	}
 	
 	//단말기 리스트 출력 & 카테고리 출력
 	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/deviceBusList.action")
-	public String devicebuslist(HttpServletRequest request, HttpSession session){
+	public String devicebuslist(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
 		String seq = (String) session.getAttribute("universitySeq");
 		System.out.println(seq);
@@ -122,7 +123,7 @@ public class DeviceManageController {
 	
 	
 	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/busStopCategoryAddOk.action")
-	public String busStopCategoryAddOk(HttpServletRequest request, String[] seq, String[] category) {
+	public String busStopCategoryAddOk(HttpServletRequest request,HttpSession session,HttpServletResponse response, String[] seq, String[] category) {
 		
 		HashMap<String, String> bdmap = new HashMap<String, String>();
 		

@@ -117,10 +117,9 @@ $(document).ready(function() {
 	
 	$("#subject").focus();
 	
- 	$(document).keypress(function(e){
-	    if(e.keyCode==13) return false;
-	});
-
+ 	$("#subject").keypress(function(e){
+    	if(e.keyCode==13) return false;
+ 	 });
 
 
 	
