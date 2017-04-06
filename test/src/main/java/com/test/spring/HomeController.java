@@ -2,6 +2,7 @@ package com.test.spring;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,12 +25,14 @@ public class HomeController {
 	@Autowired
 	HomeDAO dao; 
 	
-	@RequestMapping(value = "/adminMain.action", method = {RequestMethod.GET})
-	public String home(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	@RequestMapping(value = "/home.action", method = {RequestMethod.GET})
+	public String home(HttpServletRequest request,HttpSession session) throws IOException {
+		
+		String referer = request.getHeader("referer");
+		System.out.println(referer);
 		
 		
-		
-		return "adminMain";
+		return "home";
 	}
 	
 	

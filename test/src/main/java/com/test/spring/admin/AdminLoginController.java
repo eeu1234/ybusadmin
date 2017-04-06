@@ -1,6 +1,7 @@
 package com.test.spring.admin;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.dto.AdminDTO;
+import com.test.spring.dto.AdminUniversityDTO;
 
 @Controller("adminLoginController")
 public class AdminLoginController {
@@ -17,18 +18,18 @@ public class AdminLoginController {
 	private AdminLoginDAO dao;
 	
 	//로그인 화면
-	@RequestMapping(method = {RequestMethod.GET}, value="/admin/adminlogin.action")
-	public String loginView(HttpServletRequest request){
+	@RequestMapping(method = {RequestMethod.GET}, value="/admin/adminLogin.action")
+	public String loginView(HttpServletRequest request,HttpSession session,HttpServletResponse response){
+			
 		
 		
-		
-		return "admin/adminlogin";
+		return "admin/adminLogin";
 	}
 	
 
 	//로그인 하기
-	@RequestMapping(method = {RequestMethod.POST}, value="/admin/adminloginok.action")
-	public String loginCheck(HttpServletRequest request, HttpSession session){
+	@RequestMapping(method = {RequestMethod.POST}, value="/admin/adminLoginOk.action")
+	public String loginCheck(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
 		
 		String id = request.getParameter("id");
@@ -36,29 +37,24 @@ public class AdminLoginController {
 		session = request.getSession();
 		
 		
-		AdminDTO dto= new AdminDTO();
+		AdminUniversityDTO adto= new AdminUniversityDTO();
 		
-		dto.setAdminID(id);
-		dto.setAdminPassword(password);
+		adto.setAdminID(id);
+		adto.setAdminPassword(password);
 		
-		dto= dao.checkAdmin(dto); 
+		adto= dao.checkAdmin(adto); 
 		request.setAttribute("result", 0);
 		
-		if(dto !=null){
-			session.setAttribute("adminID",dto.getAdminID());
-			session.setAttribute("adminLevel", dto.getAdminLevel());
-			session.setAttribute("universitySeq", dto.getUniversitySeq());
-			
+		if(adto !=null){
+			session.setAttribute("adto",adto);
+						
 			//일반 사용자가 로그인했다고 알리기 위해 구분 속성 추가
 			request.setAttribute("result", 1);
 			
 		}
-		
-		//System.out.println(dto.getAdminID());
-		//System.out.println(dto.getUniversitySeq());
 
 		
-		return "admin/adminloginok";
+		return "admin/adminLoginOk";
 	}
 	
 	

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="device">
+
+   
+   
+<!--    <select id ="m1" resultType="Integer">
+      SELECT COUNT(*) FROM USER
+   </select>
+   
+   <select id ="m2" resultType="com.test.spring.HomeDTO">
+      SELECT USER_EMAIL_ID AS USEREMAILID FROM USER 
+   </select>
+   
+    -->
+   
+	<select id = "nullList" resultType="com.test.spring.dto.DeviceDTO">
+		SELECT DEVICESEQ AS deviceSeq, DEVICEMODEL AS deviceModel, DEVICETEL AS deviceTel, UNIVERSITYSEQ AS universitySeq FROM DEVICE WHERE UNIVERSITYSEQ IS NULL
+	</select>
+
+	<update id="addUniversity" parameterType="java.util.HashMap">
+		UPDATE DEVICE SET UNIVERSITYSEQ = (SELECT UNIVERSITYSEQ FROM UNIVERSITY WHERE UNIVERSITYNAME = #{universityName}) WHERE DEVICESEQ = #{seq}
+	</update>
+	
+	<select id="deviceBusList" parameterType ="String" resultType="com.test.spring.dto.DeviceBusInfoDTO">
+		SELECT ABC.BUSINFOSEQ AS busInfoSeq, ABC.BUSINFONUM AS busInfoNum, ABC.BUSINFONAME AS busInfoName,ABC.DEVICEMODEL AS deviceModel, ABC.DEVICETEL AS deviceTel, ABC.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, D.BUSSTOPCATEGORY AS busStopCategory FROM BUSSTOP_CATEGORY D
+		RIGHT OUTER JOIN
+		(SELECT C.BUSINFOSEQ, C.BUSINFONUM, C.BUSINFONAME AS busInfoName, AB.DEVICEMODEL, AB.DEVICETEL, C.BUSSTOPCATEGORYSEQ FROM BUS_INFO C 
+		INNER JOIN
+			(SELECT B.BUSINFOSEQ, B.DEVICESEQ, A.DEVICEMODEL,A.DEVICETEL FROM DEVICE_BUS B 
+			INNER JOIN 
+				(SELECT DEVICESEQ, DEVICEMODEL, DEVICETEL FROM DEVICE WHERE UNIVERSITYSEQ=#{seq}) A 
+			ON A.DEVICESEQ = B.DEVICESEQ) AB
+		ON AB.BUSINFOSEQ = C.BUSINFOSEQ) ABC
+		ON ABC.BUSSTOPCATEGORYSEQ = D.BUSSTOPCATEGORYSEQ
+			ORDER BY ABC.BUSINFOSEQ;
+	</select>
+	
+	<select id = "busStopCategoryList" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
+	
+		SELECT BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSSTOPCATEGORY AS busStopCategory, UNIVERSITYSEQ AS universitySeq FROM BUSSTOP_CATEGORY WHERE UNIVERSITYSEQ = #{seq}
+	</select>
+	
+	<select id = "busStopDetailCategoryList" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
+		SELECT BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName FROM BUSSTOP_DETAIL_CATEGORY WHERE BUSSTOPCATEGORYSEQ = #{seq}
+	</select>
+	
+	<!-- 
+	<update id = "busStopCategoryAdd" parameterType="java.util.HashMap">
+		UPDATE BUS_INFO SET BUSSTOPCATEGORYSEQ = #{category}, BUSSTOPDETAILCATEGORY=#{dcategory} WHERE BUSINFOSEQ = #{seq}    
+	</update>
+	-->
+	
+	<update id = "busStopCategoryAdd" parameterType="java.util.HashMap">
+		UPDATE BUS_INFO SET BUSSTOPCATEGORYSEQ = #{category} WHERE BUSINFOSEQ = #{seq}    
+	</update>
+	
+</mapper>
+
+
+
+
+

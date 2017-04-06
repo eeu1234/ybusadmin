@@ -14,6 +14,8 @@ import com.test.spring.dto.LocationDTO;
 public class androidDAO {
 
 	private static final int String = 0;
+	
+	
 	@Autowired
 	SqlSessionTemplate sql;
 	

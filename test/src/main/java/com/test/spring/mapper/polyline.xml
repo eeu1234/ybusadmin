@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="polyline">
+
+	<!-- 대학교 가져오기 -->
+	<select id="university" resultType="com.test.spring.dto.UniversityDTO">
+		SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName, UNIVERSITYTEL AS universityTel, 			
+		UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude FROM UNIVERSITY
+			WHERE UNIVERSITYNAME &lt;> '기타'
+	</select>
+	
+		<!-- 관리자 대학교 가져오기 -->
+	<select id="adminUniversity" parameterType="map" resultType="com.test.spring.dto.AdminUniversityDTO">
+		SELECT U.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYNAME AS universityName, A.ADMINLEVEL AS adminLevel FROM UNIVERSITY U
+			INNER JOIN ADMIN A
+				ON U.UNIVERSITYSEQ = A.UNIVERSITYSEQ
+					WHERE U.UNIVERSITYSEQ = #{universitySeq}  AND A.ADMINID = #{adminID} 
+	</select>
+	
+	<!-- 학교 위도,경도 가져오기 -->
+	<select id="universityMap" parameterType="String" resultType="com.test.spring.dto.UniversityDTO">
+		SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName, UNIVERSITYTEL AS universityTel, UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude FROM UNIVERSITY
+				WHERE UNIVERSITYSEQ = #{seq}
+	</select>
+
+	<!-- 셔틀 종류 가져오기 -->
+	<select id="busStopCategory" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
+		SELECT BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSSTOPCATEGORY AS busStopCategory FROM BUSSTOP_CATEGORY
+			WHERE UNIVERSITYSEQ = #{seq}
+	</select>
+	
+	<!-- 셔틀 세부 종류 가져오기 -->
+	<select id="busStopDetailCategory" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
+		SELECT BUSSTOPDETAILCATEGORYSEQ AS BusStopDetailCategorySeq, BUSSTOPDETAILCATEGORYNAME AS BusStopDetailCategoryName 
+			FROM BUSSTOP_DETAIL_CATEGORY
+				WHERE BUSSTOPCATEGORYSEQ = #{seq}
+	</select>
+	
+	<!-- 셔틀 정보 가져오기 -->
+	<select id="busInfo" parameterType="String" resultType="com.test.spring.dto.BusInfoDTO">
+		SELECT BI.BUSINFOSEQ AS BusInfoSeq, BI.BUSINFONAME AS BusInfoName FROM BUS_INFO BI
+			INNER JOIN BUSSTOP_CATEGORY BC
+				ON BC.BUSSTOPCATEGORYSEQ = BI.BUSSTOPCATEGORYSEQ
+					INNER JOIN BUSSTOP_DETAIL_CATEGORY BDC
+						ON BC.BUSSTOPCATEGORYSEQ = BDC.BUSSTOPCATEGORYSEQ	
+							WHERE BDC.BUSSTOPDETAILCATEGORYSEQ = #{seq}
+	</select>
+	<!-- 정류장 가져오기  -->
+	<select id="busStop" parameterType="String" resultType="com.test.spring.dto.BusStopDTO">
+		SELECT BUSSTOPSEQ AS busStopSeq, BUSSTOPORDER AS busStopOrder, BUSSTOP AS busStop, BUSSTOPLATITUDE AS busStopLatitude, BUSSTOPLONGITUDE AS busStopLongitude, BUSSTOPLINE as busStopLine FROM BUSSTOP_DETAIL_CATEGORY AS BDC
+		      INNER JOIN BUSSTOP B
+		      	ON B.BUSSTOPDETAILCATEGORYSEQ = BDC.BUSSTOPDETAILCATEGORYSEQ
+		     	 WHERE B.BUSSTOPDETAILCATEGORYSEQ = #{seq}	
+   </select>
+   
+  
+	<!-- 버스 위치 가져오기  -->
+	<select id="location" parameterType="map" resultType="com.test.spring.dto.LocationDTO">
+	  SELECT L.LOCATIONSEQ AS locationSeq, L.LOCATIONLATITUDE AS locationLatitude, L.LOCATIONLONGITUDE AS locationLongitude, L.LOCATIONTIME AS locationTime, L.DEVICESEQ AS deviceSeq FROM LOCATION L
+		INNER JOIN DEVICE D
+			ON L.DEVICESEQ = D.DEVICESEQ
+				INNER JOIN DEVICE_BUS DB
+					ON D.DEVICESEQ = DB.DEVICESEQ
+						INNER JOIN BUS_INFO BI
+							ON DB.BUSINFOSEQ = BI.BUSINFOSEQ
+								WHERE BI.BUSINFOSEQ = #{seq} AND (L.LOCATIONTIME between #{start} AND #{end})
+									ORDER BY L.LOCATIONTIME ASC
+   	</select>
+
+</mapper>

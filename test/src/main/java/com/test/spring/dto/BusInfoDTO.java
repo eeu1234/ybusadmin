@@ -1,5 +1,6 @@
 package com.test.spring.dto;
 
+
 //버스 정보 DTO
 public class BusInfoDTO {
 

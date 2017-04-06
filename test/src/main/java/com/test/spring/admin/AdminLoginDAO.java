@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.test.spring.dto.AdminDTO;
+import com.test.spring.dto.AdminUniversityDTO;
 
 @Repository
 public class AdminLoginDAO {
@@ -13,9 +14,9 @@ public class AdminLoginDAO {
 	@Autowired
 	public SqlSessionTemplate sql;
 	
-	public AdminDTO checkAdmin(AdminDTO dto){
+	public AdminUniversityDTO checkAdmin(AdminUniversityDTO adto){
 		
-		return sql.selectOne("admin.checkAdmin",dto);
+		return sql.selectOne("admin.checkAdmin",adto);
 		
 		
 	}

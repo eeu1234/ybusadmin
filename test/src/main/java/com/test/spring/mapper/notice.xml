@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+	    <!-- 공지사항 가져오는 쿼리 - 검색 있음 -->
+    <select id="notice" resultType="com.test.spring.dto.NoticeDTO" parameterType="com.test.spring.dto.SearchDTO">
+    	SELECT N.* FROM 
+(SELECT N.NOTICESEQ AS noticeSeq, N.NOTICESUBJECT AS noticeSubject, N.NOTICECONTENT AS noticeContent, 
+SUBSTR(N.NOTICEREGDATE,1,16) AS noticeRegdate, N.NOTICEREADCOUNT AS noticeReadCount, N.ADMINID AS adminID,
+A.ADMINNAME AS adminName, A.ADMINDEPARTMENT AS adminDepartment, A.ADMINLEVEL AS adminLevel, 
+A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
+	FROM NOTICE N
+		INNER JOIN ADMIN A
+			ON N.ADMINID = A.ADMINID
+				INNER JOIN UNIVERSITY U
+					ON A.UNIVERSITYSEQ = U.UNIVERSITYSEQ
+				${whereWord}
+					ORDER BY N.NOTICEREGDATE DESC) N
+						LIMIT #{start}, 10
+    </select>
+    
+    <!-- 총 계정 수 가져오는 쿼리, 검색 때문에 대학과 inner join 함 -->
+    <select id="totalAdmin" resultType="Integer" parameterType="String">
+    	SELECT count(*) FROM NOTICE N
+			INNER JOIN ADMIN A
+				ON N.ADMINID = A.ADMINID
+					INNER JOIN UNIVERSITY U
+						ON A.UNIVERSITYSEQ = U.UNIVERSITYSEQ
+	    				${whereWord}
+    </select>
+    
+    	    <!-- 공지사항 가져오는 쿼리 - 검색 있음 -->
+    <select id="noticeContent" parameterType="String" resultType="com.test.spring.dto.NoticeDTO">
+    	 
+SELECT N.NOTICESEQ AS noticeSeq, N.NOTICESUBJECT AS noticeSubject, N.NOTICECONTENT AS noticeContent, 
+N.NOTICEREGDATE AS noticeRegdate, N.NOTICEREADCOUNT AS noticeReadCount, N.ADMINID AS adminID,
+N.NOTICESTATUS AS notisStatus,
+A.ADMINNAME AS adminName, A.ADMINDEPARTMENT AS adminDepartment, A.ADMINLEVEL AS adminLevel, 
+A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
+	FROM NOTICE N
+		INNER JOIN ADMIN A
+			ON N.ADMINID = A.ADMINID
+				INNER JOIN UNIVERSITY U
+					ON A.UNIVERSITYSEQ = U.UNIVERSITYSEQ
+							WHERE N.NOTICESEQ = #{seq}
+    </select>
+    
+    <!-- 공지사항 글 삭제하는  쿼리 -->
+    <delete id="noticeDelete" parameterType="String">
+    	DELETE FROM NOTICE WHERE noticeSeq = #{seq}
+    </delete>
+    
+    <!-- 공지사항 글 추가하기  -->
+    <insert id="noticeAdd" parameterType="String">
+    	INSERT INTO NOTICE (NOTICESUBJECT,NOTICECONTENT,ADMINID) VALUES (#{subject},#{content},#{adminID})
+    </insert>
+    
+    <!-- 공지사항 글 수정하기  -->
+    <update id="noticeUpdate" parameterType="map">
+    	UPDATE NOTICE SET NOTICESUBJECT=#{subject},NOTICECONTENT=#{content},NOTICESTATUS=#{status}
+    		WHERE NOTICESEQ = #{noticeSeq}
+    </update>
+    
+    <!-- 공지사항 조회수 추가  -->
+    <update id="readCountAdd" parameterType="String">
+    	UPDATE NOTICE SET NOTICEREADCOUNT = NOTICEREADCOUNT+1 WHERE NOTICESEQ = #{seq}
+    </update>
+
+</mapper>

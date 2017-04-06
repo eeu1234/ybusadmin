@@ -8,7 +8,14 @@ public class AdminDTO {
 	private String adminDepartment;				//관리자 부서
 	private String adminLevel;					//관리자 레벨
 	private String universitySeq;				//대학교 seq
+	private String universityName;				//대학교 seq
 	
+	public String getUniversityName() {
+		return universityName;
+	}
+	public void setUniversityName(String universityName) {
+		this.universityName = universityName;
+	}
 	public String getAdminID() {
 		return adminID;
 	}
