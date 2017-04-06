@@ -8,6 +8,7 @@
 <meta charset=UTF-8">
 <title>Insert title here</title>
 <style>
+
 	#busTimeTable{
 		width: 900px;
 		margin:0px auto;
@@ -20,6 +21,7 @@
 		width: 270px;
 		float:left;
 	}
+	
 	.timeContent{
 		width: 850px;
 	}
@@ -38,6 +40,13 @@
 	
 </style>
 <script>
+
+$(document).ready(function(){
+	$("#weekDays").change(function(){
+		var weekDays = $("#weekDays").val();
+		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
+	});
+});
 
 function schedule(seq){
 	

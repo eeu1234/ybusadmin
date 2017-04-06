@@ -12,7 +12,7 @@
 	<select id="getCategoryList" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
 		SELECT BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSSTOPCATEGORY AS busStopCategory
 			FROM BUSSTOP_CATEGORY
-				WHERE UNIVERSITYSEQ = #{universitySeq}
+				WHERE UNIVERSITYSEQ = #{universitySeq} AND BUSSTOPCATEGORYSTAT = 'show'
 	</select>
 	
 	<!-- 버스스탑디테일카테고리 가져오기 -->
@@ -28,8 +28,10 @@
 			FROM BUSSCHEDULE BS
 				INNER JOIN BUSSTOP_DETAIL_CATEGORY BD
 					ON BS.BUSSTOPDETAILCATEGORYSEQ = BD.BUSSTOPDETAILCATEGORYSEQ
-						WHERE BS.BUSSTOPDETAILCATEGORYSEQ = #{busStopCategorySeq} AND WEEKDAYS = #{weekDays}
-							ORDER BY BUSTIME ASC;
+						INNER JOIN BUSSTOP_CATEGORY BC
+							ON BC.BUSSTOPCATEGORYSEQ = BD.BUSSTOPCATEGORYSEQ
+								WHERE BS.BUSSTOPDETAILCATEGORYSEQ = #{busStopCategorySeq} AND WEEKDAYS = #{weekDays} AND BC.BUSSTOPCATEGORYSTAT = 'show'
+									ORDER BY BUSTIME ASC;
 	</select>
 	
 	<!-- 버스시간표 가져오기 -->

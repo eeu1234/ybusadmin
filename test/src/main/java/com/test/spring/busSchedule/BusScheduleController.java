@@ -98,6 +98,8 @@ public class BusScheduleController {
 		request.setAttribute("slist", slist);
 		//request.setAttribute("map", map);
 		request.setAttribute("weekDays", bsdto.getWeekDays());
+		//버스 busStopCategorySeq 보내주자
+		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 		
 		
 		return "busSchedule/busTimeTable";
