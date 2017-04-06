@@ -400,10 +400,10 @@ ul,li{
 		
 		
 		 
-		var busStopCategorySeq = $(this).attr("class");
-		//alert(busStopCategorySeq);
+		var busStopCategorySeq = $(this).attr("value");
+		alert(busStopCategorySeq);
 		
-		busStopCategorySeq = busStopCategorySeq.substr(3,1);
+		
 		//alert(busStopCategorySeq);
 		location.href="http://211.63.89.34:8090/spring/getBusStopLine.action?universitySeq="+${universitySeq}+"&busStopCategorySeq="+busStopCategorySeq;
 	})
@@ -696,11 +696,13 @@ function appendCategory(){
 		iconImg.appendChild(img);
 		iconInfo.innerText = "${bscDto.busStopCategory}";
 		
+		
 		iconBox.appendChild(iconImg);
 		iconBox.appendChild(iconInfo);
 		iconBox.appendChild(text);
 	
 		$(".BSC${status.count}").append(iconBox);
+		$(".BSC${status.count}").attr("value","${bscDto.busStopCategorySeq}");
 		//$("#firstBox").append(iconBox);
 		//$(iconBox).appendTo($("#firstBox"));
 		//$("#firstBox").append("<a>test</a>");

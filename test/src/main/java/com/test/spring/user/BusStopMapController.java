@@ -101,14 +101,14 @@ public class BusStopMapController {
 	public String getBusStopLine(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq, String busStopDetailCategorySeq){
 		universitySeq = (String) session.getAttribute("universitySeq");
 		//busStopCategorySeq ="2";
-		System.out.println("getBusStopLine="+busStopCategorySeq);
+		//System.out.println("getBusStopLine="+busStopCategorySeq);
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("busStopCategorySeq", busStopCategorySeq);
 		map.put("universitySeq", universitySeq);
-		
+		System.out.println("$$$$$"+universitySeq);
 		if(busStopDetailCategorySeq==null||busStopDetailCategorySeq.equals("")){
 			busStopDetailCategorySeq = dao.getDefaultBusStopDetailCategory(map);
-			System.out.println(busStopDetailCategorySeq);
+			System.out.println("?????="+busStopDetailCategorySeq);
 		}
 		map.put("busStopDetailCategorySeq",busStopDetailCategorySeq);
 		
@@ -159,6 +159,7 @@ public class BusStopMapController {
 		UniversityDTO unidto = dao.getUniversityArea(universitySeq);
 		
 		//request.setAttribute("bsdcdto", bsdcdto);
+		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 		request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
 		request.setAttribute("bsdcList", bsdcList);
 		request.setAttribute("cblList", cblList);

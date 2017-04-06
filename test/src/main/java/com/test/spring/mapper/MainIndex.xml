@@ -6,14 +6,15 @@
 	<select id="getSpecipicBusStopDetailCategory" parameterType="map" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
 		SELECT * FROM
 			(SELECT X.* FROM
-				(SELECT B.UNIVERSITYSEQ AS universitySeq, B.BUSSTOPCATEGORYSEQ, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, A.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName FROM BUSSTOP_DETAIL_CATEGORY A 
+				(SELECT B.UNIVERSITYSEQ AS universitySeq, B.BUSSTOPCATEGORYSTAT AS busStopCategoryStat, B.BUSSTOPCATEGORYSEQ, A.BUSSTOPDETAILCATEGORYSTAT AS busStopDetailCategoryStat, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, A.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName FROM BUSSTOP_DETAIL_CATEGORY A 
 					INNER JOIN BUSSTOP_CATEGORY B ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ) X
 						INNER JOIN UNIVERSITY C ON X.universitySeq=C.UNIVERSITYSEQ) Y
-							WHERE UNIVERSITYSEQ = #{universitySeq} AND BUSSTOPCATEGORYSEQ=#{busStopCategorySeq} limit 0,3;
+							WHERE UNIVERSITYSEQ = #{universitySeq} AND BUSSTOPCATEGORYSEQ=#{busStopCategorySeq} and busStopDetailCategoryStat ='show' and busStopCategoryStat = 'show' limit 0,3;
 	</select>
 	
 	<select id="getSpecipicBusStopCategory" parameterType="map" resultType="com.test.spring.dto.BusStopCategoryDTO">
-		SELECT A.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, A.BUSSTOPCATEGORY AS busStopCategory,A.UNIVERSITYSEQ AS universitySeq FROM BUSSTOP_CATEGORY A INNER JOIN UNIVERSITY B ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ WHERE A.UNIVERSITYSEQ = #{universitySeq} limit 0,3
+		SELECT A.BUSSTOPCATEGORYSEQ AS busStopCategorySeq,A.BUSSTOPCATEGORYSTAT AS busStopCategoryStat, A.BUSSTOPCATEGORY AS busStopCategory,A.UNIVERSITYSEQ AS universitySeq FROM BUSSTOP_CATEGORY A 
+			INNER JOIN UNIVERSITY B ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ WHERE A.UNIVERSITYSEQ = #{universitySeq} and busStopCategoryStat = 'show' limit 0,3
 	</select>
 	
 	<select id="getAllNotice" resultType="com.test.spring.dto.NoticeDTO">
