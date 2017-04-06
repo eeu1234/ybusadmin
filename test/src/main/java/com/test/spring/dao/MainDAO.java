@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
+import com.test.spring.dto.NoticeDTO;
 
 @Repository
 public class MainDAO {
@@ -25,5 +26,11 @@ public class MainDAO {
 	public List<BusStopCategoryDTO> getSpecipicBusStopCategory(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
 		return sql.selectList("mainIndex.getSpecipicBusStopCategory",map);
+	}
+
+
+	public List<NoticeDTO> getAllNotice() {
+		// TODO Auto-generated method stub
+		return sql.selectList("mainIndex.getAllNotice");
 	}
 }

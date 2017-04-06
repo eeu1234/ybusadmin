@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.test.spring.dao.MainDAO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
+import com.test.spring.dto.NoticeDTO;
 import com.test.spring.dto.WeatherStatDTO;
 
 @Controller("MainController")
@@ -47,9 +48,12 @@ public class MainController {
 		map.put("universitySeq", universitySeq);
 		//이학교에 있는 노선을 메인 화면에 띄워주어야함
 		//노선목록 들고옴.
+		//공지사항목록 들고옴.
+		List<NoticeDTO> nList = dao.getAllNotice();
 		List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
 		List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
 		
+		request.setAttribute("nList", nList);
 		request.setAttribute("wsdto", wsdto);
 		request.setAttribute("bsdcList", bsdcList);
 		request.setAttribute("bscList", bscList);
