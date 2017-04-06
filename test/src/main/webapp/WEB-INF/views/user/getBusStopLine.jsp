@@ -331,6 +331,7 @@ body, html {
 	 right:0;
 	 cursor:pointer;
 	 
+	 
 }#refreshBtn{
 	position:absolute;
 	 width:auto;
@@ -359,24 +360,29 @@ body, html {
 <script>
 $(document).ready(function(){
 	$(".stopName").click(function(){
-		
-		location.href="/spring/getBusStopRoadView.action?busStopSeq="+$(this).attr("busStopSeq");
+		var busStopCategorySeq = $("#busStopCategorySeq").val();
+		location.href="/spring/getBusStopRoadView.action?busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+$(this).attr("busStopSeq");
 	});
 	
 	$("#detailLocationSel").change(function(){
 		var bsdcSeq = $(this).val();
-		location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
+		//alert($("#busStopCategorySeq").val());
+		//alert($("#busStopCategorySeq").attr("value"))
+		var busStopCategorySeq = $("#busStopCategorySeq").val();
+		location.href="/spring/getBusStopLine.action?busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 	});
 });
 
 function refresh(){
 	var bsdcSeq = $("#detailLocationSel").val();
-	location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
+	var busStopCategorySeq = $("#busStopCategorySeq").val();
+	location.href="/spring/getBusStopLine.action?busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
 
 function moveMap(){
 	var bsdcSeq = $("#detailLocationSel").val();
-	location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
+	var busStopCategorySeq = $("#busStopCategorySeq").val();
+	location.href="/spring/getBusStopLocation.action?busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
 	
 </script>
@@ -424,7 +430,7 @@ function moveMap(){
 		</div>
 		<div id="contents">
 			<div id="lineArea">
-
+				<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<c:forEach items="${bsList}" var="dto" varStatus="status">	
 					<c:choose>
 						<c:when test="${status.first}">

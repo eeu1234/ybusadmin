@@ -118,6 +118,7 @@
 	<div id="container">
 		<div id ="top">
 			<div id="header">
+			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<div id="infoPage">
 					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1%; width: 8%; height: 55%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
 					<div id="txtLogo">

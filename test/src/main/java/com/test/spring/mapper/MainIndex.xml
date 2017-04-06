@@ -19,4 +19,8 @@
 	<select id="getAllNotice" resultType="com.test.spring.dto.NoticeDTO">
 		SELECT NOTICESEQ AS noticeSeq, NOTICESUBJECT AS noticeSubject FROM NOTICE where NOTICESTATUS = 'show'
 	</select>
+	
+	<select id="getUniversitySeq" parameterType="String" resultType="String">
+		SELECT UNIVERSITYSEQ AS universitySeq FROM UNIVERSITY WHERE UNIVERSITYDOMAIN = #{urlStr}
+	</select>
 </mapper>

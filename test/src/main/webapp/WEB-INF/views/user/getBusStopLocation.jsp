@@ -369,19 +369,22 @@ body, html {
 		
 		$("#detailLocationSel").change(function(){
 			var bsdcSeq = $(this).val();
-			location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
+			var busStopCategorySeq = $("#busStopCategorySeq").val();
+			location.href="/spring/getBusStopLocation.action?busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 		});
 		
 	})
 
 	function refresh(){
 		var bsdcSeq = $("#detailLocationSel").val();
-		location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
+		var busStopCategorySeq = $("#busStopCategorySeq").val();
+		location.href="/spring/getBusStopLocation.action?busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 	}
 	
 	function back(){
 		var bsdcSeq = $("#detailLocationSel").val();
-		location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
+		var busStopCategorySeq = $("#busStopCategorySeq").val();
+		location.href="/spring/getBusStopLine.action?busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 	}
 	
 </script>
@@ -391,6 +394,7 @@ body, html {
 	<div id="container">
 		<div id="top">
 			<div id="header">
+			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<div id="infoPage">
 					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="back();" />
 					<div id="txtLogo">
@@ -402,7 +406,7 @@ body, html {
 				</div>
 			</div>
 			<div id="footer">
-					
+				
 				<select id = "detailLocationSel" class="form-Control">
 					<c:forEach items="${bsdcList}" var="bsdcDto">
 						<c:choose>

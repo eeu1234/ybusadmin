@@ -1,6 +1,7 @@
 package com.test.spring.user;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -9,6 +10,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,15 +36,43 @@ public class MainController {
 	@Autowired
 	private MainDAO dao;
 	
-	@RequestMapping(method={RequestMethod.GET}, value="/mainIndex.action")
-	public String mainIndex(HttpServletRequest request,HttpServletResponse response,HttpSession session, String universitySeq,String busStopCategorySeq){
+	@RequestMapping(method={RequestMethod.GET}, value="/index.action")
+	public void index(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
+		//System.out.println("check1");
+		StringBuffer url = request.getRequestURL();
+		String urlStr = url.toString();
+		//System.out.println("check2");
+		//System.out.println("urlurl"+urlStr);
+		//도메인에 따른 universitySeq를 가져옴
+		String universitySeq = dao.getUniversitySeq(urlStr);
+		//System.out.println("universitySeq==="+universitySeq);
 		
+		session.setAttribute("universitySeq", universitySeq);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");
+		try {
+			
+			//response.sendRedirect("/spring/mainIndex.action");
+			dispatcher.forward(request, response);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@RequestMapping(method={RequestMethod.GET}, value="/mainIndex.action")
+	public String mainIndex(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq){
+		System.out.println("mainuniversitySeq"+universitySeq);
 		
 		WeatherStatDTO wsdto = apiExplorer();
+		universitySeq = (String) session.getAttribute("universitySeq");
 		
-		
-		universitySeq = "1";
-		busStopCategorySeq ="2";
+	
+		//busStopCategorySeq ="2";
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("busStopCategorySeq", busStopCategorySeq);
@@ -57,11 +88,18 @@ public class MainController {
 		request.setAttribute("wsdto", wsdto);
 		request.setAttribute("bsdcList", bsdcList);
 		request.setAttribute("bscList", bscList);
-		request.setAttribute("universitySeq", universitySeq);
+		
 		
 		return "user/mainIndex";
 	}
 	
+	@RequestMapping(method={RequestMethod.GET},value="/user/makeIcon.action")
+	public String makeIcon(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		
+		
+		
+		return "user/makeIcon";
+	}
 	
 	double RE = 6371.00877; // 지구 반경(km)
 	double GRID = 5.0; // 격자 간격(km)
@@ -125,8 +163,8 @@ public class MainController {
 		    String day = String.valueOf(cal.get(Calendar.DATE));
 		    String hours = String.valueOf(cal.get(Calendar.HOUR));
 		    String minutes = String.valueOf(cal.get(Calendar.MINUTE));
-		    System.out.println("day =" + day);
-		    System.out.println("month = "+month);
+		    //System.out.println("day =" + day);
+		    //System.out.println("month = "+month);
 		    /*
 		     * 기상청 30분마다 발표
 		     * 30분보다 작으면, 한시간 전 hours 값
@@ -142,8 +180,8 @@ public class MainController {
 		            hours = "23";
 		        }
 		    }
-		    System.out.println("day2 =" + day);
-		    System.out.println("month2 = "+month);
+		    //System.out.println("day2 =" + day);
+		    //System.out.println("month2 = "+month);
 		    /* example
 		     * 9시 -> 09시 변경 필요
 		     */
@@ -157,8 +195,8 @@ public class MainController {
 		    if(Integer.parseInt(day) < 10) {
 		        day = '0' + day;
 		    } 
-		    System.out.println("day3 =" + day);
-		    System.out.println("month3 = "+month);
+		    //System.out.println("day3 =" + day);
+		    //System.out.println("month3 = "+month);
 		    today = year+""+month+""+day;
 		    
 		    String baseTime=hours +"00";
@@ -170,7 +208,7 @@ public class MainController {
 		    ForecastGribURL += "&Nx=" + nx + "&Ny=" + ny;
 		    ForecastGribURL += "&pageNo=1&numOfRows=7";
 		    ForecastGribURL += "&_type=json";
-		    System.out.println(ForecastGribURL);
+		    //System.out.println(ForecastGribURL);
 		    
 	        StringBuilder urlBuilder = new StringBuilder("http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib"); //URL
 		    //StringBuilder urlBuilder = new StringBuilder("http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData");
@@ -184,11 +222,11 @@ public class MainController {
 	        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("7", "UTF-8")); //파라미터설명
 	        urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); //파라미터설명
 	        URL url = new URL(urlBuilder.toString());
-	        System.out.println(url);
+	        //System.out.println(url);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Content-type", "application/json");
-	        System.out.println("Response code: " + conn.getResponseCode());
+	        //System.out.println("Response code: " + conn.getResponseCode());
 	        BufferedReader rd;
 	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -220,7 +258,7 @@ public class MainController {
             		weatherJO = (JSONObject) jsonArray.get(i);
             		String wkey = weatherJO.get("category").toString();
             		String wvalue = weatherJO.get("obsrValue").toString();
-            		System.out.println(wkey+"==="+wvalue);
+            		//System.out.println(wkey+"==="+wvalue);
             		String value ="";
             		if(wkey.equals("SKY")){
             			
@@ -265,8 +303,8 @@ public class MainController {
             }//ajax에서 날씨정보 빼오는 for문 end
           
             
-            System.out.println("getSky="+wsdto.getSky());
-            System.out.println("getTemp="+wsdto.getTemperature());
+            //System.out.println("getSky="+wsdto.getSky());
+            //System.out.println("getTemp="+wsdto.getTemperature());
             
             
             

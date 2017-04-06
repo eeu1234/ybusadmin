@@ -33,4 +33,10 @@ public class MainDAO {
 		// TODO Auto-generated method stub
 		return sql.selectList("mainIndex.getAllNotice");
 	}
+
+
+	public String getUniversitySeq(String urlStr) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("mainIndex.getUniversitySeq",urlStr);
+	}
 }

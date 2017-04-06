@@ -347,6 +347,7 @@ ul,li{
 			<div class="clear"></div>
 
 			<div id="forthBox" class="BSC4" onclick="location.href='http://localhost:8090/spring/busSchedule/busTimeTable.action';">
+																						 
 				<div class="iconBox">
             	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
                	<div class="iconInfo">시간표</div>
@@ -397,10 +398,14 @@ ul,li{
 	
 	$(".busLine").click(function(){
 		
-		<%--alert($(this).attr("class"));--%>
-		var busStopCategory = $(this).attr("class");
-		busStopCategory = busStopCategory.substr(3,1);
-		location.href="http://211.63.89.34:8090/spring/getBusStopLine.action?universitySeq="+${universitySeq}+"&busStopCategory="+busStopCategory;
+		
+		 
+		var busStopCategorySeq = $(this).attr("class");
+		//alert(busStopCategorySeq);
+		
+		busStopCategorySeq = busStopCategorySeq.substr(3,1);
+		//alert(busStopCategorySeq);
+		location.href="http://211.63.89.34:8090/spring/getBusStopLine.action?universitySeq="+${universitySeq}+"&busStopCategorySeq="+busStopCategorySeq;
 	})
 	
   var defaults, internal, methods;
