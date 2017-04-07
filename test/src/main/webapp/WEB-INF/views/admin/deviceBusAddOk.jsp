@@ -10,7 +10,7 @@
 	$().ready(function(){
 		<c:if test="${result==1}">
 			alert("등록 성공");
-			location.href="/spring/admin/busStopCategoryAdd.action"
+			location.href="/spring/admin/deviceInfoList.action"
 		</c:if>
 		<c:if test="${result==0}">
 			alert("등록 실패");

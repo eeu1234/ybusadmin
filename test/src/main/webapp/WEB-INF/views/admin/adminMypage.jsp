@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset=UTF-8">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <%@include file="/inc/asset.jsp"%>
 <style>
@@ -38,7 +38,6 @@
 	text-align:center;
 }
 </style>
-</style>
 </head>
 <body>
 	<%@include file="/inc/top.jsp"%>
@@ -63,7 +62,7 @@
 			<div id="submitBtn">
 				<input type="button" value="되돌아가기" onclick="history.back();" class="btn btn-default"/>
 				<input type="button" value="수정하기" class="btn btn-primary"
-					onclick="location.href='/spring/admin/adminUpdate.action?adminID=${adto.adminID}'" />
+					onclick="location.href='/spring/admin/adminUpdate.action?adminID=${adto.adminID}&my=my'" />
 			</div>
 		</form>
 	</div>

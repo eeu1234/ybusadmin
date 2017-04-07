@@ -169,7 +169,7 @@ public class NoticeController {
 	}
 	
 	//공지사항 내용 추가하기
-	@RequestMapping(method={RequestMethod.POST}
+	@RequestMapping(method={RequestMethod.POST, RequestMethod.GET}
 					, value="/admin/notice/noticeAddOk.action")
 	@Transactional
 	public String noticeAddOk(HttpServletRequest request, HttpSession session, HttpServletResponse response
@@ -186,7 +186,7 @@ public class NoticeController {
 	}
 	
 	//공지사항 내용 수정할 내용 가져오기
-	@RequestMapping(method={RequestMethod.POST}
+	@RequestMapping(method={RequestMethod.POST, RequestMethod.GET}
 					, value="/admin/notice/noticeUpdate.action")
 	@Transactional
 	public String noticeUpdate(HttpServletRequest request, HttpSession session, HttpServletResponse response
@@ -212,7 +212,7 @@ public class NoticeController {
 	}
 	
 	//공지사항 내용 수정하기
-	@RequestMapping(method={RequestMethod.POST}
+	@RequestMapping(method={RequestMethod.POST, RequestMethod.GET}
 					, value="/admin/notice/noticeUpdateOk.action")
 	@Transactional
 	public String noticeUpdateOk(HttpServletRequest request, HttpSession session, HttpServletResponse response
@@ -238,7 +238,6 @@ public class NoticeController {
 				,String noticeSeq){
 		
 		System.out.println(noticeSeq);
-		
 		int result = dao.noticeDelete(noticeSeq);
 		
 		request.setAttribute("result", result);

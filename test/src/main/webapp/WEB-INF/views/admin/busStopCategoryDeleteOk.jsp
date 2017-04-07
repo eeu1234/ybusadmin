@@ -9,11 +9,11 @@
 <script>
 	$().ready(function(){
 		<c:if test="${result==1}">
-			alert("등록 성공");
+			alert("삭제 성공");
 			location.href="/spring/admin/busStopCategoryAdd.action"
 		</c:if>
 		<c:if test="${result==0}">
-			alert("등록 실패");
+			alert("삭제 실패");
 			history.back();
 		</c:if>
 	});

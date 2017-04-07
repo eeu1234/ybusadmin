@@ -14,7 +14,22 @@
 	$(document).ready(function(){
 		<c:if test="${result == 1}">
 			alert("수정 완료");
-			location.href="/spring/admin/adminManage.action";
+			var my = ${my};
+			if(my == 'my'){
+				<c:when test="${adto.adminLevel=='9999'}">
+				location.href="/spring/admin/adminMain.action";
+				</c:when>
+				<c:when test="${adto.adminLevel!='9999'}">
+				location.href="/spring/polyline/polyline.action";
+				</c:when>
+			}else{
+				<c:when test="${adto.adminLevel=='9999'}">
+				location.href="/spring/admin/adminManage.action";
+				</c:when>
+				<c:when test="${adto.adminLevel!='9999'}">
+				location.href="/spring/polyline/polyline.action";
+				</c:when>
+			}
 		</c:if>
 		<c:if test="${result == 0}">
 			alert("수정 실패");

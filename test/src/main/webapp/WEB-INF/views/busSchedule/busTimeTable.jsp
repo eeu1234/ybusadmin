@@ -6,46 +6,130 @@
 <html>
 <head>
 <meta charset=UTF-8">
-<title>Insert title here</title>
+<title>운행시간표</title>
+<link rel="stylesheet" href="/spring/css/busStop.css">
 <style>
 	#busTimeTable{
-		width: 900px;
+		
+		width: 100%;
 		margin:0px auto;
+		margin-top:5%;
 	}
 	#scheduleHead{
-		width: 850px;
+		width: 100%;
 		margin:0px auto;
-	}
-	#scheduleHead div{
-		width: 270px;
-		float:left;
+		margin-top:5%;
+		text-align:center;
 	}
 	.timeContent{
-		width: 850px;
+		position:relative;
+		width: 100%;
+		margin-top:10%;
+		border-bottom:1px solid grey;
 	}
 	.totalTable{
+	 	width:100%;
+	 	height:auto;
 		margin:0px auto;
 	}
 	
 	.timeHeader{
+		position:relative;
+		width:100%;
+		background-color:#555555;
+		color:white;
 		text-align: center;
 		margin: 0px auto;
 	}
 	.timeLeft, .timeRight{
+		position:relative;
 		float:left;
-		width: 425px;
+		width:50%;
+		line-height:50px;
+		text-align: center;
 	}
-	
+	.busTime{
+		float:left;
+		width:30%;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		word-wrap: normal;
+		overflow: hidden;
+		background-color: #CECDCD;
+		border-bottom:1px solid #eee; 
+		display:inline-block;
+	}
+	.busTimeName{
+		float:left;
+		width:70%;
+		background-color:white;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		word-wrap: normal;
+		overflow: hidden;
+		border-bottom:1px solid #eee;
+		display:inline-block;
+	}
 </style>
 <script>
 $(document).ready(function(){
-	   $("#weekDays").change(function(){
-	      var weekDays = $("#weekDays").val();
-	      location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
-	   });
-	});
+   $("#weekDays").change(function(){
+      var weekDays = $("#weekDays").val();
+      location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
+   });
+
+	var now = new Date();
+	var hour = now.getHours(); // 시
+	var minute = now.getMinutes(); // 분
+
+	var sum = (Number)(hour +""+ minute +"00");
+	console.log(sum);
+
+	var time = $(".busTime");
+	var name = $(".busTimeName");
+ 	var shown = true;
+
+	var busTime = new Array(time.length);
+	var busTimeName = new Array(name.length);
+
+	var result = "";
+	var timeBoolean = true;
+	for(var k=0;k<time.length;k++){
+		busTime[k] = time.eq(k).text().replace(/:/g,"");
+		busTimeName[k] = name.eq(k).text();
+		//console.log(busTime[k] +"  "+sum);
+		if((busTime[k] - sum) >= 1 && (busTime[k] - sum) <= 500){
+			result = k;
+			console.log("result는 "+result);
+			timeBoolean = true;
+			break;
+		}else{
+			timeBoolean = false;
+		}
+	}
+	var interval;
+	if(timeBoolean){
+		interval = setInterval(toggle, 500);
+	}
+    setTimeout(function(){
+        clearInterval(interval);
+    },500000);
 	
-	
+	//현재 버스시간 깜빡이는 토글
+	function toggle(){//깜빡이는 효과
+	   if(shown) {
+		   time.eq(result).css("background-color","");
+		   name.eq(result).css("background-color","");
+	       shown = false;
+	   } else {
+		   time.eq(result).css("background-color","green");
+		   name.eq(result).css("background-color","green");
+	       shown = true;
+	   }
+	}
+});
+
+//버스 시간표 가져오는 함수
 function schedule(seq){
 	
 	var weekDays = $("#weekDays").val();
@@ -58,65 +142,95 @@ function schedule(seq){
 
 </head>
 <body>	
-   <%@include file="/inc/top.jsp"%> 
-	<!-- 사용자 화면은 학교 주소로 들어오면 곧바로 해당 학교 seq를 session으로 고정 -->
-	<h1>버스 시간표</h1>
+
+			<div id="header">
+				<div id="infoPage">
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1%; width: 8%; height: 55%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/index.action';" />
+					<div id="txtLogo">
+					
+						버스 시간표
+					
+					</div>
+				
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+				</div>
+			</div>
+<div id="container">
+
+
+
+	
+	
 	<!-- 버스 시간표 -->
 	<div id="busTimeTable">
 		<!-- 통학, 셔틀, 노랑 등 선택 -->
 		<div>
-			<select id="weekDays">
+			<select id="weekDays" class="form-control">
 				<option value="normal" <c:if test="${weekDays == 'normal'}">selected</c:if>>평일</option>
 				<option value="weekends" <c:if test="${weekDays == 'weekends'}">selected</c:if>>주말</option>
 			</select>
 		</div>
+		
+		
 		<div id="scheduleHead">
-			<c:forEach items="${clist }" var="category">
-				<div class="busStopCategory" onclick="schedule(${category.busStopCategorySeq});">${category.busStopCategory}</div>
+			<c:forEach items="${clist }" var="category" >
+				<button class="btn busStopCategory" onclick="schedule(${category.busStopCategorySeq});">${category.busStopCategory}</button>
 			</c:forEach>
 		</div>
 		<div style="clear:both;"></div>
-		<!-- 선택된 버스노선 시간표 -->
 		
+		
+               
+               
+               
+		
+		<!-- 선택된 버스노선 시간표 -->
 		<c:forEach items="${dlist}" var="dlist" varStatus="out">
 		<div class="timeContent">
 			<div class="timeHeader">
 				${dlist.busStopDetailCategoryName}  
 				<c:if test="${weekDays == 'normal' }"> 평일시간표</c:if>
 				<c:if test="${weekDays == 'weekends' }"> 주말시간표</c:if>
-			</div><!-- timeHeader -->
-			<div class="totalTable">
+			</div>
+				<!-- 시간없으면 출력하는 jstl if조건문 -->
+				<c:forEach items="${slist}" var="slist" varStatus="in">
+				<c:if test="${out.count == in.count }">
+				<c:if test="${slist.timeList.size() == 0}">
+	            	   <div style="position:absolute;width:100%;text-align:center;margin:0 auto;">시간표가 없습니다.</div>
+	               </c:if>
+				</c:if>
+				</c:forEach>
 				<div class="timeLeft">
 				<c:forEach items="${slist}" var="slist" varStatus="in">
 				<c:if test="${out.count == in.count }">
-				
-					<!-- 시간없으면 출력하는 jstl if조건문 -->
-					<c:if test="${slist.timeList.size() == 0}">
-					<div>시간표가 없습니다.</div>
-					</c:if>
 					
 					<c:forEach items="${slist.timeList}" var="dto" varStatus="stat">
 						<c:if test="${stat.index < slist.timeList.size()/2 }">
-						<div>${dto.busTime} ${dto.courseName }</div>
+						<div class="busTime">${dto.busTime}</div>
+						<div class="busTimeName">${dto.courseName }</div>
 						</c:if>
 					</c:forEach>
-				</div><!-- timeLeft -->
+					
+				</div>
+				
 				<div class="timeRight">
 					<c:forEach items="${slist.timeList}" var="dto" varStatus="stat">
 						<c:if test="${stat.index >= slist.timeList.size()/2 }">
-						<div>${dto.busTime} ${dto.courseName }</div>
+							<div class="busTime">${dto.busTime}</div>
+							<div class="busTimeName">${dto.courseName }</div>
 						</c:if>
 					</c:forEach>
 				</c:if>
 				</c:forEach>
-				</div><!-- timeRight -->
-			</div><!-- totalTable -->
+				</div>
+				
 			<div style="clear:both;"></div>
 		</div><!-- timeContent -->
-		</c:forEach><!-- dlist -->
+		</c:forEach>
 	
 	</div>
 	
 	
+	</div><!-- container -->
 </body>
 </html>

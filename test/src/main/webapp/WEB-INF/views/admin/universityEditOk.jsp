@@ -7,19 +7,22 @@
 <meta charset=UTF-8">
 <title>Insert title here</title>
 <script>
-	$().ready(function(){
-		<c:if test="${result==1}">
-			alert("등록 성공");
-			location.href="/spring/admin/busStopCategoryAdd.action"
-		</c:if>
-		<c:if test="${result==0}">
-			alert("등록 실패");
-			history.back();
-		</c:if>
-	});
+
+$().ready(function(){
+	<c:if test="${result==1}">
+		alert("등록 성공");
+		location.href="/spring/admin/universityList.action";
+	</c:if>
+	<c:if test="${result==0}">
+		alert("등록 실패");
+		history.back();
+	</c:if>
+});
+
 </script>
 </head>
 <body>
 
+	
 </body>
 </html>

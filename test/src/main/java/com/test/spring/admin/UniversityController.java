@@ -57,7 +57,7 @@ public class UniversityController {
 	
 	
 	//대학교 수정
-	@RequestMapping(method = { RequestMethod.POST }, value = "/admin/universityEditOk.action")
+	@RequestMapping(method = { RequestMethod.POST, RequestMethod.GET}, value = "/admin/universityEditOk.action")
 	public String universityEditOk(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		UniversityDTO udto = new UniversityDTO();
@@ -83,7 +83,7 @@ public class UniversityController {
 	
 	
 	//대학교 추가
-	@RequestMapping(method = { RequestMethod.POST }, value = "/admin/universityAddOk.action")
+	@RequestMapping(method = { RequestMethod.POST, RequestMethod.GET}, value = "/admin/universityAddOk.action")
 	public String universityAddOk(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		

@@ -169,13 +169,15 @@ public class AdminManageController {
 	}
 	
 	//admin 계정 수정 내용 업데이트
-	@RequestMapping(method={RequestMethod.POST}
+	@RequestMapping(method={RequestMethod.POST, RequestMethod.GET}
 		, value="/admin/adminUpdateOk.action")
 	public String adminupdateok(HttpServletRequest request,HttpSession session,HttpServletResponse response
-					,AdminDTO dto){
+					,AdminDTO dto
+					,String my){
 		
 		int result = dao.getupdate(dto);
 		
+		request.setAttribute("my", my);
 		request.setAttribute("result", result);
 		
 		return "admin/adminUpdateOk";
@@ -184,7 +186,7 @@ public class AdminManageController {
 	//admin 계정 삭제
 	@RequestMapping(method={RequestMethod.GET}
 		, value="/admin/adminDelete.action")
-	public String admindelete(HttpServletRequest request,HttpSession session,HttpServletResponse response
+	public String adminDelete(HttpServletRequest request,HttpSession session,HttpServletResponse response
 					,String adminID){
 		
 		int result = dao.admindelete(adminID);
@@ -197,7 +199,7 @@ public class AdminManageController {
 	//admin 계정 생성 시 대학 카테고리 가져오기
 	@RequestMapping(method={RequestMethod.GET}
 		, value="/admin/adminAdd.action")
-	public String adminadd(HttpServletRequest request,HttpSession session,HttpServletResponse response){
+	public String adminAdd(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
 		List<UniversityDTO> ulist = dao.universitylist();
 		
@@ -220,7 +222,7 @@ public class AdminManageController {
 	}
 	
 	//계정 생성 아이디 유효성 확인
-	@RequestMapping(method={RequestMethod.POST}
+	@RequestMapping(method={RequestMethod.POST, RequestMethod.GET}
 		, value="/admin/adminAddOk.action")
 	public String adminaddok(HttpServletRequest request,HttpSession session,HttpServletResponse response
 					,AdminDTO dto){

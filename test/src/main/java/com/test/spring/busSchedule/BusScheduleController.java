@@ -83,7 +83,7 @@ public class BusScheduleController {
 		int num = 0;
 		for(BusStopDetailCategoryDTO dto : dlist){
 			BusScheduleSearchDTO sdto = new BusScheduleSearchDTO();
-			sdto.setBusStopCategorySeq(dto.getBusStopDetailCategorySeq());//버스디테일seq
+			sdto.setBusStopDetailCategorySeq(dto.getBusStopDetailCategorySeq());//버스디테일seq
 			sdto.setWeekDays(bsdto.getWeekDays());
 			
 			slist.add(sdto);
