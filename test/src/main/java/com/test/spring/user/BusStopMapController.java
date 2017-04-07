@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.dao.BusStopMapDAO;
 import com.test.spring.dto.AroundPlaceDTO;
 import com.test.spring.dto.BusStopAvgLatLonDTO;
 import com.test.spring.dto.BusStopDTO;
@@ -39,7 +38,7 @@ public class BusStopMapController {
 	
 	@RequestMapping(method={RequestMethod.GET},value="/getAllBusStop.action")
 	public String getBusStop(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopSeq){
-		universitySeq = (String) session.getAttribute("universitySeq");
+		universitySeq = request.getParameter("universitySeq");
 		//busStopSeq="4";
 		//System.out.println(universitySeq);
 		
@@ -62,7 +61,7 @@ public class BusStopMapController {
 	public String getBusStopRoadView(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopSeq,String busStopCategorySeq){
 		
 		//busStopSeq="4";
-		universitySeq = (String) session.getAttribute("universitySeq");
+		
 		List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
 		BusStopDTO bsdto= dao.busStop(busStopSeq);
 		
@@ -81,7 +80,7 @@ public class BusStopMapController {
 	public String getBusStopMapView(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopSeq,String busStopCategorySeq){
 		
 		//busStopSeq="4";
-		universitySeq = (String) session.getAttribute("universitySeq");
+		
 		List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
 		BusStopDTO bsdto= dao.busStop(busStopSeq);
 		
@@ -98,17 +97,22 @@ public class BusStopMapController {
 	//해당 노선의 정류장 번호를 받아서 모든 정류장의 위경도 받아다가 지도에 마커 찍어줘야함.
 	//현재 해당 노선에서 운행중인 버스의 실시간 위치를 찍어줘야함.
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopLine.action")
-	public String getBusStopLine(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq, String busStopDetailCategorySeq){
-		universitySeq = (String) session.getAttribute("universitySeq");
+	public String getBusStopLine(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq, String busStopDetailCategorySeq,UniversityDTO universityDTO){
+		
 		//busStopCategorySeq ="2";
 		//System.out.println("getBusStopLine="+busStopCategorySeq);
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("busStopCategorySeq", busStopCategorySeq);
 		map.put("universitySeq", universitySeq);
-		System.out.println("$$$$$"+universitySeq);
+		
+		System.out.println("busStopCategorySeq+++"+map.get("busStopCategorySeq"));
+		System.out.println(map.get("universitySeq"));
+		System.out.println(busStopCategorySeq);
+		System.out.println(universitySeq);
+		//System.out.println("$$$$$"+universitySeq);
 		if(busStopDetailCategorySeq==null||busStopDetailCategorySeq.equals("")){
 			busStopDetailCategorySeq = dao.getDefaultBusStopDetailCategory(map);
-			System.out.println("?????="+busStopDetailCategorySeq);
+			//System.out.println("?????="+busStopDetailCategorySeq);
 		}
 		map.put("busStopDetailCategorySeq",busStopDetailCategorySeq);
 		
@@ -137,7 +141,8 @@ public class BusStopMapController {
 	//정류장들의 위,경도의 평균을 내서 지도의 중앙을 잡아줘야함	
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopLocation.action")
 	public String getBusStopLocation(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,String busStopDetailCategorySeq){
-		universitySeq = (String) session.getAttribute("universitySeq");
+		
+
 		//busStopCategorySeq ="2";
 		
 		HashMap<String,String> map = new HashMap<String,String>();

@@ -49,55 +49,12 @@
 
 <style>
 
-#container {
-	position: relative;
-	width: 100%;
-	max-width: 480px;
-	height: 568px;
-	margin: 0 auto;
 
-}
 #mapAP { 
 	height: 100%;
 	width:100%;
 }
-#top{
-	position: relative;
-	width: 100%;
-	height: 7%;
-	z-index: 3;
-}
-#header {
-	position: relative;
-	width: 100%;
-	height: 50px;
-	background-color: #003d4f;
-	text-align: center;
-	color: white;
-	background-color: #003d4f;
-}
-#infoPage {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background-color: #003d4f;
-}
-#txtLogo {
-	position: relative;
-	width: 60%;
-	height: 80%;
-	padding-top: 2.5%;
-	margin: 0 auto;
-	font-weight: bold;
-}
 
-#logo {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	width: auto;
-}
 </style>
 <script>
 	$(function() {
@@ -178,7 +135,7 @@
 					
 					</div>
 				
-					<img src="/spring/images/timeLine/header_logo.png" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
 				</div>
 			</div>
 		</div>

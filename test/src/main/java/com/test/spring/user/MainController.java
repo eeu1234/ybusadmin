@@ -24,10 +24,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.dao.MainDAO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.NoticeDTO;
+import com.test.spring.dto.UniversityDTO;
 import com.test.spring.dto.WeatherStatDTO;
 
 @Controller("MainController")
@@ -38,17 +38,28 @@ public class MainController {
 	
 	@RequestMapping(method={RequestMethod.GET}, value="/index.action")
 	public void index(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
-		//System.out.println("check1");
+		
 		StringBuffer url = request.getRequestURL();
 		String urlStr = url.toString();
-		//System.out.println("check2");
-		//System.out.println("urlurl"+urlStr);
+		UniversityDTO universityDto;
 		//도메인에 따른 universitySeq를 가져옴
-		String universitySeq = dao.getUniversitySeq(urlStr);
+		if(session.getAttribute("universityDto") == null){
+			//도메인에 따른 universitySeq를 가져옴
+			
+			universityDto = dao.getUniversitySeq(urlStr);
+			
+//			String universitySeq = universityDto.getUniversitySeq() ;
+			System.out.println("***************도영"+universityDto.getUniversitySeq());
+			 
+			session.setAttribute("universityDto", universityDto);
+	
+			
+		}
 		//System.out.println("universitySeq==="+universitySeq);
 		
-		session.setAttribute("universitySeq", universitySeq);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");
+		
 		try {
 			
 			//response.sendRedirect("/spring/mainIndex.action");
@@ -61,15 +72,17 @@ public class MainController {
 			
 			e.printStackTrace();
 		}
+		
 	}
 	
 	
 	@RequestMapping(method={RequestMethod.GET}, value="/mainIndex.action")
-	public String mainIndex(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq){
-		System.out.println("mainuniversitySeq"+universitySeq);
+	public String mainIndex(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,UniversityDTO universityDTO){
+		
 		
 		WeatherStatDTO wsdto = apiExplorer();
-		universitySeq = (String) session.getAttribute("universitySeq");
+		universityDTO = (UniversityDTO) session.getAttribute("universityDto");
+		universitySeq = universityDTO.getUniversitySeq();
 		
 	
 		//busStopCategorySeq ="2";

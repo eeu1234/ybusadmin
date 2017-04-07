@@ -10,6 +10,15 @@
 <%@include file="/inc/asset.jsp" %>
 <script src="./js/jquery.xdomainajax.js"></script>
 <style>
+@font-face {
+	font-family: "notoFont-medium";
+	src: url(/spring/css/fonts/NotoSansCJKkr-Medium.woff) format("truetype");
+}
+
+@font-face {
+	font-family: "notoFont-bold";
+	src: url(/spring/css/fonts/NotoSansCJKsc-Bold.woff) format("truetype");
+}
 /* iphone5 */
 @media screen and (max-width: 320px) {
 	#headerArea #notice_content {
@@ -47,7 +56,7 @@
 /* ipad*/
 @media screen and (min-width: 768px) and (max-width: 1023px) {
 	#headerArea #notice_content {
-		font-size: 2.0em;
+		font-size: 1.5em;
 	}
 	#weatherText {
 		font-size: 1.0em;
@@ -131,8 +140,12 @@ body, html {
 	width: 80%;
 	height: 95%;
 	color: #444;
-	
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+	overflow: hidden;
 	margin: 0 auto;
+	line-height:2;
 }
 
 #headerArea img {
@@ -392,7 +405,7 @@ ul,li{
 (function($) {
 	appendCategory();
 	
-
+	//alert(${universityDto.universitySeq});
 	
 	
 	
@@ -401,11 +414,11 @@ ul,li{
 		
 		 
 		var busStopCategorySeq = $(this).attr("value");
-		alert(busStopCategorySeq);
+		//alert(busStopCategorySeq);
 		
 		
 		//alert(busStopCategorySeq);
-		location.href="http://211.63.89.34:8090/spring/getBusStopLine.action?universitySeq="+${universitySeq}+"&busStopCategorySeq="+busStopCategorySeq;
+		location.href="/spring/getBusStopLine.action?universitySeq="+${universityDto.universitySeq}+"&busStopCategorySeq="+busStopCategorySeq;
 	})
 	
   var defaults, internal, methods;

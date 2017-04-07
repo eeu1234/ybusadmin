@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminDetailCategory">
+<!-- 	
+	<select id="busStopList" parameterType="String" resultType="com.test.spring.dto.BusStopDTO">
+		SELECT BUSSTOPSEQ AS busStopSeq, BUSSTOPORDER AS busStopOrder, BUSSTOP AS busStop, BUSSTOPLATITUDE AS busStopLatitude, BUSSTOPLONGITUDE AS busStopLongitude, BUSSTOPLINE as busStopLine FROM BUSSTOP_DETAIL_CATEGORY AS BDC
+		INNER JOIN BUSSTOP B
+		ON B.BUSSTOPDETAILCATEGORYSEQ = BDC.BUSSTOPDETAILCATEGORYSEQ
+		WHERE B.BUSSTOPDETAILCATEGORYSEQ = #{bseq}
+	</select>
+
+	
+	<update id="updateBusStop" parameterType="com.test.spring.dto.BusStopDTO">
+		UPDATE BUSSTOP SET 
+		BUSSTOP = #{busStop}, 
+		BUSSTOPLATITUDE = #{busStopLatitude}, 
+		BUSSTOPLONGITUDE = #{busStopLongitude}, 
+		BUSSTOPLINE = #{busStopLine}, 
+		BUSSTOPORDER = #{busStopOrder}, 
+		BUSSTOPDETAILCATEGORYSEQ = #{busStopDetailCategorySeq} 
+		WHERE BUSSTOPSEQ = #{busStopSeq};
+	</update>
+	
+	<insert id="addBusStop" parameterType="com.test.spring.dto.BusStopDTO">
+		insert into BUSSTOP(BUSSTOP,BUSSTOPLATITUDE,BUSSTOPLONGITUDE,BUSSTOPLINE,BUSSTOPORDER,BUSSTOPDETAILCATEGORYSEQ) VALUES(#{busStop},#{busStopLatitude},#{busStopLongitude},#{busStopLine},#{busStopOrder},#{busStopDetailCategorySeq})
+	</insert>
+	
+	<delete id="deleteBusStop" parameterType="String">
+		DELETE FROM BUSSTOP WHERE BUSSTOPSEQ = #{seq}
+	</delete>
+	
+	<update id="updateLocation" parameterType="String">
+		UPDATE LOCATION SET BUSSTOPSEQ = NULL where BUSSTOPSEQ = #{seq};
+	</update>
+	
+	대학교 가져오기
+   <select id="university" resultType="com.test.spring.dto.UniversityDTO">
+      SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName, UNIVERSITYTEL AS universityTel,          
+      UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude FROM UNIVERSITY
+   </select>
+   
+   map 가져오기
+   <select id="universityMap" parameterType="String" resultType="com.test.spring.dto.UniversityDTO">
+      SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName, UNIVERSITYTEL AS universityTel,          UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude FROM UNIVERSITY
+            WHERE UNIVERSITYSEQ = #{seq}
+   </select> -->
+
+   <!-- 셔틀 종류 가져오기 -->
+   <select id="busStopCategory" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
+      SELECT BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSSTOPCATEGORY AS busStopCategory, BUSSTOPCATEGORYSTAT AS busStopCategoryStat FROM BUSSTOP_CATEGORY BC
+         WHERE UNIVERSITYSEQ = #{universitySeq} AND BUSSTOPCATEGORYSTAT = 'show';
+   </select>
+   
+   <!-- show인 셔틀 세부 종류 가져오기 -->
+   <select id="showDetailCategoryList" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
+      SELECT BDC.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, BDC.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName, 
+	BDC.BUSSTOPDETAILCATEGORYINTERVAL AS busStopDetailCategoryInterval, BDC.BUSSTOPDETAILCATEGORYINTERVALDISTANCE AS busStopDetailCategoryIntervalDistance,
+	BDC.BUSSTOPDETAILCATEGORYSTAT AS busStopDetailCategoryStat, BC.BUSSTOPCATEGORY AS busStopCategory FROM BUSSTOP_DETAIL_CATEGORY  BDC
+	INNER JOIN BUSSTOP_CATEGORY BC
+	ON BC.BUSSTOPCATEGORYSEQ = BDC.BUSSTOPCATEGORYSEQ
+	INNER JOIN UNIVERSITY U 
+	ON U.UNIVERSITYSEQ = BC.UNIVERSITYSEQ
+	WHERE U.UNIVERSITYSEQ = #{seq} AND BUSSTOPDETAILCATEGORYSTAT = 'show';
+
+   </select>
+   
+   <!-- hide인 셔틀 세부 종류 가져오기 -->
+   <select id="hideDetailCategoryList" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
+      SELECT BDC.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, BDC.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName, 
+	BDC.BUSSTOPDETAILCATEGORYINTERVAL AS busStopDetailCategoryInterval, BDC.BUSSTOPDETAILCATEGORYINTERVALDISTANCE AS busStopDetailCategoryIntervalDistance,
+	BDC.BUSSTOPDETAILCATEGORYSTAT AS busStopDetailCategoryStat, BC.BUSSTOPCATEGORY AS busStopCategory FROM BUSSTOP_DETAIL_CATEGORY  BDC
+	INNER JOIN BUSSTOP_CATEGORY BC
+	ON BC.BUSSTOPCATEGORYSEQ = BDC.BUSSTOPCATEGORYSEQ
+	INNER JOIN UNIVERSITY U 
+	ON U.UNIVERSITYSEQ = BC.UNIVERSITYSEQ
+	WHERE U.UNIVERSITYSEQ = #{seq} AND BUSSTOPDETAILCATEGORYSTAT = 'hide';
+
+   </select>
+   
+   <!-- 세부분류 추가하기 -->
+   <insert id="addDetailCategory" parameterType="com.test.spring.dto.BusStopDetailCategoryDTO">
+      INSERT INTO BUSSTOP_DETAIL_CATEGORY(BUSSTOPDETAILCATEGORYNAME,BUSSTOPDETAILCATEGORYINTERVAL,BUSSTOPDETAILCATEGORYINTERVALDISTANCE,BUSSTOPDETAILCATEGORYSTAT,BUSSTOPCATEGORYSEQ) VALUES(#{busStopDetailCategoryName},#{busStopDetailCategoryInterval},#{busStopDetailCategoryIntervalDistance},#{busStopDetailCategoryStat},#{busStopCategorySeq}); 
+   </insert>
+   
+   <!-- 세부분류 정보가져오기 -->
+   <select id="getDetailcategory" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
+    	SELECT BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName, 
+		BUSSTOPDETAILCATEGORYINTERVAL AS busStopDetailCategoryInterval, BUSSTOPDETAILCATEGORYINTERVALDISTANCE AS busStopDetailCategoryIntervalDistance,
+		BUSSTOPDETAILCATEGORYSTAT AS busStopDetailCategoryStat, BUSSTOPCATEGORYSEQ AS busStopCategorySeq FROM BUSSTOP_DETAIL_CATEGORY WHERE BUSSTOPDETAILCATEGORYSEQ = #{seq};
+   </select>
+   
+   <!-- 세부분류 수정하기 -->
+   <update id="updateDetailCategory" parameterType="com.test.spring.dto.BusStopDetailCategoryDTO">
+   		UPDATE BUSSTOP_DETAIL_CATEGORY SET BUSSTOPCATEGORYSEQ = #{busStopCategorySeq}, BUSSTOPDETAILCATEGORYNAME = #{busStopDetailCategoryName}, BUSSTOPDETAILCATEGORYINTERVAL = #{busStopDetailCategoryInterval}, 
+		BUSSTOPDETAILCATEGORYINTERVALDISTANCE = #{busStopDetailCategoryIntervalDistance}, BUSSTOPDETAILCATEGORYSTAT = #{busStopDetailCategoryStat} WHERE BUSSTOPDETAILCATEGORYSEQ = #{busStopDetailCategorySeq};
+   </update>
+   
+   <!-- 세부분류 삭제하기 -->
+   <delete id="deleteDetailCategory" parameterType="String">
+   	 	DELETE FROM BUSSTOP_DETAIL_CATEGORY WHERE BUSSTOPDETAILCATEGORYSEQ = #{seq};
+   </delete>
+</mapper>

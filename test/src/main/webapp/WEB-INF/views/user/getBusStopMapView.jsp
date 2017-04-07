@@ -127,7 +127,7 @@
 					
 					</div>
 				
-					<img src="/spring/images/timeLine/header_logo.png" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
 				</div>
 			</div>
 		</div>
