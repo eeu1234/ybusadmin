@@ -7,13 +7,14 @@
    
    <!-- 기기고유번호로 seq 찾기 -->
    <select id ="deviceSeq" parameterType="String" resultType="String">
-      SELECT * FROM DEVICE WHERE DEVICEMODEL = #{deviceId};
+      SELECT DEVICESEQ,DEVICEMODEL,DEVICETEL,UNIVERSITYSEQ FROM DEVICE WHERE DEVICEMODEL = #{deviceId};
    </select>
    
    
    <!-- 기기고유번호로 인터벌시간 찾기 -->
-   <select id ="deviceIntervalTime" parameterType="String" resultType="String">
-      SELECT A.DEVICESEQ as deviceSeq, E.BUSSTOPDETAILCATEGORYINTERVAL as busStopDetailCategoryInterval FROM DEVICE  A 
+   <select id ="deviceInterval" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
+      SELECT A.DEVICESEQ as deviceSeq, E.BUSSTOPDETAILCATEGORYINTERVAL as busStopDetailCategoryInterval, E.BUSSTOPDETAILCATEGORYINTERVALDISTANCE as busStopDetailCategoryIntervalDistance  
+      FROM DEVICE  A 
 		INNER JOIN DEVICE_BUS B ON B.DEVICESEQ = A.DEVICESEQ
 			INNER JOIN BUS_INFO C ON B.BUSINFOSEQ = C.BUSINFOSEQ
 				INNER JOIN BUS_INTERVAL D ON C.BUSINFOSEQ = D.BUSINFOSEQ
@@ -21,13 +22,58 @@
 						WHERE A.DEVICEMODEL=#{deviceId};
    </select>
    
+   <!-- 기기 시퀀스 ID  찾기 -->
+   <select id ="findDeviceId" parameterType="String" resultType="String">
+    SELECT DEVICEMODEL AS deviceModel FROM DEVICE WHERE DEVICESEQ =#{deviceSeq};
+   </select>
 
 
+
+
+
+
+
+
+
+
+
+	<!-- 위,경도 insert -->
 	<insert id="busData" parameterType="com.test.spring.dto.LocationDTO" >
 		INSERT INTO LOCATION (LOCATIONLATITUDE,LOCATIONLONGITUDE,DEVICESEQ) VALUES (#{locationLatitude}, #{locationLongitude}, #{deviceSeq});
 	</insert>
-
 	
+	
+	<!--  최신 인서트 된 값 가져옴 -->
+	<select id ="recentData" parameterType="com.test.spring.dto.LocationDTO" resultType="com.test.spring.dto.LocationDTO">
+   	 SELECT LOCATIONLATITUDE AS locationLatitude,LOCATIONLONGITUDE AS locationLongitude ,DEVICESEQ AS deviceSeq ,LOCATIONSEQ AS locationSeq
+   	 		FROM LOCATION 
+	   	 		WHERE LOCATIONLATITUDE = #{locationLatitude} 
+	   	 			AND LOCATIONLONGITUDE = #{locationLongitude} 
+	   	 				AND DEVICESEQ = #{deviceSeq} 
+	   	 					ORDER by LOCATIONSEQ DESC LIMIT 0,1; 
+    </select>
+    
+    
+    
+    <!-- 해당기기 정류장 목록 호출 -->
+	<select id ="myBusStop" parameterType="String" resultType="com.test.spring.dto.VirtualBusStopDTO">
+      SELECT F.VIRTUALBUSSTOPSEQ as virtualBusStopSeq,F.VIRTUALBUSSTOP as virtualBusStop,F.VIRTUALBUSSTOPLATITUDE AS virtualBusStopLatitude,F.VIRTUALBUSSTOPLONGITUDE AS virtualBusStopLongitude,F.VIRTUALBUSSTOPORDER AS virtualBusStopOrder FROM DEVICE  A 
+		INNER JOIN DEVICE_BUS B ON B.DEVICESEQ = A.DEVICESEQ
+			INNER JOIN BUS_INFO C ON B.BUSINFOSEQ = C.BUSINFOSEQ
+				INNER JOIN BUS_INTERVAL D ON C.BUSINFOSEQ = D.BUSINFOSEQ
+					INNER JOIN BUSSTOP_DETAIL_CATEGORY E ON D.BUSSTOPDETAILCATEGORYSEQ = E.BUSSTOPDETAILCATEGORYSEQ
+						INNER JOIN VIRTUAL_BUSSTOP F ON E.BUSSTOPDETAILCATEGORYSEQ = F.BUSSTOPDETAILCATEGORYSEQ
+							WHERE A.DEVICEMODEL=#{deviceId}
+								ORDER BY virtualBusStopOrder ASC;
+    </select>
+    
+    
+    <!-- myBusStop 업데이트  -->
+	<update id ="updateBusStop" parameterType="com.test.spring.dto.LocationDTO">
+    UPDATE LOCATION  SET BUSSTOPSEQ=#{busStopSeq} WHERE LOCATIONSEQ=#{locationSeq};
+    
+
+    </update>
    
 </mapper>
 

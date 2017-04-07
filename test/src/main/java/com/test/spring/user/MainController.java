@@ -52,7 +52,8 @@ public class MainController {
 			System.out.println("***************도영"+universityDto.getUniversitySeq());
 			 
 			session.setAttribute("universityDto", universityDto);
-	
+			
+			request.setAttribute("universitySeq", universityDto.getUniversitySeq());
 			
 		}
 		//System.out.println("universitySeq==="+universitySeq);
@@ -82,6 +83,7 @@ public class MainController {
 		
 		WeatherStatDTO wsdto = apiExplorer();
 		universityDTO = (UniversityDTO) session.getAttribute("universityDto");
+
 		universitySeq = universityDTO.getUniversitySeq();
 		
 	

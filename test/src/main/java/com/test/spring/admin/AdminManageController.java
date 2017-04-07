@@ -27,6 +27,7 @@ public class AdminManageController {
 					, value="/admin/adminManage.action")
 	public String adminManagelist(HttpServletRequest request
 								,HttpSession session
+								,HttpServletResponse response
 								,String page
 								,SearchDTO sdto){
 		
@@ -122,7 +123,7 @@ public class AdminManageController {
 	@RequestMapping(method={RequestMethod.GET}
 		, value="/admin/adminMypage.action")
 	public String adminMypage(HttpServletRequest request,HttpSession session,HttpServletResponse response,String adminID){
-
+		
 		AdminDTO dto = dao.getadmin(adminID);
 		
 		request.setAttribute("dto", dto);

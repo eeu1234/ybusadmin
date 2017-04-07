@@ -26,7 +26,7 @@
 	
 	<!-- 버스 리스트 불러오기 -->
 	<select id = "busList" parameterType="String" resultType="com.test.spring.dto.BusInfoDTO">
-		SELECT B.BUSINFOSEQ AS busInfoSeq, B.BUSINFONUM AS busInfoNum, B.BUSINFONAME AS busInfoName, B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, A.BUSSTOPCATEGORY AS busStopCategory, A.BUSSTOPCATEGORYSTAT AS busStopCategoryStat FROM BUS_INFO B
+		SELECT B.BUSINFOSEQ AS busInfoSeq, B.BUSINFONUM AS busInfoNum, B.BUSINFONAME AS busInfoName, B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq,B.BUSINFOSTAT AS busInfoStat, A.BUSSTOPCATEGORY AS busStopCategory, A.BUSSTOPCATEGORYSTAT AS busStopCategoryStat FROM BUS_INFO B
 		INNER JOIN
 		(SELECT * FROM BUSSTOP_CATEGORY WHERE UNIVERSITYSEQ = #{seq} AND BUSSTOPCATEGORYSTAT='show') A
 			ON B.BUSSTOPCATEGORYSEQ=A.BUSSTOPCATEGORYSEQ
@@ -56,7 +56,23 @@
 				) VALUES (#{busInfoNum}, #{busInfoName})
 			</if> -->
 	</insert>
-
+	
+	<!-- 버스 삭제 -->
+	<delete id="delBus" parameterType="String">
+		DELETE FROM BUS_INFO WHERE BUSINFOSEQ =#{seq}
+	</delete>
+	
+	<!-- 버스 수정을 위한 정보 받아오기 -->
+	<select id = "editSelBus" parameterType="String" resultType="com.test.spring.dto.BusInfoDTO">
+		SELECT BUSINFOSEQ AS busInfoSeq, BUSINFONUM AS busInfoNum, BUSINFONAME AS busInfoName, BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSINFOSTAT AS busInfoStat FROM BUS_INFO WHERE BUSINFOSEQ = #{seq};
+	</select>
+	
+	<!-- 버스 수정 -->
+	<update id = "editBus" parameterType="com.test.spring.dto.BusInfoDTO">
+		UPDATE BUS_INFO SET BUSINFONUM = #{busInfoNum}, BUSINFONAME = #{busInfoName},BUSINFOSTAT = #{busInfoStat} WHERE BUSINFOSEQ =#{busInfoSeq}
+	</update>
+	
+	
 	<!-- 정류장 카테고리 추가 -->
 	<insert id="addCategory" parameterType = "java.util.HashMap">
 		INSERT INTO BUSSTOP_CATEGORY (BUSSTOPCATEGORY, UNIVERSITYSEQ) VALUES (#{busStopCategory}, ${universitySeq})

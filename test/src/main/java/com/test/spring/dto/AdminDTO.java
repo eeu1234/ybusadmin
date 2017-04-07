@@ -1,6 +1,6 @@
 package com.test.spring.dto;
 
-//관리자 정보 DTO+대학 이름 변수
+//관리자 정보 DTO
 public class AdminDTO {
 	private String adminID;						//관리자 아이디
 	private String adminPassword;				//관리자 비밀번호
@@ -8,8 +8,7 @@ public class AdminDTO {
 	private String adminDepartment;				//관리자 부서
 	private String adminLevel;					//관리자 레벨
 	private String universitySeq;				//대학교 seq
-	//관리자 내역을 위해 변수 하나 추가
-	private String universityName;
+	private String universityName;				//대학교 seq
 	
 	public String getUniversityName() {
 		return universityName;

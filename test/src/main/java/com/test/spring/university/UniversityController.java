@@ -1,0 +1,199 @@
+package com.test.spring.university;
+
+import java.io.File;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.test.spring.dto.UniversityDTO;
+
+@Controller("universityController")
+public class UniversityController {
+	
+	@Autowired
+	private UniversityDAO dao;
+	
+	//대학 관리 메인
+	@RequestMapping(method={RequestMethod.GET}, value="/university/universityCrud.action")
+	public String universityMain(HttpServletRequest request){
+		
+		return "university/universityCrud";
+	}
+	
+	
+	//대학교 리스트
+	@RequestMapping(method = { RequestMethod.GET }, value = "/university/universityList.action")
+	public String universityList(HttpServletRequest request) {
+		
+		List<UniversityDTO> ulist = dao.universityList();
+		
+		request.setAttribute("ulist", ulist);
+		
+		return "university/universityList";
+	}
+	
+	
+	
+	//대학교 수정으로 이동시 필요한 정보 가져오기
+	@RequestMapping(method = { RequestMethod.GET }, value = "/university/universityEdit.action")
+	public String universityEdit(HttpServletRequest request, String seq) {
+		
+		UniversityDTO udto = new UniversityDTO();
+		
+		udto.setUniversitySeq(seq);
+		udto = dao.universityGet(seq);
+		
+		request.setAttribute("udto", udto);
+		
+		return "university/universityEdit";
+	}
+	
+	
+	
+	//대학교 수정
+	@RequestMapping(method = { RequestMethod.POST }, value = "/university/universityEditOk.action")
+	public String universityEditOk(HttpServletRequest request) {
+		
+		UniversityDTO udto = new UniversityDTO();
+		
+		udto.setUniversitySeq(request.getParameter("universitySeq"));
+		udto.setUniversityName(request.getParameter("universityName"));
+		udto.setUniversityTel(request.getParameter("universityTel"));
+		udto.setUniversityLatitude(request.getParameter("universityLatitude"));
+		udto.setUniversityLongitude(request.getParameter("universityLongitude"));
+		udto.setUniversityDomain(request.getParameter("universityDomain"));
+
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest)request;
+		MultipartFile mfile = multi.getFile("universityImg");
+		
+		if(!mfile.isEmpty()){
+			
+			
+			String temp = getFileName(mfile.getOriginalFilename());
+			
+			
+			File file = new File ("D:\\"+temp);
+			
+			try {
+				
+				mfile.transferTo(file); //파일 업로드 실행
+				
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+			
+			udto.setUniversityImg(temp);
+			
+		}
+		
+		
+		
+		int result = dao.universityEdit(udto);
+		request.setAttribute("result", result);
+		
+		return "university/universityEditOk";
+	}
+	
+	//대학교 추가로 이동
+	@RequestMapping(method = { RequestMethod.GET }, value = "/university/universityAdd.action")
+	public String universityAdd(HttpServletRequest request) {
+
+		return "university/universityAdd";
+	}
+	
+	
+	//대학교 추가
+	@RequestMapping(method = { RequestMethod.POST }, value = "/university/universityAddOk.action")
+	public String universityAddOk(HttpServletRequest request) {
+		
+		
+		UniversityDTO udto = new UniversityDTO();
+		
+		udto.setUniversityName(request.getParameter("universityName"));
+		udto.setUniversityTel(request.getParameter("universityTel"));
+		udto.setUniversityLatitude(request.getParameter("universityLatitude"));
+		udto.setUniversityLongitude(request.getParameter("universityLongitude"));
+		udto.setUniversityDomain(request.getParameter("universityDomain"));
+		
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest)request;
+		MultipartFile mfile = multi.getFile("universityImg");
+		
+		if(!mfile.isEmpty()){
+			
+			
+			String temp = getFileName(mfile.getOriginalFilename());
+			
+			
+			File file = new File ("D:\\"+temp);
+			
+			try {
+				
+				mfile.transferTo(file); //파일 업로드 실행
+				
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+			
+			udto.setUniversityImg(temp);
+			
+		}
+		
+		
+		
+		int result = dao.universityAdd(udto);
+		
+		request.setAttribute("result", result);
+
+		
+		return "university/universityAddOk";
+	}
+	
+	private String getFileName(String filename) {
+
+		int n = 1;
+		int index = filename.lastIndexOf(".");
+		String name = filename.substring(0,index);
+		String ext = filename.substring(index);//.txt
+		
+			while(true){
+			File file = new File("D:\\"+filename);
+			
+			if(file.exists()){
+				//홍길동.txt
+				filename= name +"_" + n + ext;	//홍길동_1.txt
+				n++;
+				
+			} else {
+				
+				return file.getName();
+				
+			}
+		
+		}
+	}
+
+
+	//대학교 삭제
+	@RequestMapping(method = { RequestMethod.GET }, value = "/university/universityDel.action")
+	public String universityDel(HttpServletRequest request, String seq) {
+		
+		int result = dao.universityDel(seq);
+		
+		request.setAttribute("result", result);
+		
+		return "university/universityDeleteOk";
+	}
+	
+	
+	
+	
+	
+	
+}
