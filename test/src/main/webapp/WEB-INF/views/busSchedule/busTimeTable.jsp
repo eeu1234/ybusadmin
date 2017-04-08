@@ -73,32 +73,42 @@
 </style>
 <script>
 $(document).ready(function(){
+	
    $("#weekDays").change(function(){
       var weekDays = $("#weekDays").val();
       location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
    });
 
-	var now = new Date();
+ 	//시간 가져오는 Date()선언
+	var now = new Date();	
 	var hour = now.getHours(); // 시
 	var minute = now.getMinutes(); // 분
 
-	var sum = (Number)(hour +""+ minute +"00");
-	console.log(sum);
-
+	//현재 시각은 시간*60+분으로 계산.
+	var sum = Number(hour*60) + now.getMinutes();
+	//console.log(sum);
+	
+	//버스시간과 이름 가져오기
 	var time = $(".busTime");
 	var name = $(".busTimeName");
- 	var shown = true;
 
+	//깜빡이용 Boolean 선언
+	var shown = true;
+	
 	var busTime = new Array(time.length);
 	var busTimeName = new Array(name.length);
 
 	var result = "";
 	var timeBoolean = true;
+
 	for(var k=0;k<time.length;k++){
-		busTime[k] = time.eq(k).text().replace(/:/g,"");
+		
+		busTimeSum = time.eq(k).text().split(":");
+		console.log(busTimeSum[0]+":"+busTimeSum[1]);
+		busTime[k] = Number(60*busTimeSum[0]) + Number(busTimeSum[1]);
 		busTimeName[k] = name.eq(k).text();
-		//console.log(busTime[k] +"  "+sum);
-		if((busTime[k] - sum) >= 1 && (busTime[k] - sum) <= 500){
+		console.log(busTime[k] +"-"+sum+"="+(busTime[k] - sum));
+		if((busTime[k] - sum) >= 1 && (busTime[k] - sum) <= 5){
 			result = k;
 			console.log("result는 "+result);
 			timeBoolean = true;
@@ -113,7 +123,7 @@ $(document).ready(function(){
 	}
     setTimeout(function(){
         clearInterval(interval);
-    },500000);
+    },300000);
 	
 	//현재 버스시간 깜빡이는 토글
 	function toggle(){//깜빡이는 효과
@@ -126,7 +136,9 @@ $(document).ready(function(){
 		   name.eq(result).css("background-color","green");
 	       shown = true;
 	   }
+	   
 	}
+	
 });
 
 //버스 시간표 가져오는 함수
