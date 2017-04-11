@@ -37,12 +37,17 @@ public class AdminDAO {
 		return sql.selectOne("admin.getAdmin",adminID);
 	}
 	
-	//관리자 수정 업데이트하기
+	//관리자 수정 업데이트하기(일반 관리자)
 	public int getupdate(AdminDTO dto) {
 		
 		return sql.update("admin.adminUpdate", dto);
 	}
 	
+	//관리자 수정 업데이트하기(슈퍼 바이저)
+	public int getupdate2(AdminDTO dto) {
+		
+		return sql.update("admin.adminUpdate2", dto);
+	}
 	
 	
 	//계정 삭제하기

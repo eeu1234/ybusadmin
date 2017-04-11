@@ -47,10 +47,20 @@
     			WHERE ADMINID = #{adminID}
     </select>
     
-    <!-- 계정 정보 수정 쿼리 -->
+    <!-- 계정 정보 수정 쿼리11 -->
     <update id="adminUpdate" parameterType="com.test.spring.dto.AdminDTO">
     	UPDATE ADMIN SET
     		ADMINPASSWORD = PASSWORD(#{adminPassword}),
+    		ADMINNAME = #{adminName},
+    		ADMINDEPARTMENT = #{adminDepartment}
+    		<if test="adminLevel != null">
+    		,ADMINLEVEL = #{adminLevel}
+    		</if>
+    			WHERE ADMINID = #{adminID}
+    </update>
+    <!-- 계정 정보 수정 쿼리22 -->
+    <update id="adminUpdate2" parameterType="com.test.spring.dto.AdminDTO">
+    	UPDATE ADMIN SET
     		ADMINNAME = #{adminName},
     		ADMINDEPARTMENT = #{adminDepartment}
     		<if test="adminLevel != null">

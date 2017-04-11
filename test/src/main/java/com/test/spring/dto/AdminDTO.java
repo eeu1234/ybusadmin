@@ -10,6 +10,11 @@ public class AdminDTO {
 	private String universitySeq;				//대학교 seq
 	private String universityName;				//대학교 seq
 	
+	public AdminDTO(){
+		adminPassword = "";
+		adminID = "";
+	}
+	
 	public String getUniversityName() {
 		return universityName;
 	}

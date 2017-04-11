@@ -110,13 +110,15 @@ function updateOk(){
 
 	//일반관리자용
 	<c:if test="${dto.adminLevel != 9999}">
-	if(beforeCheck && afterCheck){
+		if(<c:if test="${adto.adminLevel != 9999}">beforeCheck && </c:if>
+			afterCheck){
 		if(confirm("수정하시겠습니까?")){
 			$("#updateForm").submit();
 		}
 	}else{
 		alert("비밀번호를 다시 확인해주세요.");
 	}
+	
 	</c:if>
 	
 	//최고 관리자용
@@ -136,16 +138,21 @@ function updateOk(){
 			<table id="tbl1" class="table table-striped">
 				<tr>
 					<th>아이디</th>
-					<td>${dto.adminID}<input type="hidden" value="${dto.adminID}"
+					<td>${dto.adminID}
+					<input type="hidden" value="${dto.adminID}"
 						name="adminID" />
+					<input type="hidden" value="${my}"
+						name="my" />
 					</td>
 				</tr>
 				<c:if test="${dto.adminLevel != 9999}">
+				<c:if test="${adto.adminLevel != 9999}">
 				<tr>
 					<th>기존 비밀번호</th>
 					<td><input type="password" value=""
 						id="beforeCheck" class="form-control" required/></td>
 				</tr>
+				</c:if>
 				<tr>
 					<th>새로운 비밀번호</th>
 					<td><input type="password" value=""
@@ -168,11 +175,14 @@ function updateOk(){
 					<td><input type="text" value="${dto.adminDepartment}"
 						class="form form-control" name="adminDepartment" required/></td>
 				</tr>
-				<c:if test="${dto.adminLevel == 9999}">
+				<c:if test="${adto.adminLevel == 9999}">
 				<tr>
 					<th>직급</th>
 					<td><input type="text" value="${dto.adminLevel}"
-						class="form form-control" name="adminLevel" required/>
+						class="form form-control" name="adminLevel" required
+							<c:if test="${dto.adminLevel == 9999}">
+							disabled
+							</c:if>/>
 						</td>
 				</tr>
 				</c:if>

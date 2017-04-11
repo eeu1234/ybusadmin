@@ -136,10 +136,12 @@ public class AdminManageController {
 	@RequestMapping(method={RequestMethod.GET}
 		, value="/admin/adminUpdate.action")
 	public String adminupdate(HttpServletRequest request,HttpSession session,HttpServletResponse response
-					,String adminID){
+					,String adminID
+					,String my){
 		
 		AdminDTO dto = dao.getadmin(adminID);
-		
+
+		request.setAttribute("my", my);
 		request.setAttribute("dto", dto);
 		
 		return "admin/adminUpdate";
@@ -175,7 +177,15 @@ public class AdminManageController {
 					,AdminDTO dto
 					,String my){
 		
-		int result = dao.getupdate(dto);
+		int result;
+		
+		if(dto.getAdminPassword() == null || dto.getAdminPassword().equals("")){ 
+			//최고관리자용
+			result = dao.getupdate2(dto);
+		}else{
+			//일반관리자용
+			result = dao.getupdate(dto);
+		}
 		
 		request.setAttribute("my", my);
 		request.setAttribute("result", result);
