@@ -36,15 +36,22 @@ public class AuthCheck {
    		+ "|| execution(String *.BusStopController.busStopOK(..))"
    		+ "|| execution(String *.PolyLineController.*(..))"  )*/
 	
+/*
+	   + "|| execution(String *.AdminManageController.adminMypage(..))"
+	   + "|| execution(String *.AdminManageController.adminUpdate(..))"
+	   + "|| execution(String *.AdminMainController.adminMain(..))"  
+	   + "|| execution(String *.AdminMainController.adminMain1(..))"*/
+	   
 	//일반관리자 - AdminLoginController는 제외할 것. 로그인창 자체를 접근못함.
    @Pointcut("execution(String *.BusStopController.*(..)) "
-		   + "|| execution(String *.AdminBusScheduleManage.*(..))"  //버스스케쥴관리
+		   + "|| execution(String *.busSchedule.AdminBusScheduleManage.*(..))"  //버스스케쥴관리
 		   + "|| execution(String *.PolyLineController.*(..))"  
-		   + "|| execution(String *.AdminMainController.*(..))"  
-		   + "|| execution(String *.AdminBusScheduleManage.*(..))"
 		   + "|| execution(String *.DeviceManageController.*(..))"
 		   + "|| execution(String *.NoticeController.*(..))"
-		   + "|| execution(String *.BusStopManageController.*(..))")
+		   + "|| execution(String *.UniversityController.*(..))"
+		   + "|| execution(String *.BusStopManageController.*(..))"
+		   + "|| execution(String *.AdminManageController.*(..))"
+		   + "|| execution(String *.BusScheduleController.*(..))")
    public void member(){}
    
    @Before("member()")
@@ -99,9 +106,12 @@ public class AuthCheck {
    
    //최고관리자
    @Pointcut("execution(String *.NoticeController.*(..)) "//공지사항
-		   + "|| execution(String *.AdminMainController.adminMain(..))"  
+		   + "|| execution(String *.AdminMainController.adminMain(..))"  //관리자메인
 		   + "|| execution(String *.AdminMainController.adminMain1(..))"
-		   + "|| execution(String *.UniversityController.*(..))")
+		   + "|| execution(String *.AdminManageController.adminManagelist(..))"
+		   + "|| execution(String *.AdminManageController.adminDelete(..))"
+		   + "|| execution(String *.AdminManageController.adminAdd(..))"
+		   + "|| execution(String *.AdminManageController.adminManage(..))")
    public void root(){}
    
    @Before("root()")
@@ -116,14 +126,14 @@ public class AuthCheck {
       HttpSession session = (HttpSession)args[1];
       HttpServletResponse response = (HttpServletResponse)args[2];
       
-      System.out.println(request);
       
       AdminUniversityDTO adto = (AdminUniversityDTO) session.getAttribute("adto");
+      System.out.println("최고관리자 인가요? : "+adto.getAdminLevel());
       
       //보조 업무 9999 아닌 얘들
       
-     if(session == null || session.getAttribute("adto") == null || !adto.getAdminLevel().equals("9999")){
-    		 
+      if(session == null || adto.getAdminLevel().isEmpty()
+    		  || !adto.getAdminLevel().equals("9999")){
          try {
             
             //인증 받지 못한 사람들..
@@ -142,5 +152,9 @@ public class AuthCheck {
       }
       
    }
+   
+   
+   
+   
 
 }
