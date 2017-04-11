@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Cambus</title>
-
+<link rel="stylesheet" href="/spring/css/busStop.css">
 
 <!-- 모바일용웹 -->
 <meta name="viewport"
@@ -40,20 +40,7 @@
 
 
 <style>
-@font-face {
-	font-family: "notoFont-medium";
-	src: url(/spring/css/fonts/NotoSansCJKkr-Medium.woff) format("truetype");
-}
 
-@font-face {
-	font-family: "notoFont-bold";
-	src: url(/spring/css/fonts/NotoSansCJKsc-Bold.woff) format("truetype");
-}
-
-body, p, div, li, ul, span, img {
-	margin: 0;
-	padding: 0;
-}
 
 img {
 	width: 60%;
@@ -331,6 +318,7 @@ body, html {
 	 right:0;
 	 cursor:pointer;
 	 
+	 
 }#refreshBtn{
 	position:absolute;
 	 width:auto;
@@ -357,26 +345,33 @@ body, html {
 </style>
 
 <script>
+var universitySeq = '${universityDto.universitySeq}';
 $(document).ready(function(){
+	
 	$(".stopName").click(function(){
-		
-		location.href="/spring/getBusStopRoadView.action?busStopSeq="+$(this).attr("busStopSeq");
+		var busStopCategorySeq = $("#busStopCategorySeq").val();
+		location.href="/spring/getBusStopRoadView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+$(this).attr("busStopSeq");
 	});
 	
 	$("#detailLocationSel").change(function(){
 		var bsdcSeq = $(this).val();
-		location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
+		//alert($("#busStopCategorySeq").val());
+		//alert($("#busStopCategorySeq").attr("value"))
+		var busStopCategorySeq = $("#busStopCategorySeq").val();
+		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 	});
 });
 
 function refresh(){
 	var bsdcSeq = $("#detailLocationSel").val();
-	location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
+	var busStopCategorySeq = $("#busStopCategorySeq").val();
+	location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
 
 function moveMap(){
 	var bsdcSeq = $("#detailLocationSel").val();
-	location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
+	var busStopCategorySeq = $("#busStopCategorySeq").val();
+	location.href="/spring/getBusStopLocation.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
 	
 </script>
@@ -386,6 +381,7 @@ function moveMap(){
 	<div id="container">
 		<div id="top">
 			<div id="header">
+			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<div id="infoPage">
 					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
 					<div id="txtLogo">
@@ -393,7 +389,7 @@ function moveMap(){
 					셔틀버스 위치조회
 					
 					</div>
-					<img src="/spring/images/timeLine/header_logo.png" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
 				</div>
 			</div>
 
@@ -424,7 +420,7 @@ function moveMap(){
 		</div>
 		<div id="contents">
 			<div id="lineArea">
-
+				
 				<c:forEach items="${bsList}" var="dto" varStatus="status">	
 					<c:choose>
 						<c:when test="${status.first}">

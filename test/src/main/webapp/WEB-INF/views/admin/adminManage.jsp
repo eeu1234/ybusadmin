@@ -43,7 +43,7 @@
 	}
 	
 	//로그인 한 level 이 9999 이면 삭제 함수 생성
-	<c:if test="${adto.adminLevel == 9999}">
+	<c:if test="${adminLevel == 9999}">
 	function adminDelete(adminID){
 		if(confirm("삭제하시겠습니까?")){
 			location.href="/spring/admin/adminDelete.action?adminID="+adminID;

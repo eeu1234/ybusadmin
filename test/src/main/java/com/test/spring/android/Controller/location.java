@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.test.spring.android.DAO.androidDAO;
-import com.test.spring.dto.BusStopDetalCategoryDTO;
+import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.LocationDTO;
 import com.test.spring.dto.VirtualBusStopDTO;
 
@@ -48,7 +48,7 @@ public class location {
 			String newUrl = "http://211.63.89.33:8090/spring/android/location.action";
 			
 			//3.버스 상세 구역 intervalTime
-			BusStopDetalCategoryDTO busDetailDto = androidDao.findDeviceInterval(deviceId);
+			BusStopDetailCategoryDTO busDetailDto = androidDao.findDeviceInterval(deviceId);
 			String intervalTime = busDetailDto.getBusStopDetailCategoryInterval();
 			String intervalDistance = busDetailDto.getBusStopDetailCategoryIntervalDistance();
 			

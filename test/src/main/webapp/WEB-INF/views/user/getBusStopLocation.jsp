@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Cambus</title>
-
+<link rel="stylesheet" href="/spring/css/busStop.css">
 
 <!-- 모바일용웹 -->
 <meta name="viewport"
@@ -25,7 +25,7 @@
 <script
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
-
+<link rel="stylesheet" href="/spring/css/busStop.css">
 
 
 <!-- ico 아이콘-->
@@ -40,21 +40,6 @@
 
 
 <style>
-@font-face {
-	font-family: "notoFont-medium";
-	src: url(/spring/css/fonts/NotoSansCJKkr-Medium.woff) format("truetype");
-}
-
-@font-face {
-	font-family: "notoFont-bold";
-	src: url(/spring/css/fonts/NotoSansCJKsc-Bold.woff) format("truetype");
-}
-
-body, p, div, li, ul, span, img {
-	margin: 0;
-	padding: 0;
-}
-
 img {
 	width: 60%;
 	height: auto;
@@ -175,10 +160,7 @@ body, html {
 }
 /* 아이폰5 */
 @media(max-width:320px) { 
- #contents{
- padding-top:65%;
- } 
-}
+	}
 /* 정류장 타임라인 틀 시작 */
 #lineArea {
 	position: relative;
@@ -369,19 +351,22 @@ body, html {
 		
 		$("#detailLocationSel").change(function(){
 			var bsdcSeq = $(this).val();
-			location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
+			var busStopCategorySeq = $("#busStopCategorySeq").val();
+			location.href="/spring/getBusStopLocation.action?universitySeq="+${universityDto.universitySeq}+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 		});
 		
 	})
 
 	function refresh(){
 		var bsdcSeq = $("#detailLocationSel").val();
-		location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
+		var busStopCategorySeq = $("#busStopCategorySeq").val();
+		location.href="/spring/getBusStopLocation.action?universitySeq="+${universityDto.universitySeq}+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 	}
 	
 	function back(){
 		var bsdcSeq = $("#detailLocationSel").val();
-		location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
+		var busStopCategorySeq = $("#busStopCategorySeq").val();
+		location.href="/spring/getBusStopLine.action?universitySeq="+${universityDto.universitySeq}+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 	}
 	
 </script>
@@ -391,6 +376,7 @@ body, html {
 	<div id="container">
 		<div id="top">
 			<div id="header">
+			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<div id="infoPage">
 					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="back();" />
 					<div id="txtLogo">
@@ -398,11 +384,11 @@ body, html {
 					셔틀버스 위치조회
 					
 					</div>
-					<img src="/spring/images/timeLine/header_logo.png" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
 				</div>
 			</div>
 			<div id="footer">
-					
+				
 				<select id = "detailLocationSel" class="form-Control">
 					<c:forEach items="${bsdcList}" var="bsdcDto">
 						<c:choose>

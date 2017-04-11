@@ -7,7 +7,8 @@ public class UniversityDTO {
    private String universityTel;      //대학교 연락처
    private String universityLatitude;   //대학교 위도
    private String universityLongitude;   //대학교 경도
-   
+   private String universityDomain;
+   private String universityImg;
    
    public String getUniversityLatitude() {
       return universityLatitude;
@@ -39,4 +40,18 @@ public class UniversityDTO {
    public void setUniversityTel(String universityTel) {
       this.universityTel = universityTel;
    }
+	public String getUniversityDomain() {
+		return universityDomain;
+	}
+	public void setUniversityDomain(String universityDomain) {
+		this.universityDomain = universityDomain;
+	}
+	public String getUniversityImg() {
+		return universityImg;
+	}
+	public void setUniversityImg(String universityImg) {
+		this.universityImg = universityImg;
+	}
+   
+   
 }

@@ -47,14 +47,13 @@ public class AdminBusScheduleManage {
 		List<BusStopDetailCategoryDTO> dlist = new ArrayList<BusStopDetailCategoryDTO>();
 		
 		BusScheduleSearchDTO Search = new BusScheduleSearchDTO();
-		
 		//만약 blist가 없으면 그냥 리턴해주자
-		if(blist.size() == 0){
-			request.setAttribute("blist", blist);
-			return "admin/adminNotBusTimeManage";
-		}else{
-			Search.setBusStopCategorySeq(blist.get(0).getBusStopCategorySeq());
-		}
+		  if(blist.size() == 0){
+		     request.setAttribute("blist", blist);
+		     return "admin/adminNotBusTimeManage";
+		  }else{
+		     Search.setBusStopCategorySeq(blist.get(0).getBusStopCategorySeq());
+		  }
 		
 		//만약 넘어온 SearchDto가 없으면 기본값을 넣어준다.
 		if(SearchDto == null || SearchDto.getBusStopDetailCategorySeq() == null || SearchDto.getBusStopDetailCategorySeq().equals("") || SearchDto.getBusStopCategorySeq() == null || SearchDto.getBusStopCategorySeq().equals("")){
@@ -123,7 +122,7 @@ public class AdminBusScheduleManage {
 	}
 	
 	//학교 노선 소분류 가져오는 ajax
-	@RequestMapping(method = { RequestMethod.POST, RequestMethod.GET}
+	@RequestMapping(method = { RequestMethod.POST, RequestMethod.GET }
 							, value = "/admin/adminGetDetailCategory.action")
 	public String adminGetDetailCategory(HttpServletRequest request
 										,HttpSession session
@@ -136,7 +135,7 @@ public class AdminBusScheduleManage {
 	}
 	
 	//노선 시간표 분류 가져오는 ajax
-	@RequestMapping(method = { RequestMethod.POST, RequestMethod.GET},
+	@RequestMapping(method = { RequestMethod.POST, RequestMethod.GET },
 							value = "/admin/adminGetBusSchedule.action")
 	public String adminGetBusSchedule(HttpServletRequest request
 									,HttpSession session

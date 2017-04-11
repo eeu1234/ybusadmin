@@ -19,12 +19,12 @@
 	<select id="getDetailCategoryDTO" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
 		SELECT BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName
 			FROM BUSSTOP_DETAIL_CATEGORY
-				WHERE BUSSTOPCATEGORYSEQ = #{busStopCategorySeq}
+				WHERE BUSSTOPCATEGORYSEQ = #{busStopCategorySeq} AND BUSSTOPDETAILCATEGORYSTAT = 'show'
 	</select>
 	
 	<!-- 버스시간표 가져오기 -->
 	<select id="getBusSchedule" parameterType="String" resultType="com.test.spring.dto.BusScheduleDTO">
-		SELECT SUBSTR(BS.BUSTIME,1,5) AS busTime, BS.COURSENAME AS courseName, BS.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq
+		SELECT SUBSTR(BS.BUSTIME,1,5) busTime, BS.COURSENAME AS courseName, BS.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq
 			FROM BUSSCHEDULE BS
 				INNER JOIN BUSSTOP_DETAIL_CATEGORY BD
 					ON BS.BUSSTOPDETAILCATEGORYSEQ = BD.BUSSTOPDETAILCATEGORYSEQ
@@ -34,14 +34,12 @@
 	
 	<!-- 버스시간표 가져오기 -->
 	<select id="getBusSchedule2" parameterType="String" resultType="com.test.spring.dto.BusScheduleDTO">
-		SELECT BS.BUSSCHEDULESEQ AS busScheduleSeq, BS.BUSTIME AS busTime, BS.COURSENAME AS courseName, BS.WEEKDAYS AS weekDays, BS.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq
+		SELECT BS.BUSTIME AS busTime, BS.COURSENAME AS courseName, BS.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq
 			FROM BUSSCHEDULE BS
 				INNER JOIN BUSSTOP_DETAIL_CATEGORY BD
 					ON BS.BUSSTOPDETAILCATEGORYSEQ = BD.BUSSTOPDETAILCATEGORYSEQ
-						INNER JOIN BUSSTOP_CATEGORY BC
-							ON BD.BUSSTOPCATEGORYSEQ = BC.BUSSTOPCATEGORYSEQ
-								WHERE BS.BUSSTOPDETAILCATEGORYSEQ = #{busStopCategorySeq} AND WEEKDAYS = #{weekDays} AND BC.BUSSTOPCATEGORYSTAT = 'show'
-									ORDER BY BUSTIME ASC;
+						WHERE BS.BUSSTOPDETAILCATEGORYSEQ = #{busStopCategorySeq} AND WEEKDAYS = #{weekDays}
+							ORDER BY BUSTIME ASC;
 	</select>
 	
 </mapper>

@@ -1,6 +1,7 @@
 package com.test.spring.user;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -9,6 +10,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,11 +24,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.admin.NoticeDAO;
-import com.test.spring.dao.MainDAO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.NoticeDTO;
+import com.test.spring.dto.UniversityDTO;
 import com.test.spring.dto.WeatherStatDTO;
 
 @Controller("MainController")
@@ -34,20 +36,58 @@ public class MainController {
 	@Autowired
 	private MainDAO dao;
 	
-	@Autowired
-	private NoticeDAO noticeDao;
-	
+	@RequestMapping(method={RequestMethod.GET}, value="/index.action")
+	public void index(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
+		
+		StringBuffer url = request.getRequestURL();
+		String urlStr = url.toString();
+		UniversityDTO universityDto;
+		//도메인에 따른 universitySeq를 가져옴
+		if(session.getAttribute("universityDto") == null){
+			//도메인에 따른 universitySeq를 가져옴
+			
+			universityDto = dao.getUniversitySeq(urlStr);
+			
+//			String universitySeq = universityDto.getUniversitySeq() ;
+			System.out.println("***************도영"+universityDto.getUniversitySeq());
+			 
+			session.setAttribute("universityDto", universityDto);
+			
+			request.setAttribute("universitySeq", universityDto.getUniversitySeq());
+			
+		}
+		//System.out.println("universitySeq==="+universitySeq);
+		
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");
+		
+		try {
+			
+			//response.sendRedirect("/spring/mainIndex.action");
+			dispatcher.forward(request, response);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	@RequestMapping(method={RequestMethod.GET}, value="/mainIndex.action")
-	public String mainIndex(HttpServletRequest request,HttpServletResponse response,HttpSession session, String universitySeq,String busStopCategorySeq){
+	public String mainIndex(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,UniversityDTO universityDTO){
 		
 		
 		WeatherStatDTO wsdto = apiExplorer();
+		universityDTO = (UniversityDTO) session.getAttribute("universityDto");
+
+		universitySeq = universityDTO.getUniversitySeq();
 		
-		
-		universitySeq = "1";
-		busStopCategorySeq ="2";
+	
+		//busStopCategorySeq ="2";
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("busStopCategorySeq", busStopCategorySeq);
@@ -63,11 +103,18 @@ public class MainController {
 		request.setAttribute("wsdto", wsdto);
 		request.setAttribute("bsdcList", bsdcList);
 		request.setAttribute("bscList", bscList);
-		request.setAttribute("universitySeq", universitySeq);
+		
 		
 		return "user/mainIndex";
 	}
 	
+	@RequestMapping(method={RequestMethod.GET},value="/user/makeIcon.action")
+	public String makeIcon(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		
+		
+		
+		return "user/makeIcon";
+	}
 	
 	double RE = 6371.00877; // 지구 반경(km)
 	double GRID = 5.0; // 격자 간격(km)
@@ -131,8 +178,8 @@ public class MainController {
 		    String day = String.valueOf(cal.get(Calendar.DATE));
 		    String hours = String.valueOf(cal.get(Calendar.HOUR));
 		    String minutes = String.valueOf(cal.get(Calendar.MINUTE));
-		    System.out.println("day =" + day);
-		    System.out.println("month = "+month);
+		    //System.out.println("day =" + day);
+		    //System.out.println("month = "+month);
 		    /*
 		     * 기상청 30분마다 발표
 		     * 30분보다 작으면, 한시간 전 hours 값
@@ -148,8 +195,8 @@ public class MainController {
 		            hours = "23";
 		        }
 		    }
-		    System.out.println("day2 =" + day);
-		    System.out.println("month2 = "+month);
+		    //System.out.println("day2 =" + day);
+		    //System.out.println("month2 = "+month);
 		    /* example
 		     * 9시 -> 09시 변경 필요
 		     */
@@ -163,8 +210,8 @@ public class MainController {
 		    if(Integer.parseInt(day) < 10) {
 		        day = '0' + day;
 		    } 
-		    System.out.println("day3 =" + day);
-		    System.out.println("month3 = "+month);
+		    //System.out.println("day3 =" + day);
+		    //System.out.println("month3 = "+month);
 		    today = year+""+month+""+day;
 		    
 		    String baseTime=hours +"00";
@@ -176,7 +223,7 @@ public class MainController {
 		    ForecastGribURL += "&Nx=" + nx + "&Ny=" + ny;
 		    ForecastGribURL += "&pageNo=1&numOfRows=7";
 		    ForecastGribURL += "&_type=json";
-		    System.out.println(ForecastGribURL);
+		    //System.out.println(ForecastGribURL);
 		    
 	        StringBuilder urlBuilder = new StringBuilder("http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib"); //URL
 		    //StringBuilder urlBuilder = new StringBuilder("http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData");
@@ -190,11 +237,11 @@ public class MainController {
 	        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("7", "UTF-8")); //파라미터설명
 	        urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); //파라미터설명
 	        URL url = new URL(urlBuilder.toString());
-	        System.out.println(url);
+	        //System.out.println(url);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Content-type", "application/json");
-	        System.out.println("Response code: " + conn.getResponseCode());
+	        //System.out.println("Response code: " + conn.getResponseCode());
 	        BufferedReader rd;
 	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -226,7 +273,7 @@ public class MainController {
             		weatherJO = (JSONObject) jsonArray.get(i);
             		String wkey = weatherJO.get("category").toString();
             		String wvalue = weatherJO.get("obsrValue").toString();
-            		System.out.println(wkey+"==="+wvalue);
+            		//System.out.println(wkey+"==="+wvalue);
             		String value ="";
             		if(wkey.equals("SKY")){
             			
@@ -271,8 +318,8 @@ public class MainController {
             }//ajax에서 날씨정보 빼오는 for문 end
           
             
-            System.out.println("getSky="+wsdto.getSky());
-            System.out.println("getTemp="+wsdto.getTemperature());
+            //System.out.println("getSky="+wsdto.getSky());
+            //System.out.println("getTemp="+wsdto.getTemperature());
             
             
             
@@ -281,47 +328,5 @@ public class MainController {
 	    }
 		return wsdto;
 	}//end apiExporler
-	
-	
-	
-	//공지사항 내용 가져옴
-		@RequestMapping(method={RequestMethod.GET}
-						, value="/admin/notice/noticeView.action")
-		public String noticeContent(HttpServletRequest request, HttpSession session, HttpServletResponse response
-					,String noticeSeq){
-			
-			System.out.println(noticeSeq);
-		
-			// 공지사항 게시글 정보 가져오기
-			NoticeDTO noticeDto = noticeDao.userNotice(noticeSeq);
-			
-
-			request.setAttribute("noticeDto", noticeDto);
-			
-			
-		   //readcount 값 바꾸기, 조회수 추가
-		   if(session.getAttribute("readcount")==null 
-		            || session.getAttribute("readcount").equals("n")){
-			   noticeDao.addReadCount(noticeSeq);
-		         session.setAttribute("readcount","y");
-		         
-		    System.out.println(session.getAttribute("readcount"));
-		      }
-			
-			
-			return "user/noticeView";
-		}
-	
-	
-	
-	
-	@RequestMapping(method={RequestMethod.GET},value="/user/makeIcon.action")
-	public String makeIcon(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-		
-		
-		
-		return "user/makeIcon";
-	}
-	
 	
 }

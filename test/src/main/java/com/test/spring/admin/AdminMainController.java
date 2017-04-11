@@ -37,7 +37,7 @@ public class AdminMainController {
 	}
 	
 	//최고관리자가 대학교를 바꿨을때 대학교 seq, 대학교명이 세션값으로 넘어감
-	@RequestMapping(method = {RequestMethod.POST},
+	@RequestMapping(method = {RequestMethod.POST, RequestMethod.GET},
 						value = "/admin/adminMain1.action")
 	public String adminMain1(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
@@ -63,7 +63,6 @@ public class AdminMainController {
 		//session.setAttribute("universitySeq", universitySeq);
 		
 		return "admin/adminMain";
-		
 	}
 	
 	//관리자 메인 화면에서 로그아웃

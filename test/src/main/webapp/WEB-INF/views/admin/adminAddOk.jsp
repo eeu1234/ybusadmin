@@ -15,7 +15,7 @@
 			location.href="/spring/admin/adminManage.action";
 		</c:if>
 		<c:if test="${result == 0}">
-			alert("계정 생성 실패");
+			alert("게정 생성 실패");
 			history.back();
 		</c:if>
 	});

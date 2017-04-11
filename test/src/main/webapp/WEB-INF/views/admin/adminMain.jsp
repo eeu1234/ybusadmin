@@ -74,7 +74,7 @@
 	<h1 class="menuTitle">관리자 학교 선택 화면</h1>
 
 	<div id="container">
-		<form method="POST" action="/spring/admin/adminMain.action">
+		<form method="POST" action="/spring/admin/adminMain1.action">
 			<div id="universitySearch">
 							<c:if test="${adto.adminLevel == '9999'}">
 								<select id="universitySel" class="form-control" name="schoolName">

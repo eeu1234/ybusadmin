@@ -8,12 +8,20 @@
 
     <!-- 대학 추가 -->
     <insert id = "uadd" parameterType="com.test.spring.dto.UniversityDTO">
-    	INSERT INTO UNIVERSITY (UNIVERSITYNAME,UNIVERSITYTEL,UNIVERSITYLATITUDE,UNIVERSITYLONGITUDE) VALUES (#{universityName},#{universityTel},#{universityLatitude},#{universityLongitude})
+    	INSERT INTO UNIVERSITY (UNIVERSITYNAME,UNIVERSITYTEL,UNIVERSITYLATITUDE,UNIVERSITYLONGITUDE,UNIVERSITYDOMAIN,UNIVERSITYIMG) VALUES (#{universityName},#{universityTel},#{universityLatitude},#{universityLongitude},#{universityDomain},#{universityImg})
     </insert>
     
     <!-- 대학 수정 -->
     <update id = "uedit" parameterType="com.test.spring.dto.UniversityDTO">
-    	UPDATE UNIVERSITY SET UNIVERSITYNAME=#{universityName}, UNIVERSITYTEL=#{universityTel},UNIVERSITYLATITUDE=#{universityLatitude}, UNIVERSITYLONGITUDE=#{universityLongitude} WHERE UNIVERSITYSEQ=#{universitySeq} 
+    	UPDATE UNIVERSITY SET UNIVERSITYNAME=#{universityName}, UNIVERSITYTEL=#{universityTel},UNIVERSITYLATITUDE=#{universityLatitude}, UNIVERSITYLONGITUDE=#{universityLongitude},UNIVERSITYDOMAIN=#{universityDomain}
+    		<if test="universityImg == null">
+				 WHERE UNIVERSITYSEQ=#{universitySeq}
+			</if>
+			
+			<if test="universityImg != null">
+				,UNIVERSITYIMG=#{universityImg} WHERE UNIVERSITYSEQ=#{universitySeq}
+			</if>
+    	
     </update>
     
     <!-- 대학 삭제 -->
@@ -23,12 +31,12 @@
     
     <!-- 대학 리스트 뽑기 -->
     <select id = "ulist" resultType="com.test.spring.dto.UniversityDTO">
-    	SELECT A.UNIVERSITYSEQ AS universitySeq, A.UNIVERSITYNAME AS universityName, A.UNIVERSITYTEL AS universityTel, A.UNIVERSITYLATITUDE AS universityLatitude, A.UNIVERSITYLONGITUDE AS universityLongitude FROM UNIVERSITY A WHERE A.UNIVERSITYSEQ != 9999 ORDER BY A.UNIVERSITYNAME ASC
+    	SELECT A.UNIVERSITYSEQ AS universitySeq, A.UNIVERSITYNAME AS universityName, A.UNIVERSITYTEL AS universityTel, A.UNIVERSITYLATITUDE AS universityLatitude, A.UNIVERSITYLONGITUDE AS universityLongitude,UNIVERSITYDOMAIN AS universityDomain, UNIVERSITYIMG AS universityImg FROM UNIVERSITY A WHERE A.UNIVERSITYSEQ != 9999 ORDER BY A.UNIVERSITYNAME ASC
     </select>
 
     <!-- 시퀀스에 해당하는 대학 가져오기 -->
    	<select id ="uget" parameterType="String" resultType="com.test.spring.dto.UniversityDTO">
-   		SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName, UNIVERSITYTEL AS universityTel, UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude FROM UNIVERSITY WHERE UNIVERSITYSEQ = #{seq}
+   		SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName, UNIVERSITYTEL AS universityTel, UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude, UNIVERSITYDOMAIN AS universityDomain, UNIVERSITYIMG AS universityImg FROM UNIVERSITY WHERE UNIVERSITYSEQ = #{seq}
    	</select> 
     
 </mapper>

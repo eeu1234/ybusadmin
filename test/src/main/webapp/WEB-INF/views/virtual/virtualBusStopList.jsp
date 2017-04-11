@@ -9,7 +9,6 @@
 				<line>${dto.virtualBusStopLine}</line>
 				<lat>${dto.virtualBusStopLatitude}</lat>
 				<lng>${dto.virtualBusStopLongitude}</lng>
-				
 			</item>
 		</c:forEach>
 </list>    

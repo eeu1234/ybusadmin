@@ -1,38 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="/inc/asset.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset=UTF-8">
-<title>공지사항</title>
-<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
+<title>Insert title here</title>
+<link rel="stylesheet" href="/spring/css/busStop.css">
 <style>
-body {
-	position: relative;
-	margin: 0 auto;
-	width: 100%;
-	height: 100%;
-	max-width: 600px;
-	 overflow: auto; 
-	 -webkit-overflow-scrolling: touch;
-}
 
-#subMenu {
-	width: 90%;
-	height: 50px;
-	margin: 0 auto;
-}
 
-#newBoardBtn {
-	width: 20%;
-}
 
-#searchBox {
-	float: right;
-	width: 50%;
-	text-align: right;
-}
+
 
 #container {
 	position: relative;
@@ -42,57 +22,22 @@ body {
 }
 
 
-.backBlue {
-	background-color: #337AB7;
-	border-color: #337AB7;
-}
-
-.backRed {
-	background-color: #D9534F;
-	border-color: #D9534F;
-}
-
-.backYellow {
-	background-color: #F0AD4E;
-	border-color: #F0AD4E;
-}
-
-.backGreen {
-	background-color: #5CB85C;
-	border-color: #5CB85C;
-}
-
-.backSkyBlue {
-	background-color: #5BC0DE;
-	border-color: #5BC0DE;
-}
-
-
-
-.blind {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	width: 100%;
-	text-align: right;
-	width: 100%;
-}
-
 #contentArea {
-
 	position: relative;
 	width: 90%;
 	height: auto;
 	min-height: 300px;
 	margin: 0 auto;
+	margin-top:10%;
 	margin-bottom: 10px;
 	background-color: white;
-	text-align:center;
+	text-align: center;
 }
-.area{
+
+.area {
 	background-color: #D5D5D5;
 	position: relative;
-	margin-bottom:20px;
+	margin-bottom: 20px;
 }
 
 .contentHeader {
@@ -101,7 +46,6 @@ body {
 	height: 35px;
 	color: white;
 	border-radius: 4px;
-	
 }
 
 .contentNum {
@@ -122,21 +66,14 @@ body {
 	padding-top: 8px;
 	margin: 0;
 	font-weight: bold;
+		text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+	overflow: hidden;
 }
 
-.shareArea {
-	float: left;
-	position: relative;
-	width: 13%;
-	height: 35px;
-}
 
-.shareBtn {
-	width: 90%;
-	height: 90%;
-	color: white;
-	border: 0px;
-}
+
 
 .content {
 	position: relative;
@@ -145,6 +82,7 @@ body {
 	min-height: 200px;
 	background-color: white;
 	padding: 8px;
+	border-bottom:2px solid silver;
 	box-shadow: 0px 7px 10px 0 silver inset;
 }
 
@@ -164,7 +102,6 @@ body {
 	font-size: 0.7em;
 	color: #888;
 }
-
 
 .showComment {
 	position: relative;
@@ -197,18 +134,27 @@ img {
 	width: 100%;
 	height: auto;
 }
-
 </style>
 <script>
-
-
-
+	
 </script>
 
 </head>
 <body>
+	<div id="header">
+		<div id="infoPage">
+			<input type="button" value="<" style=" color:white;position:
+				absolute; font-size:1.5em;left: 3%;margin-top:1%; width: 8%; height: 55%;  background-color:
+				transparent !important; border-color:
+				transparent;"	onclick="location.href='/spring/index.action';" />
+			<div id="txtLogo">공지사항</div>
 
-	<!-- 본문 글 쿼리 -->
+			<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+		</div>
+	</div>
+	<div id="container">
+
+		<!-- 본문 글 쿼리 -->
 		<div id="contentArea">
 			<div class="area">
 
@@ -222,7 +168,8 @@ img {
 					<div class="contentRegdate">${noticeDto.noticeRegdate}</div>
 					${noticeDto.noticeContent}
 				</div>
+			</div>
 		</div>
-		</div>
+	</div>
 </body>
 </html>

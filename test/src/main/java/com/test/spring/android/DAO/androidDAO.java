@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.test.spring.dto.BusStopDetalCategoryDTO;
+import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.LocationDTO;
 import com.test.spring.dto.VirtualBusStopDTO;
 
@@ -29,7 +29,7 @@ public class androidDAO {
 
 
 		//기기 intervalTime
-		public BusStopDetalCategoryDTO findDeviceInterval(String deviceId) {
+		public BusStopDetailCategoryDTO findDeviceInterval(String deviceId) {
 			return sql.selectOne("deviceInterval",deviceId);
 		}
 

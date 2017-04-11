@@ -5,7 +5,9 @@ public class DeviceDTO {
 	private String deviceSeq;			//장치 번호
 	private String deviceModel;			//장치 모델명
 	private String deviceTel;			//장치 연락처
+	
 	private String universitySeq;		//대학교 seq
+	private String busInfoName;
 	
 	public String getDeviceSeq() {
 		return deviceSeq;
@@ -30,5 +32,11 @@ public class DeviceDTO {
 	}
 	public void setUniversitySeq(String universitySeq) {
 		this.universitySeq = universitySeq;
+	}
+	public String getBusInfoName() {
+		return busInfoName;
+	}
+	public void setBusInfoName(String busInfoName) {
+		this.busInfoName = busInfoName;
 	}
 }

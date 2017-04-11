@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.dao.BusStopMapDAO;
 import com.test.spring.dto.AroundPlaceDTO;
 import com.test.spring.dto.BusStopAvgLatLonDTO;
 import com.test.spring.dto.BusStopDTO;
@@ -37,10 +37,10 @@ public class BusStopMapController {
 	//테스트용 뷰
 	
 	@RequestMapping(method={RequestMethod.GET},value="/getAllBusStop.action")
-	public String getBusStop(HttpServletRequest request, HttpServletResponse response, String universitySeq,String busStopSeq){
-		universitySeq = "1";
-		busStopSeq="4";
-		System.out.println(universitySeq);
+	public String getBusStop(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopSeq){
+		universitySeq = request.getParameter("universitySeq");
+		//busStopSeq="4";
+		//System.out.println(universitySeq);
 		
 		BusStopDTO bsdto= dao.busStop(busStopSeq);
 		
@@ -58,14 +58,14 @@ public class BusStopMapController {
 	//정류장번호 받아다가 정류장 주변 위치들 보내줌
 	//정류장번호 받아다가 정류장 위경도 보내줌
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopRoadView.action")
-	public String getBusStopRoadView(HttpServletRequest request, HttpServletResponse response, String universitySeq,String busStopSeq){
-		universitySeq = "1";
+	public String getBusStopRoadView(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopSeq,String busStopCategorySeq){
+		
 		//busStopSeq="4";
 		
 		List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
 		BusStopDTO bsdto= dao.busStop(busStopSeq);
 		
-		
+		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 		request.setAttribute("apList", apList);
 		request.setAttribute("bsdto", bsdto);
 		
@@ -77,14 +77,14 @@ public class BusStopMapController {
 	//정류장번호 받아다가 정류장 주변 위치들 보내줌
 	//정류장번호 받아다가 정류장 위경도 보내줌
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopMapView.action")
-	public String getBusStopMapView(HttpServletRequest request, HttpServletResponse response, String universitySeq,String busStopSeq){
-		universitySeq = "1";
+	public String getBusStopMapView(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopSeq,String busStopCategorySeq){
+		
 		//busStopSeq="4";
 		
 		List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
 		BusStopDTO bsdto= dao.busStop(busStopSeq);
 		
-		
+		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 		request.setAttribute("apList", apList);
 		request.setAttribute("bsdto", bsdto);
 		
@@ -97,17 +97,22 @@ public class BusStopMapController {
 	//해당 노선의 정류장 번호를 받아서 모든 정류장의 위경도 받아다가 지도에 마커 찍어줘야함.
 	//현재 해당 노선에서 운행중인 버스의 실시간 위치를 찍어줘야함.
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopLine.action")
-	public String getBusStopLine(HttpServletRequest request, HttpServletResponse response, String universitySeq,String busStopCategorySeq, String busStopDetailCategorySeq){
-		universitySeq = "1";
-		busStopCategorySeq ="2";
+	public String getBusStopLine(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq, String busStopDetailCategorySeq,UniversityDTO universityDTO){
 		
+		//busStopCategorySeq ="2";
+		//System.out.println("getBusStopLine="+busStopCategorySeq);
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("busStopCategorySeq", busStopCategorySeq);
 		map.put("universitySeq", universitySeq);
 		
+		System.out.println("busStopCategorySeq+++"+map.get("busStopCategorySeq"));
+		System.out.println(map.get("universitySeq"));
+		System.out.println(busStopCategorySeq);
+		System.out.println(universitySeq);
+		//System.out.println("$$$$$"+universitySeq);
 		if(busStopDetailCategorySeq==null||busStopDetailCategorySeq.equals("")){
 			busStopDetailCategorySeq = dao.getDefaultBusStopDetailCategory(map);
-			System.out.println(busStopDetailCategorySeq);
+			//System.out.println("?????="+busStopDetailCategorySeq);
 		}
 		map.put("busStopDetailCategorySeq",busStopDetailCategorySeq);
 		
@@ -117,7 +122,7 @@ public class BusStopMapController {
 		List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
 		UniversityDTO unidto = dao.getUniversityArea(universitySeq);
 		
-		
+		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 		request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
 		request.setAttribute("bsdcList", bsdcList);
 		request.setAttribute("cblList", cblList);
@@ -135,9 +140,10 @@ public class BusStopMapController {
 	//현재 해당 노선에서 운행중인 버스의 실시간 위치를 찍어줘야함.
 	//정류장들의 위,경도의 평균을 내서 지도의 중앙을 잡아줘야함	
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopLocation.action")
-	public String getBusStopLocation(HttpServletRequest request, HttpServletResponse response, String universitySeq,String busStopCategorySeq,String busStopDetailCategorySeq){
-		universitySeq = "1";
-		busStopCategorySeq ="2";
+	public String getBusStopLocation(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,String busStopDetailCategorySeq){
+		
+
+		//busStopCategorySeq ="2";
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("busStopCategorySeq", busStopCategorySeq);
@@ -158,6 +164,7 @@ public class BusStopMapController {
 		UniversityDTO unidto = dao.getUniversityArea(universitySeq);
 		
 		//request.setAttribute("bsdcdto", bsdcdto);
+		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 		request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
 		request.setAttribute("bsdcList", bsdcList);
 		request.setAttribute("cblList", cblList);

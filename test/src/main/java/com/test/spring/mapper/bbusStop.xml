@@ -50,12 +50,12 @@
    <!-- 셔틀 종류 가져오기 -->
    <select id="busStopCategory" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
       SELECT BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSSTOPCATEGORY AS busStopCategory FROM BUSSTOP_CATEGORY
-         WHERE UNIVERSITYSEQ = #{seq}
+         WHERE UNIVERSITYSEQ = #{seq} AND BUSSTOPCATEGORYSTAT = 'show';
    </select>
    
    <!-- 셔틀 세부 종류 가져오기 -->
    <select id="busStopDetailCategory" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
-      SELECT BUSSTOPDETAILCATEGORYSEQ AS BusStopDetailCategorySeq, BUSSTOPDETAILCATEGORYNAME AS BusStopDetailCategoryName          FROM BUSSTOP_DETAIL_CATEGORY
-            WHERE BUSSTOPCATEGORYSEQ = #{seq}
+      SELECT BUSSTOPDETAILCATEGORYNAME AS BusStopDetailCategoryName, BUSSTOPDETAILCATEGORYSEQ AS BusStopDetailCategorySeq          FROM BUSSTOP_DETAIL_CATEGORY
+            WHERE BUSSTOPCATEGORYSEQ = #{seq} AND BUSSTOPDETAILCATEGORYSTAT = 'show';
    </select>
 </mapper>

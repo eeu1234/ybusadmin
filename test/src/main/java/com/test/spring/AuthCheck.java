@@ -36,22 +36,15 @@ public class AuthCheck {
    		+ "|| execution(String *.BusStopController.busStopOK(..))"
    		+ "|| execution(String *.PolyLineController.*(..))"  )*/
 	
-/*
-	   + "|| execution(String *.AdminManageController.adminMypage(..))"
-	   + "|| execution(String *.AdminManageController.adminUpdate(..))"
-	   + "|| execution(String *.AdminMainController.adminMain(..))"  
-	   + "|| execution(String *.AdminMainController.adminMain1(..))"*/
-	   
 	//일반관리자 - AdminLoginController는 제외할 것. 로그인창 자체를 접근못함.
    @Pointcut("execution(String *.BusStopController.*(..)) "
 		   + "|| execution(String *.AdminBusScheduleManage.*(..))"  //버스스케쥴관리
 		   + "|| execution(String *.PolyLineController.*(..))"  
+		   + "|| execution(String *.AdminMainController.*(..))"  
 		   + "|| execution(String *.AdminBusScheduleManage.*(..))"
 		   + "|| execution(String *.DeviceManageController.*(..))"
 		   + "|| execution(String *.NoticeController.*(..))"
-		   + "|| execution(String *.UniversityController.*(..))"
-		   + "|| execution(String *.BusStopManageController.*(..))"
-		   + "|| execution(String *.AdminManageController.*(..))")
+		   + "|| execution(String *.BusStopManageController.*(..))")
    public void member(){}
    
    @Before("member()")
@@ -106,12 +99,9 @@ public class AuthCheck {
    
    //최고관리자
    @Pointcut("execution(String *.NoticeController.*(..)) "//공지사항
-		   + "|| execution(String *.AdminMainController.adminMain(..))"  //관리자메인
+		   + "|| execution(String *.AdminMainController.adminMain(..))"  
 		   + "|| execution(String *.AdminMainController.adminMain1(..))"
-		   + "|| execution(String *.AdminManageController.adminManagelist(..))"
-		   + "|| execution(String *.AdminManageController.adminDelete(..))"
-		   + "|| execution(String *.AdminManageController.adminAdd(..))"
-		   + "|| execution(String *.AdminManageController.adminManage(..))")
+		   + "|| execution(String *.UniversityController.*(..))")
    public void root(){}
    
    @Before("root()")
@@ -152,9 +142,5 @@ public class AuthCheck {
       }
       
    }
-   
-   
-   
-   
 
 }
