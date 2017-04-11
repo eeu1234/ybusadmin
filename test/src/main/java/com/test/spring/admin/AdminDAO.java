@@ -69,18 +69,20 @@ public class AdminDAO {
 		return sql.insert("admin.adminAdd", dto);
 	}
 	
-	//
-	public List<UniversityDTO> list() {
-		
-		return sql.selectList("polyline.university");
-	}
-	
 	//계정 수정 시 기존비밀번호 확인하는 쿼리
 	public int checkBeforePw(AdminUniversityDTO checkDto) {
 		
 		return sql.selectOne("admin.checkPw", checkDto);
 	}
 	
+	//===========================================================
+	//	AdminMainController
+	//===========================================================
+	//최고관리자 대학 선택화면
+	public List<UniversityDTO> list() {
+		
+		return sql.selectList("polyline.university");
+	}
 	
 	
 }
