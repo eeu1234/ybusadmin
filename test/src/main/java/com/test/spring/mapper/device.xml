@@ -69,7 +69,7 @@
 	
 	<!-- 미연결 상태인 디바이스 정보 -->
 	<select id = "deviceInfoNullList" parameterType="String" resultType = "com.test.spring.dto.DeviceDTO">
-	SELECT A.DEVICESEQ AS deviceSeq, A.DEVICEMODEL AS deviceModel, A.DEVICETEL AS deviceTel, A.UNIVERSITYSEQ AS universitySeq FROM DEVICE_BUS B
+<!-- 	SELECT A.DEVICESEQ AS deviceSeq, A.DEVICEMODEL AS deviceModel, A.DEVICETEL AS deviceTel, A.UNIVERSITYSEQ AS universitySeq FROM DEVICE_BUS B
 	RIGHT OUTER JOIN
 	(SELECT DEVICESEQ , DEVICEMODEL, DEVICETEL, UNIVERSITYSEQ FROM DEVICE WHERE UNIVERSITYSEQ =#{seq}) A
 		ON B.DEVICESEQ = A.DEVICESEQ 
@@ -80,12 +80,18 @@
 				ON D.DEVICESEQ = C.DEVICESEQ
 					WHERE D.DEVICEBUSSTAT='show') CD
 			ON B.DEVICEBUSSEQ = CD.DEVICEBUSSEQ
-				WHERE CD.DEVICESEQ IS NULL;
+				WHERE CD.DEVICESEQ IS NULL; -->
+				
+		SELECT A.DEVICESEQ AS deviceSeq, A.DEVICEMODEL AS deviceModel, A.DEVICETEL AS deviceTel, A.UNIVERSITYSEQ AS universitySeq FROM DEVICE A
+		LEFT JOIN
+		DEVICE_BUS B
+		   ON A.DEVICESEQ = B.DEVICESEQ 
+		      WHERE UNIVERSITYSEQ=#{seq} AND B.DEVICEBUSSTAT IS NULL;
 	</select>
 	
 	
 	
-	
+	 
 	<!-- 
 	<update id = "busStopCategoryAdd" parameterType="java.util.HashMap">
 		UPDATE BUS_INFO SET BUSSTOPCATEGORYSEQ = #{category}, BUSSTOPDETAILCATEGORY=#{dcategory} WHERE BUSINFOSEQ = #{seq}    
