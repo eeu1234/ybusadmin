@@ -16,14 +16,17 @@
    
     -->
    
+   	<!-- 빈 디바이스 리스트 가져오기 -->
 	<select id = "nullList" resultType="com.test.spring.dto.DeviceDTO">
 		SELECT DEVICESEQ AS deviceSeq, DEVICEMODEL AS deviceModel, DEVICETEL AS deviceTel, UNIVERSITYSEQ AS universitySeq FROM DEVICE WHERE UNIVERSITYSEQ IS NULL
 	</select>
 
+	<!-- 학교 디바이스에 추가 -->
 	<update id="addUniversity" parameterType="java.util.HashMap">
 		UPDATE DEVICE SET UNIVERSITYSEQ = (SELECT UNIVERSITYSEQ FROM UNIVERSITY WHERE UNIVERSITYNAME = #{universityName}) WHERE DEVICESEQ = #{seq}
 	</update>
 	
+	<!-- 
 	<select id="deviceBusList" parameterType ="String" resultType="com.test.spring.dto.DeviceBusInfoDTO">
 		SELECT ABC.BUSINFOSEQ AS busInfoSeq, ABC.BUSINFONUM AS busInfoNum, ABC.BUSINFONAME AS busInfoName,ABC.DEVICEMODEL AS deviceModel, ABC.DEVICETEL AS deviceTel, ABC.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, D.BUSSTOPCATEGORY AS busStopCategory FROM BUSSTOP_CATEGORY D
 		RIGHT OUTER JOIN
@@ -37,7 +40,9 @@
 		ON ABC.BUSSTOPCATEGORYSEQ = D.BUSSTOPCATEGORYSEQ
 			ORDER BY ABC.BUSINFOSEQ;
 	</select>
+	-->
 	
+	<!-- 해당 대학 버스 정류장 카테고리 리스트 가져오기 -->
 	<select id = "busStopCategoryList" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
 		SELECT BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSSTOPCATEGORY AS busStopCategory, UNIVERSITYSEQ AS universitySeq FROM BUSSTOP_CATEGORY WHERE UNIVERSITYSEQ = #{seq}
 	</select>
@@ -46,31 +51,88 @@
 		SELECT BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName FROM BUSSTOP_DETAIL_CATEGORY WHERE BUSSTOPCATEGORYSEQ = #{seq}
 	</select>
 	
+	
+	<!-- 연결된 디바이스 최신 정보 -->
+	<select id = "deviceInfoList" parameterType="String" resultType = "com.test.spring.dto.DeviceDTO">
+	SELECT AB.DEVICESEQ AS deviceSeq, AB.DEVICEMODEL AS deviceModel, AB.DEVICETEL AS deviceTel, AB.UNIVERSITYSEQ AS universitySeq, AB.DEVICEBUSSTAT AS deviceBusStat, C.BUSINFONAME AS busInfoName FROM BUS_INFO C
+	RIGHT OUTER JOIN
+	(SELECT A.DEVICESEQ, A.DEVICEMODEL, A.DEVICETEL, A.UNIVERSITYSEQ, B.BUSINFOSEQ, B.DEVICEBUSSTAT FROM DEVICE_BUS B
+		RIGHT OUTER JOIN
+		(SELECT DEVICESEQ , DEVICEMODEL, DEVICETEL, UNIVERSITYSEQ FROM DEVICE WHERE UNIVERSITYSEQ =#{seq}) A
+			ON B.DEVICESEQ = A.DEVICESEQ) AB
+		ON AB.BUSINFOSEQ = C.BUSINFOSEQ
+			WHERE AB.DEVICEBUSSTAT = 'show'
+	</select>
+	
+	
+	
+	
+	<!-- 미연결 상태인 디바이스 정보 -->
+	<select id = "deviceInfoNullList" parameterType="String" resultType = "com.test.spring.dto.DeviceDTO">
+<!-- 	SELECT A.DEVICESEQ AS deviceSeq, A.DEVICEMODEL AS deviceModel, A.DEVICETEL AS deviceTel, A.UNIVERSITYSEQ AS universitySeq FROM DEVICE_BUS B
+	RIGHT OUTER JOIN
+	(SELECT DEVICESEQ , DEVICEMODEL, DEVICETEL, UNIVERSITYSEQ FROM DEVICE WHERE UNIVERSITYSEQ =#{seq}) A
+		ON B.DEVICESEQ = A.DEVICESEQ 
+		LEFT JOIN
+		(SELECT C.DEVICESEQ, C.DEVICEMODEL, C.DEVICETEL, C.UNIVERSITYSEQ, D.BUSINFOSEQ, D.DEVICEBUSSEQ,D.DEVICEBUSSTAT FROM DEVICE_BUS D
+			RIGHT OUTER JOIN
+			(SELECT DEVICESEQ , DEVICEMODEL, DEVICETEL, UNIVERSITYSEQ FROM DEVICE WHERE UNIVERSITYSEQ =#{seq}) C
+				ON D.DEVICESEQ = C.DEVICESEQ
+					WHERE D.DEVICEBUSSTAT='show') CD
+			ON B.DEVICEBUSSEQ = CD.DEVICEBUSSEQ
+				WHERE CD.DEVICESEQ IS NULL; -->
+				
+		SELECT A.DEVICESEQ AS deviceSeq, A.DEVICEMODEL AS deviceModel, A.DEVICETEL AS deviceTel, A.UNIVERSITYSEQ AS universitySeq FROM DEVICE A
+		LEFT JOIN
+		DEVICE_BUS B
+		   ON A.DEVICESEQ = B.DEVICESEQ 
+		      WHERE UNIVERSITYSEQ=#{seq} AND B.DEVICEBUSSTAT IS NULL;
+	</select>
+	
+	
+	
+	 
 	<!-- 
 	<update id = "busStopCategoryAdd" parameterType="java.util.HashMap">
 		UPDATE BUS_INFO SET BUSSTOPCATEGORYSEQ = #{category}, BUSSTOPDETAILCATEGORY=#{dcategory} WHERE BUSINFOSEQ = #{seq}    
 	</update>
 	-->
 	
+	<!-- 버스 정류장 카테고리 추가하기 -->
 	<update id = "busStopCategoryAdd" parameterType="java.util.HashMap">
 		UPDATE BUS_INFO SET BUSSTOPCATEGORYSEQ = #{category} WHERE BUSINFOSEQ = #{seq}    
 	</update>
 	
-	
+	<!-- 디바이스 정보 받아오기 -->
+	<!--
 	<select id = "deviceInfoList" parameterType="String" resultType = "com.test.spring.dto.DeviceDTO">
-		SELECT DEVICESEQ AS deviceSeq, DEVICEMODEL AS deviceModel, DEVICETEL AS deviceTel, UNIVERSITYSEQ AS universitySeq FROM DEVICE WHERE UNIVERSITYSEQ =#{seq}
+		SELECT AB.DEVICESEQ AS deviceSeq, AB.DEVICEMODEL AS deviceModel, AB.DEVICETEL AS deviceTel, AB.UNIVERSITYSEQ AS universitySeq, C.BUSINFONAME AS busInfoName FROM BUS_INFO C
+		RIGHT OUTER JOIN
+		(SELECT A.DEVICESEQ, A.DEVICEMODEL, A.DEVICETEL, A.UNIVERSITYSEQ, B.BUSINFOSEQ FROM DEVICE_BUS B
+			RIGHT OUTER JOIN
+			(SELECT DEVICESEQ , DEVICEMODEL, DEVICETEL, UNIVERSITYSEQ FROM DEVICE WHERE UNIVERSITYSEQ =#{seq}) A
+				ON B.DEVICESEQ = A.DEVICESEQ) AB
+			ON AB.BUSINFOSEQ = C.BUSINFOSEQ;
 	</select>
+	-->
 	
 	
+	
+	<!-- 가능한 버스 리스트 받아오기 -->
 	<select id = "busInfoList" resultType="com.test.spring.dto.BusInfoDTO">
-		SELECT BUSINFOSEQ AS busInfoSeq, BUSINFONUM AS busInfoNum, BUSINFONAME AS busInfoName, BUSSTOPCATEGORYSEQ AS busStopCategorySeq FROM BUS_INFO
+		SELECT B.BUSINFOSEQ AS busInfoSeq, B.BUSINFONUM AS busInfoNum, B.BUSINFONAME AS busInfoName, B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq FROM BUS_INFO B
+		INNER JOIN
+		(SELECT * FROM BUSSTOP_CATEGORY WHERE BUSSTOPCATEGORYSTAT='show') A
+			ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ
+				WHERE BUSINFOSTAT = 'show'
 	</select>
 	
+	<!-- 선택한 버스의 카테고리 -->
 	<select id = "selBusInfo" parameterType="String" resultType="com.test.spring.dto.BusInfoDTO">
 		SELECT A.BUSINFOSEQ AS busInfoSeq, A.BUSINFONUM AS busInfoNum,A.BUSINFONAME AS busInfoName, B.BUSSTOPCATEGORY AS busStopCategory FROM BUSSTOP_CATEGORY B
-INNER JOIN
-(SELECT BUSINFOSEQ, BUSINFONUM , BUSINFONAME, BUSSTOPCATEGORYSEQ FROM BUS_INFO WHERE BUSINFOSEQ=#{seq}) A
-ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ
+		INNER JOIN
+		(SELECT BUSINFOSEQ, BUSINFONUM , BUSINFONAME, BUSSTOPCATEGORYSEQ FROM BUS_INFO WHERE BUSINFOSEQ=#{seq}) A
+			ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ
 	</select>
 	
 	
@@ -80,9 +142,15 @@ ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ
 		INSERT INTO DEVICE_BUS (DEVICESEQ, BUSINFOSEQ) VALUES (#{seq}, #{busInfoSeq})
 	</insert>
 	
+	
 	<!-- deviceTel update -->
 	<update id = "deviceTelUp" parameterType ="java.util.HashMap">
-		UPDATE DEVICE SET DEVICETEL = #{deviceTel} WHERE DEVICESEQ = #{seq}
+		UPDATE DEVICE SET DEVICETEL = #{deviceTel} WHERE DEVICESEQ = #{seq} 
+	</update>
+	
+	<!-- 디바이스 버스 테이블의 해당 기기 이전 기록 상태 모두 hide -->
+	<update id ="deviceBusStatUp" parameterType ="java.util.HashMap" >
+		UPDATE DEVICE_BUS SET deviceBusStat='hide' WHERE deviceSeq=#{seq} OR busInfoSeq=#{busInfoSeq}
 	</update>
 	
 </mapper>

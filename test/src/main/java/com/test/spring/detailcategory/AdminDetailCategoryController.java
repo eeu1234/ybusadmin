@@ -22,8 +22,8 @@ public class AdminDetailCategoryController {
 	@Autowired
 	private AdminDetailCategoryDAO dao;
 	
-	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/detailCategory/adminDetailCategory.action")
-	public String adminDetailCategory(HttpServletRequest request,HttpSession session) {
+	@RequestMapping(method = { RequestMethod.GET }, value = "/detailCategory/adminDetailCategory.action")
+	public String adminDetailCategory(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
 		
@@ -40,14 +40,14 @@ public class AdminDetailCategoryController {
 		request.setAttribute("showDetailCategoryList", showDetailCategoryList);
 		request.setAttribute("hideDetailCategoryList", hideDetailCategoryList);
 		
-		return "admin/detailCategory/adminDetailCategory";
+		return "detailCategory/adminDetailCategory";
 
 	}
 	
 	
 	
 	//카테고리 추가 페이지
-	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/detailCategory/addDetailCategory.action")
+	@RequestMapping(method = { RequestMethod.GET }, value = "/detailCategory/addDetailCategory.action")
 	public String addDetailCategory(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
@@ -58,12 +58,12 @@ public class AdminDetailCategoryController {
 		
 		request.setAttribute("categoryList", categoryList);
 		
-		return "admin/detailCategory/addDetailCategory";
+		return "detailCategory/addDetailCategory";
 
 	}
 	
 	//카테고리 추가 처리 페이지
-	@RequestMapping(method = { RequestMethod.POST }, value = "/admin/detailCategory/addDetailCategoryOK.action")
+	@RequestMapping(method = { RequestMethod.POST }, value = "/detailCategory/addDetailCategoryOK.action")
 	public String addDetailCategoryOK(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		//입력한 값들 dto로 묶기
@@ -85,12 +85,12 @@ public class AdminDetailCategoryController {
 		
 		request.setAttribute("result", result);
 		
-		return "admin/detailCategory/addDetailCategoryOK";
+		return "detailCategory/addDetailCategoryOK";
 
 	}
 	
 	//카테고리 수정 페이지
-	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/detailCategory/updateDetailCategory.action")
+	@RequestMapping(method = { RequestMethod.GET }, value = "/detailCategory/updateDetailCategory.action")
 	public String updateDetailCategory(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
@@ -110,12 +110,12 @@ public class AdminDetailCategoryController {
 		request.setAttribute("getDetailCategory",getDetailCategory);
 		request.setAttribute("categoryList", categoryList);
 		
-		return "admin/detailCategory/updateDetailCategory";
+		return "detailCategory/updateDetailCategory";
 
 	}
 	
 	//카테고리 수정 처리페이지
-	@RequestMapping(method = { RequestMethod.POST }, value = "/admin/detailCategory/updateDetailCategoryOK.action")
+	@RequestMapping(method = { RequestMethod.POST }, value = "/detailCategory/updateDetailCategoryOK.action")
 	public String updateDetailCategoryOK(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		//수정한 값들을 받아온다
@@ -140,12 +140,12 @@ public class AdminDetailCategoryController {
 		
 		request.setAttribute("result", result);
 		
-		return "admin/detailCategory/updateDetailCategoryOK";
+		return "detailCategory/updateDetailCategoryOK";
 
 	}
 	
 	//카테고리 삭제 페이지
-	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/detailCategory/deleteDetailCategory.action")
+	@RequestMapping(method = { RequestMethod.GET }, value = "/detailCategory/deleteDetailCategory.action")
 	@Transactional
 	public String deleteDetailCategory(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
@@ -160,7 +160,7 @@ public class AdminDetailCategoryController {
 		
 		
 		
-		return "admin/detailCategory/deleteDetailCategoryOK";
+		return "detailCategory/deleteDetailCategoryOK";
 
 	}
 }

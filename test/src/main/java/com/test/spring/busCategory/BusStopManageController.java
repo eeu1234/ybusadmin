@@ -43,11 +43,11 @@ public class BusStopManageController {
 		List<BusInfoDTO> blist = dao.busList(seq);
 		
 		request.setAttribute("blist", blist);
-		
+		/*
 		List<BusStopCategoryDTO> clist = dao.busStopCategoryList(seq);
 		
 		request.setAttribute("clist", clist);
-		
+		*/
 		
 		return "busInfo/busCategoryCrud";
 	}

@@ -44,10 +44,10 @@ public class DeviceManageDAO {
 
 	
 	//선택한 대학의 기기 불러오기
-	public List<DeviceBusInfoDTO> deviceBusList(String seq) {
+	/*public List<DeviceBusInfoDTO> deviceBusList(String seq) {
 		// TODO Auto-generated method stub
 		return sql.selectList("device.deviceBusList",seq);
-	}
+	}*/
 
 	
 	//해당 학교 버스 정류장 큰 분류 불러오기
@@ -74,6 +74,12 @@ public class DeviceManageDAO {
 		return sql.selectList("device.deviceInfoList",seq);
 	}
 	
+	//Null 디바이스 정보 불러오기
+	public List<DeviceDTO> deviceInfoNullList(String seq){
+		
+		return sql.selectList("device.deviceInfoNullList",seq);
+	}
+	
 	
 	//버스 정보 불러오기
 	public List<BusInfoDTO> busInfoList(String seq) {
@@ -81,6 +87,7 @@ public class DeviceManageDAO {
 		return sql.selectList("device.busInfoList", seq);
 	}
 
+	//선택한 버스의 카테고리 가져오기
 	public BusInfoDTO selBusInfo(String seq) {
 		
 		return sql.selectOne("device.selBusInfo", seq);
@@ -96,6 +103,11 @@ public class DeviceManageDAO {
 	public int updateDeviceTel(HashMap<String, String> dmap) {
 		
 		return sql.update("device.deviceTelUp", dmap);
+	}
+
+	public void updateDeviceBusStat(HashMap<String, String> dmap) {
+		sql.update("device.deviceBusStatUp",dmap);
+		
 	}
 
 

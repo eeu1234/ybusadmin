@@ -68,9 +68,9 @@ $().ready(function(){
 </head>
 <body>
 	<%@include file="/inc/top.jsp"%>
-	<h1>${adto.universityName} 정류장 세부 카테고리 수정 페이지</h1>
+	<h1>중분류(노선종류) 수정 페이지</h1>
 	
-	<form id="frm" method="POST" action="/spring/admin/detailCategory/updateDetailCategoryOK.action">
+	<form id="frm" method="POST" action="/spring/detailCategory/updateDetailCategoryOK.action">
 		<table id="addTable" class="table table-striped">
 			<tr>
 				<th>구분</th>

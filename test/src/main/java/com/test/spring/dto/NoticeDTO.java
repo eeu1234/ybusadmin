@@ -1,5 +1,7 @@
 package com.test.spring.dto;
 
+import java.util.List;
+
 public class NoticeDTO {
 	
 	private String noticeSeq;
@@ -17,6 +19,16 @@ public class NoticeDTO {
 	
 	private String universityName;
 	
+	private List<NoticeFileDTO> filelist;
+	
+
+	public List<NoticeFileDTO> getFilelist() {
+		return filelist;
+	}
+
+	public void setFilelist(List<NoticeFileDTO> filelist) {
+		this.filelist = filelist;
+	}
 
 	public String getNoticeSeq() {
 		return noticeSeq;

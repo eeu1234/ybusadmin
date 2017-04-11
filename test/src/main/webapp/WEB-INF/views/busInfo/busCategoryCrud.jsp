@@ -16,10 +16,6 @@
 		location.href="/spring/busInfo/busInfoAdd.action";
 	}
 
-	function cadd(){
-
-		location.href="/spring/busStopCategory/busStopCategoryAdd.action";
-	}
 
 	function busEdit(seq){
 		location.href="/spring/busInfo/busInfoEdit.action?seq="+seq;
@@ -43,8 +39,7 @@
 			<th>버스 이름</th>
 			<th>이전 분류</th>
 			<th>버스 상태</th>
-			<th>변경할 분류</th>
-			<th></th>
+			<th>관리</th>
 		</tr>
 		<c:forEach items="${blist}" var="bdto">
 		<tr>
@@ -53,14 +48,7 @@
 			<td>${bdto.busInfoName}</td>
 			<td>${bdto.busStopCategory}</td>
 			<td>${bdto.busInfoStat}</td>
-			<td>
-			<select id="busStopCategory${bdto.busInfoSeq}" name="busStopCategory" class="busStopCategory">
-				<option value="-1">카테고리 선택</option>
-				<c:forEach items="${clist}" var="cdto">
-					<option value="${cdto.busStopCategorySeq}">${cdto.busStopCategory}</option>
-				</c:forEach>
-			</select>
-			</td>
+			
 			<td>
 			<input type="button" class="btn btn-primary" value="수정" onclick="busEdit(${bdto.busInfoSeq});">
 			<input type="button" class="btn btn-danger" value="삭제" onclick="busDelete(${bdto.busInfoSeq});">
@@ -69,9 +57,7 @@
 		</c:forEach>
 	
 	</table>
-	<input type="submit" class="btn btn-primary" value="확인">
 	<input type="button" class="btn btn-primary" value="버스 추가" onclick="badd();">
-	<input type="button" class="btn btn-warning" value="카테고리 추가" onclick="cadd();">
 	</form>
 </body>
 </html>

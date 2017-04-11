@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -85,6 +86,10 @@ public class DeviceManageController {
 		
 		request.setAttribute("dvList", dvList);
 		
+		List<DeviceDTO> dNList = dao.deviceInfoNullList(seq);
+		
+		request.setAttribute("dNList", dNList);
+		
 		List<BusInfoDTO> busList = dao.busInfoList(seq);
 		
 		request.setAttribute("busList", busList);
@@ -139,8 +144,10 @@ public class DeviceManageController {
 		return "admin/busStopCategoryAddOk";
 	}
 	*/
-
+	
+	//기기에 버스 정보 입력 전화번호 변경시 그것도 입력
 	@RequestMapping(method = { RequestMethod.GET }, value = "/device/deviceBusAddOk.action")
+	@Transactional
 	public String deviceBusAddOk(HttpServletRequest request,HttpSession session, HttpServletResponse response, String seq, String busInfoSeq, String deviceTel) {
 		
 		HashMap<String,String> dmap = new HashMap<String,String>(); 
@@ -152,7 +159,7 @@ public class DeviceManageController {
 		int result = 0;
 		
 		if(!busInfoSeq.equals("-1")){
-			
+			dao.updateDeviceBusStat(dmap);
 			result = dao.insertDeviceBus(dmap);
 			
 		}

@@ -23,6 +23,12 @@ public class androidDAO {
 
 		//기기seq 찾기
 		public String findDeviceSeq(String deviceId) {
+			String result = sql.selectOne("deviceSeq",deviceId);
+			if(result == null){
+				sql.insert("newDevice",deviceId);
+			}
+			
+			
 
 			return sql.selectOne("deviceSeq",deviceId);
 		}

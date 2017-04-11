@@ -17,7 +17,6 @@ import com.test.spring.dto.BusScheduleDTO;
 import com.test.spring.dto.BusScheduleSearchDTO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
-import com.test.spring.dto.UniversityDTO;
 
 @Controller
 public class BusScheduleController {
@@ -34,26 +33,34 @@ public class BusScheduleController {
 							,String busStopCategorySeq
 							,String weekDays){
 		
-		UniversityDTO universityDto = (UniversityDTO) session.getAttribute("universityDto");//세션모셔옴
+		AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
 		
 		//학교 seq 가져오기
-		String universitySeq = universityDto.getUniversitySeq();
+		String universitySeq = adto.getUniversitySeq();
 		
 		//해당 학교 busCategory 가져오기
 		List<BusStopCategoryDTO> clist = dao.getCategoryList(universitySeq);
 		List<BusStopDetailCategoryDTO> dlist;
 		
-		//busCategorySeq 가 null 이면
-		if(busStopCategorySeq == null || busStopCategorySeq.equals("") || busStopCategorySeq.equals("null")){
-			//해당 학교 clist.get(0)로 busDetailCategorySeq 가져오기
-			dlist = dao.getDetailCategoryList(clist.get(0).getBusStopCategorySeq());
-			//System.out.println("디테일111 갖고왔니? : "+dlist.get(0).getBusStopDetailCategorySeq());
-		}else{
-			//해당 학교 busCategorySeq로 busDetailCategorySeq 가져오기
-			dlist = dao.getDetailCategoryList(busStopCategorySeq);
-			//System.out.println("디테일222 갖고왔니? : "+dlist.get(0).getBusStopDetailCategorySeq());
-		}
+		System.out.println("카테고리값 있니? -> "+ clist.size());
 		
+		//해당 학교의 카테고리가 있는지 조건문 실행.
+		if(clist.size() > 0){
+			//busCategorySeq 가 null 이면
+			if(busStopCategorySeq == null || busStopCategorySeq.equals("") || busStopCategorySeq.equals("null")){
+				//해당 학교 clist.get(0)로 busDetailCategorySeq 가져오기
+				dlist = dao.getDetailCategoryList(clist.get(0).getBusStopCategorySeq());
+				//System.out.println("디테일111 갖고왔니? : "+dlist.get(0).getBusStopDetailCategorySeq());
+			}else{
+				//해당 학교 busCategorySeq로 busDetailCategorySeq 가져오기
+				dlist = dao.getDetailCategoryList(busStopCategorySeq);
+				//System.out.println("디테일222 갖고왔니? : "+dlist.get(0).getBusStopDetailCategorySeq());
+			}
+		}else{
+			//없으면 그냥 넘긴다.
+			return "busSchedule/busTimeTable";
+		}//카테고리 확인 if
+		System.out.println("디테일카테고리값 있니? -> "+ dlist.size());
 		//가져온 버스디테일카테고리로 시간표 가져오기
 		//busDetailCategorySeq가 여러개일 경우도 있으니 for문 사용
 		
@@ -76,7 +83,7 @@ public class BusScheduleController {
 		int num = 0;
 		for(BusStopDetailCategoryDTO dto : dlist){
 			BusScheduleSearchDTO sdto = new BusScheduleSearchDTO();
-			sdto.setBusStopCategorySeq(dto.getBusStopDetailCategorySeq());//버스디테일seq
+			sdto.setBusStopDetailCategorySeq(dto.getBusStopDetailCategorySeq());//버스디테일seq
 			sdto.setWeekDays(bsdto.getWeekDays());
 			
 			slist.add(sdto);

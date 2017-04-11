@@ -7,6 +7,19 @@
 <meta charset=UTF-8">
 <title>Insert title here</title>
 
+<style>
+
+#busStopCategory{
+	width : 300px;
+	display: inline;
+}
+
+#tblCategory{
+	margin-top: 30px;
+}
+
+</style>
+
 <script>
 	$().ready(function(){
 
@@ -30,7 +43,7 @@
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
-	<h1>카테고리 관리</h1>
+	<h1>대분류(버스종류) 관리</h1>
 		<table id= "tblCategory" name ="tblCategory" class="table table-striped">
 		<tr>
 			<th>노선 번호</th>
@@ -55,7 +68,7 @@
 		</c:forEach>
 		</table>
 	<form method = "POST" action = "/spring/busStopCategory/busStopCategoryAddOk.action">
-		<input type="text" name="busStopCategory">
+		<input type="text" id="busStopCategory" name="busStopCategory" class="form-control" placeholder="추가할 대분류명을 입력하세요">
 		<input type="submit" id="addCategory" value="카테고리 추가" class="btn btn-warning">
 	</form>
 	

@@ -25,9 +25,7 @@ public class AdminManageController {
 	//admin 관리 메인 페이지로 이동, 모든 대학 관리자 내역 가져옴
 	@RequestMapping(method={RequestMethod.GET}
 					, value="/admin/adminManage.action")
-	public String adminManagelist(HttpServletRequest request
-								,HttpSession session
-								,HttpServletResponse response
+	public String adminManagelist(HttpServletRequest request,HttpSession session,HttpServletResponse response
 								,String page
 								,SearchDTO sdto){
 		
@@ -138,10 +136,12 @@ public class AdminManageController {
 	@RequestMapping(method={RequestMethod.GET}
 		, value="/admin/adminUpdate.action")
 	public String adminupdate(HttpServletRequest request,HttpSession session,HttpServletResponse response
-					,String adminID){
+					,String adminID
+					,String my){
 		
 		AdminDTO dto = dao.getadmin(adminID);
-		
+
+		request.setAttribute("my", my);
 		request.setAttribute("dto", dto);
 		
 		return "admin/adminUpdate";
@@ -174,10 +174,20 @@ public class AdminManageController {
 	@RequestMapping(method={RequestMethod.POST, RequestMethod.GET}
 		, value="/admin/adminUpdateOk.action")
 	public String adminupdateok(HttpServletRequest request,HttpSession session,HttpServletResponse response
-					,AdminDTO dto){
+					,AdminDTO dto
+					,String my){
 		
-		int result = dao.getupdate(dto);
+		int result;
 		
+		if(dto.getAdminPassword() == null || dto.getAdminPassword().equals("")){ 
+			//최고관리자용
+			result = dao.getupdate2(dto);
+		}else{
+			//일반관리자용
+			result = dao.getupdate(dto);
+		}
+		
+		request.setAttribute("my", my);
 		request.setAttribute("result", result);
 		
 		return "admin/adminUpdateOk";
@@ -186,7 +196,7 @@ public class AdminManageController {
 	//admin 계정 삭제
 	@RequestMapping(method={RequestMethod.GET}
 		, value="/admin/adminDelete.action")
-	public String admindelete(HttpServletRequest request,HttpSession session,HttpServletResponse response
+	public String adminDelete(HttpServletRequest request,HttpSession session,HttpServletResponse response
 					,String adminID){
 		
 		int result = dao.admindelete(adminID);
@@ -199,7 +209,7 @@ public class AdminManageController {
 	//admin 계정 생성 시 대학 카테고리 가져오기
 	@RequestMapping(method={RequestMethod.GET}
 		, value="/admin/adminAdd.action")
-	public String adminadd(HttpServletRequest request,HttpSession session,HttpServletResponse response){
+	public String adminAdd(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
 		List<UniversityDTO> ulist = dao.universitylist();
 		

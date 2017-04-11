@@ -12,7 +12,7 @@
 </style>
 <script>
 $(document).ready(function(){
-	<c:if test="${result == 1}">
+	<c:if test="${result >= 1}">
 		alert("추가 완료");
 		location.href="/spring/admin/notice/notice.action";
 	</c:if>

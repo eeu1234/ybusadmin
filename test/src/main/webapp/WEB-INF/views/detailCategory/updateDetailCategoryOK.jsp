@@ -14,7 +14,7 @@
 	$(document).ready(function(){
 		<c:if test="${result == 1}">
 			alert("수정 완료");
-			location.href="/spring/admin/detailCategory/adminDetailCategory.action";
+			location.href="/spring/detailCategory/adminDetailCategory.action";
 		</c:if>
 		<c:if test="${result == 0}">
 			alert("수정 실패");

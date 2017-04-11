@@ -7,6 +7,12 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
+
+<style>
+#universityName{
+	width : 300px;
+}
+</style>
 <script>
 	$().ready(function(){
 
@@ -29,14 +35,14 @@
 <body>
 
 	<%@include file="/inc/top.jsp"%>
-	<h1>빈 디바이스 리스트</h1>
+	<h1>배치가능한 디바이스 리스트</h1>
 	<table id = "tblNullDevice" class="table table-striped">
 		<tr>
 			<th>기기번호</th>
 			<th>기기명</th>
 			<th>전화번호</th>
 			<th>학교명</th>
-			<th></th>
+			<th>관리</th>
 		</tr>
 	<c:forEach items="${dlist}" var ="ddto">
 		<tr>
@@ -44,7 +50,7 @@
 			<td>${ddto.deviceModel}</td>
 			<td>${ddto.deviceTel}</td>
 			<td>
-			<select id="universityName" name="universityName">
+			<select id="universityName" name="universityName" class="form-control">
 				<c:forEach items="${ulist}" var="udto">
 				<option>${udto.universityName}</option><br>
 				</c:forEach>

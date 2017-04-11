@@ -32,6 +32,14 @@ html, body {
    height: 80px;
 }
 
+#showTable{
+	margin-top: 30px;
+}
+
+#hideTable{
+	margin-top: 30px;
+}
+
 </style>
 
 <script>
@@ -43,18 +51,18 @@ $().ready(function(){
 
 //카테로리 추가 함수
 function addDetailCategory(){
-	location.href = "/spring/admin/detailCategory/addDetailCategory.action";
+	location.href = "/spring/detailCategory/addDetailCategory.action";
 }
 
 //카테고리 수정 함수
 function updateDetailCategory(seq){
-	location.href = "/spring/admin/detailCategory/updateDetailCategory.action?seq="+seq;
+	location.href = "/spring/detailCategory/updateDetailCategory.action?seq="+seq;
 }
 
 //카테고리 삭제 함수
 function deleteDetailCategory(seq){
 	if(confirm("삭제하시겠습니까?")){
-		location.href = "/spring/admin/detailCategory/deleteDetailCategory.action?seq="+seq;
+		location.href = "/spring/detailCategory/deleteDetailCategory.action?seq="+seq;
 	}
 }
 </script>
@@ -62,7 +70,6 @@ function deleteDetailCategory(seq){
 </head>
 <body>
 	<%@include file="/inc/top.jsp"%>
-	<h1>${adto.universityName} 정류장 세부 카테고리 관리</h1>
 	
 	<h2>활성화된 카테고리</h2>
 	<table id="showTable" class="table table-striped">
@@ -116,7 +123,6 @@ function deleteDetailCategory(seq){
 			</tr>
 		</c:forEach>
 	</table>
-	<input type="submit" class="btn btn-primary" value="확인"> 
-	<input type="button" class="btn btn-primary" value="정류장 세부 카테고리 추가" onclick="addDetailCategory();">
+	<input type="button" class="btn btn-primary" value="중분류(노선종류) 추가" onclick="addDetailCategory();">
 </body>
 </html>

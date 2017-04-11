@@ -12,7 +12,7 @@
 		border: 1px solid black;
 		width: 1000px;
 		margin: 0px auto;
-		height: 600px;
+		height: 630px;
 	}
 	
 	#totalBox #mainBox{
@@ -86,9 +86,18 @@
 		margin-right: 20px;
 	}
 	
-
-
+	#totalBox #mainBox #bottomBox #btnFile{
+		border: 0px solid black;
+		width: 250px;
+		float: left;
+		cursor: pointer;
+	}
 	
+	.file #filename{
+		cursor: pointer;
+		font-weight: bold;	
+	}
+
 </style>
 <script>
 $(document).ready(function() {
@@ -99,11 +108,8 @@ $(document).ready(function() {
  	$("#subject").keypress(function(e){
     	if(e.keyCode==13) return false;
  	 });
- 	 		
-	    
-	
-});
 
+});	
 
 </script>
 
@@ -116,16 +122,24 @@ $(document).ready(function() {
 	</div>
 	
 	<div id="totalBox">
-		<form method="POST" action="/spring/admin/notice/noticeAddOk.action">
+		<form method="POST" action="/spring/admin/notice/noticeAddOk.action" enctype="multipart/form-data">
 			<div id="mainBox">
 				<div id="topBox">
 					<div id="titleSubject">제목</div><input type="text" name="subject" id="subject">
 				</div>
 				<div id="middleBox"><div id="titleContent"><span>내용</span></div><textarea name="content" id="content"></textarea></div>
-				<div id="bottomBox"><input type="submit" value="저장" class="btn btn-primary"></div>
+				<div id="bottomBox">
+		<div id="files">
+			<div class="file"><input type="file" name="filename" id="filename" multiple="multiple"></div>
+		</div>
+		
+
+					<input type="submit" value="저장" class="btn btn-primary">
+				</div>
 			</div>
 		</form>
 	</div>
 	
+
 </body>
 </html>

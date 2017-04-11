@@ -41,9 +41,9 @@ $().ready(function(){
 </head>
 <body>
 	<%@include file="/inc/top.jsp"%>
-	<h1>${adto.universityName} 정류장 세부 카테고리 추가 페이지</h1>
+	<h1>중분류(노선종류) 추가 페이지</h1>
 	
-	<form method="POST" action="/spring/admin/detailCategory/addDetailCategoryOK.action">
+	<form method="POST" action="/spring/detailCategory/addDetailCategoryOK.action">
 		<table id="addTable" class="table table-striped">
 			<tr>
 				<th>구분</th>
