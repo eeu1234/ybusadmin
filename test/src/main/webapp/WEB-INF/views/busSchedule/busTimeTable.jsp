@@ -98,32 +98,43 @@ $(document).ready(function(){
 	var busTime = new Array(time.length);
 	var busTimeName = new Array(name.length);
 
-	var result = "";
-	var timeBoolean = true;
+	//중복된 시간이 있기에 배열로 선언
+	var result = new Array();
+	//result index 0부터 시작
+	var intResult = 0;
 
+	//깜빡이여야 되는 칸 알아내는 반복문
 	for(var k=0;k<time.length;k++){
-		
+		//split으로 시, 분으로 나눈 작업
 		busTimeSum = time.eq(k).text().split(":");
-		console.log(busTimeSum[0]+":"+busTimeSum[1]);
+		//console.log(busTimeSum[0]+":"+busTimeSum[1]);
+		
+		//나눈 시간을 60*시+분 으로 합산
 		busTime[k] = Number(60*busTimeSum[0]) + Number(busTimeSum[1]);
+		//같이 깜빡이는 버스노선명
 		busTimeName[k] = name.eq(k).text();
-		console.log(busTime[k] +"-"+sum+"="+(busTime[k] - sum));
+		//console.log(busTime[k] +"-"+sum+"="+(busTime[k] - sum));
+		
+		//현재 시간과 비교하여 5분이하 1분이상인 경우에만 깜빡이기 시작
 		if((busTime[k] - sum) >= 1 && (busTime[k] - sum) <= 5){
-			result = k;
+			result[intResult] = k;
+			intResult++;
 			console.log("result는 "+result);
-			timeBoolean = true;
-			break;
-		}else{
-			timeBoolean = false;
 		}
 	}
-	var interval;
-	if(timeBoolean){
-		interval = setInterval(toggle, 500);
+
+	//인터벌은 result의 사이즈 만큼
+	var interval = new Array(result.length);
+	
+	for(var i=0;i<result.length;i++){
+		interval[i] = setInterval(toggle, 500);
 	}
-    setTimeout(function(){
-        clearInterval(interval);
-    },300000);
+
+	for(var i=0;i<result.length;i++){
+	    setTimeout(function(){
+	        clearInterval(interval[i]);
+	    },300000);
+	}
 	
 	//현재 버스시간 깜빡이는 토글
 	function toggle(){//깜빡이는 효과
@@ -136,7 +147,6 @@ $(document).ready(function(){
 		   name.eq(result).css("background-color","green");
 	       shown = true;
 	   }
-	   
 	}
 	
 });
