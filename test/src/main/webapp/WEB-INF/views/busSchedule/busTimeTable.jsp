@@ -73,9 +73,10 @@
 </style>
 <script>
 $(document).ready(function(){
-	
+	//선택된 평일/주말 값
+	var weekDays = $("#weekDays").val();
    $("#weekDays").change(function(){
-      var weekDays = $("#weekDays").val();
+      weekDays = $("#weekDays").val();
       location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
    });
 
@@ -83,6 +84,15 @@ $(document).ready(function(){
 	var now = new Date();	
 	var hour = now.getHours(); // 시
 	var minute = now.getMinutes(); // 분
+	var day = 0;
+
+	//평일(1~5)이면 day는 1
+	if(now.getDay() >= 1 && now.getDay() <= 5){
+		day = 1;
+	}else{
+		//주말이면 2의 값을 가진다.
+		day = 2;
+	}
 
 	//현재 시각은 시간*60+분으로 계산.
 	var sum = Number(hour*60) + now.getMinutes();
@@ -117,35 +127,41 @@ $(document).ready(function(){
 		
 		//현재 시간과 비교하여 5분이하 1분이상인 경우에만 깜빡이기 시작
 		if((busTime[k] - sum) >= 1 && (busTime[k] - sum) <= 5){
+			//result[] 배열에 td 인덱스 넣기
 			result[intResult] = k;
+			console.log("result는 "+result[intResult]);
 			intResult++;
-			console.log("result는 "+result);
 		}
 	}
 
-	//인터벌은 result의 사이즈 만큼
-	var interval = new Array(result.length);
-	
-	for(var i=0;i<result.length;i++){
-		interval[i] = setInterval(toggle, 500);
+	//인터벌 실행, 선택한 값이 주말/평일에 따라 실행
+	if(weekDays == 'weekends' && day == 2){
+		interval = setInterval(toggle, 500);
+	}else if(weekDays == 'normal' && day == 1){
+		interval = setInterval(toggle, 500);
 	}
 
-	for(var i=0;i<result.length;i++){
-	    setTimeout(function(){
-	        clearInterval(interval[i]);
-	    },300000);
-	}
+	//5분 뒤 인터벌 종료
+	setTimeout(function(){
+	    clearInterval(interval);
+	},300000);
 	
 	//현재 버스시간 깜빡이는 토글
 	function toggle(){//깜빡이는 효과
 	   if(shown) {
-		   time.eq(result).css("background-color","");
-		   name.eq(result).css("background-color","");
-	       shown = false;
+		   for(var i=0;i<result.length;i++){
+			   //console.log("i는 "+i+" shown는 "+shown+" result[i]는 "+result[i]);
+			   time.eq(result[i]).css("background-color","");
+			   name.eq(result[i]).css("background-color","");
+		   }
+		   shown = false;
 	   } else {
-		   time.eq(result).css("background-color","green");
-		   name.eq(result).css("background-color","green");
-	       shown = true;
+		   for(var i=0;i<result.length;i++){
+			   //console.log("i는 "+i+" shown는 "+shown+" result[i]는 "+result[i]);
+			   time.eq(result[i]).css("background-color","green");
+			   name.eq(result[i]).css("background-color","green");
+		   }
+		   shown = true;
 	   }
 	}
 	

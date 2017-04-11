@@ -49,7 +49,7 @@
 					<li><a href="/spring/admin/deviceInfoList.action">단말기 관리</a></li>
 					<li><a href="/spring/busStop/busStop.action">정류장 관리</a></li>
 					<li><a href="/spring/admin/busList.action">버스 관리</a></li>
-					<li><a href="#">운행시간표 관리</a></li>
+					<li><a href="/spring/admin/adminBusTimeManage.action">운행시간표 관리</a></li>
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">

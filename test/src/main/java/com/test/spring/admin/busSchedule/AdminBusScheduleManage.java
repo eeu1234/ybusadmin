@@ -1,4 +1,4 @@
-package com.test.spring.admin;
+package com.test.spring.admin.busSchedule;
 
 import java.util.ArrayList;
 import java.util.List;

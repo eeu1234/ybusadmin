@@ -1,4 +1,4 @@
-package com.test.spring.admin;
+package com.test.spring.admin.login;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
