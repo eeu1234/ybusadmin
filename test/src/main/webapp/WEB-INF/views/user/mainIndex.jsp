@@ -276,7 +276,7 @@ body, html {
 	width:60%;
 	height:70%;
 	margin:20% auto;
-	background-color: yellow;
+	background-color: ;
 	text-align:center;
 }
 
@@ -350,33 +350,39 @@ ul,li{
 					위치조회
 				</div>
 			</div>
-			<div id="cityBus"></div>
+			<div id="cityBus">
+				<div class="iconBox" onclick="location.href='http://m.gbis.go.kr/common/main.do?osInfoType=M'">
+            	<div class="iconImg"><img src="./images/mainImage/cityBus.png" alt="" /></div>
+               	<div class="iconInfo">경기버스</div>
+	            	위치조회
+	            </div>
+			</div>
 
 			<div class="clear"></div>
 
-			<div id="firstBox" class="BSC1 busLine">첫번째</div>
-			<div id="secBox" class="BSC2 busLine">두번째</div>
-			<div id="thirdBox" class="BSC3 busLine">세번째</div>
+			<div id="firstBox" class="BSC1 busLine"></div>
+			<div id="secBox" class="BSC2 busLine"></div>
+			<div id="thirdBox" class="BSC3 busLine"></div>
 			<div class="clear"></div>
 
 			<div id="forthBox" class="BSC4" onclick="location.href='http://localhost:8090/spring/busSchedule/busTimeTable.action';">
 																						 
 				<div class="iconBox">
-            	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
-               	<div class="iconInfo">시간표</div>
-	               	가...가버렷
+            	<div class="iconImg"><img src="./images/mainImage/busTimeTable.png" alt="" /></div>
+               	<div class="iconInfo">전체버스</div>
+	            	시간표
 	            </div>
 			</div>
 			<div id="fifthBox" class="BSC5">
 				<div class="iconBox">
             	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
                	<div class="iconInfo"></div>
-	               	위치조회
+	               	아직미정
 	            </div>
 			</div>
 			<div id="sixthBox" class="BSC6" onclick="location.href='http://localhost:8090/spring/user/makeIcon.action'">
 				<div class="iconBox">
-            	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
+            	<div class="iconImg"><img src="./images/mainImage/howToAdd.png" alt="" /></div>
                	<div class="iconInfo"></div>
 	               	How to Add
 	            </div>
@@ -696,8 +702,17 @@ function appendCategory(){
 		iconImg.setAttribute("class","iconImg");
 		
 		var img = document.createElement("img");
-		img.setAttribute("src","./images/mainImage/tempIcon.png");
-	
+		<c:choose>
+			<c:when test="${status.count==1}">
+				img.setAttribute("src","./images/mainImage/mainBus.png");
+			</c:when>
+			<c:when test="${status.count==2}">
+			img.setAttribute("src","./images/mainImage/mainBus.png");
+			</c:when>
+			<c:when test="${status.count==3}">
+			img.setAttribute("src","./images/mainImage/schoolBus.png");
+			</c:when>
+		</c:choose>
 		var iconInfo = document.createElement("div");
 		iconInfo.setAttribute("class","iconInfo");
 	

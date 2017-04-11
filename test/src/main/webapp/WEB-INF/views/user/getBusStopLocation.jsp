@@ -6,37 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Cambus</title>
-<link rel="stylesheet" href="/spring/css/busStop.css">
-
-<!-- 모바일용웹 -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
-
-<meta name="mobile-web-app-capable" content="yes">
-
-<!-- import 시작 -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-	crossorigin="anonymous"></script>
-
-<link
-	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
-	rel="stylesheet">
-<script
-	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
-<link rel="stylesheet" href="/spring/css/busStop.css">
-
-
-<!-- ico 아이콘-->
-
-<link rel="apple-touch-icon" href="/mobile/Image/favicon.ico">
-<link rel="stylesheet" href="/spring/css/newTimeline.css">
-
-<script
-  src="https://code.jquery.com/jquery-1.12.4.min.js"
-  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-  crossorigin="anonymous"></script>
+<%@include file="/inc/userAsset.jsp" %>
 
 
 <style>
@@ -344,6 +314,13 @@ body, html {
 
 
 }
+.selectBox{
+	color:#555;
+	background-color: #fff;
+	border:1px solid #ccc;
+	border-radius:4px;
+	text-align:center;
+}
 </style>
 <script>
 
@@ -389,7 +366,7 @@ body, html {
 			</div>
 			<div id="footer">
 				
-				<select id = "detailLocationSel" class="form-Control">
+				<select id = "detailLocationSel" class="selectBox">
 					<c:forEach items="${bsdcList}" var="bsdcDto">
 						<c:choose>
 
@@ -432,6 +409,7 @@ zoom: 13
 	    map: mapAP,
 	    draggable: false,
 	    animation: google.maps.Animation.DROP,
+	    icon: '/spring/images/timeLine/busStopMaker.png',
 	    info: '${bsdto.busStop}',
 	    title: '${bsdto.busStop}',
 	    position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}}
@@ -450,7 +428,7 @@ zoom: 13
 		    map: mapAP,
 		    draggable: false,
 		    animation: google.maps.Animation.DROP,
-		    icon:'/spring/images/timeLine/busIcon.png',
+		    icon:'/spring/images/timeLine/busMaker.png',
 		    title: '${cbldto.businfoName}',
 		    position: {lat: ${cbldto.locationLatitude}, lng: ${cbldto.locationLongitude}}
 		});

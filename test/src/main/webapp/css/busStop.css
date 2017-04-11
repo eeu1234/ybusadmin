@@ -56,7 +56,7 @@ body, html {
 	line-height: 3;
 }
 
-/* contents �κ� ����*/
+/* contents */
 #contents {
 	position: relative;
 	width: 100%;
@@ -196,3 +196,4 @@ div.tab a:focus, .active {
 	width: auto;
 	opacity:0.4;
 }
+
