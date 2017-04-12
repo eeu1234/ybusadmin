@@ -41,6 +41,7 @@ public class NoticeController {
                , value="/admin/notice/notice.action")
    public String notice(HttpServletRequest request
                         ,HttpSession session
+                        ,HttpServletResponse response
                         ,String page
                         ,SearchDTO sdto){
       
@@ -131,10 +132,9 @@ public class NoticeController {
       
       return "admin/notice/notice";
    }
+   /*------------------------------------------------------공지사항 메인!!------------------------------*/
    
-   
-   
-   String path = "";
+   String path = "";   //업로드 경로!!
    
    //공지사항 내용 가져옴
    @RequestMapping(method={RequestMethod.GET}
@@ -154,7 +154,6 @@ public class NoticeController {
       for(int i=0; i<noticeContent.getFilelist().size(); i++){
          
          String str = noticeContent.getFilelist().get(i).getNoticeFileName();
-         //System.out.println("name : " + ddd + ", length : " + ddd.length() + " test : " + ddd.indexOf("."));
          String[] ddd = str.split("\\.");
          
          NoticeFileDTO fileNameDto = new NoticeFileDTO();
@@ -164,25 +163,9 @@ public class NoticeController {
       }
       
       noticeContent.setFilelist(listFileType);
-      
-      
-      
+     
       request.setAttribute("noticeContent", noticeContent);
-    
       
-      /*---------------------------------------------파일 다운로드----------------------*/
-/*      JSONArray list = new JSONArray();// 파일을위한 배열
-
-        for (int i = 0; i < noticeContent.getFilelist().size(); i++) {
-              JSONObject obj = new JSONObject();
-              obj.put("noticeFileName", noticeContent.getFilelist().get(i).getNoticeFileName());
-              list.add(obj);
-        }
-        
-        System.out.println(list.toJSONString());
-        response.setCharacterEncoding("utf-8");
-        response.getWriter().print(list);*/
-   
       
       //readcount 값 바꾸기, 조회수 추가
       if(session.getAttribute("readcount")==null 
@@ -236,9 +219,7 @@ public class NoticeController {
       
       List<MultipartFile> getfile = multi.getFiles("filename");
 
-      // 첨부파일의 갯수가 여러개 -> Iterator
-      //Iterator<String> iterator = multi.getFileNames();
-      
+      // 첨부파일의 갯수가 여러개
       for(int i=0;i<getfile.size();i++) {
       
          NoticeFileDTO fileUpload = new NoticeFileDTO();
@@ -246,6 +227,7 @@ public class NoticeController {
          MultipartFile mfile = getfile.get(i);
 
          path = request.getRealPath("/images/notice/");
+         System.out.println(path);
          
          String temp = getFileName(mfile.getOriginalFilename());
 
@@ -261,7 +243,6 @@ public class NoticeController {
             System.out.println(e.toString());
          }
 
-      
       /*-----------------------------------------------------------------*/
       
       int result = dao.noticeAdd(noticeAddInfo,fileList);

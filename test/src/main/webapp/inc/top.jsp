@@ -52,6 +52,7 @@
 
 							<ul class="dropdown-menu">
 								<li><a href="/spring/device/deviceNullList.action">디바이스	- 학교</a></li>
+								<li><a href="/spring/deviceInfoManage/deviceInfoManage.action">디바이스 관리</a></li>
 
 								<li><a href="/spring/virtual/virtualBusStop.action">가상정류장 관리</a></li>
 
@@ -85,9 +86,8 @@
 
 						<ul class="dropdown-menu">
 							<li><a href="/spring/busInfo/busList.action">1.버스 정보 관리</a></li>
-							<li><a href="/spring/device/deviceInfoList.action">2.기기 정보 관리</a></li>
-							<li><a href="/spring/device/deviceInfoList.action">3.버스 - 기기 매칭</a></li>
-							<li><a href="/spring/busCategoryManage/busCategoryManage.action">4.버스 - 노선 매칭</a></li>
+							<li><a href="/spring/device/deviceInfoList.action">2.버스 - 기기 매칭</a></li>
+							<li><a href="/spring/busCategoryManage/busCategoryManage.action">3.버스 - 노선 매칭</a></li>
 						</ul></li>
 
 

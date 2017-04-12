@@ -47,11 +47,9 @@ public class AuthCheck {
 		   + "|| execution(String *.busSchedule.AdminBusScheduleManage.*(..))"  //버스스케쥴관리
 		   + "|| execution(String *.PolyLineController.*(..))"  
 		   + "|| execution(String *.DeviceManageController.*(..))"
-		   + "|| execution(String *.NoticeController.*(..))"
 		   + "|| execution(String *.UniversityController.*(..))"
 		   + "|| execution(String *.BusStopManageController.*(..))"
-		   + "|| execution(String *.AdminManageController.*(..))"
-		   + "|| execution(String *.BusScheduleController.*(..))")
+		   + "|| execution(String *.AdminManageController.*(..))")
    public void member(){}
    
    @Before("member()")

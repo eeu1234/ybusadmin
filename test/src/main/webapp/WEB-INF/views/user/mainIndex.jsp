@@ -8,7 +8,7 @@
 <title>Cambus</title>
 
 <%@include file="/inc/asset.jsp" %>
-<script src="./js/jquery.xdomainajax.js"></script>
+
 <style>
 @font-face {
 	font-family: "notoFont-medium";
@@ -324,7 +324,7 @@ ul,li{
 
 				<ul>
 					<c:forEach items="${nList}" var="ndto">
-						<li class="nContent" value="${ndto.noticeSeq}"><a href="http://localhost:8090/spring/admin/notice/noticeContent.action?noticeSeq="+${ndto.noticeSeq}>${ndto.noticeSubject }</a></li>
+						<li class="nContent" value="${ndto.noticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${ndto.noticeSeq}">${ndto.noticeSubject}</a></li>
 					</c:forEach>
 				</ul>
 

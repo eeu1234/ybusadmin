@@ -176,7 +176,7 @@ public class MainController {
 			String year = String.valueOf(cal.get(Calendar.YEAR));
 		    String month = String.valueOf(cal.get(Calendar.MONTH)+1);
 		    String day = String.valueOf(cal.get(Calendar.DATE));
-		    String hours = String.valueOf(cal.get(Calendar.HOUR));
+		    String hours = String.valueOf(cal.get(Calendar.HOUR_OF_DAY));
 		    String minutes = String.valueOf(cal.get(Calendar.MINUTE));
 		    //System.out.println("day =" + day);
 		    //System.out.println("month = "+month);
