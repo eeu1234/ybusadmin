@@ -171,7 +171,7 @@ public class NoticeController {
     
       
       /*---------------------------------------------파일 다운로드----------------------*/
-      JSONArray list = new JSONArray();// 파일을위한 배열
+/*      JSONArray list = new JSONArray();// 파일을위한 배열
 
         for (int i = 0; i < noticeContent.getFilelist().size(); i++) {
               JSONObject obj = new JSONObject();
@@ -181,7 +181,7 @@ public class NoticeController {
         
         System.out.println(list.toJSONString());
         response.setCharacterEncoding("utf-8");
-        response.getWriter().print(list);
+        response.getWriter().print(list);*/
    
       
       //readcount 값 바꾸기, 조회수 추가
@@ -237,7 +237,7 @@ public class NoticeController {
       List<MultipartFile> getfile = multi.getFiles("filename");
 
       // 첨부파일의 갯수가 여러개 -> Iterator
-      Iterator<String> iterator = multi.getFileNames();
+      //Iterator<String> iterator = multi.getFileNames();
       
       for(int i=0;i<getfile.size();i++) {
       
@@ -245,10 +245,11 @@ public class NoticeController {
 
          MultipartFile mfile = getfile.get(i);
 
+         path = request.getRealPath("/images/notice/");
+         
          String temp = getFileName(mfile.getOriginalFilename());
 
-         String path = request.getRealPath("/images/notice/")+temp;
-         File file = new File(path + temp);
+         File file = new File(path+temp);
          // DB -> temp(물리명)
          // -> mfile.getOriginalFilename()(원본명)
 
@@ -335,9 +336,10 @@ public class NoticeController {
       String oname = filename.substring(0, index);
       String ext = filename.substring(index);
       
+      
       while(true) {
          File file = new File(path + filename);
-         
+
          if (file.exists()) {
             //홍길동.txt
             filename = oname + "_" + n + ext; //홍길동_1.txt
