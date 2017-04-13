@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset=UTF-8">
-<title>Insert title here</title>
+<title>대학 추가</title>
 <link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
 <style>
 

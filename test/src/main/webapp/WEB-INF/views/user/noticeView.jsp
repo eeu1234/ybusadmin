@@ -139,6 +139,9 @@ img {
 	width: 100%;
 	height: auto;
 }
+#logo{
+opacity:0.6;
+}
 </style>
 <script>
 	

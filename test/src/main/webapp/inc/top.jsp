@@ -18,7 +18,7 @@
 
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="http://ybus.kr">CAMBUS</a></li>
+					<li class="active"><a href="http://cambus.kr">CAMBUS</a></li>
 
 					<c:choose>
 						<c:when test="${adto.adminLevel =='9999'}">

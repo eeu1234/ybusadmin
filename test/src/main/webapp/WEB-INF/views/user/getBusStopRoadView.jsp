@@ -105,7 +105,7 @@ $(function() {
 					
 					</div>
 				
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'" />
 				</div>
 			</div>
 		</div>

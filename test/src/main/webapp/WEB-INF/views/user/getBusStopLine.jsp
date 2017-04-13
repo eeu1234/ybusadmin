@@ -83,6 +83,7 @@ body, html {
 	right: 0;
 	height: 100%;
 	width: auto;
+	opacity:0.6;
 }
 
 #btnArea {
@@ -367,13 +368,13 @@ function moveMap(){
 			<div id="header">
 			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
 					<div id="txtLogo">
 					
 					셔틀버스 위치조회
 					
 					</div>
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>
 				</div>
 			</div>
 

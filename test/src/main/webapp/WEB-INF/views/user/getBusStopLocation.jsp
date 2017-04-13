@@ -79,6 +79,7 @@ body, html {
 	right: 0;
 	height: 100%;
 	width: auto;
+	opacity:0.6;
 }
 
 #btnArea {
@@ -361,7 +362,7 @@ body, html {
 					셔틀버스 위치조회
 					
 					</div>
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>
 				</div>
 			</div>
 			<div id="footer">

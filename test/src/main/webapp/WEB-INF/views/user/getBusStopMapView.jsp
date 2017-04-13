@@ -77,6 +77,7 @@
 	right: 0;
 	height: 100%;
 	width: auto;
+	opacity:0.6;
 }
 </style>
 <script>
@@ -100,7 +101,7 @@
 					
 					</div>
 				
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'" />
 				</div>
 			</div>
 		</div>

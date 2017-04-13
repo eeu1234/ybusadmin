@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +28,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.NoticeDTO;
+import com.test.spring.dto.NoticeFileDTO;
 import com.test.spring.dto.UniversityDTO;
 import com.test.spring.dto.WeatherStatDTO;
+import com.test.spring.notice.NoticeDAO;
 
 @Controller("MainController")
 public class MainController {
@@ -36,43 +39,65 @@ public class MainController {
 	@Autowired
 	private MainDAO dao;
 	
+
+	
+	
+	@Autowired
+	private NoticeDAO noticeDao;
+	
+	
+	
 	@RequestMapping(method={RequestMethod.GET}, value="/index.action")
 	public void index(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
-		
-		StringBuffer url = request.getRequestURL();
-		String urlStr = url.toString();
-		UniversityDTO universityDto;
-		//도메인에 따른 universitySeq를 가져옴
-		if(session.getAttribute("universityDto") == null){
-			//도메인에 따른 universitySeq를 가져옴
-			
-			universityDto = dao.getUniversitySeq(urlStr);
-			
-//			String universitySeq = universityDto.getUniversitySeq() ;
-			System.out.println("***************도영"+universityDto.getUniversitySeq());
-			 
-			session.setAttribute("universityDto", universityDto);
-			
-			request.setAttribute("universitySeq", universityDto.getUniversitySeq());
-			
-		}
-		//System.out.println("universitySeq==="+universitySeq);
-		
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");
-		
 		try {
+	        
+	        //내용
+			StringBuffer url = request.getRequestURL();
+			String urlStr = url.toString();
+			UniversityDTO universityDto;
+			//도메인에 따른 universitySeq를 가져옴
+			if(session.getAttribute("universityDto") == null){
+				//도메인에 따른 universitySeq를 가져옴
+				
+				universityDto = dao.getUniversitySeq(urlStr);
+				
+//				String universitySeq = universityDto.getUniversitySeq() ;
+				
+				 
+				session.setAttribute("universityDto", universityDto);
+				
+				request.setAttribute("universitySeq", universityDto.getUniversitySeq());
+				
+			}
+			//System.out.println("universitySeq==="+universitySeq);
 			
-			//response.sendRedirect("/spring/mainIndex.action");
-			dispatcher.forward(request, response);
-		} catch (IOException e) {
 			
-			e.printStackTrace();
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");
 			
-			e.printStackTrace();
-		}
+			try {
+				
+				//response.sendRedirect("/spring/mainIndex.action");
+				dispatcher.forward(request, response);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				
+				e.printStackTrace();
+			}
+     } catch (Exception e) {
+    	 e.printStackTrace();
+	        session.invalidate();
+	        try {
+	           
+	           response.sendRedirect("/spring/user/selectUniversity.action");
+	        } catch (Exception e2) {
+	           // TODO: handle exception
+	        	e2.printStackTrace();
+	        }
+	     }
+		
 		
 	}
 	
@@ -80,40 +105,71 @@ public class MainController {
 	@RequestMapping(method={RequestMethod.GET}, value="/mainIndex.action")
 	public String mainIndex(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,UniversityDTO universityDTO){
 		
-		
-		WeatherStatDTO wsdto = apiExplorer();
-		universityDTO = (UniversityDTO) session.getAttribute("universityDto");
+		try {
+	         
+	         //내용
+			WeatherStatDTO wsdto = apiExplorer();
+			universityDTO = (UniversityDTO) session.getAttribute("universityDto");
 
-		universitySeq = universityDTO.getUniversitySeq();
+			universitySeq = universityDTO.getUniversitySeq();
+			
 		
-	
-		//busStopCategorySeq ="2";
+			//busStopCategorySeq ="2";
+			
+			HashMap<String,String> map = new HashMap<String,String>();
+			map.put("busStopCategorySeq", busStopCategorySeq);
+			map.put("universitySeq", universitySeq);
+			//이학교에 있는 노선을 메인 화면에 띄워주어야함
+			//노선목록 들고옴.
+			//공지사항목록 들고옴.
+			List<NoticeDTO> nList = dao.getAllNotice();
+			List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
+			List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
+			
+			request.setAttribute("nList", nList);
+			request.setAttribute("wsdto", wsdto);
+			request.setAttribute("bsdcList", bsdcList);
+			request.setAttribute("bscList", bscList);
+			
+			
 		
-		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("busStopCategorySeq", busStopCategorySeq);
-		map.put("universitySeq", universitySeq);
-		//이학교에 있는 노선을 메인 화면에 띄워주어야함
-		//노선목록 들고옴.
-		//공지사항목록 들고옴.
-		List<NoticeDTO> nList = dao.getAllNotice();
-		List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
-		List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
-		
-		request.setAttribute("nList", nList);
-		request.setAttribute("wsdto", wsdto);
-		request.setAttribute("bsdcList", bsdcList);
-		request.setAttribute("bscList", bscList);
-		
-		
+	         
+	      } catch (Exception e) {
+	         session.invalidate();
+	         try {
+	            
+	        	 response.sendRedirect("/spring/user/selectUniversity.action");
+	            return "";
+	         } catch (Exception e2) {
+	            // TODO: handle exception
+	         }
+	      }
 		return "user/mainIndex";
 	}
 	
 	@RequestMapping(method={RequestMethod.GET},value="/user/makeIcon.action")
-	public String makeIcon(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+	public String makeIcon(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
-		
-		
+		try {
+	         
+	         //내용
+	         
+	         
+			
+	         
+	         
+	      } catch (Exception e) {
+	         session.invalidate();
+	         try {
+	            
+	        	 response.sendRedirect("/spring/user/selectUniversity.action");
+	         } catch (Exception e2) {
+	            // TODO: handle exception
+	         }
+	      }
+
 		return "user/makeIcon";
+		
 	}
 	
 	double RE = 6371.00877; // 지구 반경(km)
@@ -329,4 +385,49 @@ public class MainController {
 		return wsdto;
 	}//end apiExporler
 	
+	
+	
+	
+	 //공지사항 내용 가져옴
+	   @RequestMapping(method={RequestMethod.GET}
+	               , value="/user/noticeView.action")
+	   public String noticeContent(HttpServletRequest request, HttpSession session, HttpServletResponse response
+	            ,String noticeSeq) throws IOException{
+	      
+	      
+		  String seq = noticeSeq;
+	   
+	      // 공지사항 게시글 정보 가져오기
+	      NoticeDTO noticeContent = noticeDao.notice(seq);
+
+	      
+	      List<NoticeFileDTO> listFileType = new ArrayList<>();
+	      for(int i=0; i<noticeContent.getFilelist().size(); i++){
+	         
+	         String str = noticeContent.getFilelist().get(i).getNoticeFileName();
+	         String[] ddd = str.split("\\.");
+	         
+	         NoticeFileDTO fileNameDto = new NoticeFileDTO();
+	         fileNameDto.setNoticeFileName(str);
+	         fileNameDto.setNoticeFileType(ddd[1]);
+	         listFileType.add(fileNameDto);
+	      }
+	      
+	      noticeContent.setFilelist(listFileType);
+	     
+	      request.setAttribute("noticeContent", noticeContent);
+	      
+	      
+	      //readcount 값 바꾸기, 조회수 추가
+	      if(session.getAttribute("readcount")==null 
+	               || session.getAttribute("readcount").equals("n")){
+	    	  noticeDao.addReadCount(seq);
+	            session.setAttribute("readcount","y");
+	            
+	       System.out.println(session.getAttribute("readcount"));
+	         }
+	      
+	      
+	      return "user/noticeView";
+	   }
 }

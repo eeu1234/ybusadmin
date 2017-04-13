@@ -129,24 +129,37 @@ public class AuthCheck {
       System.out.println("최고관리자 인가요? : "+adto.getAdminLevel());
       
       //보조 업무 9999 아닌 얘들
+      int result = 0;	//0이면 접근 가능, 1이면 접근 금지.
       
-      if(session == null || adto.getAdminLevel().isEmpty()
-    		  || !adto.getAdminLevel().equals("9999")){
-         try {
-            
-            //인증 받지 못한 사람들..
-            //response.sendRedirect("/spring/index.action");
-            response.setCharacterEncoding("UTF-8");
-            PrintWriter writer = response.getWriter();
-            writer.print("<script>");
-            writer.print("location.href='/spring/admin/adminLogin.action';");
-            writer.print("</script>");
-            writer.close();
-            
-         } catch (Exception e) {
-            e.printStackTrace();
-         }
-	         
+      try {
+    	  //이 중 해당되면 로그인 안되었거나 일반 관리자라는 뜻.
+	      if(adto.getAdminLevel()==null || adto.getAdminLevel().isEmpty()
+	    		  || !adto.getAdminLevel().equals("9999")){
+	    	  result = 1;
+		         
+	      }else{
+	    	  result = 0;
+	      }
+      } catch (Exception e) {
+    	  //에러 나면 로그인 안되었다는 뜻. null 상태.
+    	  result = 1;
+      }
+      //if조건으로 result가 1 일 때만 로그인창으로 튕겨내기
+      if(result == 1){
+    	  try {
+              
+              //인증 받지 못한 사람들..
+              //response.sendRedirect("/spring/index.action");
+              response.setCharacterEncoding("UTF-8");
+              PrintWriter writer = response.getWriter();
+              writer.print("<script>");
+              writer.print("location.href='/spring/admin/adminLogin.action';");
+              writer.print("</script>");
+              writer.close();
+              
+           } catch (Exception e) {
+              e.printStackTrace();
+           }
       }
       
    }

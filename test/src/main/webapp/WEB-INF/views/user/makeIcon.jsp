@@ -364,6 +364,9 @@ body, html {
 #infoImg{
 	width:100%;
 }
+#logo{
+	opacity:0.6;
+}
 </style>
 
 <script>
@@ -397,13 +400,13 @@ function moveMap(){
 		<div id="top">
 			<div id="header">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
 					<div id="txtLogo">
 					
 					How to Add
 					
 					</div>
-					<img src="/spring/images/timeLine/header_logo.png" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>
 				</div>
 			</div>
 
