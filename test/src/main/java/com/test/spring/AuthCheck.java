@@ -1,5 +1,6 @@
 package com.test.spring;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,8 +51,7 @@ public class AuthCheck {
 		   + "|| execution(String *.NoticeController.*(..))"
 		   + "|| execution(String *.UniversityController.*(..))"
 		   + "|| execution(String *.BusStopManageController.*(..))"
-		   + "|| execution(String *.AdminManageController.*(..))"
-		   + "|| execution(String *.BusScheduleController.*(..))")
+		   + "|| execution(String *.AdminManageController.*(..))")
    public void member(){}
    
    @Before("member()")
@@ -117,9 +117,9 @@ public class AuthCheck {
    @Before("root()")
    public void checkRoot(JoinPoint joinPoint){
 	   
-	   
+	   int result = 0;
 	
-      //joinPoint: 주업무 참조하는 프록시 객체
+      //joinPoint: 주업무 참조하는 프 록시 객체
       Object[] args = joinPoint.getArgs();
       
       HttpServletRequest request = (HttpServletRequest)args[0];
@@ -128,29 +128,38 @@ public class AuthCheck {
       
       
       AdminUniversityDTO adto = (AdminUniversityDTO) session.getAttribute("adto");
-      System.out.println("최고관리자 인가요? : "+adto.getAdminLevel());
-      
+     
       //보조 업무 9999 아닌 얘들
       
-      if(session == null || adto.getAdminLevel().isEmpty()
-    		  || !adto.getAdminLevel().equals("9999")){
-         try {
-            
-            //인증 받지 못한 사람들..
-            //response.sendRedirect("/spring/index.action");
-            response.setCharacterEncoding("UTF-8");
-            PrintWriter writer = response.getWriter();
-            writer.print("<script>");
-            writer.print("location.href='/spring/admin/adminLogin.action';");
-            writer.print("</script>");
-            writer.close();
-            
-         } catch (Exception e) {
-            e.printStackTrace();
-         }
-	         
-      }
+      //response.sendRedirect("/spring/index.action");
+      try {
+    	  //로그인 했는데 9999 가 아니다? 일반 관리자가 접근했다는 것.
+		  if(adto.getAdminLevel() == null || adto.getAdminLevel().isEmpty()
+			    		  || !adto.getAdminLevel().equals("9999")){
+			  
+			  result = 1;
+		  }else{
+			  //전혀 해당안되면 최고 관리자가 접근했다는 것.
+			  result = 0;
+		  }
+      }catch (Exception e) {
+    	  //에러 발생하면 없다는 거다.
+    	  result = 1;
+	  }
       
+      if(result == 1){
+	    try {
+		      //인증 받지 못한 사람들..
+			  response.setCharacterEncoding("UTF-8");
+			  PrintWriter writer = response.getWriter();
+	          writer.print("<script>");
+	          writer.print("location.href='/spring/admin/adminLogin.action';");
+	          writer.print("</script>");
+	          writer.close();
+	    } catch (Exception e) {
+	  	  
+	    }
+      }
    }
    
    

@@ -182,7 +182,7 @@
 					<div id="submitBtn">
 						<input type="button" value="되돌아가기" onclick="history.back();" class="btn btn-default"/>
 						<input type="button" value="계정생성하기" onclick="add();" class="btn btn-primary"	 />
-						</div>
+					</div>
 		</form>
 	</div><!-- content -->
 	

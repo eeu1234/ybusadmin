@@ -14,6 +14,11 @@ public class AdminUniversityDTO {
 	private String universityTel;     			 //대학교 연락처
 	private String universityLatitude;  		 //대학교 위도
 	private String universityLongitude;  		 //대학교 경도
+	
+	public AdminUniversityDTO(){
+		
+	}
+	
 	public String getAdminID() {
 		return adminID;
 	}

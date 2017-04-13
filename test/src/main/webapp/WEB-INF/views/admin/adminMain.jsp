@@ -83,7 +83,7 @@
 										<option value="${dto.universitySeq},${dto.universityName}">${dto.universityName}</option>
 									</c:forEach>
 								</select>
-								<input type="submit" value="검색" onclick="search();" class="btn btn-primary" style="margin-left:5%;;">
+								<input type="submit" value="검색" onclick="search();" class="btn btn-info" style="margin-left:5%;;">
 							</c:if>
 				</div>
 		</form>

@@ -62,7 +62,7 @@
 			</table>
 			<div id="submitBtn">
 				<input type="button" value="되돌아가기" onclick="history.back();" class="btn btn-default"/>
-				<input type="button" value="수정하기" class="btn btn-primary"
+				<input type="button" value="수정하기" class="btn btn-warning"
 					onclick="location.href='/spring/admin/adminUpdate.action?adminID=${adto.adminID}&my=my'" />
 			</div>
 		</form>
