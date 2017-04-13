@@ -120,7 +120,7 @@ html, body {
 $().ready(function(){
 	$("#tbl").tableDnD();
 	
-	$("#tbl tr").mouseup(function(){
+	$(document).mouseup(function(){
 		//console.log($(this).children().eq(1).text());
 		//console.log($("#tbl tbody tr").length);
 		//테이블 tr사이즈만큼 돌리면서 순서대로 순서를 채워넣는다
@@ -134,7 +134,7 @@ $().ready(function(){
 		}
 
 	});
-	$("#tbl tbody tr").mouseup(function(){
+	$(document).mouseup(function(){
 		//$(this).css("background-color","white");
 
 		$("#tbl tbody tr").css("background-color","");

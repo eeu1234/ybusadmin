@@ -174,7 +174,7 @@ $(document).ready(function() {
 			return;
 			
 		} else {
-			alert(filename.files.length+"개의 파일을 업로드합니다."); 
+			//alert(filename.files.length+"개의 파일을 업로드합니다."); 
        		frm.submit();
 		}   
     }
