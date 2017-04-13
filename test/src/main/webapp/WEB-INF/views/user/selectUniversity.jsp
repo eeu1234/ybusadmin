@@ -6,55 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Cambus</title>
-
-
-<!-- 모바일용웹 -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
-
-<meta name="mobile-web-app-capable" content="yes">
-
-<!-- import 시작 -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-	crossorigin="anonymous"></script>
-
-<link
-	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
-	rel="stylesheet">
-<script
-	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
-
-
-
-<!-- ico 아이콘-->
-
-<link rel="apple-touch-icon" href="/mobile/Image/favicon.ico">
-<link rel="stylesheet" href="/spring/css/newTimeline.css">
-
-<script
-  src="https://code.jquery.com/jquery-1.12.4.min.js"
-  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-  crossorigin="anonymous"></script>
+<%@include file="/inc/userAsset.jsp" %>
 
 
 <style>
-@font-face {
-	font-family: "notoFont-medium";
-	src: url(/spring/css/fonts/NotoSansCJKkr-Medium.woff) format("truetype");
-}
-
-@font-face {
-	font-family: "notoFont-bold";
-	src: url(/spring/css/fonts/NotoSansCJKsc-Bold.woff) format("truetype");
-}
-
-body, p, div, li, ul, span, img {
-	margin: 0;
-	padding: 0;
-}
-
 img {
 	width: 60%;
 	height: auto;
@@ -80,15 +35,16 @@ body, html {
 	max-width: 480px;
 	height: 568px;
 	margin: 0 auto;
-	background-color: yellow;
+
 }
 
 #top {
-	position: fixed;
+	position: relative;
 	max-width: 480px;
 	width: 100%;
-	height: 25%;
+	height: 15%;
 	z-index: 3;
+	text-align:center;
 }
 
 #header {
@@ -112,7 +68,7 @@ body, html {
 	position: relative;
 	width: 60%;
 	height: 80%;
-	padding-top: 3.5%;
+	padding-top: 2.5%;
 	margin: 0 auto;
 	font-weight: bold;
 }
@@ -165,19 +121,16 @@ body, html {
 #contents {
 	position: relative;
 	width: 100%;
-	height: 90%;
+	height: 75%;
 	margin: 0;
 	padding: 0;
-	padding-top:12%;
+	padding-top:23%;
 
 	background-color: white;
 }
 /* 아이폰5 */
 @media(max-width:320px) { 
- #contents{
- padding-top:15%;
- } 
-}
+	}
 /* 정류장 타임라인 틀 시작 */
 #lineArea {
 	position: relative;
@@ -313,7 +266,7 @@ body, html {
 #footer {
 	position: relative;
 	width: 95%;
-	height: 25%;
+	height: 65%;
 	background-color: #bfbfbf;
 	text-align: left;
 	color: #272727;
@@ -343,10 +296,23 @@ body, html {
 	 cursor:pointer;
 }
 
-#detailLocationSel{
+      
+    #mapAP { 
+     height: 100%;
+     width:100%;
+
+ }
+#selUni{
+	width:100%;
+	height:10%;
+	margin:0;
+	padding:0;
+}
+ 
+#universitySeq{
 
 	 width:50%;
-	 height:80%;
+	 height:100%;
 	 margin:0;
 	 padding:0;
 	 margin-right:5%;
@@ -354,43 +320,35 @@ body, html {
 
 
 }
+.selectBox{
+	color:#555;
+	background-color: #fff;
+	border:1px solid #ccc;
+	border-radius:4px;
+	text-align:center;
+}
 
-#top{
-	position: fixed;
-	width: 100%;
-	height: 7%;
-	z-index: 3;
-}
-#infoImg{
-	width:100%;
-}
-#logo{
-	opacity:0.6;
+#cambusLogo{
+	width:85%;
+	height:auto;
+
 }
 </style>
-
 <script>
-$(document).ready(function(){
-	$(".stopName").click(function(){
+
+	$(document).ready(function(){
 		
-		location.href="/spring/getBusStopRoadView.action?busStopSeq="+$(this).attr("busStopSeq");
-	});
-	
-	$("#detailLocationSel").change(function(){
-		var bsdcSeq = $(this).val();
-		location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
-	});
-});
+		$("#universitySeq").change(function(){
+			$("#selUni").submit();
+		});
+		
+	})
 
-function refresh(){
-	var bsdcSeq = $("#detailLocationSel").val();
-	location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
-}
+	function move(){
 
-function moveMap(){
-	var bsdcSeq = $("#detailLocationSel").val();
-	location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
-}
+		var uniSeq = $(this).val();
+		location.href="/spring/mainIndex.action?universitySeq="+uniSeq;
+	}
 	
 </script>
 
@@ -400,26 +358,26 @@ function moveMap(){
 		<div id="top">
 			<div id="header">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
 					<div id="txtLogo">
-					
-					How to Add
-					
+						학교 선택
 					</div>
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>
+					
 				</div>
-			</div>
-
-			
-		</div>
-		<div id="contents">
-			<div id="lineArea">
-				<img src="/spring/images/info.jpg" id="infoImg">
 				
 			</div>
-			<!-- lineArea  -->
-
+			<img id="cambusLogo"src="/spring/images/logo.PNG" onerror="this.style.display='none'"/>
 		</div>
+		<div id="contents">
+			<form id="selUni" action="/spring/mainIndex.action" method="GET">
+				<select id = "universitySeq" name = "universitySeq" class="selectBox">
+					<option value="9999">학교를 선택해주세요</option>
+					<c:forEach items="${uniList}" var="uniDto">
+						<option value="${uniDto.universitySeq}" onclick="move();">${uniDto.universityName}</option> 	
+					</c:forEach>
+				</select>
+			</form>
+		</div>
+
 		
 	</div>
 </body>

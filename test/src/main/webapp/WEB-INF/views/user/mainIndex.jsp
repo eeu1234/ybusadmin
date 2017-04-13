@@ -95,7 +95,7 @@ body, html, p, ul, img, span, div, a {
 
 body, html {
 	position: relative;
-	height: 110%;
+	height: 100%;
 	width: 100%;
 	max-width: 1000px;
 	font-family: 'notoFont-bold';
@@ -159,7 +159,7 @@ body, html {
 #content {
 	position: relative;
 	margin: 0 auto;
-	margin-top: 5%;
+	margin-top: 10%;
 	width: 100%;
 	height: 81%;
 }
@@ -312,6 +312,47 @@ ul,li{
 </style>
 
 <script>
+$(function(){
+	if(isMobile.any()){
+	    if(isMobile.Android()){
+	 
+	    }else if(isMobile.IOS()){
+	        $('body').css("height","110%");
+	    }else if(isMobile.BlackBerry()){
+	        
+	    }else if(isMobile.Opera()){
+	        
+	    }else if(isMobile.Windows()){
+	        
+	    }
+	}
+
+
+});
+
+
+//모바일 에이전트 구분
+var isMobile = {
+        Android: function () {
+                 return navigator.userAgent.match(/Android/i) == null ? false : true;
+        },
+        BlackBerry: function () {
+                 return navigator.userAgent.match(/BlackBerry/i) == null ? false : true;
+        },
+        IOS: function () {
+                 return navigator.userAgent.match(/iPhone|iPad|iPod/i) == null ? false : true;
+        },
+        Opera: function () {
+                 return navigator.userAgent.match(/Opera Mini/i) == null ? false : true;
+        },
+        Windows: function () {
+                 return navigator.userAgent.match(/IEMobile/i) == null ? false : true;
+        },
+        any: function () {
+                 return (isMobile.Android() || isMobile.BlackBerry() || isMobile.IOS() || isMobile.Opera() || isMobile.Windows());
+        }
+};
+
 
 	
 </script>

@@ -39,12 +39,8 @@ public class MainController {
 	@Autowired
 	private MainDAO dao;
 	
-
-	
-	
 	@Autowired
 	private NoticeDAO noticeDao;
-	
 	
 	
 	@RequestMapping(method={RequestMethod.GET}, value="/index.action")
@@ -53,47 +49,67 @@ public class MainController {
 	        
 	        //내용
 			StringBuffer url = request.getRequestURL();
+			System.out.println("check1");
 			String urlStr = url.toString();
 			UniversityDTO universityDto;
 			//도메인에 따른 universitySeq를 가져옴
+			System.out.println("check2");
 			if(session.getAttribute("universityDto") == null){
 				//도메인에 따른 universitySeq를 가져옴
-				
+				System.out.println("check3");
 				universityDto = dao.getUniversitySeq(urlStr);
 				
 //				String universitySeq = universityDto.getUniversitySeq() ;
 				
-				 
-				session.setAttribute("universityDto", universityDto);
+				if(universityDto==null){
+					System.out.println("check4");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/selectUniversity.action");
+					dispatcher.forward(request, response);
 				
-				request.setAttribute("universitySeq", universityDto.getUniversitySeq());
+				}else{
+					System.out.println("check5");
+					session.setAttribute("universityDto", universityDto);
+					
+					request.setAttribute("universitySeq", universityDto.getUniversitySeq());
 				
+					try {
+						System.out.println("check6");
+						RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");			
+						//response.sendRedirect("/spring/mainIndex.action");
+						dispatcher.forward(request, response);
+				
+					} catch (IOException e) {
+						System.out.println("check7");
+						e.printStackTrace();
+					} catch (ServletException e) {
+						// TODO Auto-generated catch block
+						System.out.println("check8");
+						e.printStackTrace();
+					}
+				}
+				
+				System.out.println("check9");
+				
+			}else{
+				System.out.println("check10");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");			
+				//response.sendRedirect("/spring/mainIndex.action");
+				dispatcher.forward(request, response);
 			}
 			//System.out.println("universitySeq==="+universitySeq);
 			
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");
 			
-			try {
-				
-				//response.sendRedirect("/spring/mainIndex.action");
-				dispatcher.forward(request, response);
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			} catch (ServletException e) {
-				// TODO Auto-generated catch block
-				
-				e.printStackTrace();
-			}
+			
      } catch (Exception e) {
     	 e.printStackTrace();
 	        session.invalidate();
 	        try {
-	           
-	           response.sendRedirect("/spring/user/selectUniversity.action");
+	        	System.out.println("check11");
+	           response.sendRedirect("/selectUniversity.action");
 	        } catch (Exception e2) {
 	           // TODO: handle exception
+	        	System.out.println("check12");
 	        	e2.printStackTrace();
 	        }
 	     }
@@ -106,12 +122,26 @@ public class MainController {
 	public String mainIndex(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,UniversityDTO universityDTO){
 		
 		try {
-	         
+			System.out.println("check13");
+			UniversityDTO universityDto = new UniversityDTO();
 	         //내용
+			
 			WeatherStatDTO wsdto = apiExplorer();
 			universityDTO = (UniversityDTO) session.getAttribute("universityDto");
-
-			universitySeq = universityDTO.getUniversitySeq();
+			if(universitySeq!=null){
+				universityDTO = dao.getUniversityDtoSeq(universitySeq);
+				session.setAttribute("universityDto", universityDTO);
+			}
+			
+			if(universityDTO==null){
+				response.sendRedirect("/index.action");
+				
+			}else{
+				
+				universitySeq = universityDTO.getUniversitySeq();
+				System.out.println("check15"+universityDTO.getUniversitySeq());
+			}
+			
 			
 		
 			//busStopCategorySeq ="2";
@@ -122,6 +152,8 @@ public class MainController {
 			//이학교에 있는 노선을 메인 화면에 띄워주어야함
 			//노선목록 들고옴.
 			//공지사항목록 들고옴.
+			System.out.println("check16");
+			System.out.println(map.get("universitySeq"));
 			List<NoticeDTO> nList = dao.getAllNotice();
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
 			List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
@@ -130,21 +162,23 @@ public class MainController {
 			request.setAttribute("wsdto", wsdto);
 			request.setAttribute("bsdcList", bsdcList);
 			request.setAttribute("bscList", bscList);
+			System.out.println("check17");
+			return "user/mainIndex";
 			
-			
-		
 	         
 	      } catch (Exception e) {
 	         session.invalidate();
 	         try {
-	            
-	        	 response.sendRedirect("/spring/user/selectUniversity.action");
+	        	 System.out.println("check18");
+	        	response.sendRedirect("/selectUniversity.action");
 	            return "";
 	         } catch (Exception e2) {
 	            // TODO: handle exception
+	        	 System.out.println("check19");
+	        	 return "";
 	         }
 	      }
-		return "user/mainIndex";
+		
 	}
 	
 	@RequestMapping(method={RequestMethod.GET},value="/user/makeIcon.action")
@@ -162,7 +196,7 @@ public class MainController {
 	         session.invalidate();
 	         try {
 	            
-	        	 response.sendRedirect("/spring/user/selectUniversity.action");
+	        	 response.sendRedirect("/selectUniversity.action");
 	         } catch (Exception e2) {
 	            // TODO: handle exception
 	         }
@@ -171,6 +205,17 @@ public class MainController {
 		return "user/makeIcon";
 		
 	}
+	
+	@RequestMapping(method={RequestMethod.GET},value="/selectUniversity.action")
+	public String selectUniversity(HttpServletRequest request, HttpSession session, HttpServletResponse response){
+		
+		List<UniversityDTO> uniList = dao.getAllUniversity();
+		
+		
+		request.setAttribute("uniList", uniList);
+		return "user/selectUniversity";
+	}
+	
 	
 	double RE = 6371.00877; // 지구 반경(km)
 	double GRID = 5.0; // 격자 간격(km)
@@ -385,10 +430,7 @@ public class MainController {
 		return wsdto;
 	}//end apiExporler
 	
-	
-	
-	
-	 //공지사항 내용 가져옴
+	//공지사항 내용 가져옴
 	   @RequestMapping(method={RequestMethod.GET}
 	               , value="/user/noticeView.action")
 	   public String noticeContent(HttpServletRequest request, HttpSession session, HttpServletResponse response

@@ -40,4 +40,12 @@ public class MainDAO {
 		// TODO Auto-generated method stub
 		return sql.selectOne("mainIndex.getUniversitySeq",urlStr);
 	}
+	public UniversityDTO getUniversityDtoSeq(String universitySeq) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("mainIndex.getUniversityDtoSeq",universitySeq);
+	}
+	public List<UniversityDTO> getAllUniversity() {
+		// TODO Auto-generated method stub
+		return sql.selectList("mainIndex.getAllUniversity");
+	}
 }

@@ -110,5 +110,5 @@
                         INNER JOIN BUSSTOP D ON Y.busStopDetailCategorySeq = D.BUSSTOPDETAILCATEGORYSEQ ) Z
                            WHERE universitySeq = #{universitySeq} AND BUSSTOPCATEGORYSEQ=#{busStopCategorySeq} AND busStopDetailCategorySeq = #{busStopDetailCategorySeq} and busStopDetailCategoryStat ='show' and busStopCategoryStat = 'show'
    </select>
-   
+    
 </mapper>

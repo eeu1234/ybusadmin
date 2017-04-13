@@ -91,4 +91,6 @@ public class BusStopMapDAO {
 		// TODO Auto-generated method stub
 		return sql.selectOne("busStop.getSpecipicAvgBusStopLanLon",map);
 	}
+	
+	
 }
