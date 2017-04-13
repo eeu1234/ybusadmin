@@ -43,7 +43,9 @@
 <body>
 
 	<%@include file="/inc/top.jsp"%>
+	<div class = "mainTitle">
 	<h1>디바이스 관리 페이지</h1>
+	</div>
 	<table id = "tbl" class="table table-striped">
 		<tr>
 			<th>기기번호</th>

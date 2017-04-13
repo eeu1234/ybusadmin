@@ -56,7 +56,8 @@
 </head>
 <body>
 	<%@include file="/inc/top.jsp"%>
-	<h1 class="menuTitle">대학 추가하기</h1>
+	<div class="menuTitle">
+	<h1>대학 추가하기</h1></div>
 	
 	<div id="container">
 	<form method="POST" action="/spring/university/universityAddOk.action" enctype="multipart/form-data">

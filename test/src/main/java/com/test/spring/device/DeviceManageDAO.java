@@ -80,6 +80,12 @@ public class DeviceManageDAO {
 		return sql.selectList("device.deviceInfoNullList",seq);
 	}
 	
+	//이전에 사용 내역이 있는 디바이스 정보 불러오기
+	public List<DeviceDTO> deviceInfoHideList(String seq){
+		
+		return sql.selectList("device.deviceInfoHideList",seq);
+		
+	}
 	
 	//버스 정보 불러오기
 	public List<BusInfoDTO> busInfoList(String seq) {
@@ -109,6 +115,7 @@ public class DeviceManageDAO {
 		sql.update("device.deviceBusStatUp",dmap);
 		
 	}
+	
 
 
 	

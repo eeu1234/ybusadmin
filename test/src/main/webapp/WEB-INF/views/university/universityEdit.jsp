@@ -12,18 +12,24 @@
 
 		init();
 		
-		$(".tel").change(function(){
+		$(".tel").change(
+				function() {
+					if($("#universityTel1").val()!=""){
+			            
+						var tel = $("#universityTel1").val()+"-"+$("#universityTel2").val()+"-"+$("#universityTel3").val();
+						$("#universityTel").val(tel);
 
+					} else {
+						var tel = $("#universityTel2").val()+"-"+$("#universityTel3").val();
+						$("#universityTel").val(tel);
 
-			if($("#universityTel1").val()!=""){
-				$("#universityTel").val($("#universityTel1").val()+"-"+$("#universityTel2").val()+"-"+$("#universityTel3").val());
-			} else {
+					}
 
-				$("#universityTel").val($('#universityTel2').val()+"-"+$('#universityTel3').val());
+					if(tel=="-") {
+						$("#universityTel").val("");
+					}
 
-			}
-			
-			
+					
 		});
 		
 	});
@@ -34,13 +40,15 @@
 		var utel = result.split("-");
 
 
-		if(utel.length<3){
+		if(utel.length<3 && utel.length>1){
 			$("#universityTel2").val(utel[0].toString());
 			$("#universityTel3").val(utel[1].toString());
-		} else{
+		} else if(utel.length==3){
 			$("#universityTel1").val(utel[0].toString());
 			$("#universityTel2").val(utel[1].toString());
 			$("#universityTel3").val(utel[2].toString());
+		} else {
+			$("#universityTel2").val(utel[0].toString());
 		}
 
 	}

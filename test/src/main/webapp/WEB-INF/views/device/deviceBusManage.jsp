@@ -6,16 +6,53 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css">
 
 <style>
 
-#tblDevice{
+#tblDevice {
+	width: 100%;
 	margin-top: 30px;
+
 }
 
-.busInfoNum{
-	width : 200px;
+#tblDevice tr th:nth-child(1), #tblDevice tr td:nth-child(1){
+
+	width: 30%;
 }
+
+#tblDevice tr th:nth-child(2), #tblDevice tr td:nth-child(2){
+
+	width: 15%;
+}
+
+#tblDevice tr th:nth-child(3), #tblDevice tr td:nth-child(3){
+
+	width: 15%;
+}
+
+#tblDevice tr th:nth-child(4), #tblDevice tr td:nth-child(4){
+
+	width: 10%;
+}
+
+#tblDevice tr th:nth-child(5), #tblDevice tr td:nth-child(5){
+
+	width: 15%;
+}
+
+#tblDevice tr th:nth-child(6), #tblDevice tr td:nth-child(6){
+
+	width: 10%;
+}
+
+#tblDevice tr th:nth-child(7), #tblDevice tr td:nth-child(7){
+
+	width: 5%;
+}
+
+
+
 </style>
 <script>
 	$().ready(function(){
@@ -79,7 +116,7 @@
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
-	<h1>디바이스 리스트</h1>
+	<div class="mainTitle"><h1>디바이스 리스트</h1></div>
 
 	<table id="tblDevice"  class="table table-striped" >
 		<tr>
@@ -97,10 +134,10 @@
 			
 			
 			<td>${dvdto.deviceModel}</td>
-			<td><input type="text" id="deviceTel${dvdto.deviceSeq}" placeholder="${dvdto.deviceTel}" name="deviceTel" class="form-control"></td>
+			<td><input type="text" id="deviceTel${dvdto.deviceSeq}" placeholder="${dvdto.deviceTel}" name="deviceTel" maxlength="11"></td>
 			<td>${dvdto.busInfoName}</td>
 			<td>
-			<select id = "busInfoNum${dvdto.deviceSeq}" class="busInfoNum form-control" name="busNumber">
+			<select id = "busInfoNum${dvdto.deviceSeq}" class="busInfoNum" name="busNumber">
 				<option value="-1">선택</option>
 				<c:forEach items="${busList}" var ="busdto">
 				<%-- <c:if test="${dbdto.busInfoName}==${busdto.busInfoName}">
@@ -133,10 +170,10 @@
 			
 			
 			<td>${dndto.deviceModel}</td>
-			<td><input type="text" id="deviceTel${dndto.deviceSeq}" placeholder="${dndto.deviceTel}" name="deviceTel" class="form-control"></td>
+			<td><input type="text" id="deviceTel${dndto.deviceSeq}" placeholder="${dndto.deviceTel}" name="deviceTel" maxlength="11"></td>
 			<td>${dndto.busInfoName}</td>
 			<td>
-			<select id = "busInfoNum${dndto.deviceSeq}" class="busInfoNum form-control" name="busNumber">
+			<select id = "busInfoNum${dndto.deviceSeq}" class="busInfoNum" name="busNumber">
 				<option value="-1">선택</option>
 				<c:forEach items="${busList}" var ="busdto">
 				<option value="${busdto.busInfoSeq}">${busdto.busInfoNum}</option>
@@ -146,20 +183,32 @@
 			
 			<td></td>
 			<td></td>
-			
-			<%-- 
-			<td>
-			<select id="busStopCategory${dvdto.deviceSeq}" class="busStopCategory" name="busStopCategory">
-				<option value="-1">카테고리 선택</option>
-				<c:forEach items="${bsclist}" var="bsdto">
-				<option value="${bsdto.busStopCategorySeq}">${bsdto.busStopCategory}</option>
-				</c:forEach>
-			</select>
-			</td>
-			--%>
 			<td><input type="button" value = "확인" onclick="add(${dndto.deviceSeq});" class="btn btn-primary"></td>
 		</tr>
 		</c:forEach>
+		
+		<c:forEach items="${dHList}" var ="dhdto">
+		<tr>
+			
+			
+			<td>${dhdto.deviceModel}</td>
+			<td><input type="text" id="deviceTel${dhdto.deviceSeq}" placeholder="${dhdto.deviceTel}" name="deviceTel" maxlength="11"></td>
+			<td>${dhdto.busInfoName}</td>
+			<td>
+			<select id = "busInfoNum${dhdto.deviceSeq}" class="busInfoNum" name="busNumber">
+				<option value="-1">선택</option>
+				<c:forEach items="${busList}" var ="busdto">
+				<option value="${busdto.busInfoSeq}">${busdto.busInfoNum}</option>
+				</c:forEach>
+			</select>
+			</td>
+			
+			<td></td>
+			<td></td>
+			<td><input type="button" value = "확인" onclick="add(${dhdto.deviceSeq});" class="btn btn-primary"></td>
+		</tr>
+		</c:forEach>
+		
 		
 	</table>
 

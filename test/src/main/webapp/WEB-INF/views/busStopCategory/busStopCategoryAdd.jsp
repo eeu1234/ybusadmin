@@ -43,7 +43,9 @@
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
+	<div class = "mainTitle">
 	<h1>대분류(버스종류) 관리</h1>
+	</div>
 		<table id= "tblCategory" name ="tblCategory" class="table table-striped">
 		<tr>
 			<th>노선 번호</th>

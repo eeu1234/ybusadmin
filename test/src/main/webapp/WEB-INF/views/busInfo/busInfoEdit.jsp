@@ -48,7 +48,9 @@ html, body {
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
+	<div class = "mainTitle">
 	<h1>버스 정보 수정 페이지</h1>
+	</div>
 	<form method="POST" action="/spring/busInfo/busInfoEditOk.action">
 		<table id="tbl" class="table table-striped">
 			<tr>

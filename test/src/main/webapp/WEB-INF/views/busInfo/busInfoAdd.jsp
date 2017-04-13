@@ -30,7 +30,8 @@
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
-	<h1>버스 추가</h1>
+	<div class = "mainTitle">
+	<h1>버스 추가</h1></div>
 	
 	<form method = "POST" action="/spring/busInfo/busInfoAddOk.action">
 		<table id="tblBus" class="table table-striped">

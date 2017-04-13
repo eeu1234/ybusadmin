@@ -31,7 +31,7 @@
 <body>
 	<%@include file="/inc/top.jsp" %>
 
-	<h1>버스 카테고리 관리</h1>
+	<div class = "mainTitle"><h1>버스 카테고리 관리</h1></div>
 	<form method="POST" action="/spring/admin/busStopCategoryMatchOk.action">
 	<table class="table table-striped">
 		<tr>
@@ -50,8 +50,12 @@
 			<td>${bdto.busInfoStat}</td>
 			
 			<td>
+			<div class="btnForm">
 			<input type="button" class="btn btn-primary" value="수정" onclick="busEdit(${bdto.busInfoSeq});">
+			<div style="margin-left">
 			<input type="button" class="btn btn-danger" value="삭제" onclick="busDelete(${bdto.busInfoSeq});">
+			</div>
+			</div>
 			</td>
 		</tr>
 		</c:forEach>

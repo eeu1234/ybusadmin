@@ -8,6 +8,8 @@
 <meta charset=UTF-8">
 <title>Insert title here</title>
 
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css">
+
 <style>
 #universityName{
 	width : 300px;
@@ -35,7 +37,7 @@
 <body>
 
 	<%@include file="/inc/top.jsp"%>
-	<h1>배치가능한 디바이스 리스트</h1>
+	<div class = "mainTitle"><h1>배치가능한 디바이스 리스트</h1></div>
 	<table id = "tblNullDevice" class="table table-striped">
 		<tr>
 			<th>기기번호</th>
@@ -58,7 +60,7 @@
 			</select>
 			</td>
 			<td>
-			<input type="button" id="sel" value="적용" onclick="add(${ddto.deviceSeq});" class="btn btn-primary" >
+			<div id="btnForm"><input type="button" id="sel" value="적용" onclick="add(${ddto.deviceSeq});" class="btn btn-primary" ></div>
 			</td>
 		</tr>
 		

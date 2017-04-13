@@ -30,6 +30,10 @@ html, body {
    height: 80px;
 }
 
+#tbl{
+	margin-top: 30px;
+}
+
 </style>
 <script>
 	
@@ -46,7 +50,9 @@ html, body {
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
+	<div class = "mainTitle">
 	<h1>대분류 수정 페이지</h1>
+	</div>
 	<form method="POST" action="/spring/busStopCategory/busStopCategoryEditOk.action">
 		<table id="tbl" class="table table-striped">
 			<tr>

@@ -31,22 +31,50 @@ public class DeviceManageController {
 	@RequestMapping(method = { RequestMethod.GET }, value = "/device/deviceMain.action")
 	public String device(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
 	
-		
-		return "device/deviceMain";
+		try{
+			return "device/deviceMain";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	//비어있는 단말기 리스트 가져오기
 	@RequestMapping(method = { RequestMethod.GET }, value = "/device/deviceNullList.action")
 	public String deviceNullList(HttpServletRequest request,HttpSession session, HttpServletResponse response) {
-		
-		List<DeviceDTO> dlist= dao.deviceNullList();
-		List<UniversityDTO> ulist = dao.universityList();
-		
-		
-		request.setAttribute("dlist", dlist);
-		request.setAttribute("ulist", ulist);
-		
-		return "device/deviceList";
+		try{
+			List<DeviceDTO> dlist= dao.deviceNullList();
+			List<UniversityDTO> ulist = dao.universityList();
+			
+			
+			request.setAttribute("dlist", dlist);
+			request.setAttribute("ulist", ulist);
+			
+			return "device/deviceList";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	//단말기에 학교 정보 입력
@@ -55,22 +83,50 @@ public class DeviceManageController {
 		
 		HashMap<String, String> dmap = new HashMap<String, String>();
 		
-		dmap.put("seq", seq);
-		dmap.put("universityName", universityName);
-		
-		int result = dao.deviceAddUniv(dmap);
-		
-		request.setAttribute("result", result);
-		
-		return "device/deviceAddUnivOk";
+		try{
+			dmap.put("seq", seq);
+			dmap.put("universityName", universityName);
+			
+			int result = dao.deviceAddUniv(dmap);
+			
+			request.setAttribute("result", result);
+			
+			return "device/deviceAddUnivOk";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 
 
 	//단말기 관리 출력	
 	@RequestMapping(method={RequestMethod.GET}, value="/device/deviceBusManage.action")
-	public String deviceManage(HttpServletRequest request){
-		
-		return "device/deviceBusManage";
+	public String deviceManage(HttpServletRequest request,HttpSession session, HttpServletResponse response){
+		try{
+			return "device/deviceBusManage";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 
 	
@@ -82,24 +138,44 @@ public class DeviceManageController {
 		
 		String seq = adto.getUniversitySeq();
 		
-		List<DeviceDTO> dvList = dao.deviceInfoList(seq);
 		
-		request.setAttribute("dvList", dvList);
+		try{
+			List<DeviceDTO> dvList = dao.deviceInfoList(seq);
+			
+			request.setAttribute("dvList", dvList);
+			
+			List<DeviceDTO> dNList = dao.deviceInfoNullList(seq);
+			
+			request.setAttribute("dNList", dNList);
+			
+			List<DeviceDTO> dHList = dao.deviceInfoHideList(seq);
+			
+			request.setAttribute("dHList", dHList);
+			
+			
+			List<BusInfoDTO> busList = dao.busInfoList(seq);
+			
+			request.setAttribute("busList", busList);
+			
+			List<BusStopCategoryDTO> bsclist = dao.busStopCategoryList(seq);
+			
+			request.setAttribute("bsclist", bsclist);
+			
+			return "device/deviceBusManage";
 		
-		List<DeviceDTO> dNList = dao.deviceInfoNullList(seq);
-		
-		request.setAttribute("dNList", dNList);
-		
-		List<BusInfoDTO> busList = dao.busInfoList(seq);
-		
-		request.setAttribute("busList", busList);
-		
-		List<BusStopCategoryDTO> bsclist = dao.busStopCategoryList(seq);
-		
-		request.setAttribute("bsclist", bsclist);
-		
-		return "device/deviceBusManage";
-		
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	
@@ -107,12 +183,27 @@ public class DeviceManageController {
 	@RequestMapping(method={RequestMethod.GET}, value ="/device/selBusInfo.action")
 	public String selBusName(HttpServletRequest request,HttpSession session, HttpServletResponse response, String seq){
 		
-		BusInfoDTO BusInfo = dao.selBusInfo(seq);
 		
-		request.setAttribute("BusInfo", BusInfo);
-		
-		
-		return "device/deviceBusManageData";
+		try{
+			BusInfoDTO BusInfo = dao.selBusInfo(seq);
+			
+			request.setAttribute("BusInfo", BusInfo);
+			
+			
+			return "device/deviceBusManageData";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 		
 	}
 	
@@ -151,28 +242,42 @@ public class DeviceManageController {
 	public String deviceBusAddOk(HttpServletRequest request,HttpSession session, HttpServletResponse response, String seq, String busInfoSeq, String deviceTel) {
 		
 		HashMap<String,String> dmap = new HashMap<String,String>(); 
-		
-		dmap.put("seq", seq);
-		dmap.put("busInfoSeq", busInfoSeq);
-		dmap.put("deviceTel", deviceTel);
-		
-		int result = 0;
-		
-		if(!busInfoSeq.equals("-1")){
-			dao.updateDeviceBusStat(dmap);
-			result = dao.insertDeviceBus(dmap);
+		try{
+			dmap.put("seq", seq);
+			dmap.put("busInfoSeq", busInfoSeq);
+			dmap.put("deviceTel", deviceTel);
 			
+			int result = 0;
+			
+			if(!busInfoSeq.equals("-1")){
+				dao.updateDeviceBusStat(dmap);
+				result = dao.insertDeviceBus(dmap);
+				
+			}
+			
+			if(deviceTel != ""){
+				
+				result = dao.updateDeviceTel(dmap);
+				
+			}
+			
+			request.setAttribute("result", result);
+			
+			return "device/deviceBusAddOk";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
 		}
-		
-		if(deviceTel != ""){
-			
-			result = dao.updateDeviceTel(dmap);
-			
-		}
-		
-		request.setAttribute("result", result);
-		
-		return "device/deviceBusAddOk";
 	}
 	
 }
