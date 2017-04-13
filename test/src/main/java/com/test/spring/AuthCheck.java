@@ -166,7 +166,8 @@ public class AuthCheck {
    
 
    //일반사용자페이지
-   @Pointcut("execution(String *.BusStopMapController.*(..)) ")//사용자페이지
+   @Pointcut("execution(String *.BusStopMapController.*(..)) "
+		   + "|| execution(String *.MainController.mainIndex(..))")//사용자페이지
 		 
    public void user(){}
    

@@ -347,7 +347,7 @@ body, html {
 	function move(){
 
 		var uniSeq = $(this).val();
-		location.href="/spring/mainIndex.action?universitySeq="+uniSeq;
+		location.href="/spring/uploadUniversity.action?universitySeq="+uniSeq;
 	}
 	
 </script>
@@ -368,7 +368,7 @@ body, html {
 			<img id="cambusLogo"src="/spring/images/logo.PNG" onerror="this.style.display='none'"/>
 		</div>
 		<div id="contents">
-			<form id="selUni" action="/spring/mainIndex.action" method="GET">
+			<form id="selUni" action="/spring/uploadUniversity.action" method="GET">
 				<select id = "universitySeq" name = "universitySeq" class="selectBox">
 					<option value="9999">학교를 선택해주세요</option>
 					<c:forEach items="${uniList}" var="uniDto">

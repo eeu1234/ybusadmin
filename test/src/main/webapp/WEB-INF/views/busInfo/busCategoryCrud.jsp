@@ -56,7 +56,7 @@
 			<td>${bdto.busInfoStat}</td>
 			
 			<td>
-			<input type="button" class="btn btn-primary" value="수정" onclick="busEdit(${bdto.busInfoSeq});">
+			<input type="button" class="btn btn-warning" value="수정" onclick="busEdit(${bdto.busInfoSeq});">
 			<input type="button" class="btn btn-danger" value="삭제" onclick="busDelete(${bdto.busInfoSeq});">
 			
 			</td>

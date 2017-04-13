@@ -49,49 +49,49 @@ public class MainController {
 	        
 	        //내용
 			StringBuffer url = request.getRequestURL();
-			System.out.println("check1");
+		
 			String urlStr = url.toString();
 			UniversityDTO universityDto;
 			//도메인에 따른 universitySeq를 가져옴
-			System.out.println("check2");
+		
 			if(session.getAttribute("universityDto") == null){
 				//도메인에 따른 universitySeq를 가져옴
-				System.out.println("check3");
+		
 				universityDto = dao.getUniversitySeq(urlStr);
 				
 //				String universitySeq = universityDto.getUniversitySeq() ;
 				
 				if(universityDto==null){
-					System.out.println("check4");
+		
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/selectUniversity.action");
 					dispatcher.forward(request, response);
 				
 				}else{
-					System.out.println("check5");
+		
 					session.setAttribute("universityDto", universityDto);
 					
 					request.setAttribute("universitySeq", universityDto.getUniversitySeq());
 				
 					try {
-						System.out.println("check6");
+		
 						RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");			
 						//response.sendRedirect("/spring/mainIndex.action");
 						dispatcher.forward(request, response);
 				
 					} catch (IOException e) {
-						System.out.println("check7");
+		
 						e.printStackTrace();
 					} catch (ServletException e) {
 						// TODO Auto-generated catch block
-						System.out.println("check8");
+		
 						e.printStackTrace();
 					}
 				}
 				
-				System.out.println("check9");
+		
 				
 			}else{
-				System.out.println("check10");
+		
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");			
 				//response.sendRedirect("/spring/mainIndex.action");
 				dispatcher.forward(request, response);
@@ -105,11 +105,11 @@ public class MainController {
     	 e.printStackTrace();
 	        session.invalidate();
 	        try {
-	        	System.out.println("check11");
+	    
 	           response.sendRedirect("/selectUniversity.action");
 	        } catch (Exception e2) {
 	           // TODO: handle exception
-	        	System.out.println("check12");
+	    
 	        	e2.printStackTrace();
 	        }
 	     }
@@ -117,35 +117,58 @@ public class MainController {
 		
 	}
 	
-	
-	@RequestMapping(method={RequestMethod.GET}, value="/mainIndex.action")
-	public String mainIndex(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,UniversityDTO universityDTO){
+	@RequestMapping(method={RequestMethod.GET}, value="/uploadUniversity.action")
+	public void uploadUniversity(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq){
 		
-		try {
-			System.out.println("check13");
-			UniversityDTO universityDto = new UniversityDTO();
-	         //내용
+		
+		UniversityDTO universityDTO = new UniversityDTO();
+		
+		if(universitySeq!=null){
 			
 			
-			universityDTO = (UniversityDTO) session.getAttribute("universityDto");
-			if(universitySeq!=null){
-				universityDTO = dao.getUniversityDtoSeq(universitySeq);
-				session.setAttribute("universityDto", universityDTO);
-			}else{
-				if(universityDTO==null){
-					response.sendRedirect("/index.action");
-					
-				}else{
-					
-					universitySeq = universityDTO.getUniversitySeq();
-					System.out.println("check15"+universityDTO.getUniversitySeq());
-				}
+			universityDTO = dao.getUniversityDtoSeq(universitySeq);
+			session.setAttribute("universityDto", universityDTO);
+			
+			
+			try{
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");			
+				//response.sendRedirect("/spring/mainIndex.action");
+				dispatcher.forward(request, response);
+			}catch(Exception e){
+				e.toString();
 			}
 			
+		}else{
+			try{
 			
-			
-			
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/selectUniversity.action");
+				dispatcher.forward(request, response);
+			}catch(Exception e){
+				e.toString();
+			}
+		}
 		
+	}
+	
+	
+	@RequestMapping(method={RequestMethod.GET}, value="/mainIndex.action")
+	public String mainIndex(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,UniversityDTO universityDto){
+		
+		try {
+			
+			
+	         //내용
+			universityDto = (UniversityDTO) session.getAttribute("universityDto");
+			
+			if(universityDto==null){
+				response.sendRedirect("/index.action");
+				
+			}else{
+				
+				universitySeq = universityDto.getUniversitySeq();
+			
+			}
 			//busStopCategorySeq ="2";
 			
 			HashMap<String,String> map = new HashMap<String,String>();
@@ -154,31 +177,38 @@ public class MainController {
 			//이학교에 있는 노선을 메인 화면에 띄워주어야함
 			//노선목록 들고옴.
 			//공지사항목록 들고옴.
-			System.out.println("check16");
-			System.out.println(map.get("universitySeq"));
+			
 			List<NoticeDTO> nList = dao.getAllNotice();
+			
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
+			
 			List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
-			WeatherStatDTO wsdto = apiExplorer(Double.parseDouble(universityDTO.getUniversityLatitude()),Double.parseDouble(universityDTO.getUniversityLongitude()));
+			
+			
+			
+			WeatherStatDTO wsdto = apiExplorer(Double.parseDouble(universityDto.getUniversityLatitude()),Double.parseDouble(universityDto.getUniversityLongitude()));
+			
 			
 			
 			request.setAttribute("nList", nList);
 			request.setAttribute("wsdto", wsdto);
 			request.setAttribute("bsdcList", bsdcList);
 			request.setAttribute("bscList", bscList);
-			System.out.println("check17");
+			
 			return "user/mainIndex";
 			
 	         
 	      } catch (Exception e) {
+	    	  System.out.println(e.toString());
 	         session.invalidate();
 	         try {
-	        	 System.out.println("check18");
+	        
 	        	response.sendRedirect("/selectUniversity.action");
 	            return "";
 	         } catch (Exception e2) {
 	            // TODO: handle exception
-	        	 System.out.println("check19");
+	        	 System.out.println(e2.toString());
+	        
 	        	 return "";
 	         }
 	      }
@@ -320,7 +350,7 @@ public class MainController {
 		    today = year+""+month+""+day;
 		    
 		    String baseTime=hours +"00";
-		    String apikey = "H9oL068yRVguVD43j0frXIqlUeWt8jTGxqFrT5tEYQ7bRETLjf5WHiv1dSw6ig09KQQJoB7mX0BQ8UnP042bDg%3D%3D",    
+		    String apikey = "JjkfBQSHf4l4jIpfYfZ9BdtNXuWi7LyhAC%2FjCHXNrPccQQyIznZtbL98ji7%2FU1hAEkfhDonCP4M%2FcnDs8R0oIw%3D%3D",    
 		    ForecastGribURL = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData";
 		    ForecastGribURL += "?ServiceKey=" + apikey;
 		    ForecastGribURL += "&base_date=" + today;

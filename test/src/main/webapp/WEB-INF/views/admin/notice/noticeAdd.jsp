@@ -173,6 +173,7 @@ $(document).ready(function() {
 			alert("내용글의 글자수가 최소 1자리 이상 작성해주세요.(공백포함 최대 2000자입니다.)");
 			return;
 			
+			
 		} else {
 			//alert(filename.files.length+"개의 파일을 업로드합니다."); 
        		frm.submit();
