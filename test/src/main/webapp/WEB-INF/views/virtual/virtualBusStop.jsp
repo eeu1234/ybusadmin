@@ -24,7 +24,12 @@ html, body {
    
    margin: 10 auto;
 }
-
+#virtualTitle{
+   border: 0px solid black;
+   text-align: center;
+   margin: 10px 0px 10px 0px;
+   font-weight: bold;
+}
 #mapForm {
    width: 90%;
    height: 50%;
@@ -95,7 +100,7 @@ html, body {
 <script type="text/javascript"
    src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=OazUcQZXVmbaU8Wfw0UB&submodules=panorama"></script>
 <script async defer
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqkSVH4lOztiSHYWlitRMnFPXC3--QX_8&callback=initMap"></script>
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap"></script>
 
 
 <script type="text/javascript">
@@ -423,20 +428,26 @@ html, body {
 
    //맵 초기화
    function initMap(lat, lng) {
-      console.log(markers.length);
-
-      var myLatlng = new google.maps.LatLng(lat, lng);
-      var myOptions = {
-         zoom : 13,
-         center : myLatlng,
-         mapTypeId : google.maps.MapTypeId.ROADMAP
-      }
-      //마커확인 작업
-      for (var i = 0; i < markers.length; i++) {
-         console.log("마커" + markers[i]);
-      }
-
-      map = new google.maps.Map(document.getElementById("map"), myOptions);
+	   try{
+	      console.log(markers.length);
+	
+	      var myLatlng = new google.maps.LatLng(lat, lng);
+	      var myOptions = {
+	         zoom : 13,
+	         center : myLatlng,
+	         mapTypeId : google.maps.MapTypeId.ROADMAP
+	      }
+	      //마커확인 작업
+	      for (var i = 0; i < markers.length; i++) {
+	         console.log("마커" + markers[i]);
+	      }
+	
+	      map = new google.maps.Map(document.getElementById("map"), myOptions);
+	   }
+      catch(error){
+  		alert("지도 불러오기 실패");
+  		location.reload();
+  	  }
       
    } // function initialize() 함수 끝
 
@@ -557,6 +568,7 @@ html, body {
       $("#tbl tbody").html("");
 
       $("#updateBtn").attr("value","초기화");
+      $("#updateBtn").attr("class","btn btn-danger");
       
       if(addMarkerCheck == true){
     	  $("#detailCategorySel").removeAttr("disabled");
@@ -565,6 +577,7 @@ html, body {
           addMarkerCheck = false;
           $("#saveBtn").hide(); 
           $("#updateBtn").attr("value","정류장 수정");
+          $("#updateBtn").attr("class","btn btn-warning");
           
       }else if ($("#universitySel").val() == -1 || $("#busCategorySel").val() == -1
             || $("#detailCategorySel").val() == -1) {
@@ -693,8 +706,9 @@ html, body {
 
 <body>
    <%@include file="/inc/top.jsp"%>
-   <h1 class="menuTitle">${adto.universityName} 가상 정류장 관리페이지</h1>
-
+   
+	
+	<h1 id="virtualTitle"><img src="/spring/images/logo.PNG"> 가상 정류장</h1>	
    <form id="frm" method="POST" action="/spring/virtual/virtualBusStopOK.action">
    <div id="searchForm">
          <div id="university">
@@ -748,7 +762,7 @@ html, body {
 
    
          <div class="btnForm">
-            <input type="button" id="updateBtn" value="정류장 수정" class="btn btn-success" onclick="updateBusStop();"> 
+            <input type="button" id="updateBtn" value="정류장 수정" class="btn btn-warning" onclick="updateBusStop();"> 
                <input type="submit" id="saveBtn" value="정류장 저장" class="btn btn-primary">
          </div>
 

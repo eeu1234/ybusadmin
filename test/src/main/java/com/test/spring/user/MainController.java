@@ -126,21 +126,23 @@ public class MainController {
 			UniversityDTO universityDto = new UniversityDTO();
 	         //내용
 			
-			WeatherStatDTO wsdto = apiExplorer();
+			
 			universityDTO = (UniversityDTO) session.getAttribute("universityDto");
 			if(universitySeq!=null){
 				universityDTO = dao.getUniversityDtoSeq(universitySeq);
 				session.setAttribute("universityDto", universityDTO);
+			}else{
+				if(universityDTO==null){
+					response.sendRedirect("/index.action");
+					
+				}else{
+					
+					universitySeq = universityDTO.getUniversitySeq();
+					System.out.println("check15"+universityDTO.getUniversitySeq());
+				}
 			}
 			
-			if(universityDTO==null){
-				response.sendRedirect("/index.action");
-				
-			}else{
-				
-				universitySeq = universityDTO.getUniversitySeq();
-				System.out.println("check15"+universityDTO.getUniversitySeq());
-			}
+			
 			
 			
 		
@@ -157,6 +159,8 @@ public class MainController {
 			List<NoticeDTO> nList = dao.getAllNotice();
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
 			List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
+			WeatherStatDTO wsdto = apiExplorer(Double.parseDouble(universityDTO.getUniversityLatitude()),Double.parseDouble(universityDTO.getUniversityLongitude()));
+			
 			
 			request.setAttribute("nList", nList);
 			request.setAttribute("wsdto", wsdto);
@@ -262,11 +266,11 @@ public class MainController {
 		}
 		return map;
 	}
-	public WeatherStatDTO apiExplorer(){
+	public WeatherStatDTO apiExplorer(double lat,double lng){
 		WeatherStatDTO wsdto = new WeatherStatDTO();
 		try{
 			
-			HashMap<String,Integer> map = dfs_xy_conv("toXY", 37.226719, 127.167840);
+			HashMap<String,Integer> map = dfs_xy_conv("toXY", lat, lng);
 			int nx = map.get("nx");
 			int ny = map.get("ny");
 			

@@ -59,10 +59,13 @@ $(document).ready(function(){
 			success:function(data){
 				if(data == 1){
 					beforeCheck = true;
+					$("#checkBeforePw").text("기존 비밀번호 일치").css("color","blue");
 				}else{
 					beforeCheck = false;
+					$("#checkBeforePw").text("기존 비밀번호 불일치").css("color","red");
 				}
 			},error(){
+				beforeCheck = false;
 				alert("비밀번호 확인 에러");
 			}
 		});
@@ -74,15 +77,19 @@ $(document).ready(function(){
 		
 		var pw = $("#afterPw1").val();
 		var pw2 = $("#afterPw2").val();
-		
-		if(pw == pw2){
-			afterCheck = true;
-			$("#checkPw").text("비밀번호 일치").css("color","blue");
-		}else{
-			afterCheck = false;
-			$("#checkPw").text("비밀번호 비일치").css("color","red");
-		}
 
+		if(pw != "" && pw2 != "" && pw != null && pw2 != null){
+			if(pw == pw2){
+				afterCheck = true;
+				$("#checkPw").text("비밀번호 일치").css("color","blue");
+			}else{
+				afterCheck = false;
+				$("#checkPw").text("비밀번호 비일치").css("color","red");
+			}
+		}else{
+			$("#checkPw").text("비밀번호 공백").css("color","red");
+			afterCheck = false;
+		}
 	});
 	
 	//새로운 비밀번호 비교확인
@@ -90,14 +97,19 @@ $(document).ready(function(){
 		
 		var pw = $("#afterPw1").val();
 		var pw2 = $("#afterPw2").val();
-		
-		if(pw == pw2){
-			afterCheck = true;
-			$("#checkPw").text("비밀번호 일치").css("color","blue");
+
+		if(pw != "" && pw2 != "" && pw != null && pw2 != null){
+			if(pw == pw2){
+				afterCheck = true;
+				$("#checkPw").text("비밀번호 일치").css("color","blue");
+			}else{
+				afterCheck = false;
+				$("#checkPw").text("비밀번호 비일치").css("color","red");
+				$("#afterPw2").val("");
+			}
 		}else{
+			$("#checkPw").text("비밀번호 공백").css("color","red");
 			afterCheck = false;
-			$("#checkPw").text("비밀번호 비일치").css("color","red");
-			$("#afterPw2").val("");
 		}
 
 	});
@@ -110,8 +122,7 @@ function updateOk(){
 
 	//일반관리자용
 	<c:if test="${dto.adminLevel != 9999}">
-		if(<c:if test="${adto.adminLevel != 9999}">beforeCheck && </c:if>
-			afterCheck){
+	if(<c:if test="${adto.adminLevel != 9999}">beforeCheck && </c:if> afterCheck){
 		if(confirm("수정하시겠습니까?")){
 			$("#updateForm").submit();
 		}
@@ -121,11 +132,23 @@ function updateOk(){
 	
 	</c:if>
 	
-	//최고 관리자용
-	<c:if test="${dto.adminLevel == 9999}">
+	//최고 관리자 - myPage 왔을 때
+	<c:if test="${adto.adminLevel == 9999 && my == 'my'}">
+	if(beforeCheck && afterCheck){
+		if(confirm("수정하시겠습니까?")){
+			$("#updateForm").submit();
+		}
+	}else{
+		alert("비밀번호를 다시 확인해주세요.");
+	}
+	</c:if>
+
+	//최고 관리자용 - 일반계정 관리할 때
+	<c:if test="${dto.adminLevel == 9999 && my != 'my'}">
 		$("#updateForm").submit();
 	</c:if>
-}
+	
+}//updateOk
 
 </script>
 
@@ -145,14 +168,35 @@ function updateOk(){
 						name="my" />
 					</td>
 				</tr>
-				<c:if test="${dto.adminLevel != 9999}">
+				<c:if test="${dto.adminLevel != 9999 && my != 'my'}">
 				<c:if test="${adto.adminLevel != 9999}">
 				<tr>
 					<th>기존 비밀번호</th>
 					<td><input type="password" value=""
-						id="beforeCheck" class="form-control" required/></td>
+						id="beforeCheck" class="form-control" required/>
+						<span id="checkBeforePw"></span></td>
 				</tr>
 				</c:if>
+				<tr>
+					<th>새로운 비밀번호</th>
+					<td><input type="password" value=""
+						id="afterPw1" class="form-control" required/></td>
+				</tr>
+				<tr>
+					<th>새로운 비밀번호 확인</th>
+					<td><input type="password" value=""
+						id="afterPw2" name="adminPassword" class="form-control" required />
+						<span id="checkPw"></span></td>
+				</tr>
+				</c:if>
+				
+				<c:if test="${my == 'my'}">
+				<tr>
+					<th>기존 비밀번호</th>
+					<td><input type="password" value=""
+						id="beforeCheck" class="form-control" required/>
+						<span id="checkBeforePw"></span></td>
+				</tr>
 				<tr>
 					<th>새로운 비밀번호</th>
 					<td><input type="password" value=""
@@ -191,9 +235,11 @@ function updateOk(){
 				<input type="button" value="되돌아가기" onclick="history.back();"
 					class="btn btn-default" /> 
 				<input type="button" value="수정하기"
-					class="btn btn-primary" onclick="updateOk();"/>
+					class="btn btn-warning" onclick="updateOk();"/>
 			</div>
+			
 		</form>
+		
 	</div>
 	<!-- content -->
 

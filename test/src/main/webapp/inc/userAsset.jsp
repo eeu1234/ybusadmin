@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<link rel="stylesheet" href="/spring/css/busStop.css">
 
 <!-- 모바일용웹 -->
 <meta name="viewport"
@@ -21,4 +21,4 @@
 
 <!-- ico 아이콘-->
 
-<link rel="apple-touch-icon" href="/spring/images/ico/favicon.ico">
+<link rel="apple-touch-icon" href="/spring/image/favicon.ico">

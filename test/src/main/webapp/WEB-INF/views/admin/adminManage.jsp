@@ -125,7 +125,7 @@
 							</select>
 						</td>
 						<td><input type="text" name="word" id="word" class="form-control" required placeholder="검색어를 입력하세요." value="${sdto.word}"></td>
-						<td><input type="submit" value="검색하기" class="btn btn-warning"></td>
+						<td><input type="submit" value="검색하기" class="btn btn-info"></td>
 					</tr>
 				</table>
 			</form>

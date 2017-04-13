@@ -63,9 +63,9 @@ public class NoticeDAO {
 
 	//공지사항 글 추가 및 파일 추가
 	public int noticeAdd(NoticeDTO noticeAddInfo, ArrayList<NoticeFileDTO> fileList) {
-		int result = 0;
+		int result;
 		
-		sql.insert("notice.noticeAdd", noticeAddInfo);
+		result = sql.insert("notice.noticeAdd", noticeAddInfo);
 		
 		noticeAddInfo = sql.selectOne("notice.noticeInfo");
 		String noticeSeq = noticeAddInfo.getNoticeSeq();
@@ -76,23 +76,42 @@ public class NoticeDAO {
           
           String fileName = fileList.get(i).getNoticeFileName();
           map.put("fileName", fileName);
-
-          int count = sql.insert("notice.noticeFileUpload",map);
-          result += count;
+          
+          
+        	  sql.insert("notice.noticeFileUpload",map);
+   
        }
 
 		return result;
 	}
 	
-	//글 수정
-	public int noticeUpdate(String noticeSeq, String content, String subject, String status) {
+	// 글 수정
+	public int noticeUpdate(String noticeSeq, String content, String subject, String status,
+			ArrayList<NoticeFileDTO> fileList) {
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("noticeSeq",noticeSeq);
-		map.put("subject",subject);
-		map.put("content",content);
-		map.put("status",status);
-	
-		return sql.update("notice.noticeUpdate", map);
+		map.put("noticeSeq", noticeSeq);
+		map.put("subject", subject);
+		map.put("content", content);
+		map.put("status", status);
+
+		int result;
+
+		result = sql.update("notice.noticeUpdate", map);
+		
+		sql.delete("notice.noticeDeleteFile", noticeSeq);
+		
+		HashMap<String, String> map1 = new HashMap<String, String>();
+		for (int i = 0; i < fileList.size(); i++) {
+			map.put("noticeSeq", noticeSeq);
+
+			String fileName = fileList.get(i).getNoticeFileName();
+			map.put("fileName", fileName);
+			
+			sql.insert("notice.noticeFileUpload",map);
+			
+		}
+
+		return result;
 	}
 	
 	//조회수 늘리기

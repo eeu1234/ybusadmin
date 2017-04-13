@@ -6,8 +6,14 @@
 <html>
 <head>
 <meta charset=UTF-8">
-<title>Insert title here</title>
+<title>대분류(버스 정류장 목록)</title>
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
+<style>
+#tblBusInfo{
 
+	margin-top: 30px;
+}
+</style>
 <script>
 
 
@@ -31,9 +37,9 @@
 <body>
 	<%@include file="/inc/top.jsp" %>
 
-	<h1>버스 카테고리 관리</h1>
+	<h1 class = "menuTitle">버스 카테고리 관리</h1>
 	<form method="POST" action="/spring/admin/busStopCategoryMatchOk.action">
-	<table class="table table-striped">
+	<table id = "tblBusInfo" class="table table-striped">
 		<tr>
 			<th>버스 번호</th>
 			<th>버스 이름</th>
@@ -52,12 +58,15 @@
 			<td>
 			<input type="button" class="btn btn-primary" value="수정" onclick="busEdit(${bdto.busInfoSeq});">
 			<input type="button" class="btn btn-danger" value="삭제" onclick="busDelete(${bdto.busInfoSeq});">
+			
 			</td>
 		</tr>
 		</c:forEach>
 	
 	</table>
+			<div class="btnForm">
 	<input type="button" class="btn btn-primary" value="버스 추가" onclick="badd();">
+			</div>
 	</form>
 </body>
 </html>

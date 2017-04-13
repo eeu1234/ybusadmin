@@ -1,4 +1,4 @@
-package com.test.spring.busstop;
+package com.test.spring.busStop;
 
 import java.util.List;
 

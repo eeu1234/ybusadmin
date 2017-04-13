@@ -8,7 +8,7 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css">
 <style>
 html, body {
    width: 100%;
@@ -46,7 +46,7 @@ function updateBusCategoryManage(seq){
 </head>
 <body>
 	<%@include file="/inc/top.jsp"%>
-	<h1>장치와 연결된 버스 리스트</h2>
+	<h1 class="menuTitle">장치와 연결된 버스 리스트</h1>
 	<table id="showTable" class="table table-striped">
 		<tr>
 			<th>번호</th>
@@ -64,7 +64,7 @@ function updateBusCategoryManage(seq){
 				<td>${dto.busStopCategory}</td>
 				<td>${dto.busStopDetailCategoryName}</td>
 				<td>
-					<input type="button" class="btn btn-primary" value="수정" onclick="updateBusCategoryManage(${dto.busInfoSeq});">
+					<input type="button" class="btn btn-warning" value="수정" onclick="updateBusCategoryManage(${dto.busInfoSeq});">
 					<%-- <input type="button" class="btn btn-danger" value="삭제" onclick="deleteBusCategoryManage(${dto.busInfoSeq});"> --%>
 				</td>
 			</tr>

@@ -41,34 +41,33 @@ html, body {
 
 
 #mapBox{
-   margin-top: 60px;
+   margin-top: 0px;
 }
 
 #map {
-   width : 1030px;
-   height: 500px;
-   margin: 0px auto;
+   width : 100%;
+   height: 60%;
+   margin: 20px auto;
+   margin-top: 30px;
 }
 
 #totalBox{
    border: 0px solid gray;
-   width: 1100px;
-   height: 600px;
    margin: 0px auto;
+   width: 90%;
+   height: 100%;
 }
 
 #controllerBox{
    border: 0px solid black;
-   width: 1100px;
-   margin: 0px auto;
-   margin-left: 25px;
-   margin-top: 10px;
+   width: 100%;
+   height: auto;
+   margin: 20px auto;
 }
 
-#controllerBox div{
-   border: 1px solid black;
-   width: 250px;
+#controllerBox select{
    float: left;
+   width : 24%;
    margin-left: 10px;
    cursor: pointer;
 }
@@ -79,18 +78,18 @@ html, body {
 
 #searchForm{
    border : 0px solid gray;
-   width : 1100px;
-   height: 200px;
-   margin : 10px auto;
+   width : 100%;
+   height: 100%;
+   margin : 0px auto;
 }
 
 #searchForm #operationTime{
    border: 0px solid black;
-   width: 1100px;
+   width: 100%;
 }
 
 #searchForm #operationTime #start, #searchForm #operationTime #end{
-   width: 440px;
+   width: 500px;
    text-align: center;
    font-size: 20px;
    font-weight: bold;
@@ -114,8 +113,8 @@ html, body {
 
 
 #timeLogo{
-   border: 0px solid white;
-   width: 1100px;
+   border: 1px solid white;
+   width: 100%;
    margin: 10px auto;
 }
 
@@ -502,60 +501,56 @@ $(function(){
 
    <%@include file="/inc/top.jsp"%>
 
-   <h1 id="polylineTitle"><img src="/spring/images/logo.PNG"> 폴리라인</h1>
+   <h1 id="polylineTitle"><img src="/spring/images/logo.PNG"> 운행기록</h1>
    
       <div id="totalBox">
          <div id="controllerBox">
-            <div id="university">
+            
                <select id="universitySel" class="form-control">
                      <option value="${adto.universitySeq}">${adto.universityName}</option>
                </select>
-            </div>
+            
       
-            <div id="busCategory">
                
                <select id="busCategorySel" class="form-control">
                   <option value="-1">버스종류를 선택하세요.</option>
                </select>
-            </div>
       
-            <div id="detailCategory">
                
                <select id="detailCategorySel" class="form-control">
                   <option value="-1">노선종류를 선택하세요.</option>
                </select>
-            </div>
       
-            <div id="busNum">
                
                <select id="busnumSel" class="form-control" name="busnumSel">
                   <option value="-1">버스를 선택하세요.</option>
                </select>
-            </div>
+               <div style="clear: both;"></div>
          </div>
          <div id="mapBox">
             <div id="map"></div>
          </div>
-      </div>
+         
+	         <div id="timeLogo">
+	            <span>기간 선택</span>
+	         </div>
+	   <div id="searchForm">
+	
+	      <div id="operationTime">
+	         <input type="text" id="start" name="startTime" class='datetimepicker' value="" readonly> ~ <input type="text" id="end" name="endTime" class='datetimepicker' value="" readonly> 
+	            
+	
+	         <div id="btnForm">
+	            <input type="button" id="btnSearch" value="검색" onclick="search();" class="btn btn-primary">
+	            <form method="POST" action="/spring/polyline/polyline.action">
+	               <input type="submit" id="btnReset" value="초기화" class="btn btn-danger">
+	            </form>
+	         </div>
+	      </div>
+	
+	   </div>
+ </div>
 
 
-         <div id="timeLogo">
-            <span>기간 선택</span>
-         </div>
-   <div id="searchForm">
-
-      <div id="operationTime">
-         <input type="text" id="start" name="startTime" class='datetimepicker' value="" readonly> ~ <input type="text" id="end" name="endTime" class='datetimepicker' value="" readonly> 
-            
-
-         <div id="btnForm">
-            <input type="button" id="btnSearch" value="검색" onclick="search();" class="btn btn-primary">
-            <form method="POST" action="/spring/polyline/polyline.action">
-               <input type="submit" id="btnReset" value="초기화" class="btn btn-primary">
-            </form>
-         </div>
-      </div>
-
-   </div>
 </body>
 </html>

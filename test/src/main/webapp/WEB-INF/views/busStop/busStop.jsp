@@ -17,12 +17,17 @@ html, body {
    margin: 0 auto;
    padding: 0;
 }
-
 #title {
    text-align: center;
    width:90%;
    
    margin: 10 auto;
+}
+#menuTitle{
+   border: 0px solid black;
+   text-align: center;
+   margin: 10px 0px 10px 0px;
+   font-weight: bold;
 }
 
 #mapForm {
@@ -95,7 +100,7 @@ html, body {
 <script type="text/javascript"
    src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=OazUcQZXVmbaU8Wfw0UB&submodules=panorama"></script>
 <script async defer
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqkSVH4lOztiSHYWlitRMnFPXC3--QX_8&callback=initMap"></script>
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap"></script>
 
 
 <script type="text/javascript">
@@ -616,31 +621,36 @@ html, body {
 
    //맵 초기화
    function initMap(lat, lng) {
-      console.log(markers.length);
-
-      var myLatlng = new google.maps.LatLng(lat, lng);
-      var myOptions = {
-         zoom : 15,
-         center : myLatlng,
-         mapTypeId : google.maps.MapTypeId.ROADMAP
-      }
-      //마커확인 작업
-      for (var i = 0; i < markers.length; i++) {
-         console.log("마커" + markers[i]);
-      }
-
-      map = new google.maps.Map(document.getElementById("map"), myOptions);
-      //클릭했을 때 이벤트
-      google.maps.event.addListener(map, 'click', function(event) {
-         addMarker(event.latLng);
-         //infowindow.setContent("latLng: " + event.latLng); // 인포윈도우 안에 클릭한 곳위 좌표값을 넣는다.
-         //infowindow.setPosition(event.latLng); // 인포윈도우의 위치를 클릭한 곳으로 변경한다.
-         //markers.push(event.latLng);
-         console.log(markers.length);
-         console.log(event.latLng.lat());
-         console.log(event.latLng.lng());
-      });
-
+	  try{
+	      console.log(markers.length);
+	
+	      var myLatlng = new google.maps.LatLng(lat, lng);
+	      var myOptions = {
+	         zoom : 15,
+	         center : myLatlng,
+	         mapTypeId : google.maps.MapTypeId.ROADMAP
+	      }
+	      //마커확인 작업
+	      for (var i = 0; i < markers.length; i++) {
+	         console.log("마커" + markers[i]);
+	      }
+	
+	      map = new google.maps.Map(document.getElementById("map"), myOptions);
+	      //클릭했을 때 이벤트
+	      google.maps.event.addListener(map, 'click', function(event) {
+	         addMarker(event.latLng);
+	         //infowindow.setContent("latLng: " + event.latLng); // 인포윈도우 안에 클릭한 곳위 좌표값을 넣는다.
+	         //infowindow.setPosition(event.latLng); // 인포윈도우의 위치를 클릭한 곳으로 변경한다.
+	         //markers.push(event.latLng);
+	         console.log(markers.length);
+	         console.log(event.latLng.lat());
+	         console.log(event.latLng.lng());
+	      });
+	  }
+	  catch(error){
+		alert("지도 불러오기 실패");
+		location.reload();
+	  }
       
       //infowindow.open(map); 윈도우창 열기
 
@@ -959,7 +969,7 @@ html, body {
       $("#tbl tbody").html("");
 
       $("#updateBtn").attr("value","초기화");
-	      
+      $("#updateBtn").attr("class","btn btn-danger");
 	  if(addMarkerCheck == true){
 	    	  $("#detailCategorySel").removeAttr("disabled");
 	          $("#universitySel").removeAttr("disabled");
@@ -967,14 +977,20 @@ html, body {
 	          addMarkerCheck = false;
 	          $("#saveBtn").hide(); 
 	          $("#updateBtn").attr("value","정류장 수정");
+	          $("#updateBtn").attr("class","btn btn-warning");
+	          $("#updateOrderBtn").hide();	  
 	          
 	  }else if ($("#universitySel").val() == -1 || $("#busCategorySel").val() == -1
             || $("#detailCategorySel").val() == -1) {
          alert("선택하지않은 항목이 있습니다.");
+         $("#updateBtn").attr("value","정류장 수정");
+         $("#updateOrderBtn").hide();
+         
       } else {
       
          
          $("#saveBtn").show();
+         $("#updateOrderBtn").show();
          //지도에 마커 추가 기능 on
          addMarkerCheck = true;
          //버스카테고리 선택못하게 막음
@@ -1033,6 +1049,10 @@ html, body {
 
       }
    }
+   function updateOrder(){
+	   $("#detailCategorySel").val();
+		location.href = "/spring/busStop/updateOrder.action?detailCategorySel="+$("#detailCategorySel").val();
+   }
 
    function createTable() {
       //노선 seq
@@ -1081,7 +1101,7 @@ html, body {
                                                          + lng
                                                          + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up' selected>상행</option>   <option value='down'>하행</option><option value='turn'>회차점</option></select></td><td><input type='button' value='삭제' id='delBusStop"
                                                          + order
-                                                         + "' class='btn btn-primary' onclick='deleteOneMarkers("
+                                                         + "' class='btn btn-danger' onclick='deleteOneMarkers("
                                                          + order
                                                          + ");'></td></tr>");
                                     } else if (line == "down") {
@@ -1095,7 +1115,7 @@ html, body {
                                                          + lng
                                                          + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down' selected>하행</option><option value='turn'>회차점</option></select></td><td><input type='button' value='삭제' id='delBusStop"
                                                          + order
-                                                         + "' class='btn btn-primary' onclick='deleteOneMarkers("
+                                                         + "' class='btn btn-danger' onclick='deleteOneMarkers("
                                                          + order
                                                          + ");'></td></tr>");
                                     } else if (line == "turn") {
@@ -1109,7 +1129,7 @@ html, body {
                                                          + lng
                                                          + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down'>하행</option><option value='turn' selected>회차점</option></select></td><td><input type='button' value='삭제' id='delBusStop"
                                                          + order
-                                                         + "' class='btn btn-primary' onclick='deleteOneMarkers("
+                                                         + "' class='btn btn-danger' onclick='deleteOneMarkers("
                                                          + order
                                                          + ");'></td></tr>");
                                     }
@@ -1130,7 +1150,7 @@ html, body {
 
 <body>
    <%@include file="/inc/top.jsp"%>
-   <h1 class="menuTitle">${adto.universityName} 버스 정류장 관리페이지</h1>
+   <h1 id="menuTitle"><img src="/spring/images/logo.PNG"> 버스 정류장 관리</h1>
 
    <form id="frm" method="POST" action="/spring/busStop/busStopOK.action">
    <div id="searchForm">
@@ -1185,7 +1205,8 @@ html, body {
 
    
          <div class="btnForm">
-            <input type="button" id="updateBtn" value="정류장 수정" class="btn btn-success" onclick="updateBusStop();"> 
+            <input type="button" id="updateOrderBtn" value="정류장 순서 변경" class="btn btn-warning" onclick="updateOrder();" style="display: none;"> 
+            <input type="button" id="updateBtn" value="정류장 수정" class="btn btn-warning" onclick="updateBusStop();"> 
                <input   type="submit" id="saveBtn" value="정류장 저장" class="btn btn-primary">
          </div>
 

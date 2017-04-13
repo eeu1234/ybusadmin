@@ -7,6 +7,7 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
 <style>
 html, body {
    width: 100%;
@@ -30,6 +31,10 @@ html, body {
    height: 80px;
 }
 
+#tbl{
+	margin-top: 30px;
+}
+
 </style>
 <script>
 	
@@ -46,7 +51,8 @@ html, body {
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
-	<h1>대분류 수정 페이지</h1>
+	<h1 class = "menuTitle">대분류 수정 페이지</h1>
+	
 	<form method="POST" action="/spring/busStopCategory/busStopCategoryEditOk.action">
 		<table id="tbl" class="table table-striped">
 			<tr>

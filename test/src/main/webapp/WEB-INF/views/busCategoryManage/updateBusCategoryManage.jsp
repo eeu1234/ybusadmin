@@ -8,7 +8,7 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css">
 <style>
 html, body {
    width: 100%;
@@ -30,6 +30,9 @@ html, body {
    float: left;
    width: 35%;
    height: 80px;
+}
+#showTable{
+	margin-top: 30px;
 }
 
 </style>
@@ -100,9 +103,8 @@ function updateBusCategory(){
 </head>
 <body>
 	<%@include file="/inc/top.jsp"%>
-	<h1>${adto.universityName} 버스 매핑 페이지</h1>
+	<h1 class="menuTitle">${adto.universityName} 버스 매핑 페이지</h1>
 	
-	<h2>show상태인 버스 리스트</h2>
 	<table id="showTable" class="table table-striped">
 		<tr>
 			<th>구분</th>
@@ -142,8 +144,8 @@ function updateBusCategory(){
 		</tr>
 	</table>
 	
-	<input type="button" class="btn btn-primary" value="수정" onclick="updateBusCategory();">
-	<input type="button" class="btn btn-primary" value="돌아가기" onclick="location.href='/spring/busCategoryManage/busCategoryManage.action';">
+	<input type="button" class="btn btn-primary" value="저장" onclick="updateBusCategory();" style="float: right;">
+	<input type="button" class="btn btn-default" value="돌아가기" onclick="location.href='/spring/busCategoryManage/busCategoryManage.action';" style="float: right; margin-right: 10px;">
 	
 	
 </body>

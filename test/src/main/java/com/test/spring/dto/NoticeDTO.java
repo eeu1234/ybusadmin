@@ -9,7 +9,7 @@ public class NoticeDTO {
 	private String noticeContent;
 	private String noticeRegdate;
 	private String noticeReadCount;
-	private String notisStatus;
+	private String noticeStatus;
 	private String adminID;
 	
 	private String adminName;
@@ -70,12 +70,12 @@ public class NoticeDTO {
 		this.noticeReadCount = noticeReadCount;
 	}
 
-	public String getNotisStatus() {
-		return notisStatus;
+	public String getNoticeStatus() {
+		return noticeStatus;
 	}
 
-	public void setNotisStatus(String notisStatus) {
-		this.notisStatus = notisStatus;
+	public void setNoticeStatus(String noticeStatus) {
+		this.noticeStatus = noticeStatus;
 	}
 
 	public String getAdminID() {

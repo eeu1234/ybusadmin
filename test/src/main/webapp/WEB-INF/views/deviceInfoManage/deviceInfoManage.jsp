@@ -7,7 +7,7 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
-
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
 <style>
 #universityName{
 	width : 300px;
@@ -43,7 +43,9 @@
 <body>
 
 	<%@include file="/inc/top.jsp"%>
-	<h1>디바이스 관리 페이지</h1>
+	
+	<h1 class = "menuTitle">디바이스 관리 페이지</h1>
+	
 	<table id = "tbl" class="table table-striped">
 		<tr>
 			<th>기기번호</th>

@@ -125,7 +125,7 @@ body, html {
 	margin: 0;
 	padding: 0;
 	padding-top:23%;
-
+	text-align:center;
 	background-color: white;
 }
 /* 아이폰5 */

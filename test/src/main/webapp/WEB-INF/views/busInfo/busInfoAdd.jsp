@@ -7,7 +7,12 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
-
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
+<style>
+#tblBus{
+	margin-top: 30px;
+}
+</style>
 <script>
 
 	$().ready(function(){
@@ -30,7 +35,8 @@
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
-	<h1>버스 추가</h1>
+	
+	<h1 class = "menuTitle">버스 추가</h1>
 	
 	<form method = "POST" action="/spring/busInfo/busInfoAddOk.action">
 		<table id="tblBus" class="table table-striped">

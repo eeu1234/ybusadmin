@@ -22,10 +22,10 @@
 	</select>
 	
 	<select id="getUniversitySeq" parameterType="String" resultType="com.test.spring.dto.UniversityDTO">
-      SELECT UNIVERSITYSEQ AS universitySeq,UNIVERSITYIMG AS universityImg FROM UNIVERSITY WHERE UNIVERSITYDOMAIN = #{urlStr}
+      SELECT UNIVERSITYSEQ AS universitySeq,UNIVERSITYIMG AS universityImg, UNIVERSITYTEL AS universityTel, UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude, UNIVERSITYDOMAIN AS universityDomain FROM UNIVERSITY WHERE UNIVERSITYDOMAIN = #{urlStr}
    </select>
    <select id="getUniversityDtoSeq" parameterType="String" resultType="com.test.spring.dto.UniversityDTO">
-   		SELECT UNIVERSITYSEQ AS universitySeq,UNIVERSITYIMG AS universityImg FROM UNIVERSITY WHERE UNIVERSITYSEQ = #{universitySeq}
+   		SELECT UNIVERSITYSEQ AS universitySeq,UNIVERSITYIMG AS universityImg, UNIVERSITYTEL AS universityTel, UNIVERSITYLATITUDE AS universityLatitude, UNIVERSITYLONGITUDE AS universityLongitude, UNIVERSITYDOMAIN AS universityDomain FROM UNIVERSITY WHERE UNIVERSITYSEQ = #{universitySeq}
    	</select>
    	<select id="getAllUniversity" resultType="com.test.spring.dto.UniversityDTO">
       SELECT UNIVERSITYSEQ AS universitySeq, UNIVERSITYNAME AS universityName FROM UNIVERSITY

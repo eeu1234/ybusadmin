@@ -8,7 +8,7 @@
     	SELECT N.* FROM 
 (SELECT N.NOTICESEQ AS noticeSeq, N.NOTICESUBJECT AS noticeSubject, N.NOTICECONTENT AS noticeContent, 
 SUBSTR(N.NOTICEREGDATE,1,16) AS noticeRegdate, N.NOTICEREADCOUNT AS noticeReadCount, N.ADMINID AS adminID,
-N.NOTICESTATUS AS notisStatus,
+N.NOTICESTATUS AS noticeStatus,
 A.ADMINNAME AS adminName, A.ADMINDEPARTMENT AS adminDepartment, A.ADMINLEVEL AS adminLevel, 
 A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
 	FROM NOTICE N
@@ -36,7 +36,7 @@ A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
     	 
 SELECT N.NOTICESEQ AS noticeSeq, N.NOTICESUBJECT AS noticeSubject, N.NOTICECONTENT AS noticeContent, 
 SUBSTR(N.NOTICEREGDATE,1,16) AS noticeRegdate, N.NOTICEREADCOUNT AS noticeReadCount, N.ADMINID AS adminID,
-N.NOTICESTATUS AS notisStatus,
+N.NOTICESTATUS AS noticeStatus,
 A.ADMINNAME AS adminName, A.ADMINDEPARTMENT AS adminDepartment, A.ADMINLEVEL AS adminLevel, 
 A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
 	FROM NOTICE N
@@ -47,7 +47,7 @@ A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
 							WHERE N.NOTICESEQ = #{seq}
     </select>
     
-        	    <!-- 공지사항 가져오는 쿼리 - 검색 있음 -->
+    <!-- 공지사항 가져오는 쿼리 - 검색 있음 -->
     <select id="noticefile" parameterType="String" resultType="com.test.spring.dto.NoticeFileDTO">
 		SELECT NOTICEFILESEQ AS noticeFileSeq, NOTICEFILENAME AS noticeFileName FROM NOTICEFILE
 			WHERE NOTICESEQ = #{seq}
@@ -83,7 +83,7 @@ A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
     <select id="noticeInfo" parameterType="String" resultType="com.test.spring.dto.NoticeDTO">	 
 SELECT MAX(NOTICESEQ) AS noticeSeq, NOTICESUBJECT AS noticeSubject, NOTICECONTENT AS noticeContent, 
 NOTICEREGDATE AS noticeRegdate, NOTICEREADCOUNT AS noticeReadCount, ADMINID AS adminID,
-NOTICESTATUS AS notisStatus FROM NOTICE
+NOTICESTATUS AS noticeStatus FROM NOTICE
     </select>
     
      <!-- 공지사항 파일 추가하기  -->

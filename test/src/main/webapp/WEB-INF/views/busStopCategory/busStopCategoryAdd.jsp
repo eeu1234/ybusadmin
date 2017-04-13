@@ -6,7 +6,7 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
-
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
 <style>
 
 #busStopCategory{
@@ -43,7 +43,9 @@
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
-	<h1>대분류(버스종류) 관리</h1>
+	
+	<h1 class = "menuTitle">대분류(버스종류) 관리</h1>
+	
 		<table id= "tblCategory" name ="tblCategory" class="table table-striped">
 		<tr>
 			<th>노선 번호</th>

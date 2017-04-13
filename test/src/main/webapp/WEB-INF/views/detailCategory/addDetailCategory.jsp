@@ -9,12 +9,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css">
 <style>
 html, body {
    width: 100%;
    height: 100%;
    margin: 0 auto;
    padding: 0;
+}
+#addTable{
+	margin-top: 30px;
 }
 #searchForm {
    border: 0px solid gray;
@@ -41,7 +45,7 @@ $().ready(function(){
 </head>
 <body>
 	<%@include file="/inc/top.jsp"%>
-	<h1>중분류(노선종류) 추가 페이지</h1>
+	<h1 class="menuTitle">중분류(노선종류) 추가 페이지</h1>
 	
 	<form method="POST" action="/spring/detailCategory/addDetailCategoryOK.action">
 		<table id="addTable" class="table table-striped">
@@ -89,8 +93,8 @@ $().ready(function(){
 				</td>
 			</tr>
 		</table>
-		<input type="submit" class="btn btn-primary" value="추가하기"> 
-		<input type="button" class="btn btn-primary" value="돌아가기" onclick="history.back();">
+		<input type="submit" class="btn btn-primary" value="추가하기" style="float: right;"> 
+		<input type="button" class="btn btn-default" value="돌아가기" onclick="history.back();" style="float: right;margin-right: 10px;">
 	</form>
 </body>
 </html>
