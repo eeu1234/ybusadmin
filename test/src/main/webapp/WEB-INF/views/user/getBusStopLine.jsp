@@ -6,47 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Cambus</title>
-<link rel="stylesheet" href="/spring/css/busStop.css">
-
-<!-- 모바일용웹 -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
-
-<meta name="mobile-web-app-capable" content="yes">
-
-<!-- import 시작 -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-	crossorigin="anonymous"></script>
-
-<link
-	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
-	rel="stylesheet">
-<script
-	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
-
-
-
-<!-- ico 아이콘-->
-
-<link rel="apple-touch-icon" href="/mobile/Image/favicon.ico">
-<link rel="stylesheet" href="/spring/css/newTimeline.css">
-
-<script
-  src="https://code.jquery.com/jquery-1.12.4.min.js"
-  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-  crossorigin="anonymous"></script>
-
+<%@include file="/inc/userAsset.jsp" %>
 
 <style>
 
 
-img {
-	width: 60%;
-	height: auto;
+.busNum	img {
+	width: 90%;
+	height: 90%;
 }
-
+.busIcon img {
+	width: 70%;
+	height: auto;
+	
+}
 body, html {
 	position: relative;
 	width: 100%;
@@ -110,6 +83,7 @@ body, html {
 	right: 0;
 	height: 100%;
 	width: auto;
+	opacity:0.6;
 }
 
 #btnArea {
@@ -156,7 +130,7 @@ body, html {
 	margin: 0;
 	padding: 0;
 	padding-top:55%;
-
+	text-align:left;
 	background-color: white;
 }
 /* 아이폰5 */
@@ -276,6 +250,7 @@ body, html {
 	height: 90%;
 	float: left;
 	padding-top:4%;
+	text-align:left;
 }
 
 .busNum {
@@ -290,11 +265,13 @@ body, html {
 
 .busTxt {
 	position: absolute;
-	width: 50%;
-	height: 30%;
+	width: 70%;
+	height: 35%;
 	font-size: 0.3em;
 	padding-top: 20%;
-	padding-left: 22px;
+	padding-left: 10px;
+	<%-- background-image: url('/spring/images/timeLine/busNum.png'); --%>
+	
 }
 
 #footer {
@@ -342,6 +319,14 @@ body, html {
 
 
 }
+
+.selectBox{
+	color:#555;
+	background-color: #fff;
+	border:1px solid #ccc;
+	border-radius:4px;
+	text-align:center;
+}
 </style>
 
 <script>
@@ -383,13 +368,13 @@ function moveMap(){
 			<div id="header">
 			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
 					<div id="txtLogo">
 					
 					셔틀버스 위치조회
 					
 					</div>
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>
 				</div>
 			</div>
 
@@ -400,7 +385,7 @@ function moveMap(){
 				</div>
 			</div>
 					<div id="footer">
-						<select id = "detailLocationSel" class="form-Control">
+						<select id = "detailLocationSel" class="selectBox">
 							<c:forEach items="${bsdcList}" var="bsdcDto">
 								<c:choose>
 		
@@ -413,7 +398,7 @@ function moveMap(){
 								</c:choose>
 							</c:forEach>
 						</select>
-					<img src="/spring/images/timeLine/naverMap.png" id="changeMap" onclick="moveMap();" />
+					<img src="/spring/images/timeLine/mapIamge.png" id="changeMap" onclick="moveMap();" />
 					<img src="/spring/images/timeLine/refreshBtn.png" id="refreshBtn" onclick="window.location.reload();" />
 				
 					</div>
@@ -435,7 +420,7 @@ function moveMap(){
 									<c:if test="${cbldto.busStopSeq==status.count}">
 										<div class="busNum">
 											<div class="busTxt">${cbldto.businfoName} </div>
-											<img src="/spring/images/timeLine/busNum.png" alt="" />
+											<img src='/spring/images/timeLine/busNum.png'>
 										</div>
 										<div class="busIcon">
 											<img src="/spring/images/timeLine/busIcon.png" alt="" />

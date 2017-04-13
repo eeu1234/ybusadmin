@@ -8,7 +8,7 @@
 <title>Cambus</title>
 
 <%@include file="/inc/asset.jsp" %>
-<script src="./js/jquery.xdomainajax.js"></script>
+
 <style>
 @font-face {
 	font-family: "notoFont-medium";
@@ -25,8 +25,8 @@
 		font-size: 1em;
 	}
 	#weatherText {
-		font-size: 0.6em;
-		width: 42%;
+		font-size: 1em;
+		width: 63%;
 		padding-right: 5%;
 	}
 	#frontTemp {
@@ -42,8 +42,8 @@
 		font-size: 1.2em;
 	}
 	#weatherText {
-		font-size: 0.7em;
-		width: 42%;
+		font-size: 1em;
+		width: 60%;
 		padding-right: 5%;
 	}
 	#frontTemp {
@@ -59,8 +59,8 @@
 		font-size: 1.5em;
 	}
 	#weatherText {
-		font-size: 1.0em;
-		width: 50%;
+		font-size: 1.5em;
+		width: 65%;
 		padding-right: 5%;
 	}
 	#frontTemp {
@@ -76,7 +76,7 @@
 		font-size: 2.5em;
 	}
 	#weatherText {
-		width: 45%;
+		width: 65%;
 		padding-right: 5%;
 		font-size: 1.5em;
 	}
@@ -95,11 +95,11 @@ body, html, p, ul, img, span, div, a {
 
 body, html {
 	position: relative;
-	height: 100%;
+	height: 110%;
 	width: 100%;
 	max-width: 1000px;
 	font-family: 'notoFont-bold';
-	color: #222;
+	color: #5E5B5A;
 	margin: 0 auto;
 }
 
@@ -201,6 +201,7 @@ body, html {
 	color: white;
 	width: 50%;
 	height: 100%;
+	margin-left:15%;
 	text-align: right;
 }
 
@@ -210,7 +211,7 @@ body, html {
 	text-shadow: #999999 5px 5px 5px;
 	padding-top: 10%;
 	color: white;
-	width: 40%;
+	width: 30%;
 	height: 100%;
 	padding-left: 3%;
 	color: white;
@@ -229,7 +230,9 @@ body, html {
 	height: 25%;
 	background-color: rgba(255, 255, 255, 0.6);
 }
-
+.iconInfo{
+	margin-top:10px;
+}
 #firstBox {
 	float: left;
 	width: 33%;
@@ -276,7 +279,7 @@ body, html {
 	width:60%;
 	height:70%;
 	margin:20% auto;
-	background-color: yellow;
+	background-color: ;
 	text-align:center;
 }
 
@@ -285,7 +288,7 @@ body, html {
 
 #bottom {
 	width: 100%;
-	height: 11%;
+	height: 8%;
 	background-color: black;
 	color: white;
 	text-align: center;
@@ -324,7 +327,7 @@ ul,li{
 
 				<ul>
 					<c:forEach items="${nList}" var="ndto">
-						<li class="nContent" value="${ndto.noticeSeq}"><a href="http://localhost:8090/spring/admin/notice/noticeContent.action?noticeSeq="+${ndto.noticeSeq}>${ndto.noticeSubject }</a></li>
+						<li class="nContent" value="${ndto.noticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${ndto.noticeSeq}">${ndto.noticeSubject}</a></li>
 					</c:forEach>
 				</ul>
 
@@ -345,40 +348,46 @@ ul,li{
 			</div>
 			<div id="camMain">
 				<div class="iconBox">
-					<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
-					<div class="iconInfo">셔틀버스</div>
-					위치조회
+					<div class="iconImg"><img src="./images/mainImage/camMain.png" style="width:50%;height:auto;" /></div>
+					<div class="iconInfo">CAMBUS</div>
+					
 				</div>
 			</div>
-			<div id="cityBus"></div>
+			<div id="cityBus">
+				<div class="iconBox" onclick="location.href='http://m.gbis.go.kr/common/main.do?osInfoType=M'">
+            	<div class="iconImg"><img src="./images/mainImage/cityBus.png" alt="" /></div>
+               	<div class="iconInfo">경기버스</div>
+	            	위치조회
+	            </div>
+			</div>
 
 			<div class="clear"></div>
 
-			<div id="firstBox" class="BSC1 busLine">첫번째</div>
-			<div id="secBox" class="BSC2 busLine">두번째</div>
-			<div id="thirdBox" class="BSC3 busLine">세번째</div>
+			<div id="firstBox" class="BSC1 busLine"></div>
+			<div id="secBox" class="BSC2 busLine"></div>
+			<div id="thirdBox" class="BSC3 busLine"></div>
 			<div class="clear"></div>
 
-			<div id="forthBox" class="BSC4" onclick="location.href='http://localhost:8090/spring/busSchedule/busTimeTable.action';">
+			<div id="forthBox" class="BSC4" onclick="location.href='/spring/busSchedule/busTimeTable.action';">
 																						 
 				<div class="iconBox">
-            	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
-               	<div class="iconInfo">시간표</div>
-	               	가...가버렷
+            	<div class="iconImg"><img src="./images/mainImage/busTimeTable.png" alt="" /></div>
+               	<div class="iconInfo">전체버스</div>
+	            	시간표
 	            </div>
 			</div>
 			<div id="fifthBox" class="BSC5">
 				<div class="iconBox">
             	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
                	<div class="iconInfo"></div>
-	               	위치조회
+	               	아직미정
 	            </div>
 			</div>
-			<div id="sixthBox" class="BSC6" onclick="location.href='http://localhost:8090/spring/user/makeIcon.action'">
+			<div id="sixthBox" class="BSC6" onclick="location.href='/spring/user/makeIcon.action'">
 				<div class="iconBox">
-            	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
+            	<div class="iconImg"><img src="./images/mainImage/howToAdd.png" alt="" /></div>
                	<div class="iconInfo"></div>
-	               	How to Add
+	               	App 등록
 	            </div>
 			</div>
 			<div class="clear"></div>
@@ -696,8 +705,17 @@ function appendCategory(){
 		iconImg.setAttribute("class","iconImg");
 		
 		var img = document.createElement("img");
-		img.setAttribute("src","./images/mainImage/tempIcon.png");
-	
+		<c:choose>
+			<c:when test="${status.count==1}">
+				img.setAttribute("src","./images/mainImage/mainBus.png");
+			</c:when>
+			<c:when test="${status.count==2}">
+			img.setAttribute("src","./images/mainImage/mainBus.png");
+			</c:when>
+			<c:when test="${status.count==3}">
+			img.setAttribute("src","./images/mainImage/schoolBus.png");
+			</c:when>
+		</c:choose>
 		var iconInfo = document.createElement("div");
 		iconInfo.setAttribute("class","iconInfo");
 	

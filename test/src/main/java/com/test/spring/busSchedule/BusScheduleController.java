@@ -17,6 +17,7 @@ import com.test.spring.dto.BusScheduleDTO;
 import com.test.spring.dto.BusScheduleSearchDTO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
+import com.test.spring.dto.UniversityDTO;
 
 @Controller
 public class BusScheduleController {
@@ -33,7 +34,7 @@ public class BusScheduleController {
 							,String busStopCategorySeq
 							,String weekDays){
 		
-		AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+		UniversityDTO adto = (UniversityDTO)session.getAttribute("universityDto");
 		
 		//학교 seq 가져오기
 		String universitySeq = adto.getUniversitySeq();

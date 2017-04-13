@@ -27,7 +27,7 @@ public class AdminLoginController {
 	}
 	
 
-	//로그인 하기
+	//로그인 하기 - try catch 안해도 됨. 실패하면 adminLoginOk 에서 로그인창으로 돌아옴
 	@RequestMapping(method = {RequestMethod.POST}, value="/admin/adminLoginOk.action")
 	public String loginCheck(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
@@ -35,7 +35,6 @@ public class AdminLoginController {
 		String id = request.getParameter("id");
 		String password = request.getParameter("pw");
 		session = request.getSession();
-		
 		
 		AdminUniversityDTO adto= new AdminUniversityDTO();
 		

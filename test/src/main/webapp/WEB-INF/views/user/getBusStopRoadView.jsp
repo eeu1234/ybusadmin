@@ -6,17 +6,8 @@
 <head>
 <meta charset="utf-8">
 <title>Cambus</title>
+<%@include file="/inc/userAsset.jsp" %>
 
-
-
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
-
-<meta name="mobile-web-app-capable" content="yes">
-<!-- import 시작 -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-	crossorigin="anonymous"></script>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -24,27 +15,7 @@
 	crossorigin="anonymous">
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link
-	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
-	rel="stylesheet">
-<script
-	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
-
-
-
-<!-- ico 아이콘-->
-<link rel="apple-touch-icon" href="/mobile/images/favicon.ico">
-
-
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=IVVqCpGsP6YXrl2ogm4R&submodules=panorama"></script>
-
-<script
-  src="https://code.jquery.com/jquery-1.12.4.min.js"
-  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-  crossorigin="anonymous"></script>
-
-<link rel="stylesheet" href="/spring/css/busStop.css">
 
 
 <style>
@@ -57,11 +28,11 @@
 
 </style>
 <script>
-	$(function() {
+$(function() {
 
 		
 	});
-
+	//네이버 로드뷰
 	var HOME_PATH = window.HOME_PATH || '.',
 	pano = null;
 
@@ -85,11 +56,12 @@
 	    }
 	});
 	}
-
+	
+	//네이버 로드뷰 마커
 	var marker = new naver.maps.Marker({
 	position: new naver.maps.LatLng(${bsdto.busStopLatitude}, ${bsdto.busStopLongitude}),
 	icon: { // 레티나 디스플레이 대응 마커 아이콘
-	    url: HOME_PATH +"/img/example/pin_map.png", // 110x72 크기의 원본 이미지
+	    url: HOME_PATH +"/images/timeLine/busStopMaker.png",
 	    size: new naver.maps.Size(55, 36),
 	    anchor: new naver.maps.Point(28, 36),
 	    origin: new naver.maps.Point(0, 0),
@@ -116,8 +88,6 @@
 	});
 
 	naver.maps.onJSContentLoaded = initPanorama;
-	////////////////////////////////////////////////////
-
 	
 	
 </script>
@@ -135,7 +105,7 @@
 					
 					</div>
 				
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'" />
 				</div>
 			</div>
 		</div>
@@ -153,7 +123,7 @@
 			<div id="infoAround">
 				<div id="infoTitle">
 					 
-					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">${bsdto.busStop} </div>
+					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">${bsdto.busStop} 주변정보 </div>
 				</div>
 				<div id="mapAP"></div>
 			    <script type="text/javascript">
@@ -162,14 +132,14 @@
 					var marker;
 					
 					function initMap() {
-					  
+					  	//정류장 맛집 맵
 						mapAP = new google.maps.Map(document.getElementById('mapAP'), {
 						
 					    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
 					    zoom: 15
 					  	});
 						
-						
+						//정류장 마커
 						<c:forEach items="${apList}" var="apdto">
 							var infowindow${apdto.aroundPlaceSeq} = new google.maps.InfoWindow({
 								content:'${apdto.aroundPlaceName}',

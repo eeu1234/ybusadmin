@@ -18,18 +18,7 @@
 	text-align: center;
 }
 
-#tbl1 th:nth-child(1) {
-	width:5%;
-}
-#tbl1 th {
-	width: 20%;
-}
-#tbl1 td:nth-child(1) {
-	width:5%;
-}
-#tbl1 td {
-	width: 20%;
-}
+
 
 </style>
 <script>

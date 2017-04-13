@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset=UTF-8">
-<title>Insert title here</title>
+<title>CAMBUS::공지사항</title>
 <link rel="stylesheet" href="/spring/css/busStop.css">
 <style>
 
@@ -32,6 +32,10 @@
 	margin-bottom: 10px;
 	background-color: white;
 	text-align: center;
+}
+#contentArea img{
+	width:100%;
+	height:auto;
 }
 
 .area {
@@ -80,6 +84,7 @@
 	width: 100%;
 	height: auto;
 	min-height: 200px;
+	text-align:left;
 	background-color: white;
 	padding: 8px;
 	border-bottom:2px solid silver;
@@ -134,6 +139,9 @@ img {
 	width: 100%;
 	height: auto;
 }
+#logo{
+opacity:0.6;
+}
 </style>
 <script>
 	
@@ -148,8 +156,9 @@ img {
 				transparent !important; border-color:
 				transparent;"	onclick="location.href='/spring/index.action';" />
 			<div id="txtLogo">공지사항</div>
-
-			<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+			
+			<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'" alt=''   />
+			
 		</div>
 	</div>
 	<div id="container">
@@ -160,13 +169,23 @@ img {
 
 				<!-- 머리부분 -->
 				<div class="contentHeader">
-					<div class="contentNum">#${noticeDto.noticeSeq}</div>
-					<div class="title">${noticeDto.noticeSubject}</div>
+					<div class="contentNum">#${noticeContent.noticeSeq}</div>
+					<div class="title">${noticeContent.noticeSubject}</div>
 					<div class="clear"></div>
 				</div>
 				<div class="content">
-					<div class="contentRegdate">${noticeDto.noticeRegdate}</div>
-					${noticeDto.noticeContent}
+					<div class="contentRegdate">${noticeContent.noticeRegdate}</div>
+					<c:forEach items="${noticeContent.filelist}" var="dto">
+							<c:if test="${dto.noticeFileType!='png'&&dto.noticeFileType!='jpg'&&dto.noticeFileType!='jpeg'&&dto.noticeFileType!='gif'&&dto.noticeFileType!='bmp'&&dto.noticeFileType!='PNG'&&dto.noticeFileType!='JPG'&&dto.noticeFileType!='JPEG'&&dto.noticeFileType!='GIF'&&dto.noticeFileType!='BMP'}">
+						<div class="contentRegdate"><a href="/spring/images/notice/${dto.noticeFileName}" download>${dto.noticeFileName}</a></div>
+							</c:if>
+						</c:forEach>
+					<c:forEach items="${noticeContent.filelist}" var="dto">
+						<c:if test="${dto.noticeFileType=='png'||dto.noticeFileType=='jpg'||dto.noticeFileType=='jpeg'||dto.noticeFileType=='gif'||dto.noticeFileType=='bmp'||dto.noticeFileType=='PNG'||dto.noticeFileType=='JPG'||dto.noticeFileType=='JPEG'||dto.noticeFileType=='GIF'||dto.noticeFileType=='BMP'}">
+							<a href="/spring/images/notice/${dto.noticeFileName}"><div id="imgBox"><img id="showImg" name="showImg" src="/spring/images/notice/${dto.noticeFileName}"></div></a>
+						</c:if>
+					</c:forEach>
+					${noticeContent.noticeContent}
 				</div>
 			</div>
 		</div>

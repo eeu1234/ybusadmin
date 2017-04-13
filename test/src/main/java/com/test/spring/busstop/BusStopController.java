@@ -197,9 +197,6 @@ public class BusStopController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
- 
-
-		
 		
 		return "busStop/busStopOk";
 	}

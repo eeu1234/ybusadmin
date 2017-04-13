@@ -52,6 +52,11 @@
 .btnSubmit {
 	display: inline-block;
 }
+
+#nDelete{
+	float:right;
+	margin: 10px;
+}
 </style>
 <script>
 
@@ -127,6 +132,7 @@ function readSchedule(){
 						+"<input type='hidden' class='weekDays' name='weekDays' value=''/>"
 						+"<input type='hidden' class='busScheduleSeq' name='busScheduleSeq' value="+dto.busScheduleSeq+"/>"
 						+"<input type='button' class='btn btn-danger' value='삭제' onclick='deleteOk();'/>"
+						+"<td class='chk'><input type='checkbox' name='selSeq' value="+dto.busScheduleSeq+" /></td>"
 						+"</form></div></td></tr>");
 			});//추가 끝
 
@@ -145,6 +151,24 @@ function readSchedule(){
 function deleteOk(){
 	if(confirm("삭제하시겠습니까?")){
 		$(event.srcElement).parent().submit();
+	}
+}
+
+//체크된 시간표 삭제하는 함수
+function deleteList(){
+
+	//체크박스가 선택이 되어야 실행. 안되면 선택 안되어있다고 alert하기.
+	if($(".chk :checked").size() > 0){
+		//선택된 체크박스만큼 일괄삭제 form에 hidden으로 값 추가
+		$(".chk :checked").each(function(){
+			$("#selDelete").append("<input type='hidden' name='busScheduleSeq' value='"+$(this).val()+"'>");
+		});
+
+		//submit 실행
+		$("#selDelete").submit();
+		
+	}else{
+		alert("선택된 시간이 없습니다.");
 	}
 }
 
@@ -208,7 +232,8 @@ function deleteOk(){
 							<th>순번</th>
 							<th>시간</th>
 							<th>노선명</th>
-							<th></th>
+							<th>단일삭제</th>
+							<th>삭제체크</th>
 						</tr>
 					</thead>
 
@@ -222,24 +247,25 @@ function deleteOk(){
 									<div class="btnSubmit">
 										<form action="/spring/admin/adminDeleteSchedule.action"
 											method="POST">
-											<input type="hidden" class="busStopCategorySeq"
-												name="busStopCategorySeq"
-												value="${Search.busStopCategorySeq}" /> <input type="hidden"
-												class="busStopDetailCategorySeq"
-												name="busStopDetailCategorySeq"
-												value="${Search.busStopDetailCategorySeq}" /> <input
-												type="hidden" class="weekDays" name="weekDays"
-												value="${Search.weekDays}" /> <input type="hidden"
-												class="busScheduleSeq" name="busScheduleSeq"
-												value="${time.busScheduleSeq}" /> <input type="button"
-												class="btn btn-danger" value="삭제" onclick="deleteOk();" />
+											<input type="hidden" class="busStopCategorySeq" name="busStopCategorySeq" value="${Search.busStopCategorySeq}" /> 
+											<input type="hidden" class="busStopDetailCategorySeq" name="busStopDetailCategorySeq" value="${Search.busStopDetailCategorySeq}" /> 
+											<input type="hidden" class="weekDays" name="weekDays" value="${Search.weekDays}" /> 
+											<input type="hidden" class="busScheduleSeq" name="busScheduleSeq" value="${time.busScheduleSeq}" /> 
+											<input type="button" class="btn btn-danger" value="삭제" onclick="deleteOk();" />
 										</form>
 									</div>
+								</td>
+								<td class="chk">
+									<input type="checkbox" name="selSeq" value="${time.busScheduleSeq}" />
 								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+				<form id="selDelete" action="/spring/admin/adminDeleteSchedule.action" method="POST">
+					<input type="button" id="nDelete" class="btn btn-danger" value="일괄삭제" onclick="deleteList();"/>
+				</form>
+				<div style="clear:both;"></div>
 			</div>
 			<!-- 선택 된 시간표 출력 끝-->
 

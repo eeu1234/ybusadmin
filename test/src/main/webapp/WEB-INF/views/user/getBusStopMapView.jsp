@@ -6,17 +6,8 @@
 <head>
 <meta charset="utf-8">
 <title>Cambus</title>
+<%@include file="/inc/userAsset.jsp" %>
 
-
-
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
-
-<meta name="mobile-web-app-capable" content="yes">
-<!-- import 시작 -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-	crossorigin="anonymous"></script>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -24,30 +15,12 @@
 	crossorigin="anonymous">
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link
-	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
-	rel="stylesheet">
-<script
-	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
-
-
-
-<!-- ico 아이콘-->
-<link rel="apple-touch-icon" href="/mobile/images/favicon.ico">
-
-
+	
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=IVVqCpGsP6YXrl2ogm4R&submodules=panorama"></script>
 
-<script
-  src="https://code.jquery.com/jquery-1.12.4.min.js"
-  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-  crossorigin="anonymous"></script>
-
-<link rel="stylesheet" href="/spring/css/busStop.css">
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk_ju7pwO5Gb-Q49o6-t2KvJ8erqmfgiY&callback=initMap">
-    </script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk_ju7pwO5Gb-Q49o6-t2KvJ8erqmfgiY&callback=initMap">
+</script>
 
 <style>
 
@@ -104,6 +77,7 @@
 	right: 0;
 	height: 100%;
 	width: auto;
+	opacity:0.6;
 }
 </style>
 <script>
@@ -127,7 +101,7 @@
 					
 					</div>
 				
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" />
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'" />
 				</div>
 			</div>
 		</div>
@@ -154,7 +128,7 @@
 			<div id="infoAround">
 				<div id="infoTitle">
 					 
-					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">${bsdto.busStop} </div>
+					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">${bsdto.busStop} 주변정보 </div>
 				</div>
 				<div id="mapAP"></div>
     <script type="text/javascript">
@@ -170,58 +144,55 @@
 
 	</div>
     <script type="text/javascript">
-var mapAP;
-var marker;
-var mapNormal;
-var markerNormal;
-function initMap() {
-  	
-	mapAP = new google.maps.Map(document.getElementById('mapAP'), {
-		
-	    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
-	    zoom: 15
-	});	
-	mapNormal = new google.maps.Map(document.getElementById('mapNormal'), {
-		
-	    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
-	    zoom: 15
-	});
-	
-	<c:forEach items="${apList}" var="apdto">
-		var infowindow${apdto.aroundPlaceSeq} = new google.maps.InfoWindow({
-			content:'${apdto.aroundPlaceName}',
-		});
-		
-		marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
-		    map: mapAP,
-		    draggable: false,
-		    animation: google.maps.Animation.DROP,
-		    info: '${apdto.aroundPlaceName}',
-		    title: '${apdto.aroundPlaceName}',
-		    position: {lat: ${apdto.aroundPlaceLatitude}, lng: ${apdto.aroundPlaceLongitude}}
-		});
-		marker${apdto.aroundPlaceSeq}.addListener('click', function(){
-			infowindow${apdto.aroundPlaceSeq}.open(mapAP,marker${apdto.aroundPlaceSeq});
-		});
+		var mapAP;
+		var marker;
+		var mapNormal;
+		var markerNormal;
+		function initMap() {
+		  	
+			//주변맛집 맵
+			mapAP = new google.maps.Map(document.getElementById('mapAP'), {
+				
+			    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
+			    zoom: 15
+			});	
 			
-	</c:forEach>
-	
-	
-	
-	markerNormal = new google.maps.Marker({
-	    map: mapNormal,
-	    draggable: false,
-	    animation: google.maps.Animation.DROP,
-	    position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}}
-	});
+			//정류장 맵
+			mapNormal = new google.maps.Map(document.getElementById('mapNormal'), {
+				
+			    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
+			    zoom: 15
+			});
+			
+			//주변맛집 마커
+			<c:forEach items="${apList}" var="apdto">
+				var infowindow${apdto.aroundPlaceSeq} = new google.maps.InfoWindow({
+					content:'${apdto.aroundPlaceName}',
+				});
+				
+				marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
+				    map: mapAP,
+				    draggable: false,
+				    animation: google.maps.Animation.DROP,
+				    info: '${apdto.aroundPlaceName}',
+				    title: '${apdto.aroundPlaceName}',
+				    position: {lat: ${apdto.aroundPlaceLatitude}, lng: ${apdto.aroundPlaceLongitude}}
+				});
+				marker${apdto.aroundPlaceSeq}.addListener('click', function(){
+					infowindow${apdto.aroundPlaceSeq}.open(mapAP,marker${apdto.aroundPlaceSeq});
+				});
+					
+			</c:forEach>
+			//정류장 마커
+			markerNormal = new google.maps.Marker({
+			    map: mapNormal,
+			    draggable: false,
+			    icon: '/spring/images/timeLine/busStopMaker.png',
+			    animation: google.maps.Animation.DROP,
+			    position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}}
+			});
 
-	
-
-	
-}
-
-
-
+		}//end initMap
     </script>
 
 

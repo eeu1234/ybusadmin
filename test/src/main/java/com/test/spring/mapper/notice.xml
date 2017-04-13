@@ -35,7 +35,7 @@ A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
     <select id="noticeContent" parameterType="String" resultType="com.test.spring.dto.NoticeDTO">
     	 
 SELECT N.NOTICESEQ AS noticeSeq, N.NOTICESUBJECT AS noticeSubject, N.NOTICECONTENT AS noticeContent, 
-N.NOTICEREGDATE AS noticeRegdate, N.NOTICEREADCOUNT AS noticeReadCount, N.ADMINID AS adminID,
+SUBSTR(N.NOTICEREGDATE,1,16) AS noticeRegdate, N.NOTICEREADCOUNT AS noticeReadCount, N.ADMINID AS adminID,
 N.NOTICESTATUS AS notisStatus,
 A.ADMINNAME AS adminName, A.ADMINDEPARTMENT AS adminDepartment, A.ADMINLEVEL AS adminLevel, 
 A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
@@ -47,14 +47,25 @@ A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
 							WHERE N.NOTICESEQ = #{seq}
     </select>
     
+        	    <!-- 공지사항 가져오는 쿼리 - 검색 있음 -->
+    <select id="noticefile" parameterType="String" resultType="com.test.spring.dto.NoticeFileDTO">
+		SELECT NOTICEFILESEQ AS noticeFileSeq, NOTICEFILENAME AS noticeFileName FROM NOTICEFILE
+			WHERE NOTICESEQ = #{seq}
+    </select>
+    
+    <!-- 공지사항 파일 삭제하는  쿼리 -->
+    <delete id="noticeDeleteFile" parameterType="String">
+    	DELETE FROM NOTICEFILE WHERE noticeSeq = #{noticeSeq}
+    </delete>
+    
     <!-- 공지사항 글 삭제하는  쿼리 -->
     <delete id="noticeDelete" parameterType="String">
     	DELETE FROM NOTICE WHERE noticeSeq = #{noticeSeq}
     </delete>
     
     <!-- 공지사항 글 추가하기  -->
-    <insert id="noticeAdd" parameterType="String">
-    	INSERT INTO NOTICE (NOTICESUBJECT,NOTICECONTENT,ADMINID) VALUES (#{subject},#{content},#{adminID})
+    <insert id="noticeAdd" parameterType="com.test.spring.dto.NoticeDTO">
+    	INSERT INTO NOTICE (NOTICESUBJECT,NOTICECONTENT,ADMINID) VALUES (#{noticeSubject},#{noticeContent},#{adminID})
     </insert>
     
     <!-- 공지사항 글 수정하기  -->
@@ -67,5 +78,17 @@ A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
     <update id="readCountAdd" parameterType="String">
     	UPDATE NOTICE SET NOTICEREADCOUNT = NOTICEREADCOUNT+1 WHERE NOTICESEQ = #{seq}
     </update>
+    
+    <!-- 공지사항 최신 seq 가져오기-->
+    <select id="noticeInfo" parameterType="String" resultType="com.test.spring.dto.NoticeDTO">	 
+SELECT MAX(NOTICESEQ) AS noticeSeq, NOTICESUBJECT AS noticeSubject, NOTICECONTENT AS noticeContent, 
+NOTICEREGDATE AS noticeRegdate, NOTICEREADCOUNT AS noticeReadCount, ADMINID AS adminID,
+NOTICESTATUS AS notisStatus FROM NOTICE
+    </select>
+    
+     <!-- 공지사항 파일 추가하기  -->
+    <insert id="noticeFileUpload" parameterType="map">
+    	INSERT INTO NOTICEFILE (NOTICEFILENAME,NOTICESEQ) VALUES (#{fileName},#{noticeSeq})
+    </insert>
 
 </mapper>

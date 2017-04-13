@@ -1,6 +1,5 @@
 package com.test.spring;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +47,6 @@ public class AuthCheck {
 		   + "|| execution(String *.busSchedule.AdminBusScheduleManage.*(..))"  //버스스케쥴관리
 		   + "|| execution(String *.PolyLineController.*(..))"  
 		   + "|| execution(String *.DeviceManageController.*(..))"
-		   + "|| execution(String *.NoticeController.*(..))"
 		   + "|| execution(String *.UniversityController.*(..))"
 		   + "|| execution(String *.BusStopManageController.*(..))"
 		   + "|| execution(String *.AdminManageController.*(..))")
@@ -117,9 +115,9 @@ public class AuthCheck {
    @Before("root()")
    public void checkRoot(JoinPoint joinPoint){
 	   
-	   int result = 0;
+	   
 	
-      //joinPoint: 주업무 참조하는 프 록시 객체
+      //joinPoint: 주업무 참조하는 프록시 객체
       Object[] args = joinPoint.getArgs();
       
       HttpServletRequest request = (HttpServletRequest)args[0];
@@ -128,38 +126,42 @@ public class AuthCheck {
       
       
       AdminUniversityDTO adto = (AdminUniversityDTO) session.getAttribute("adto");
-     
+      
       //보조 업무 9999 아닌 얘들
+      int result = 0;	//0이면 접근 가능, 1이면 접근 금지.
       
-      //response.sendRedirect("/spring/index.action");
       try {
-    	  //로그인 했는데 9999 가 아니다? 일반 관리자가 접근했다는 것.
-		  if(adto.getAdminLevel() == null || adto.getAdminLevel().isEmpty()
-			    		  || !adto.getAdminLevel().equals("9999")){
-			  
-			  result = 1;
-		  }else{
-			  //전혀 해당안되면 최고 관리자가 접근했다는 것.
-			  result = 0;
-		  }
-      }catch (Exception e) {
-    	  //에러 발생하면 없다는 거다.
+    	  //이 중 해당되면 로그인 안되었거나 일반 관리자라는 뜻.
+	      if(adto.getAdminLevel()==null || adto.getAdminLevel().isEmpty()
+	    		  || !adto.getAdminLevel().equals("9999")){
+	    	  result = 1;
+		         
+	      }else{
+	    	  result = 0;
+	      }
+      } catch (Exception e) {
+    	  //에러 나면 로그인 안되었다는 뜻. null 상태.
     	  result = 1;
-	  }
-      
-      if(result == 1){
-	    try {
-		      //인증 받지 못한 사람들..
-			  response.setCharacterEncoding("UTF-8");
-			  PrintWriter writer = response.getWriter();
-	          writer.print("<script>");
-	          writer.print("location.href='/spring/admin/adminLogin.action';");
-	          writer.print("</script>");
-	          writer.close();
-	    } catch (Exception e) {
-	  	  
-	    }
       }
+      //if조건으로 result가 1 일 때만 로그인창으로 튕겨내기
+      if(result == 1){
+    	  try {
+              
+              //인증 받지 못한 사람들..
+              //response.sendRedirect("/spring/index.action");
+              response.setCharacterEncoding("UTF-8");
+              PrintWriter writer = response.getWriter();
+              writer.print("<script>");
+              writer.print("location.href='/spring/admin/adminLogin.action';");
+              writer.print("</script>");
+              writer.close();
+              
+           } catch (Exception e) {
+              e.printStackTrace();
+           }
+    	  
+      }
+      
    }
    
    

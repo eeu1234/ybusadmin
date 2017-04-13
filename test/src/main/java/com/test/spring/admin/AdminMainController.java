@@ -25,15 +25,28 @@ public class AdminMainController {
 	@RequestMapping(method = {RequestMethod.GET},
 						value = "/admin/adminMain.action")
 	public String adminMain(HttpServletRequest request,HttpSession session,HttpServletResponse response){
-	
-		//메인 화면 최고 관리자 학교 설정
-		AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
-	
-		List<UniversityDTO> university = dao.list();
+		try {
+			//메인 화면 최고 관리자 학교 설정
+			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
 		
-		request.setAttribute("university", university);
-	
-		return "admin/adminMain";
+			List<UniversityDTO> university = dao.list();
+			
+			request.setAttribute("university", university);
+		
+			return "admin/adminMain";
+			
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+				            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+				} catch (Exception e2) {
+				
+				}
+			return null;
+		}
 	}
 	
 	//최고관리자가 대학교를 바꿨을때 대학교 seq, 대학교명이 세션값으로 넘어감
@@ -41,28 +54,43 @@ public class AdminMainController {
 						value = "/admin/adminMain1.action")
 	public String adminMain1(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
-		AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+		try {	
+			
+			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+					
+			//대학seq,대학이름 담겨있음(,구분)
+			String schoolName = request.getParameter("schoolName");
+			String temp[]  = schoolName.split(",");
+			
+			System.out.println(temp[0]);
+			System.out.println(temp[1]);
+			
+			
+			adto.setUniversitySeq(temp[0]);
+			adto.setUniversityName(temp[1]);
+			
+			session.setAttribute("adto", adto);
+			
+			//대학교 셀렉박스 유지
+			List<UniversityDTO> university = dao.list();
+			request.setAttribute("university", university);
+			
+			//session.setAttribute("universitySeq", universitySeq);
+			
+			return "admin/adminMain";
+			
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+				            
+				response.sendRedirect("/spring/admin/adminLogin.action");
 				
-		//대학seq,대학이름 담겨있음(,구분)
-		String schoolName = request.getParameter("schoolName");
-		String temp[]  = schoolName.split(",");
-		
-		System.out.println(temp[0]);
-		System.out.println(temp[1]);
-		
-		
-		adto.setUniversitySeq(temp[0]);
-		adto.setUniversityName(temp[1]);
-		
-		session.setAttribute("adto", adto);
-		
-		//대학교 셀렉박스 유지
-		List<UniversityDTO> university = dao.list();
-		request.setAttribute("university", university);
-		
-		//session.setAttribute("universitySeq", universitySeq);
-		
-		return "admin/adminMain";
+				} catch (Exception e2) {
+				
+				}
+			return null;
+		}
 	}
 	
 	//관리자 메인 화면에서 로그아웃

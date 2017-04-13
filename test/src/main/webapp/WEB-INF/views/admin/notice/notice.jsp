@@ -85,7 +85,7 @@
 	<%@include file="/inc/top.jsp"%>
 	<!-- content 몸통부분 -->
 	<div id="container">
-		<h1 class="menuTitle">공지사항(${adto.adminLevel})</h1>
+		<h1 class="menuTitle">공지사항</h1>
 		<table id="tbl1" class="table table-striped">
 			<tr>
 				<th>번호</th>

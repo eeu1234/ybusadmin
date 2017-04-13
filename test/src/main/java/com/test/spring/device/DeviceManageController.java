@@ -90,6 +90,11 @@ public class DeviceManageController {
 		
 		request.setAttribute("dNList", dNList);
 		
+		List<DeviceDTO> dHList = dao.deviceInfoHideList(seq);
+		
+		request.setAttribute("dHList", dHList);
+		
+		
 		List<BusInfoDTO> busList = dao.busInfoList(seq);
 		
 		request.setAttribute("busList", busList);

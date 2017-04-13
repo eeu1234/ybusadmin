@@ -51,7 +51,7 @@ html, body {
 }
 
 #totalBox{
-   border: 1px solid gray;
+   border: 0px solid gray;
    width: 1100px;
    height: 600px;
    margin: 0px auto;

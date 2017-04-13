@@ -7,16 +7,6 @@
 <meta charset=UTF-8">
 <title>Insert title here</title>
 
-<style>
-
-#tblDevice{
-	margin-top: 30px;
-}
-
-.busInfoNum{
-	width : 200px;
-}
-</style>
 <script>
 	$().ready(function(){
 		$(".busInfoNum").change(function(){
@@ -89,7 +79,7 @@
 			<th>버스번호</th>
 			<th>버스닉네임</th>
 			<th>대분류</th>
-			<th>관리</th>
+			<th></th>
 		</tr>
 		
 		<c:forEach items="${dvList}" var ="dvdto">
@@ -97,10 +87,10 @@
 			
 			
 			<td>${dvdto.deviceModel}</td>
-			<td><input type="text" id="deviceTel${dvdto.deviceSeq}" placeholder="${dvdto.deviceTel}" name="deviceTel" class="form-control"></td>
+			<td><input type="text" id="deviceTel${dvdto.deviceSeq}" placeholder="${dvdto.deviceTel}" name="deviceTel"></td>
 			<td>${dvdto.busInfoName}</td>
 			<td>
-			<select id = "busInfoNum${dvdto.deviceSeq}" class="busInfoNum form-control" name="busNumber">
+			<select id = "busInfoNum${dvdto.deviceSeq}" class="busInfoNum" name="busNumber">
 				<option value="-1">선택</option>
 				<c:forEach items="${busList}" var ="busdto">
 				<%-- <c:if test="${dbdto.busInfoName}==${busdto.busInfoName}">
@@ -133,10 +123,10 @@
 			
 			
 			<td>${dndto.deviceModel}</td>
-			<td><input type="text" id="deviceTel${dndto.deviceSeq}" placeholder="${dndto.deviceTel}" name="deviceTel" class="form-control"></td>
+			<td><input type="text" id="deviceTel${dndto.deviceSeq}" placeholder="${dndto.deviceTel}" name="deviceTel"></td>
 			<td>${dndto.busInfoName}</td>
 			<td>
-			<select id = "busInfoNum${dndto.deviceSeq}" class="busInfoNum form-control" name="busNumber">
+			<select id = "busInfoNum${dndto.deviceSeq}" class="busInfoNum" name="busNumber">
 				<option value="-1">선택</option>
 				<c:forEach items="${busList}" var ="busdto">
 				<option value="${busdto.busInfoSeq}">${busdto.busInfoNum}</option>
@@ -146,20 +136,32 @@
 			
 			<td></td>
 			<td></td>
-			
-			<%-- 
-			<td>
-			<select id="busStopCategory${dvdto.deviceSeq}" class="busStopCategory" name="busStopCategory">
-				<option value="-1">카테고리 선택</option>
-				<c:forEach items="${bsclist}" var="bsdto">
-				<option value="${bsdto.busStopCategorySeq}">${bsdto.busStopCategory}</option>
-				</c:forEach>
-			</select>
-			</td>
-			--%>
 			<td><input type="button" value = "확인" onclick="add(${dndto.deviceSeq});" class="btn btn-primary"></td>
 		</tr>
 		</c:forEach>
+		
+		<c:forEach items="${dHList}" var ="dhdto">
+		<tr>
+			
+			
+			<td>${dhdto.deviceModel}</td>
+			<td><input type="text" id="deviceTel${dhdto.deviceSeq}" placeholder="${dhdto.deviceTel}" name="deviceTel"></td>
+			<td>${dhdto.busInfoName}</td>
+			<td>
+			<select id = "busInfoNum${dhdto.deviceSeq}" class="busInfoNum" name="busNumber">
+				<option value="-1">선택</option>
+				<c:forEach items="${busList}" var ="busdto">
+				<option value="${busdto.busInfoSeq}">${busdto.busInfoNum}</option>
+				</c:forEach>
+			</select>
+			</td>
+			
+			<td></td>
+			<td></td>
+			<td><input type="button" value = "확인" onclick="add(${dhdto.deviceSeq});" class="btn btn-primary"></td>
+		</tr>
+		</c:forEach>
+		
 		
 	</table>
 

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset=UTF-8">
-<title>Insert title here</title>
+<title>CAMBUS::관리자 로그인</title>
 
 
 <script>

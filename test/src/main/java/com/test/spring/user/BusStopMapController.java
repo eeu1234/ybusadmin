@@ -28,6 +28,7 @@ import com.test.spring.dto.UniversityDTO;
  * 
  *******************************************/
 
+
 @Controller("busStopMapController")
 public class BusStopMapController {
 	
@@ -38,18 +39,30 @@ public class BusStopMapController {
 	
 	@RequestMapping(method={RequestMethod.GET},value="/getAllBusStop.action")
 	public String getBusStop(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopSeq){
-		universitySeq = request.getParameter("universitySeq");
-		//busStopSeq="4";
-		//System.out.println(universitySeq);
-		
-		BusStopDTO bsdto= dao.busStop(busStopSeq);
-		
-		UniversityDTO unidto = dao.getUniversityArea(universitySeq);
-		
-		
-		request.setAttribute("unidto", unidto);
-		request.setAttribute("bsdto", bsdto);
-		
+		try {
+		    
+			universitySeq = request.getParameter("universitySeq");
+			//busStopSeq="4";
+			//System.out.println(universitySeq);
+			
+			BusStopDTO bsdto= dao.busStop(busStopSeq);
+			
+			UniversityDTO unidto = dao.getUniversityArea(universitySeq);
+			
+			
+			request.setAttribute("unidto", unidto);
+			request.setAttribute("bsdto", bsdto);
+    
+		 } catch (Exception e) {
+		    session.invalidate();
+		    try {
+		       
+		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    } catch (Exception e2) {
+		       // TODO: handle exception
+		    }
+		 }
+				
 		return "user/getBusStop";
 	}
 	
@@ -61,13 +74,23 @@ public class BusStopMapController {
 	public String getBusStopRoadView(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopSeq,String busStopCategorySeq){
 		
 		//busStopSeq="4";
-		
-		List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
-		BusStopDTO bsdto= dao.busStop(busStopSeq);
-		
-		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
-		request.setAttribute("apList", apList);
-		request.setAttribute("bsdto", bsdto);
+		try {
+			List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
+			BusStopDTO bsdto= dao.busStop(busStopSeq);
+			
+			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
+			request.setAttribute("apList", apList);
+			request.setAttribute("bsdto", bsdto);
+			    
+		 } catch (Exception e) {
+		    session.invalidate();
+		    try {
+		       
+		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    } catch (Exception e2) {
+		       // TODO: handle exception
+		    }
+		 }
 		
 		return "user/getBusStopRoadView";
 	}
@@ -80,13 +103,25 @@ public class BusStopMapController {
 	public String getBusStopMapView(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopSeq,String busStopCategorySeq){
 		
 		//busStopSeq="4";
+		try {
+		    
+			List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
+			BusStopDTO bsdto= dao.busStop(busStopSeq);
+			
+			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
+			request.setAttribute("apList", apList);
+			request.setAttribute("bsdto", bsdto);
+			
+		 } catch (Exception e) {
+		    session.invalidate();
+		    try {
+		       
+		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    } catch (Exception e2) {
+		       // TODO: handle exception
+		    }
+		 }
 		
-		List<AroundPlaceDTO> apList = dao.getAroundPlace(busStopSeq);
-		BusStopDTO bsdto= dao.busStop(busStopSeq);
-		
-		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
-		request.setAttribute("apList", apList);
-		request.setAttribute("bsdto", bsdto);
 		
 		return "user/getBusStopMapView";
 	}
@@ -98,37 +133,48 @@ public class BusStopMapController {
 	//현재 해당 노선에서 운행중인 버스의 실시간 위치를 찍어줘야함.
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopLine.action")
 	public String getBusStopLine(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq, String busStopDetailCategorySeq,UniversityDTO universityDTO){
-		
+		try {
+		    
+			HashMap<String,String> map = new HashMap<String,String>();
+			map.put("busStopCategorySeq", busStopCategorySeq);
+			map.put("universitySeq", universitySeq);
+			
+			System.out.println("busStopCategorySeq+++"+map.get("busStopCategorySeq"));
+			System.out.println(map.get("universitySeq"));
+			System.out.println(busStopCategorySeq);
+			System.out.println(universitySeq);
+			//System.out.println("$$$$$"+universitySeq);
+			if(busStopDetailCategorySeq==null||busStopDetailCategorySeq.equals("")){
+				busStopDetailCategorySeq = dao.getDefaultBusStopDetailCategory(map);
+				//System.out.println("?????="+busStopDetailCategorySeq);
+			}
+			map.put("busStopDetailCategorySeq",busStopDetailCategorySeq);
+			
+			BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);
+			List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);
+			List<CurrBusLocationDTO> cblList = dao.getCurrBusStopLocation(map);
+			List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
+			UniversityDTO unidto = dao.getUniversityArea(universitySeq);
+			
+			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
+			request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
+			request.setAttribute("bsdcList", bsdcList);
+			request.setAttribute("cblList", cblList);
+			request.setAttribute("avgBSdto", avgBSdto);
+			request.setAttribute("unidto", unidto);
+			request.setAttribute("bsList", bsList);    
+		 } catch (Exception e) {
+		    session.invalidate();
+		    try {
+		       
+		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    } catch (Exception e2) {
+		       // TODO: handle exception
+		    }
+		 }
 		//busStopCategorySeq ="2";
 		//System.out.println("getBusStopLine="+busStopCategorySeq);
-		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("busStopCategorySeq", busStopCategorySeq);
-		map.put("universitySeq", universitySeq);
-		
-		System.out.println("busStopCategorySeq+++"+map.get("busStopCategorySeq"));
-		System.out.println(map.get("universitySeq"));
-		System.out.println(busStopCategorySeq);
-		System.out.println(universitySeq);
-		//System.out.println("$$$$$"+universitySeq);
-		if(busStopDetailCategorySeq==null||busStopDetailCategorySeq.equals("")){
-			busStopDetailCategorySeq = dao.getDefaultBusStopDetailCategory(map);
-			//System.out.println("?????="+busStopDetailCategorySeq);
-		}
-		map.put("busStopDetailCategorySeq",busStopDetailCategorySeq);
-		
-		BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);
-		List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);
-		List<CurrBusLocationDTO> cblList = dao.getCurrBusStopLocation(map);
-		List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
-		UniversityDTO unidto = dao.getUniversityArea(universitySeq);
-		
-		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
-		request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
-		request.setAttribute("bsdcList", bsdcList);
-		request.setAttribute("cblList", cblList);
-		request.setAttribute("avgBSdto", avgBSdto);
-		request.setAttribute("unidto", unidto);
-		request.setAttribute("bsList", bsList);
+
 		
 		return "user/getBusStopLine";
 	}
@@ -142,35 +188,46 @@ public class BusStopMapController {
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopLocation.action")
 	public String getBusStopLocation(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,String busStopDetailCategorySeq){
 		
-
+		try {
+		    
+			HashMap<String,String> map = new HashMap<String,String>();
+			map.put("busStopCategorySeq", busStopCategorySeq);
+			map.put("universitySeq", universitySeq);
+			
+			if(busStopDetailCategorySeq==null||busStopDetailCategorySeq.equals("")){
+				busStopDetailCategorySeq = dao.getDefaultBusStopDetailCategory(map);
+			}
+			map.put("busStopDetailCategorySeq", busStopDetailCategorySeq);
+			
+			
+		
+			List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
+			
+			BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);
+			List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);
+			List<CurrBusLocationDTO> cblList = dao.getCurrBusLocation(map);
+			UniversityDTO unidto = dao.getUniversityArea(universitySeq);
+			
+			//request.setAttribute("bsdcdto", bsdcdto);
+			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
+			request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
+			request.setAttribute("bsdcList", bsdcList);
+			request.setAttribute("cblList", cblList);
+			request.setAttribute("avgBSdto", avgBSdto);
+			request.setAttribute("unidto", unidto);
+			request.setAttribute("bsList", bsList);
+		 } catch (Exception e) {
+		    session.invalidate();
+		    try {
+		       
+		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    } catch (Exception e2) {
+		       // TODO: handle exception
+		    }
+		 }
 		//busStopCategorySeq ="2";
 		
-		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("busStopCategorySeq", busStopCategorySeq);
-		map.put("universitySeq", universitySeq);
-		
-		if(busStopDetailCategorySeq==null||busStopDetailCategorySeq.equals("")){
-			busStopDetailCategorySeq = dao.getDefaultBusStopDetailCategory(map);
-		}
-		map.put("busStopDetailCategorySeq", busStopDetailCategorySeq);
-		
-		
 
-		List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
-		
-		BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);
-		List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);
-		List<CurrBusLocationDTO> cblList = dao.getCurrBusLocation(map);
-		UniversityDTO unidto = dao.getUniversityArea(universitySeq);
-		
-		//request.setAttribute("bsdcdto", bsdcdto);
-		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
-		request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
-		request.setAttribute("bsdcList", bsdcList);
-		request.setAttribute("cblList", cblList);
-		request.setAttribute("avgBSdto", avgBSdto);
-		request.setAttribute("unidto", unidto);
-		request.setAttribute("bsList", bsList);
 		
 		return "user/getBusStopLocation";
 	}
