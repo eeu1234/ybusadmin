@@ -62,7 +62,7 @@ $(document).ready(function(){
 					$("#checkBeforePw").text("기존 비밀번호 일치").css("color","blue");
 				}else{
 					beforeCheck = false;
-					$("#checkBeforePw").text("기존 비밀번호 불일치").css("color","blue");
+					$("#checkBeforePw").text("기존 비밀번호 불일치").css("color","red");
 				}
 			},error(){
 				alert("비밀번호 확인 에러");
@@ -121,8 +121,7 @@ function updateOk(){
 
 	//일반관리자용
 	<c:if test="${dto.adminLevel != 9999}">
-		if(<c:if test="${adto.adminLevel != 9999}">beforeCheck && </c:if>
-			afterCheck){
+	if(<c:if test="${adto.adminLevel != 9999}">beforeCheck && </c:if> afterCheck){
 		if(confirm("수정하시겠습니까?")){
 			$("#updateForm").submit();
 		}
@@ -132,11 +131,23 @@ function updateOk(){
 	
 	</c:if>
 	
-	//최고 관리자용
-	<c:if test="${dto.adminLevel == 9999}">
+	//최고 관리자 - myPage 왔을 때
+	<c:if test="${adto.adminLevel == 9999 && my == 'my'}">
+	if(beforeCheck && afterCheck){
+		if(confirm("수정하시겠습니까?")){
+			$("#updateForm").submit();
+		}
+	}else{
+		alert("비밀번호를 다시 확인해주세요.");
+	}
+	</c:if>
+
+	//최고 관리자용 - 일반계정 관리할 때
+	<c:if test="${dto.adminLevel == 9999 && my != 'my'}">
 		$("#updateForm").submit();
 	</c:if>
-}
+	
+}//updateOk
 
 </script>
 
@@ -156,7 +167,7 @@ function updateOk(){
 						name="my" />
 					</td>
 				</tr>
-				<c:if test="${dto.adminLevel != 9999 && my != 'my'}">
+				<c:if test="${my != 'my'}">
 				<c:if test="${adto.adminLevel != 9999}">
 				<tr>
 					<th>기존 비밀번호</th>

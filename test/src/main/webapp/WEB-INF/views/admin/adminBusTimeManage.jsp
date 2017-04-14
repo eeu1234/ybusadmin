@@ -13,10 +13,12 @@
 	vertical-align: middle;
 	text-align: left;
 }
+
 #viewTable tbody  td{
 	vertical-align: middle;
 	text-align: left;
 }
+
 #busTimeTable {
 	width: 900px;
 	margin: 0px auto;
