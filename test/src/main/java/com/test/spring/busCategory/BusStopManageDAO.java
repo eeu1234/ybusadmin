@@ -47,8 +47,12 @@ public class BusStopManageDAO {
 
 	// 카테고리 삭제
 	public int busStopCategoryDelete(String seq) {
-		
-		return sql.delete("bCategory.delCategory", seq);
+		try{
+			return sql.delete("bCategory.delCategory", seq);
+		}catch (Exception e) {
+			System.out.println("삭제실패");
+		}
+		return 0;
 	}
 
 	//카테고리 수정을 위해 정보 가져오기
@@ -71,8 +75,12 @@ public class BusStopManageDAO {
 
 	//버스 정보 삭제
 	public int busInfoDelete(String seq) {
-		
-		return sql.delete("bCategory.delBus", seq);
+		try{
+			return sql.delete("bCategory.delBus", seq);
+		}catch(Exception e){
+			System.out.println("삭제실패");
+		}
+		return 0;
 	}
 
 	//버스 수정을 위해 정보 가져오기

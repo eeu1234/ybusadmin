@@ -416,7 +416,7 @@ function moveMap(){
 									</div>
 			
 								<c:forEach items='${cblList}' var='cbldto'>
-									<c:if test="${cbldto.busStopSeq==status.count}">
+									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
 										<div class="busNum">
 											<div class="busTxt">${cbldto.businfoName} </div>
 											<img src='/spring/images/timeLine/busNum.png'>
@@ -440,7 +440,7 @@ function moveMap(){
 									<img src="/spring/images/timeLine/endImg.png" class="lineImg" />
 									</div>
 									<c:forEach items='${cblList }' var='cbldto'>
-									<c:if test="${cbldto.busStopSeq==status.count}">
+									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
 										<div class="busNum">
 											<div class="busTxt">${cbldto.businfoName} </div>
 											<img src="/spring/images/timeLine/busNum.png" alt="" />
@@ -476,7 +476,7 @@ function moveMap(){
 										</div>
 									</c:if>
 								<c:forEach items='${cblList }' var='cbldto'>
-									<c:if test="${cbldto.busStopSeq==status.count}">
+									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
 										<div class="busNum">
 											<div class="busTxt">${cbldto.businfoName} </div>
 											<img src="/spring/images/timeLine/busNum.png" alt="" />

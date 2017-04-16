@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -82,6 +83,44 @@ public class DeviceInfoManageController {
 			request.setAttribute("result", result);
 			
 			return "deviceInfoManage/updateDeviceInfoManage";
+	         
+	         
+	         
+	      } catch (Exception e) {
+	         session.invalidate();
+
+	         try {
+	            
+	            response.sendRedirect("/spring/admin/adminLogin.action");
+
+	         } catch (Exception e2) {
+	            // TODO: handle exception
+
+	         }
+		return null;
+	      }
+	}
+	
+	//삭제 처리
+	@RequestMapping(method = { RequestMethod.GET }, value = "/deviceInfoManage/deleteDeviceInfoManage.action")
+	@Transactional
+	public String deleteDeviceInfoManage(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
+		try {
+	         
+	         //내용
+	         
+			String seq = request.getParameter("seq");
+			
+			
+			System.out.println(seq);
+			int result;
+			
+			
+			result = dao.deleteDevice(seq);
+			
+			request.setAttribute("result", result);
+			
+			return "deviceInfoManage/deleteDeviceInfoManageOK";
 	         
 	         
 	         

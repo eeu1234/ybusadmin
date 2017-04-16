@@ -45,19 +45,45 @@
 			}//if
 				
 		});//adminId change 함수
+		
+		//새로운 비밀번호 비교확인
+		$("#pw1").change(function(){
+			var pw1 = $("#pw1").val();
+			var pw2 = $("#pw2").val();
 
+			if(pw1 != "" && pw2 != "" && pw1 != null && pw2 != null){
+				if(pw1 == pw2){
+					afterCheck = true;
+					$("#checkPw").text("비밀번호 일치").css("color","blue");
+				}else{
+					afterCheck = false;
+					$("#checkPw").text("비밀번호 비일치").css("color","red");
+					$("#pw2").val("");
+				}
+			}else{
+				$("#checkPw").text("비밀번호 공백").css("color","red");
+				afterCheck = false;
+			}
+
+		});
+		
 		//비밀번호 유효성 체크
 		$("#pw2").change(function(){
 			var pw1 = $("#pw1").val();
 			var pw2 = $("#pw2").val();
 
-			if(pw1 == pw2){
-				isCheckPw = true;
-				$("#checkPw").text("비밀번호 일치").css("color","blue");
+			if(pw1 != "" && pw2 != "" && pw1 != null && pw2 != null){
+				if(pw1 == pw2){
+					isCheckPw = true;
+					$("#checkPw").text("비밀번호 일치").css("color","blue");
+				}else{
+					$("#pw2").val("");
+					isCheckPw = false;
+					$("#checkPw").text("비밀번호를 다시 확인해주세요").css("color","red");
+				}
 			}else{
-				$("#pw2").val("");
-				isCheckPw = false;
-				$("#checkPw").text("비밀번호를 다시 확인해주세요").css("color","red");
+				$("#checkPw").text("비밀번호 공백").css("color","red");
+				afterCheck = false;
 			}
 		});//비밀번호 유효성 체크
 		

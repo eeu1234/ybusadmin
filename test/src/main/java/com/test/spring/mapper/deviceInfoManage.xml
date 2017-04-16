@@ -17,9 +17,13 @@
    </select>
    
 	<update id="updateDevice" parameterType="map">
-		update DEVICE SET DEVICEMODEL = #{deviceModel},DEVICETEL = #{deviceTel}, UNIVERSITYSEQ = #{universitySel} WHERE DEVICESEQ = #{seq};
+		update DEVICE SET DEVICEMODEL = #{deviceModel},DEVICETEL = #{deviceTel}, UNIVERSITYSEQ = ${universitySel} WHERE DEVICESEQ = #{seq};
 	</update>
    
+   <!-- 디바이스 삭제 -->
+   <delete id="deleteDevice" parameterType="String">
+   		delete from DEVICE where DEVICESEQ = #{seq};
+   </delete>
    
 </mapper>
 

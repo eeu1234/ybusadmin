@@ -76,7 +76,7 @@
 		<form method="POST"
 			action="/spring/busStopCategory/busStopCategoryAddOk.action">
 			<input type="text" id="busStopCategory" name="busStopCategory"
-				class="form-control" placeholder="추가할 대분류명을 입력하세요"> <input
+				class="form-control" placeholder="추가할 대분류명을 입력하세요" required> <input
 				type="submit" id="addCategory" value="카테고리 추가"
 				class="btn btn-primary">
 		</form>

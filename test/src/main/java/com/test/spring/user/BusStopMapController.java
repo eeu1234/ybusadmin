@@ -139,10 +139,10 @@ public class BusStopMapController {
 			map.put("busStopCategorySeq", busStopCategorySeq);
 			map.put("universitySeq", universitySeq);
 			
-			System.out.println("busStopCategorySeq+++"+map.get("busStopCategorySeq"));
-			System.out.println(map.get("universitySeq"));
-			System.out.println(busStopCategorySeq);
-			System.out.println(universitySeq);
+			//System.out.println("busStopCategorySeq+++"+map.get("busStopCategorySeq"));
+			//System.out.println(map.get("universitySeq"));
+			//System.out.println(busStopCategorySeq);
+			//System.out.println(universitySeq);
 			//System.out.println("$$$$$"+universitySeq);
 			if(busStopDetailCategorySeq==null||busStopDetailCategorySeq.equals("")){
 				busStopDetailCategorySeq = dao.getDefaultBusStopDetailCategory(map);
@@ -150,9 +150,9 @@ public class BusStopMapController {
 			}
 			map.put("busStopDetailCategorySeq",busStopDetailCategorySeq);
 			
-			BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);
-			List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);
-			List<CurrBusLocationDTO> cblList = dao.getCurrBusStopLocation(map);
+			BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);//지정된 노선의 맵 중앙
+			List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);//지정된 정류장
+			List<CurrBusLocationDTO> cblList = dao.getCurrBusStopLocation(map);//현재 버스 위치
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
 			UniversityDTO unidto = dao.getUniversityArea(universitySeq);
 			

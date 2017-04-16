@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -252,6 +253,7 @@ public class BusStopManageController {
 
 	//버스 정보 삭제
 	@RequestMapping(method = { RequestMethod.GET }, value = "/busInfo/busInfoDeleteOk.action")
+	@Transactional
 	public String busInfoDeleteOk(HttpServletRequest request, HttpSession session, HttpServletResponse response, String seq) {
 		try{
 			int result = dao.busInfoDelete(seq);
@@ -396,6 +398,7 @@ public class BusStopManageController {
 	
 	//정류장 카테고리 삭제
 	@RequestMapping(method = { RequestMethod.GET }, value = "/busStopCategory/busStopCategoryDeleteOk.action")
+	@Transactional
 	public String busStopCategoryDeleteOk(HttpServletRequest request, HttpSession session, HttpServletResponse response, String seq) {
 		try{
 			int result = dao.busStopCategoryDelete(seq);

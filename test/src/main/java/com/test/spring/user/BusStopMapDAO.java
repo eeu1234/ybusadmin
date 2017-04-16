@@ -66,7 +66,7 @@ public class BusStopMapDAO {
 	//특정학교의 지정한 노선에 운행중인 버스들의 최신값의 정류장위치 들고옴
 	public List<CurrBusLocationDTO> getCurrBusStopLocation(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
-		return sql.selectList("busStop.getCurrBusStopLocation",map);
+		return sql.selectList("busStop.getCurrBusStopLocation2",map);
 	}
 	
 	//해당학교의 기본값 노선번호 한개를 불러옴

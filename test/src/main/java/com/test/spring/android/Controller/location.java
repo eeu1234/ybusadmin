@@ -45,7 +45,7 @@ public class location {
 			
 			//2.위경도 전송 주소
 							
-			String newUrl = "http://211.63.89.33:8090/spring/android/location.action";
+			String newUrl = "http://eeu1234.iptime.org:8090/spring/android/location.action";
 			
 			//3.버스 상세 구역 intervalTime
 			BusStopDetailCategoryDTO busDetailDto = androidDao.findDeviceInterval(deviceId);
@@ -92,7 +92,7 @@ public class location {
 			//2.방금 insert 한 데이터 들고옴
 			//현재 위도,경도, deviceSeq 
 			LocationDTO locationDto = androidDao.getRecentLocation(deviceSeq,deviceLat,deviceLng);
-			
+			System.out.println("위치seq:"+locationDto.getLocationSeq());
 			String locationSeq = locationDto.getLocationSeq();
 			double myLat = Double.parseDouble(locationDto.getLocationLatitude());
 			double myLng = Double.parseDouble(locationDto.getLocationLongitude());

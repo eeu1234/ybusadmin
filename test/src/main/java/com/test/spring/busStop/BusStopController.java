@@ -17,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.busStop.BusStopDAO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.UniversityDTO;
+import com.test.spring.virtual.VirtualBusStopDAO;
 
 @Controller("busStopController2")
 public class BusStopController {
@@ -30,6 +30,9 @@ public class BusStopController {
 	
 	@Autowired
 	private BusStopDAO bdao;
+	
+	@Autowired
+	private VirtualBusStopDAO vdao;
 	
 	@RequestMapping(method = { RequestMethod.GET }, value = "/busStop/busStop.action")
 	public String busStop(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
@@ -270,6 +273,19 @@ public class BusStopController {
 	                result1 = bdao.saveBusStop(dto);
 	 
 	            }
+	            
+	            
+	            //정류장을 수정 저장하면서 가상정류장에 있는 해당 노선의 가상정류자응ㄹ 전부 지운다
+	            vdao.deleteVirtualBusStop(detailCategorySelect);	            
+	            
+	            //정류장 리스트를 복사한다
+	            List<BusStopDTO> copyList = vdao.copyBusStop(detailCategorySelect);
+	            
+	            //복사한 정류장을 가상정류장에 붙여 넣는다
+	            for(int i=0;i<copyList.size();i++){
+	            	vdao.pasteVirtualBusStop(copyList.get(i));
+	            }
+	            
 	            
 	            //deleteSeq에 있는 값을 이용해  busStop테이블에 delete쿼리문을 날린다
 	            System.out.println("deleteseq사이즈 : "+deleteSeqList.size());

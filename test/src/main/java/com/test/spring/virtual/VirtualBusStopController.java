@@ -118,7 +118,7 @@ public class VirtualBusStopController {
 			
 			
 			//넘어오는게 하나라도 널이면 기본페이지만 출력
-			if(request.getParameter("jsonInfo") == null || request.getParameter("universitySel") == null || request.getParameter("busCategorySel") == null || request.getParameter("detailCategorySelect") == null){
+			if(request.getParameter("jsonInfo") == null || request.getParameter("detailCategorySelect") == null){
 				System.out.println("asdfdsfsdfsdklfjsdklfjlsdjfldsjflisdnjflksdjflksdjlkfsjlkfjsdlkfjsdlkfjsadlkfj");
 				return "virtual/virtualBusStop";
 			}

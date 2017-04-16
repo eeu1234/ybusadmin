@@ -21,4 +21,4 @@
 
 <!-- ico 아이콘-->
 
-<link rel="apple-touch-icon" href="/spring/image/favicon.ico">
+<link rel="apple-touch-icon" href="/spring/images/ico/favicon.ico">

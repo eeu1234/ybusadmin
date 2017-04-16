@@ -7,7 +7,7 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css">
 <style>
 #universityName{
 	width : 300px;
@@ -36,6 +36,15 @@
 
 	}
 
+	function deleteDevice(seq) {
+		
+		if(confirm("삭제하시겠습니까?")){
+			location.href="/spring/deviceInfoManage/deleteDeviceInfoManage.action?seq="+seq;
+		}
+
+	}
+	
+
 
 </script>
 
@@ -43,9 +52,7 @@
 <body>
 
 	<%@include file="/inc/top.jsp"%>
-	
-	<h1 class = "menuTitle">디바이스 관리 페이지</h1>
-	
+	<h1 class="menuTitle">디바이스 관리 페이지</h1>
 	<table id = "tbl" class="table table-striped">
 		<tr>
 			<th>기기번호</th>
@@ -64,7 +71,7 @@
 			<td>
 				<select id="universitySel${dto.deviceSeq}" class="form-control">
 					<option value="-1">대학교를 선택하세요</option>
-					<option value="">미배정</option>
+					<option value="null">미배정</option>
 					<c:forEach items="${universityList}" var="udto">
 						<option value="${udto.universitySeq}">${udto.universityName}</option>
 					</c:forEach>
@@ -72,6 +79,7 @@
 			</td>
 			<td>
 				<input type="button" id = "sel${dto.deviceSeq}" value="적용" onclick="update(${dto.deviceSeq});" class="btn btn-primary" >
+				<input type="button" id = "del${dto.deviceSeq}" value="삭제" onclick="deleteDevice(${dto.deviceSeq});" class="btn btn-danger" >
 			</td>
 		</tr>
 	</c:forEach>

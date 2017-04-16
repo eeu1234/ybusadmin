@@ -77,11 +77,11 @@ $(function() {
 	var marker = new naver.maps.Marker({
 	position: new naver.maps.LatLng(${bsdto.busStopLatitude}, ${bsdto.busStopLongitude}),
 	icon: { // 레티나 디스플레이 대응 마커 아이콘
-	    url: HOME_PATH +"/images/timeLine/busStopMaker.png",
-	    size: new naver.maps.Size(55, 36),
-	    anchor: new naver.maps.Point(28, 36),
-	    origin: new naver.maps.Point(0, 0),
-	    scaledSize: new naver.maps.Size(55, 36)
+		  url: HOME_PATH +"/images/timeLine/busStopMaker2.png",
+		    size: new naver.maps.Size(155, 106),
+		    anchor: new naver.maps.Point(28, 100),
+		    origin: new naver.maps.Point(0, 0),
+		    scaledSize: new naver.maps.Size(55, 80)
 	}
 	});
 

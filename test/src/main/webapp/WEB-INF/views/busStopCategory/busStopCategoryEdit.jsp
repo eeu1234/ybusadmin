@@ -92,8 +92,8 @@ html, body {
 		</table>
 		<input type= "hidden" name="busStopCategorySeq" value = "${bscdto.busStopCategorySeq }">
 		<br>
-		<input type="submit" value="수정" class="btn btn-primary">
-		<input type="button" value="돌아가기" class="btn btn-primary" onclick="history.back();">
+		<input type="submit" value="수정" class="btn btn-warning">
+		<input type="button" value="돌아가기" class="btn btn-default" onclick="history.back();">
 	</form>
 	
 </body>
