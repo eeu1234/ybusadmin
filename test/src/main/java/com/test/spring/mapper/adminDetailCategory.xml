@@ -81,7 +81,7 @@
    
    <!-- 세부분류 추가하기 -->
    <insert id="addDetailCategory" parameterType="com.test.spring.dto.BusStopDetailCategoryDTO">
-      INSERT INTO BUSSTOP_DETAIL_CATEGORY(BUSSTOPDETAILCATEGORYNAME,BUSSTOPDETAILCATEGORYINTERVAL,BUSSTOPDETAILCATEGORYINTERVALDISTANCE,BUSSTOPDETAILCATEGORYSTAT,BUSSTOPCATEGORYSEQ) VALUES(#{busStopDetailCategoryName},#{busStopDetailCategoryInterval},#{busStopDetailCategoryIntervalDistance},#{busStopDetailCategoryStat},#{busStopCategorySeq}); 
+      INSERT INTO BUSSTOP_DETAIL_CATEGORY(BUSSTOPDETAILCATEGORYNAME,BUSSTOPCATEGORYSEQ) VALUES(#{busStopDetailCategoryName},#{busStopCategorySeq}); 
    </insert>
    
    <!-- 세부분류 정보가져오기 -->

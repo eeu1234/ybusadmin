@@ -113,16 +113,13 @@ html, body {
    var deleteSeq = [];
    var markerInfo = [];
 
-   $().ready(
-               function() {
+   $().ready(function() {
                   //수정버튼 감추기 
                   $("#saveBtn").hide();
                   
                   
                   
-                  $("#universitySel")
-                        .ready(
-                              function() {
+                  $("#universitySel").ready(function() {
 								
                                  var b = $("#universitySel").val();
 									
@@ -691,6 +688,7 @@ html, body {
                   .children().eq(4).text(this.position.lng());
             //console.log("end");
             initPanorama(this.position.lat(), this.position.lng());
+            
          });
 
          markerInfo.push(infowindow);
@@ -1141,6 +1139,11 @@ html, body {
                   }
                });//ajax 
       }
+   }
+   function xyz(){
+	   console.log("pan : "+ pano.getPov().pan);
+       console.log("tilt : "+ pano.getPov().tilt);
+       console.log("fov : "+ pano.getPov().fov);
    }
 </script>
 

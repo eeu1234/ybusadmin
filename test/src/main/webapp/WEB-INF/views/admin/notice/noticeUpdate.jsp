@@ -232,6 +232,11 @@ $(document).ready(function() {
 	//용량체크
 function fileCheck(fileValue)
 {
+		
+	  if($("#statusSel").val() == -1){
+	      alert("상태값을 입력해주세요!!")
+	       return;
+	   }
 
     //확장자 체크
     var src = getFileType(fileValue);
@@ -343,6 +348,7 @@ function getFileType(filePath)
 					<div id="titleStatus">상태값(${noticeContent.noticeStatus})</div>
 					
 						<select id="statusSel" name="status">
+						<option value="-1">상태값을 선택</option>
 							<option value="hide">hide</option>
 							<option value="show">show</option>
 						</select>

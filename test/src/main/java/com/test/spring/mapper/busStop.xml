@@ -66,7 +66,7 @@
                INNER JOIN DEVICE_BUS D ON C.BUSINFOSEQ = D.BUSINFOSEQ
                   INNER JOIN DEVICE E ON D.DEVICESEQ = E.DEVICESEQ
                      INNER JOIN LOCATION F ON E.DEVICESEQ = F.DEVICESEQ   
-                        WHERE F.LOCATIONSEQ IN(
+                        WHERE F.LOCATIONTIME > DATE_FORMAT(DATE_ADD(now(),INTERVAL -10 MINUTE),'%Y-%m-%d %H:%i:%s') AND F.LOCATIONSEQ IN(
                                 
       SELECT * FROM(
          SELECT MAX(F.LOCATIONSEQ) FROM UNIVERSITY A                        
@@ -83,7 +83,7 @@
    </select>
    
    <select id="getSpecipicAvgBusStopLanLon" parameterType="map" resultType="com.test.spring.dto.BusStopAvgLatLonDTO">
-      SELECT AVG(busStoplatitude) AS avgLat,AVG(busStoplongitude) AS avgLon FROM
+      SELECT AVG(busStoplatitude) AS avgLat,AVG(busStoplongitude) AS avgLon, MIN(BUSSTOPLONGITUDE) as minLon,MAX(BUSSTOPLONGITUDE) as maxLon, MIN(BUSSTOPLATITUDE) AS minLat, MAX(BUSSTOPLATITUDE) AS maxLat FROM
          (SELECT * FROM
             (SELECT Y.*,D.BUSSTOPSEQ AS busStopSeq, D.BUSSTOP AS busStop, D.BUSSTOPLATITUDE AS busStopLatitude, D.BUSSTOPLONGITUDE AS busStopLongitude,D.BUSSTOPLINE AS busStopLine  FROM
                (SELECT X.* FROM

@@ -55,23 +55,38 @@ public class AdminBusScheduleManage {
 			  }else{
 			     Search.setBusStopCategorySeq(blist.get(0).getBusStopCategorySeq());
 			  }
-			
+
 			//만약 넘어온 SearchDto가 없으면 기본값을 넣어준다.
 			if(SearchDto == null || SearchDto.getBusStopDetailCategorySeq() == null || SearchDto.getBusStopDetailCategorySeq().equals("") || SearchDto.getBusStopCategorySeq() == null || SearchDto.getBusStopCategorySeq().equals("")){
-			//기본적으로 평일 normal 값 넣어주고 보내준다.
+				
 				dlist = getDetailCategory(blist.get(0).getBusStopCategorySeq());
 				
-				Search.setBusStopDetailCategorySeq(dlist.get(0).getBusStopDetailCategorySeq());
+				if(dlist.size() == 0){
+				     request.setAttribute("blist", blist);
+				     request.setAttribute("detail", "0");
+				     return "admin/adminBusTimeManage";
+				}else{
+				     Search.setBusStopCategorySeq(blist.get(0).getBusStopCategorySeq());
+				     Search.setBusStopDetailCategorySeq(dlist.get(0).getBusStopDetailCategorySeq());
+				}
+				
+				
+				//기본적으로 평일 normal 값 넣어주고 보내준다.
+				
+				//System.out.println("1");
 				Search.setWeekDays("normal");
 				List<BusScheduleDTO> slist = getBusSchedule(Search);
 				request.setAttribute("slist", slist);
+				
 			}else{
+				
 				dlist = getDetailCategory(SearchDto.getBusStopCategorySeq());
 				List<BusScheduleDTO> slist = getBusSchedule(SearchDto);
 				request.setAttribute("slist", slist);
 			}
 			//기본적으로 평일/주말 중에서 평일만 출력
-			
+
+		    request.setAttribute("detail", "1");
 			request.setAttribute("blist", blist);
 			request.setAttribute("dlist", dlist);
 			request.setAttribute("Search", SearchDto);
@@ -81,12 +96,11 @@ public class AdminBusScheduleManage {
 			session.invalidate();
 
 			try {
-				            
 				response.sendRedirect("/spring/admin/adminLogin.action");
 				
-				} catch (Exception e2) {
+			} catch (Exception e2) {
 				
-				}
+			}
 			return null;
 		}
 		
@@ -102,14 +116,17 @@ public class AdminBusScheduleManage {
 							,BusScheduleDTO dto
 							,BusScheduleSearchDTO Search){
 		try{
-			String hour = request.getParameter("hour");
-			String minute = request.getParameter("minute");
-			String busTime = String.format("%s:%s", hour, minute);
-			System.out.println(busTime);
-			dto.setBusTime(busTime);
-			
-			//추가하자
-			int result = dao.addSchedule(dto);
+			String hour[] = request.getParameterValues("hour");
+			String minute[] = request.getParameterValues("minute");
+			String course[] = request.getParameterValues("courseName");
+			int result = 0;
+			for(int i=0;i<hour.length;i++){
+				String busTime = String.format("%s:%s", hour[i], minute[i]);
+				dto.setBusTime(busTime);
+				dto.setCourseName(course[i]);
+				//추가하자
+				result = dao.addSchedule(dto);
+			}
 			
 			request.setAttribute("result", result);
 			request.setAttribute("Search", Search);
@@ -122,9 +139,9 @@ public class AdminBusScheduleManage {
 				            
 				response.sendRedirect("/spring/admin/adminLogin.action");
 				
-				} catch (Exception e2) {
+			} catch (Exception e2) {
 				
-				}
+			}
 			return null;
 		}
 	}

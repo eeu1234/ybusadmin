@@ -70,7 +70,7 @@ $().ready(function(){
 					<input type="text" class="form-control" id="detailCategoryName" name="detailCategoryName" placeholder="상세분류명을 입력해주세요">
 				</td>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<td>인터벌 타임</td>
 				<td>
 					<input type="number" class="form-control"  id="interverTime" name="interverTime" min="0" max="300000">
@@ -91,7 +91,7 @@ $().ready(function(){
 						<option value="hide">hide</option>
 					</select>
 				</td>
-			</tr>
+			</tr> -->
 		</table>
 		<input type="submit" class="btn btn-primary" value="추가하기" style="float: right;"> 
 		<input type="button" class="btn btn-default" value="돌아가기" onclick="history.back();" style="float: right;margin-right: 10px;">

@@ -30,8 +30,8 @@
 
 <!-- ico 아이콘-->
 
-<link rel="apple-touch-icon" href="/mobile/Image/favicon.ico">
-<link rel="stylesheet" href="/spring/css/newTimeline.css">
+
+
 
 <script
   src="https://code.jquery.com/jquery-1.12.4.min.js"

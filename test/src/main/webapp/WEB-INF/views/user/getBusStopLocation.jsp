@@ -390,13 +390,25 @@ body, html {
 
 var mapAP;
 var marker;
-
+var zoomLevel;
 function initMap() {
-
+	var distancekilometer = ${distancekilometer};
+	if(distancekilometer < 10){
+		zoomLevel=13;
+	}else if(distancekilometer >= 10 && distancekilometer < 20){
+		zoomLevel=12;
+	}else if(distancekilometer >= 20 && distancekilometer < 30){
+		zoomLevel=11;
+	}else if(distancekilometer >= 30 && distancekilometer < 40){
+		zoomLevel=10;
+	}else{
+		zoomLevel=9;
+	}
+	
 mapAP = new google.maps.Map(document.getElementById('mapAP'), {
 
 center: {lat: ${avgBSdto.avgLat}, lng: ${avgBSdto.avgLon}},
-zoom: 13
+zoom: zoomLevel
 	});
 
 

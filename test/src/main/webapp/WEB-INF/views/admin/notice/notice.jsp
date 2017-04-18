@@ -103,7 +103,7 @@
 
 					<c:forEach items="${alist}" var="dto" varStatus="stat">
 					<tr>
-						<td>${stat.count}</td>
+						<td>${dto.noticeSeq}</td>
 			<form method="GET" action="/spring/admin/notice/noticeContent.action">
 						<td ><input type="submit" value="${dto.noticeSubject}" name="subject" readonly id="btnSubject"></td>
 						<input type="hidden" value="${dto.noticeSeq}" name="seq">

@@ -74,12 +74,9 @@ html, body {
 				<td>버스 상태</td>
 				<td>
 					<select id="busInfoStat" name="busInfoStat" class="form-control">
-					<c:if test="${bdto.busInfoStat=='show'}">
+						
 						<option value = "show">show</option>
-					</c:if>
-					<c:if test="${bdto.busInfoStat=='hide'}">
 						<option value = "hide">hide</option>
-					</c:if>
 					</select>
 				</td>
 			</tr>

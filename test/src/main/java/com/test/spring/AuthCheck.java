@@ -80,6 +80,7 @@ public class AuthCheck {
       if(session == null || session.getAttribute("adto") == null){
          
          try {
+        	 
             
             //인증 받지 못한 사람들..
             //response.sendRedirect("/spring/index.action");

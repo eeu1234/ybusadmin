@@ -421,7 +421,7 @@ var isMobile = {
 				<div class="iconBox">
             	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
                	<div class="iconInfo"></div>
-	               	아직미정
+	               	학교위치
 	            </div>
 			</div>
 			<div id="sixthBox" class="BSC6" onclick="location.href='/spring/user/makeIcon.action'">
@@ -459,7 +459,7 @@ var isMobile = {
 	
 	
 	
-	$(".busLine").click(function(){
+	$(".iconBox").click(function(){
 		
 		
 		 
@@ -761,7 +761,8 @@ function appendCategory(){
 		iconInfo.setAttribute("class","iconInfo");
 	
 		var iconBox = document.createElement("div");
-		iconBox.setAttribute("class","iconBox");
+		//iconBox.setAttribute("class","iconBox");
+		iconBox.setAttribute("class","iconBox bscs${status.count}");
 		var text = document.createElement("span");
 		text.innerText="위치조회";
 		
@@ -774,7 +775,8 @@ function appendCategory(){
 		iconBox.appendChild(text);
 	
 		$(".BSC${status.count}").append(iconBox);
-		$(".BSC${status.count}").attr("value","${bscDto.busStopCategorySeq}");
+		
+		$(".bscs${status.count}").attr("value","${bscDto.busStopCategorySeq}");
 		//$("#firstBox").append(iconBox);
 		//$(iconBox).appendTo($("#firstBox"));
 		//$("#firstBox").append("<a>test</a>");

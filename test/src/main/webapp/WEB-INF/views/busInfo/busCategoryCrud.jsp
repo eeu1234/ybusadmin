@@ -37,7 +37,7 @@
 <body>
 	<%@include file="/inc/top.jsp" %>
 
-	<h1 class = "menuTitle">버스 카테고리 관리</h1>
+	<h1 class = "menuTitle">버스 정보 관리</h1>
 	<form method="POST" action="/spring/admin/busStopCategoryMatchOk.action">
 	<table id = "tblBusInfo" class="table table-striped">
 		<tr>

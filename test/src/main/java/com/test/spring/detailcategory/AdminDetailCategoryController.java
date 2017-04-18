@@ -113,16 +113,16 @@ public class AdminDetailCategoryController {
 			//입력한 값들 dto로 묶기
 			String categorySel = request.getParameter("categorySel");
 			String detailCategoryName = request.getParameter("detailCategoryName");
-			String interverTime = request.getParameter("interverTime");
-			String interverDistance = request.getParameter("interverDistance");
-			String stat = request.getParameter("stat");
+			//String interverTime = request.getParameter("interverTime");
+			//String interverDistance = request.getParameter("interverDistance");
+			//String stat = request.getParameter("stat");
 			
 			BusStopDetailCategoryDTO dto = new BusStopDetailCategoryDTO();
 			dto.setBusStopCategorySeq(categorySel);
 			dto.setBusStopDetailCategoryName(detailCategoryName);
-			dto.setBusStopDetailCategoryInterval(interverTime);
-			dto.setBusStopDetailCategoryIntervalDistance(interverDistance);
-			dto.setBusStopDetailCategoryStat(stat);
+			//dto.setBusStopDetailCategoryInterval(interverTime);
+			//dto.setBusStopDetailCategoryIntervalDistance(interverDistance);
+			//dto.setBusStopDetailCategoryStat(stat);
 			//insert쿼리
 			int result = dao.addDetailCategory(dto);
 			

@@ -96,6 +96,7 @@ $().ready(function(){
 					<input type="text" class="form-control" id="detailCategoryName" name="detailCategoryName" placeholder="상세분류명을 입력해주세요" value="${getDetailCategory.busStopDetailCategoryName }">
 				</td>
 			</tr>
+			
 			<tr>
 				<td>인터벌 타임(1000 = 1초)</td>
 				<td>
@@ -108,6 +109,7 @@ $().ready(function(){
 					<input type="number" class="form-control"  id="interverDistance" name="interverDistance" min="0" max="1000" value="${getDetailCategory.busStopDetailCategoryIntervalDistance }">
 				</td>
 			</tr>
+			
 			<tr>
 				<td>상태</td>
 				<td>

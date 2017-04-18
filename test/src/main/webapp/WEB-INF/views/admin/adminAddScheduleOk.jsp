@@ -16,7 +16,6 @@
 			history.back();
 		</c:if>
 		<c:if test="${result == 1}">
-			alert("추가 완료");
 			$("#addok").submit();
 		</c:if>
 	});

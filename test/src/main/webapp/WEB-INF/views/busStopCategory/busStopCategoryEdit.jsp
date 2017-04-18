@@ -77,12 +77,8 @@ html, body {
 				<td>노선 상태</td>
 				<td>
 					<select id="busStopCategoryStat" name="busStopCategoryStat" class="form-control">
-					<c:if test="${bscdto.busStopCategoryStat=='show'}">
 						<option value = "show">show</option>
-					</c:if>
-					<c:if test="${bscdto.busStopCategoryStat=='hide'}">
 						<option value = "hide">hide</option>
-					</c:if>
 					</select>
 
 					<%-- <input type="radio" name = "busStopCategoryStat" value = "show" <c:if test="${bscdto.busStopCategoryStat=='show'}">checked</c:if>>
