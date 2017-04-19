@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -27,8 +28,20 @@ public class BusStopManageController {
 	@RequestMapping(method = { RequestMethod.GET }, value = "/busInfo/busStopManage.action")
 	public String busStopManage(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
 		
+		try{
+			return "busInfo/busCategoryCrud";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+				return null;
+			} catch (Exception e2) {
+				return null;
+			}
+		}
 		
-		return "busInfo/busCategoryCrud";
 	}
 	
 
@@ -39,17 +52,33 @@ public class BusStopManageController {
 		AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
 		
 		String seq = adto.getUniversitySeq();
-		
-		List<BusInfoDTO> blist = dao.busList(seq);
-		
-		request.setAttribute("blist", blist);
-		/*
+		try {
+			List<BusInfoDTO> blist = dao.busList(seq);
+			
+			request.setAttribute("blist", blist);
+			/*
 		List<BusStopCategoryDTO> clist = dao.busStopCategoryList(seq);
 		
 		request.setAttribute("clist", clist);
-		*/
+			 */
+			
+			return "busInfo/busCategoryCrud";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 		
-		return "busInfo/busCategoryCrud";
+		
 	}
 	
 	//버스에 카테고리 추가
@@ -59,23 +88,41 @@ public class BusStopManageController {
 		HashMap<String, String> bdmap = new HashMap<String, String>();
 		String[] busInfoSeq = request.getParameterValues("busInfoSeq");
 		String[] busStopCategorySeq = request.getParameterValues("busStopCategory");
+		
+		
 		int result= 0;
 		
-		for(int i = 0; i< busInfoSeq.length; i++){
-			if(!busStopCategorySeq[i].equals("-1")) {
-				System.out.println(busStopCategorySeq[i]);
-				
-				bdmap.put("seq", busInfoSeq[i]);
-				bdmap.put("category", busStopCategorySeq[i]);
-				
-				result = dao.busStopCategoryMatch(bdmap);
-				
+		try{
+			for(int i = 0; i< busInfoSeq.length; i++){
+				if(!busStopCategorySeq[i].equals("-1")) {
+					System.out.println(busStopCategorySeq[i]);
+					
+					bdmap.put("seq", busInfoSeq[i]);
+					bdmap.put("category", busStopCategorySeq[i]);
+					
+					result = dao.busStopCategoryMatch(bdmap);
+					
+				}
 			}
+			
+			request.setAttribute("result", result);
+			
+			return "busStopCategory/busStopCategoryMatchOk";
+		
+		} catch (Exception e) {
+			
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
 		}
-		
-		request.setAttribute("result", result);
-		
-		return "busStopCategory/busStopCategoryMatchOk";
 	}
 	
 	
@@ -87,11 +134,26 @@ public class BusStopManageController {
 		
 		String seq = adto.getUniversitySeq();
 		
-		List<BusStopCategoryDTO> clist = dao.busStopCategoryList(seq);
-		
-		request.setAttribute("clist", clist);
-		
-		return "busInfo/busInfoAdd";
+		try{
+			List<BusStopCategoryDTO> clist = dao.busStopCategoryList(seq);
+			
+			request.setAttribute("clist", clist);
+			
+			return "busInfo/busInfoAdd";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	
@@ -106,56 +168,113 @@ public class BusStopManageController {
 		HashMap<String, String> cmap = new HashMap<String, String>();
 		
 		int result =0;
-		for(int i=0; i<busInfoNum.length; i++){
-			cmap.put("busInfoNum", busInfoNum[i]);
-			cmap.put("busInfoName", busInfoName[i]);
-			cmap.put("busStopCategorySeq", busStopCategorySeq[i]);
+		try{
+			for(int i=0; i<busInfoNum.length; i++){
+				cmap.put("busInfoNum", busInfoNum[i]);
+				cmap.put("busInfoName", busInfoName[i]);
+				cmap.put("busStopCategorySeq", busStopCategorySeq[i]);
+	
+				result = dao.busInfoAdd(cmap);
+				
+			}
+			
+			request.setAttribute("result", result);
+			
+			
+				
+			return "busInfo/busInfoAddOk";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
 
-			result = dao.busInfoAdd(cmap);
+			} catch (Exception e2) {
 			
+			}
+			
+			return null;
 		}
-		
-		request.setAttribute("result", result);
-		
-		
-			
-		return "busInfo/busInfoAddOk";
 	}
 	
 	//버스 정보 수정을 위해 정보 받아오기
 	@RequestMapping(method = { RequestMethod.GET }, value = "/busInfo/busInfoEdit.action")
 	public String busInfoEdit(HttpServletRequest request, HttpSession session, HttpServletResponse response, String seq) {
+		
+		try{
+			BusInfoDTO bdto= dao.busInfoEditSel(seq); 
 			
-		BusInfoDTO bdto= dao.busInfoEditSel(seq); 
-		
-		
-		request.setAttribute("bdto", bdto);
-		
-		return "busInfo/busInfoEdit";
+			
+			request.setAttribute("bdto", bdto);
+			
+			return "busInfo/busInfoEdit";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	
 	//버스 정보 수정
 	@RequestMapping(method = { RequestMethod.POST }, value = "/busInfo/busInfoEditOk.action")
 	public String busInfoEditOk(HttpServletRequest request, HttpSession session, HttpServletResponse response, BusInfoDTO bdto) {
-			
+		
+		try{
 		int result = dao.busInfoUpdate(bdto);
 			
 		request.setAttribute("result", result);
 			
 		return "busInfo/busInfoEditOk";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 		
 
 	//버스 정보 삭제
 	@RequestMapping(method = { RequestMethod.GET }, value = "/busInfo/busInfoDeleteOk.action")
+	@Transactional
 	public String busInfoDeleteOk(HttpServletRequest request, HttpSession session, HttpServletResponse response, String seq) {
-		
-		int result = dao.busInfoDelete(seq);
-		
-		request.setAttribute("result", result);
-		
-		return "busInfo/busInfoDeleteOk";
+		try{
+			int result = dao.busInfoDelete(seq);
+			
+			request.setAttribute("result", result);
+			
+			return "busInfo/busInfoDeleteOk";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	
@@ -168,11 +287,27 @@ public class BusStopManageController {
 		
 		String seq = adto.getUniversitySeq();
 		
-		List<BusStopCategoryDTO> clist = dao.busStopCategoryTotalList(seq);
-		
-		request.setAttribute("clist", clist);
-		
-		return "busStopCategory/busStopCategoryAdd";
+		try{
+			
+			List<BusStopCategoryDTO> clist = dao.busStopCategoryTotalList(seq);
+			
+			request.setAttribute("clist", clist);
+			
+			return "busStopCategory/busStopCategoryAdd";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	//정류장 카테고리 추가
@@ -184,13 +319,29 @@ public class BusStopManageController {
 		String seq = adto.getUniversitySeq();
 		
 		HashMap<String, String> caddmap = new HashMap<String, String>();
-		caddmap.put("busStopCategory", request.getParameter("busStopCategory"));
-		caddmap.put("universitySeq", seq);
-		int result = dao.busStopCategoryAdd(caddmap);
 		
-		request.setAttribute("result", result);
-		
-		return "busStopCategory/busStopCategoryAddOk";
+		try{
+			caddmap.put("busStopCategory", request.getParameter("busStopCategory"));
+			caddmap.put("universitySeq", seq);
+			int result = dao.busStopCategoryAdd(caddmap);
+			
+			request.setAttribute("result", result);
+			
+			return "busStopCategory/busStopCategoryAddOk";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	//정류장 카테고리 수정 페이지
@@ -199,32 +350,76 @@ public class BusStopManageController {
 		
 		BusStopCategoryDTO bscdto= dao.busStopCategoryEditSel(seq); 
 		
-		
-		request.setAttribute("bscdto", bscdto);
-		
-		return "busStopCategory/busStopCategoryEdit";
+		try{
+			request.setAttribute("bscdto", bscdto);
+			
+			return "busStopCategory/busStopCategoryEdit";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	//정류장 카테고리 수정
 	@RequestMapping(method = { RequestMethod.POST }, value = "/busStopCategory/busStopCategoryEditOk.action")
 	public String busStopCategoryEditOk(HttpServletRequest request, HttpSession session, HttpServletResponse response, BusStopCategoryDTO dto) {
 		
-		int result = dao.busStopCategoryEdit(dto);
-		
-		request.setAttribute("result", result);
-		
-		return "busStopCategory/busStopCategoryEditOk";
+		try{
+			int result = dao.busStopCategoryEdit(dto);
+			
+			request.setAttribute("result", result);
+			
+			return "busStopCategory/busStopCategoryEditOk";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	//정류장 카테고리 삭제
 	@RequestMapping(method = { RequestMethod.GET }, value = "/busStopCategory/busStopCategoryDeleteOk.action")
+	@Transactional
 	public String busStopCategoryDeleteOk(HttpServletRequest request, HttpSession session, HttpServletResponse response, String seq) {
-		
-		int result = dao.busStopCategoryDelete(seq);
-		
-		request.setAttribute("result", result);
-		
-		return "busStopCategory/busStopCategoryDeleteOk";
+		try{
+			int result = dao.busStopCategoryDelete(seq);
+			
+			request.setAttribute("result", result);
+			
+			return "busStopCategory/busStopCategoryDeleteOk";
+			
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	

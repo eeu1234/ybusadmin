@@ -7,6 +7,7 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
 <style>
 html, body {
    width: 100%;
@@ -30,6 +31,10 @@ html, body {
    height: 80px;
 }
 
+#tbl{
+	margin-top: 30px;
+}
+
 </style>
 <script>
 	
@@ -46,7 +51,8 @@ html, body {
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
-	<h1>대분류 수정 페이지</h1>
+	<h1 class = "menuTitle">대분류 수정 페이지</h1>
+	
 	<form method="POST" action="/spring/busStopCategory/busStopCategoryEditOk.action">
 		<table id="tbl" class="table table-striped">
 			<tr>
@@ -71,12 +77,8 @@ html, body {
 				<td>노선 상태</td>
 				<td>
 					<select id="busStopCategoryStat" name="busStopCategoryStat" class="form-control">
-					<c:if test="${bscdto.busStopCategoryStat=='show'}">
 						<option value = "show">show</option>
-					</c:if>
-					<c:if test="${bscdto.busStopCategoryStat=='hide'}">
 						<option value = "hide">hide</option>
-					</c:if>
 					</select>
 
 					<%-- <input type="radio" name = "busStopCategoryStat" value = "show" <c:if test="${bscdto.busStopCategoryStat=='show'}">checked</c:if>>
@@ -86,8 +88,8 @@ html, body {
 		</table>
 		<input type= "hidden" name="busStopCategorySeq" value = "${bscdto.busStopCategorySeq }">
 		<br>
-		<input type="submit" value="수정" class="btn btn-primary">
-		<input type="button" value="돌아가기" class="btn btn-primary" onclick="history.back();">
+		<input type="submit" value="수정" class="btn btn-warning">
+		<input type="button" value="돌아가기" class="btn btn-default" onclick="history.back();">
 	</form>
 	
 </body>

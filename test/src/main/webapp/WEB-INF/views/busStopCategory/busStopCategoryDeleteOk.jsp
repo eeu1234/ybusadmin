@@ -13,7 +13,7 @@
 			location.href="/spring/busStopCategory/busStopCategoryAdd.action"
 		</c:if>
 		<c:if test="${result==0}">
-			alert("삭제 실패");
+			alert("해당 하위 분류의 값이 남아있어 삭제할 수 없습니다.");
 			history.back();
 		</c:if>
 	});

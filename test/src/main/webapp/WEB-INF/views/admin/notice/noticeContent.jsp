@@ -128,6 +128,7 @@
 	
 	#fileBox{
 		width: 740px;
+		height: 60px;
 	}
 	
 	#imgTotal{
@@ -153,7 +154,7 @@
 	#box{
 		border: 0px solid black;
 		width: 730px;
-		height: 150px;
+		height: 160px;
 		margin-left: 155px;
 		text-align: center;
 	}
@@ -163,6 +164,7 @@
 		width: 100px;
 		height: 150px;
 		background-color: white;
+		margin-bottom: 10px;
 		margin-left: 10px;
 		float: left;
 	}
@@ -171,30 +173,17 @@
 		width: 100%;
 		height: 100%;
 	}
+	
+	#backBtn{
+		margin-top: 50px;
+		margin-left: 48px;
+	}
 
 
 	
 </style>
 <script>
 
-
-/* 
-		
-$(function(){
-	
-	$(".imageShow").click(function(){
-		console.log($(this).val());
-
-		var name = $(this).val();
-		
-		
-		$("#showImg").attr("src","/spring/images/notice/"+name);
-		$("#imgBox").css("display","inline");
-	});
-
-	
-})
- */
 
 </script>
 
@@ -246,6 +235,10 @@ $(function(){
 						</c:forEach>
 					</div>					
 					</div>
+					
+				<div id="backBtn">
+					<a href="/spring/admin/notice/notice.action"><input type="button" value="돌아가기" class="btn btn-default"></a>
+				</div>
 			
 	</div>
 	

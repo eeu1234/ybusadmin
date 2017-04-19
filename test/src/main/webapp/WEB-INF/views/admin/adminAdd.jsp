@@ -45,10 +45,9 @@
 			}//if
 				
 		});//adminId change 함수
-
+		
 		//새로운 비밀번호 비교확인
 		$("#pw1").change(function(){
-			
 			var pw1 = $("#pw1").val();
 			var pw2 = $("#pw2").val();
 
@@ -59,11 +58,13 @@
 				}else{
 					afterCheck = false;
 					$("#checkPw").text("비밀번호 비일치").css("color","red");
+					$("#pw2").val("");
 				}
 			}else{
 				$("#checkPw").text("비밀번호 공백").css("color","red");
 				afterCheck = false;
 			}
+
 		});
 		
 		//비밀번호 유효성 체크
@@ -84,7 +85,6 @@
 				$("#checkPw").text("비밀번호 공백").css("color","red");
 				afterCheck = false;
 			}
-			
 		});//비밀번호 유효성 체크
 		
 	});//ready
@@ -208,7 +208,7 @@
 					<div id="submitBtn">
 						<input type="button" value="되돌아가기" onclick="history.back();" class="btn btn-default"/>
 						<input type="button" value="계정생성하기" onclick="add();" class="btn btn-primary"	 />
-					</div>
+						</div>
 		</form>
 	</div><!-- content -->
 	

@@ -65,6 +65,7 @@ $(document).ready(function(){
 					$("#checkBeforePw").text("기존 비밀번호 불일치").css("color","red");
 				}
 			},error(){
+				beforeCheck = false;
 				alert("비밀번호 확인 에러");
 			}
 		});
@@ -167,7 +168,7 @@ function updateOk(){
 						name="my" />
 					</td>
 				</tr>
-				<c:if test="${my != 'my'}">
+				<c:if test="${dto.adminLevel != 9999 && my != 'my'}">
 				<c:if test="${adto.adminLevel != 9999}">
 				<tr>
 					<th>기존 비밀번호</th>

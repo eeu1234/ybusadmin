@@ -13,7 +13,7 @@
    $(document).ready(function(){
       <c:if test="${orderResult == 1}">
          alert("정류장 순서 수정 완료");
-         location.href="/spring/busStop/updateOrder.action?seq="+${seq};
+         location.href="/spring/busStop/updateOrder.action?detailCategorySel="+${detailCategorySel};
       </c:if>
       <c:if test="${orderResult == 0}">
          alert("정류장 순서 수정 실패");

@@ -27,95 +27,237 @@ public class PolyLineController {
 
 	// 메인페이지
 	// 대학교 가져오기
-		
-		@RequestMapping(method = { RequestMethod.GET }, value = "/polyline/polyline.action")
-		public String polyline(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
-	
-			
-			
+	@RequestMapping(method = { RequestMethod.GET }, value = "/polyline/polyline.action")
+	public String polyline(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
+		try {
+
+			// 내용
+
 			return "polyline/polyline";
+			
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+
+				response.sendRedirect("/spring/admin/adminLogin.action");
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+
+			}
+			return null;
 		}
 
-	    //초기화
-		@RequestMapping(method = { RequestMethod.POST }, value = "/polyline/polyline.action")
-		public String reset(HttpServletRequest request,HttpSession session,HttpServletResponse response, String universityName) {
+	}
 
-	
-		return "polyline/polyline";
+	// 초기화
+	@RequestMapping(method = { RequestMethod.POST }, value = "/polyline/polyline.action")
+	public String reset(HttpServletRequest request, HttpSession session, HttpServletResponse response,
+			String universityName) {
+		try {
+
+			// 내용
+			return "polyline/polyline";
+
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+
+				response.sendRedirect("/spring/admin/adminLogin.action");
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+
+			}
+			return null;
+		}
 
 	}
 
 	// MAP페이지
 	// 대학교 가져오기
 	@RequestMapping(method = { RequestMethod.GET }, value = "/polyline/universityMap.action")
-	public String universityMap(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
+	public String universityMap(HttpServletRequest request, HttpSession session, HttpServletResponse response,
+			String seq) {
 
-		List<UniversityDTO> universityMap = dao.universityMap(seq);
+		try {
 
-		request.setAttribute("universityMap", universityMap);
+			// 내용
+			List<UniversityDTO> universityMap = dao.universityMap(seq);
 
-		return "polyline/universityMap";
+			request.setAttribute("universityMap", universityMap);
+
+			return "polyline/universityMap";
+			
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+
+				response.sendRedirect("/spring/admin/adminLogin.action");
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+
+			}
+			return null;
+		}
+
 
 	}
 
 	// 버스 종류 가져오기
 	@RequestMapping(method = { RequestMethod.GET }, value = "/polyline/busStopCategory.action")
-	public String busStopCategory(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
+	public String busStopCategory(HttpServletRequest request, HttpSession session, HttpServletResponse response,
+			String seq) {
+		try {
 
-		List<BusStopCategoryDTO> busStopCategory = dao.busStopCategory(seq);
+			// 내용
+			List<BusStopCategoryDTO> busStopCategory = dao.busStopCategory(seq);
 
-		request.setAttribute("busStopCategory", busStopCategory);
+			request.setAttribute("busStopCategory", busStopCategory);
 
-		return "polyline/busStopCategory";
+			return "polyline/busStopCategory";
+			
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+
+				response.sendRedirect("/spring/admin/adminLogin.action");
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+
+			}
+			return null;
+		}
+
 	}
 
 	// 노선 종류 가져오기
 	@RequestMapping(method = { RequestMethod.GET }, value = "/polyline/busStopDetailCategory.action")
-	public String busStopDetailCategory(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
+	public String busStopDetailCategory(HttpServletRequest request, HttpSession session, HttpServletResponse response,
+			String seq) {
 
-		List<BusStopDetailCategoryDTO> busStopDetailCategory = dao.busStopDetailCategory(seq);
+		try {
 
-		request.setAttribute("busStopDetailCategory", busStopDetailCategory);
+			// 내용
+			List<BusStopDetailCategoryDTO> busStopDetailCategory = dao.busStopDetailCategory(seq);
 
-		return "polyline/busStopDetailCategory";
+			request.setAttribute("busStopDetailCategory", busStopDetailCategory);
+
+			return "polyline/busStopDetailCategory";
+
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+
+				response.sendRedirect("/spring/admin/adminLogin.action");
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+
+			}
+			return null;
+		}
+
 	}
 
 	// 버스 번호 가져오기
 	@RequestMapping(method = { RequestMethod.GET }, value = "/polyline/busInfo.action")
-	public String busInfo(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
+	public String busInfo(HttpServletRequest request, HttpSession session, HttpServletResponse response, String seq) {
 
-		List<BusInfoDTO> busInfo = dao.busInfo(seq);
+		try {
 
-		request.setAttribute("busInfo", busInfo);
+			// 내용
+			List<BusInfoDTO> busInfo = dao.busInfo(seq);
 
-		return "polyline/busInfo";
+			request.setAttribute("busInfo", busInfo);
+
+			return "polyline/busInfo";
+			
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+
+				response.sendRedirect("/spring/admin/adminLogin.action");
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+
+			}
+			return null;
+		}
+
 	}
 
 
 	@RequestMapping(method = { RequestMethod.GET }, value = "/polyline/location.action")
-	public String location(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq, String start, String end) {
+	public String location(HttpServletRequest request, HttpSession session, HttpServletResponse response, String seq,
+			String start, String end) {
 
-		// 대학교 다시 가져오기
-		List<UniversityDTO> university = dao.list();
-		request.setAttribute("university", university);
+		try {
 
-		// 버스 정보 가져오기
-		List<LocationDTO> location = dao.location(seq, start, end);
+			// 내용
+			// 대학교 다시 가져오기
+			List<UniversityDTO> university = dao.list();
+			request.setAttribute("university", university);
 
-		request.setAttribute("location", location);
+			// 버스 정보 가져오기
+			List<LocationDTO> location = dao.location(seq, start, end);
 
-		return "polyline/location";
+			request.setAttribute("location", location);
+			
+			return "polyline/location";
+
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+
+				response.sendRedirect("/spring/admin/adminLogin.action");
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+
+			}
+			return null;
+		}
+
 	}
 
 	// 정류장 가져오기
 	@RequestMapping(method = { RequestMethod.GET }, value = "/polyline/busStop.action")
-	public String busStop(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
+	public String busStop(HttpServletRequest request, HttpSession session, HttpServletResponse response, String seq) {
 
-		List<BusStopDTO> busStop = dao.busStop(seq);
+		try {
 
-		request.setAttribute("busStop", busStop);
+			// 내용
+			List<BusStopDTO> busStop = dao.busStop(seq);
 
-		return "polyline/busStop";
+			request.setAttribute("busStop", busStop);
+
+			return "polyline/busStop";
+			
+		} catch (Exception e) {
+			session.invalidate();
+
+			try {
+
+				response.sendRedirect("/spring/admin/adminLogin.action");
+
+			} catch (Exception e2) {
+				// TODO: handle exception
+
+			}
+			return null;
+		}
+
 	}
 
 }

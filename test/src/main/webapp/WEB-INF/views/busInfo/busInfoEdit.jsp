@@ -7,6 +7,7 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
 <style>
 html, body {
    width: 100%;
@@ -48,7 +49,9 @@ html, body {
 </head>
 <body>
 	<%@include file="/inc/top.jsp" %>
-	<h1>버스 정보 수정 페이지</h1>
+	<
+	<h1 class = "menuTitle">버스 정보 수정 페이지</h1>
+	
 	<form method="POST" action="/spring/busInfo/busInfoEditOk.action">
 		<table id="tbl" class="table table-striped">
 			<tr>
@@ -71,12 +74,9 @@ html, body {
 				<td>버스 상태</td>
 				<td>
 					<select id="busInfoStat" name="busInfoStat" class="form-control">
-					<c:if test="${bdto.busInfoStat=='show'}">
+						
 						<option value = "show">show</option>
-					</c:if>
-					<c:if test="${bdto.busInfoStat=='hide'}">
 						<option value = "hide">hide</option>
-					</c:if>
 					</select>
 				</td>
 			</tr>

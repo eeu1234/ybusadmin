@@ -9,8 +9,6 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
 <title>학교 갈 땐 CAMBUS</title>
-<!-- <link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" /> -->
-
 <style>
 html, body {
    width: 100%;
@@ -24,6 +22,13 @@ html, body {
    width:90%;
    
    margin: 10 auto;
+}
+
+#menuTitle{
+   border: 0px solid black;
+   text-align: center;
+   margin: 10px 0px 10px 0px;
+   font-weight: bold;
 }
 
 #mapForm {
@@ -115,7 +120,7 @@ html, body {
 $().ready(function(){
 	$("#tbl").tableDnD();
 	
-	$("#tbl tr").mouseup(function(){
+	$(document).mouseup(function(){
 		//console.log($(this).children().eq(1).text());
 		//console.log($("#tbl tbody tr").length);
 		//테이블 tr사이즈만큼 돌리면서 순서대로 순서를 채워넣는다
@@ -129,7 +134,7 @@ $().ready(function(){
 		}
 
 	});
-	$("#tbl tbody tr").mouseup(function(){
+	$(document).mouseup(function(){
 		//$(this).css("background-color","white");
 
 		$("#tbl tbody tr").css("background-color","");
@@ -170,7 +175,7 @@ $().ready(function(){
         var jsonInfo = JSON.stringify(busStopList);
 
         $("#frm").append("<input type='hidden' name='jsonInfo' value='"+ jsonInfo +"'>");
-        $("#frm").append("<input type='hidden' name='detailCategorySelect' value='"+ ${seq} +"'>");
+        $("#frm").append("<input type='hidden' name='detailCategorySel' value='"+ ${detailCategorySel} +"'>");
 
         //alert(jsonInfo);
         //alert(${seq});
@@ -188,9 +193,9 @@ $().ready(function(){
 
 <body>
    <%@include file="/inc/top.jsp"%>
-   <h1 class="menuTitle">${adto.universityName} 버스 정류장 관리페이지</h1>
+   <h1 id="menuTitle"><img src="/spring/images/logo.PNG">정류장 순서 관리페이지</h1>
 
-   <form id="frm" method="POST" action="/spring/busStop/updateOrder.action">
+   <form id="frm" method="POST" action="/spring/busStop/updateOrderOK.action">
    
    
    
@@ -220,8 +225,8 @@ $().ready(function(){
 
    
       <div class="btnForm">
-         <input type="submit" value="수정" class="btn btn-success" >
-         <input type="button" value="돌아가기" class="btn btn-success" onclick="location.href='/spring/busStop/busStop.action'">        
+         <input type="button" value="돌아가기" class="btn btn-default" onclick="location.href='/spring/busStop/busStop.action'" style="margin-right: 10px;">        
+         <input type="submit" value="저장" class="btn btn-primary" >
       </div>
 
    </form>

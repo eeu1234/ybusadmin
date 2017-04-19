@@ -80,6 +80,7 @@ public class AuthCheck {
       if(session == null || session.getAttribute("adto") == null){
          
          try {
+        	 
             
             //인증 받지 못한 사람들..
             //response.sendRedirect("/spring/index.action");
@@ -126,6 +127,7 @@ public class AuthCheck {
       
       
       AdminUniversityDTO adto = (AdminUniversityDTO) session.getAttribute("adto");
+      System.out.println("최고관리자 인가요? : "+adto.getAdminLevel());
       
       //보조 업무 9999 아닌 얘들
       int result = 0;	//0이면 접근 가능, 1이면 접근 금지.
@@ -159,7 +161,51 @@ public class AuthCheck {
            } catch (Exception e) {
               e.printStackTrace();
            }
-    	  
+      }
+      
+   }
+   
+
+   //일반사용자페이지
+   @Pointcut("execution(String *.BusStopMapController.*(..)) "
+		   + "|| execution(String *.MainController.mainIndex(..))")//사용자페이지
+		 
+   public void user(){}
+   
+   @Before("user()")
+   public void checkUser(JoinPoint joinPoint){
+	   
+	   
+	
+	 //joinPoint: 주업무 참조하는 프록시 객체
+	      Object[] args = joinPoint.getArgs();
+	      
+	      HttpServletRequest request = (HttpServletRequest)args[0];
+	      HttpSession session = (HttpSession)args[1];
+	      HttpServletResponse response = (HttpServletResponse)args[2];
+	      
+	      System.out.println(request.getRequestURI());
+	      
+	      //보조 업무
+	      //로그인 안한 사람 로그인화면으로 보내기
+	      if(session == null || session.getAttribute("universityDto") == null ){
+	         
+	         try {
+	            
+	            //인증 받지 못한 사람들..
+	            //response.sendRedirect("/spring/index.action");
+	            response.setCharacterEncoding("UTF-8");
+	            PrintWriter writer = response.getWriter();
+	            writer.print("<script>");
+	            writer.print("location.href='/spring/index.action';");
+	            writer.print("</script>");
+	            writer.close();
+	            
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+
+
       }
       
    }

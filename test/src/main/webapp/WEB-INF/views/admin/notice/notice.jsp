@@ -103,20 +103,20 @@
 
 					<c:forEach items="${alist}" var="dto" varStatus="stat">
 					<tr>
-						<td>${stat.count}</td>
+						<td>${dto.noticeSeq}</td>
 			<form method="GET" action="/spring/admin/notice/noticeContent.action">
 						<td ><input type="submit" value="${dto.noticeSubject}" name="subject" readonly id="btnSubject"></td>
 						<input type="hidden" value="${dto.noticeSeq}" name="seq">
 			</form>
 						<td>${dto.noticeRegdate}</td>
 						<td>${dto.noticeReadCount}</td>
-						<td>${dto.notisStatus}</td>
+						<td>${dto.noticeStatus}</td>
 						
 						<c:if test="${adto.adminLevel == '9999'}">
 						<td>
 							<div id="btnSel">
 							<form method="POST" action="/spring/admin/notice/noticeUpdate.action">
-								<input type="submit" value="수정" class="btn btn-info" id="btnEdit"/>
+								<input type="submit" value="수정" class="btn btn-warning" id="btnEdit"/>
 								<input type="hidden" value="${dto.noticeSeq}" name="seq">
 							</form>
 							
@@ -159,7 +159,7 @@
 							</select>
 						</td>
 						<td><input type="text" name="word" id="word" class="form-control" required placeholder="검색어를 입력하세요." value="${sdto.word}"></td>
-						<td><input type="submit" value="검색하기" class="btn btn-warning"></td>
+						<td><input type="submit" value="검색하기" class="btn btn-info"></td>
 					</tr>
 				</table>
 			</form>

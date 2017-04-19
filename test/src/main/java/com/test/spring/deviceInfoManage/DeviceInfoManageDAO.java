@@ -28,12 +28,8 @@ public class DeviceInfoManageDAO {
 		return sql.selectList("deviceInfoManage.universityList");
 	}
 
-	//디바이스 수정 
-	public int updateDevice(String deviceModel, String deviceTel) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
+	//디바이스 수정
 	public int updateDevice(String seq, String deviceModel, String deviceTel,String universitySel) {
 		// TODO Auto-generated method stub
 		HashMap<String, String> map = new HashMap<>();
@@ -43,6 +39,18 @@ public class DeviceInfoManageDAO {
 		map.put("universitySel", universitySel);
 		
 		return sql.update("deviceInfoManage.updateDevice",map);
+	}
+
+	//디바이스 삭제
+	public int deleteDevice(String seq) {
+		// TODO Auto-generated method stub
+		
+		try{
+			return sql.delete("deviceInfoManage.deleteDevice",seq);			
+		}catch(Exception e){
+			System.out.println("삭제실패");
+		}
+		return 0;
 	}
 	
 	

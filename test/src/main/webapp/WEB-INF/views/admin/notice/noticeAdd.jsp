@@ -12,7 +12,7 @@
 		border: 1px solid black;
 		width: 1000px;
 		margin: 0px auto;
-		height: 630px;
+		height: 680px;
 	}
 	
 	#totalBox #mainBox{
@@ -102,14 +102,100 @@
 <script>
 $(document).ready(function() {
 
-	
+	//제목 포커스
 	$("#subject").focus();
-	
+
+	//엔터 제한
  	$("#subject").keypress(function(e){
     	if(e.keyCode==13) return false;
  	 });
 
-});	
+  	//제목 제한
+	$('#subject').on('keyup', function() {
+
+			if ($(this).val().length > 15) {
+				
+				$(this).val($(this).val().substring(0, 15));
+				alert("글자수가 초과하였습니다.(공백포함 최대 15자입니다.)");
+			}
+	});
+	 
+  	//내용 제한
+	$('#content').on('keyup', function() {
+
+			if ($(this).val().length > 2000) {
+
+				$(this).val($(this).val().substring(0, 2000));
+				alert("글자수가 초과하였습니다.(공백포함 최대 2000자입니다.)");
+
+			}
+		});
+	
+});
+
+  	//용량체크
+    function fileCheck(fileValue)
+    {
+
+        //확장자 체크
+        var src = getFileType(fileValue);
+  	
+        if((src.toLowerCase() == "exe"))
+        {
+            alert("exe 파일로 올릴수 없습니다.");
+            return;
+        }
+        
+        //사이즈체크
+        var maxSize  = 5242880;    //5MB 5 * 1024 * 1024
+        var temp = 0;
+        var fileSize = 0;
+        
+       	for(var i=0; i<filename.files.length; i++){
+        temp = filename.files[i].size;
+        	//alert(temp);        	
+	    fileSize = fileSize + temp;
+	        //alert(fileSize);        	
+        }        
+       	//alert(fileSize);
+       	
+        if(fileSize > maxSize) {
+            alert("첨부파일 사이즈는 5MB 이내로 등록 가능합니다.");
+            return;
+        }
+        
+		if ($('#subject').val().length < 1) {
+			alert("제목글의 글자수가 최소 1자리 이상 작성해주세요.(공백포함 최대 15자입니다.)");
+			return;
+		} else
+
+		if ($('#content').val().length < 1) {
+			alert("내용글의 글자수가 최소 1자리 이상 작성해주세요.(공백포함 최대 2000자입니다.)");
+			return;
+			
+			
+		} else {
+			//alert(filename.files.length+"개의 파일을 업로드합니다."); 
+       		frm.submit();
+		}   
+    }
+
+    //◈◈ 파일 확장자 확인 ◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+    function getFileType(filePath)
+    {
+        var index = -1;
+            index = filePath.lastIndexOf('.');
+        var type = "";
+        if(index != -1)
+        {
+            type = filePath.substring(index+1, filePath.len);
+        }
+        else
+        {
+            type = "";
+        }
+        return type;
+    }
 
 </script>
 
@@ -122,7 +208,7 @@ $(document).ready(function() {
 	</div>
 	
 	<div id="totalBox">
-		<form method="POST" action="/spring/admin/notice/noticeAddOk.action" enctype="multipart/form-data">
+		<form method="POST" action="/spring/admin/notice/noticeAddOk.action" enctype="multipart/form-data" name="frm">
 			<div id="mainBox">
 				<div id="topBox">
 					<div id="titleSubject">제목</div><input type="text" name="subject" id="subject">
@@ -134,7 +220,8 @@ $(document).ready(function() {
 		</div>
 		
 
-					<input type="submit" value="저장" class="btn btn-primary">
+					<input type="button" value="저장" class="btn btn-primary" onclick="fileCheck(document.frm.filename.value);">
+					<a href="/spring/admin/notice/notice.action"><input type="button" value="돌아가기" class="btn btn-default"></a>
 				</div>
 			</div>
 		</form>

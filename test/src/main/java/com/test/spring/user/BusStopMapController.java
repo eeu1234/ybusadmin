@@ -139,10 +139,10 @@ public class BusStopMapController {
 			map.put("busStopCategorySeq", busStopCategorySeq);
 			map.put("universitySeq", universitySeq);
 			
-			System.out.println("busStopCategorySeq+++"+map.get("busStopCategorySeq"));
-			System.out.println(map.get("universitySeq"));
-			System.out.println(busStopCategorySeq);
-			System.out.println(universitySeq);
+			//System.out.println("busStopCategorySeq+++"+map.get("busStopCategorySeq"));
+			//System.out.println(map.get("universitySeq"));
+			//System.out.println(busStopCategorySeq);
+			//System.out.println(universitySeq);
 			//System.out.println("$$$$$"+universitySeq);
 			if(busStopDetailCategorySeq==null||busStopDetailCategorySeq.equals("")){
 				busStopDetailCategorySeq = dao.getDefaultBusStopDetailCategory(map);
@@ -150,9 +150,9 @@ public class BusStopMapController {
 			}
 			map.put("busStopDetailCategorySeq",busStopDetailCategorySeq);
 			
-			BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);
-			List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);
-			List<CurrBusLocationDTO> cblList = dao.getCurrBusStopLocation(map);
+			BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);//지정된 노선의 맵 중앙
+			List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);//지정된 정류장
+			List<CurrBusLocationDTO> cblList = dao.getCurrBusStopLocation(map);//현재 버스 위치
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
 			UniversityDTO unidto = dao.getUniversityArea(universitySeq);
 			
@@ -216,6 +216,16 @@ public class BusStopMapController {
 			request.setAttribute("avgBSdto", avgBSdto);
 			request.setAttribute("unidto", unidto);
 			request.setAttribute("bsList", bsList);
+			
+	
+	         
+	        // 미터(Meter) 단위
+	        double distancekilometer =
+	            distance(Double.parseDouble(avgBSdto.getMinLat()), Double.parseDouble(avgBSdto.getMinLon()), Double.parseDouble(avgBSdto.getMaxLat()), Double.parseDouble(avgBSdto.getMaxLon()), "kilometer");
+			System.out.println("distanceMeter="+distancekilometer);
+			
+	        request.setAttribute("distancekilometer", distancekilometer);
+			
 		 } catch (Exception e) {
 		    session.invalidate();
 		    try {
@@ -232,5 +242,38 @@ public class BusStopMapController {
 		return "user/getBusStopLocation";
 	}
 	
+    
+	
+	private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
+        
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+         
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+         
+        if (unit == "kilometer") {
+            dist = dist * 1.609344;
+        } else if(unit == "meter"){
+            dist = dist * 1609.344;
+        }
+ 
+        return (dist);
+    }
+     
+ 
+    // This function converts decimal degrees to radians
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+     
+    // This function converts radians to decimal degrees
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+
+
+
 	
 }

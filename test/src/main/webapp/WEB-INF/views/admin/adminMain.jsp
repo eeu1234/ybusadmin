@@ -26,9 +26,6 @@
 
 	$(document).ready(function(){
 
-		function search(){
-		}
-
 		 $("#universitySel").change(function(){
 		      var b = $(this).val();
 		      
@@ -62,6 +59,21 @@
 		
 	});
 
+//대학을 선택했는지 확인.
+function search(){
+	
+	var sel = $("#universitySel").val();
+	
+	if(sel == -1){
+		//-1 이면 대학 선택안함.
+		alert("대학을 선택해주세요.");
+	}else{
+		//-1 이 아니면 대학 선택함
+		$("#searchForm").submit();
+	}
+	
+}
+
 </script>
 </head>
 
@@ -74,7 +86,7 @@
 	<h1 class="menuTitle">관리자 학교 선택 화면</h1>
 
 	<div id="container">
-		<form method="POST" action="/spring/admin/adminMain1.action">
+		<form id="searchForm" method="POST" action="/spring/admin/adminMain1.action">
 			<div id="universitySearch">
 							<c:if test="${adto.adminLevel == '9999'}">
 								<select id="universitySel" class="form-control" name="schoolName">
@@ -83,7 +95,7 @@
 										<option value="${dto.universitySeq},${dto.universityName}">${dto.universityName}</option>
 									</c:forEach>
 								</select>
-								<input type="submit" value="검색" onclick="search();" class="btn btn-info" style="margin-left:5%;;">
+								<input type="button" value="검색" onclick="search();" class="btn btn-info" style="margin-left:5%;;">
 							</c:if>
 				</div>
 		</form>

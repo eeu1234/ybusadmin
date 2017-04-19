@@ -89,7 +89,7 @@ public class androidDAO {
 			LocationDTO dto = new LocationDTO();
 			dto.setLocationSeq(locationSeq);
 			dto.setBusStopSeq(myBusStop);
-			return sql.update("updateBusStop",dto);
+			return sql.update("android.updateBusStop",dto);
 		}
 
 

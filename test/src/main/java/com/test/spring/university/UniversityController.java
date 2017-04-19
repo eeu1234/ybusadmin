@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,20 +26,46 @@ public class UniversityController {
 	//대학 관리 메인
 	@RequestMapping(method={RequestMethod.GET}, value="/university/universityCrud.action")
 	public String universityMain(HttpServletRequest request,HttpSession session,HttpServletResponse response){
-		
-		return "university/universityCrud";
+		try{
+			return "university/universityCrud";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	
 	//대학교 리스트
 	@RequestMapping(method = { RequestMethod.GET }, value = "/university/universityList.action")
 	public String universityList(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
-		
-		List<UniversityDTO> ulist = dao.universityList();
-		
-		request.setAttribute("ulist", ulist);
-		
-		return "university/universityList";
+		try{
+			List<UniversityDTO> ulist = dao.universityList();
+			
+			request.setAttribute("ulist", ulist);
+			
+			return "university/universityList";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	
@@ -48,13 +75,26 @@ public class UniversityController {
 	public String universityEdit(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
 		
 		UniversityDTO udto = new UniversityDTO();
-		
-		udto.setUniversitySeq(seq);
-		udto = dao.universityGet(seq);
-		
-		request.setAttribute("udto", udto);
-		
-		return "university/universityEdit";
+		try{
+			udto.setUniversitySeq(seq);
+			udto = dao.universityGet(seq);
+			
+			request.setAttribute("udto", udto);
+			
+			return "university/universityEdit";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	
@@ -64,50 +104,77 @@ public class UniversityController {
 	public String universityEditOk(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
 		
 		UniversityDTO udto = new UniversityDTO();
-		
-		udto.setUniversitySeq(request.getParameter("universitySeq"));
-		udto.setUniversityName(request.getParameter("universityName"));
-		udto.setUniversityTel(request.getParameter("universityTel"));
-		udto.setUniversityLatitude(request.getParameter("universityLatitude"));
-		udto.setUniversityLongitude(request.getParameter("universityLongitude"));
-		udto.setUniversityDomain(request.getParameter("universityDomain"));
-
-		MultipartHttpServletRequest multi = (MultipartHttpServletRequest)request;
-		MultipartFile mfile = multi.getFile("universityImg");
-		
-		if(!mfile.isEmpty()){
+		try{
+			udto.setUniversitySeq(request.getParameter("universitySeq"));
+			udto.setUniversityName(request.getParameter("universityName"));
+			udto.setUniversityTel(request.getParameter("universityTel"));
+			System.out.println(request.getParameter("universityTel"));
+			udto.setUniversityLatitude(request.getParameter("universityLatitude"));
+			udto.setUniversityLongitude(request.getParameter("universityLongitude"));
+			udto.setUniversityDomain(request.getParameter("universityDomain"));
+	
+			MultipartHttpServletRequest multi = (MultipartHttpServletRequest)request;
+			MultipartFile mfile = multi.getFile("universityImg");
 			
-			
-			String temp = getFileName(mfile.getOriginalFilename());
-			
-			
-			File file = new File ("D:\\"+temp);
-			
-			try {
+			if(!mfile.isEmpty()){
 				
-				mfile.transferTo(file); //파일 업로드 실행
 				
-			} catch (Exception e) {
-				System.out.println(e.toString());
+				String temp = getFileName(mfile.getOriginalFilename());
+				
+				
+				File file = new File ("D:\\"+temp);
+				
+				try {
+					
+					mfile.transferTo(file); //파일 업로드 실행
+					
+				} catch (Exception e) {
+					System.out.println(e.toString());
+				}
+				
+				udto.setUniversityImg(temp);
+				
 			}
 			
-			udto.setUniversityImg(temp);
 			
+			
+			int result = dao.universityEdit(udto);
+			request.setAttribute("result", result);
+			
+			return "university/universityEditOk";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
 		}
-		
-		
-		
-		int result = dao.universityEdit(udto);
-		request.setAttribute("result", result);
-		
-		return "university/universityEditOk";
 	}
 	
 	//대학교 추가로 이동
 	@RequestMapping(method = { RequestMethod.GET }, value = "/university/universityAdd.action")
 	public String universityAdd(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
+		try{
+			return "university/universityAdd";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
 
-		return "university/universityAdd";
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	
@@ -117,44 +184,57 @@ public class UniversityController {
 		
 		
 		UniversityDTO udto = new UniversityDTO();
-		
-		udto.setUniversityName(request.getParameter("universityName"));
-		udto.setUniversityTel(request.getParameter("universityTel"));
-		udto.setUniversityLatitude(request.getParameter("universityLatitude"));
-		udto.setUniversityLongitude(request.getParameter("universityLongitude"));
-		udto.setUniversityDomain(request.getParameter("universityDomain"));
-		
-		MultipartHttpServletRequest multi = (MultipartHttpServletRequest)request;
-		MultipartFile mfile = multi.getFile("universityImg");
-		
-		if(!mfile.isEmpty()){
+		try{
+			udto.setUniversityName(request.getParameter("universityName"));
+			udto.setUniversityTel(request.getParameter("universityTel"));
+			udto.setUniversityLatitude(request.getParameter("universityLatitude"));
+			udto.setUniversityLongitude(request.getParameter("universityLongitude"));
+			udto.setUniversityDomain(request.getParameter("universityDomain"));
 			
+			MultipartHttpServletRequest multi = (MultipartHttpServletRequest)request;
+			MultipartFile mfile = multi.getFile("universityImg");
 			
-			String temp = getFileName(mfile.getOriginalFilename());
-			
-			
-			File file = new File ("D:\\"+temp);
-			
-			try {
+			if(!mfile.isEmpty()){
 				
-				mfile.transferTo(file); //파일 업로드 실행
 				
-			} catch (Exception e) {
-				System.out.println(e.toString());
+				String temp = getFileName(mfile.getOriginalFilename());
+				
+				
+				File file = new File ("D:\\"+temp);
+				
+				try {
+					
+					mfile.transferTo(file); //파일 업로드 실행
+					
+				} catch (Exception e) {
+					System.out.println(e.toString());
+				}
+				
+				udto.setUniversityImg(temp);
+				
 			}
 			
-			udto.setUniversityImg(temp);
 			
-		}
-		
-		
-		
-		int result = dao.universityAdd(udto);
-		
-		request.setAttribute("result", result);
+			
+			int result = dao.universityAdd(udto);
+			
+			request.setAttribute("result", result);
+	
+			
+			return "university/universityAddOk";
+		} catch (Exception e) {
+			session.invalidate();
+			try {
+	            
+				response.sendRedirect("/spring/admin/adminLogin.action");
+				
 
-		
-		return "university/universityAddOk";
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	private String getFileName(String filename) {
@@ -184,13 +264,30 @@ public class UniversityController {
 
 	//대학교 삭제
 	@RequestMapping(method = { RequestMethod.GET }, value = "/university/universityDel.action")
+	@Transactional
 	public String universityDel(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
-		
-		int result = dao.universityDel(seq);
-		
-		request.setAttribute("result", result);
-		
-		return "university/universityDeleteOk";
+		try{
+			int result = dao.universityDel(seq);
+			
+			request.setAttribute("result", result);
+			
+			return "university/universityDeleteOk";
+		} catch (Exception e) {
+			//여기서 세션을 날리면 로그아웃 처리됨.
+			//session.invalidate();
+			try {
+				
+				request.setAttribute("result", 0);
+				//실패했다고 보내주자.
+				return "university/universityDeleteOk";
+				
+
+			} catch (Exception e2) {
+			
+			}
+			
+			return null;
+		}
 	}
 	
 	
