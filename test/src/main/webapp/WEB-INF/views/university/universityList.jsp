@@ -40,9 +40,9 @@
 		
 	}
 
-	function del(seq){
-
-		if(confirm("삭제하겠습니까?")){
+	function del(seq, name){
+		
+		if(confirm(name + "을 삭제하겠습니까?")){
 			location.href="/spring/university/universityDel.action?seq="+seq;
 		}
 
@@ -95,7 +95,7 @@
 			<td>${udto.universityDomain}</td>
 			<td>${udto.universityImg}</td>
 		<td colspan="2"><input type="button" value="수정" class="btn btn-info" onclick="edit(${udto.universitySeq});">
-		<input type="button" value="삭제"  class="btn btn-danger" onclick="del(${udto.universitySeq});"></td>
+		<input type="button" value="삭제"  class="btn btn-danger" onclick="del(${udto.universitySeq}, '${udto.universityName}');"></td>
 		</tr>
 	</c:forEach>
 	</table>

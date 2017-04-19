@@ -12,6 +12,8 @@ public class BusStopDetailCategoryDTO {
 	
 	private String busStopCategory;//버스뷰류 명
 	
+	private String count;//정류장 갯수
+	
 	
 	public String getBusStopDetailCategorySeq() {
 		return busStopDetailCategorySeq;
@@ -54,6 +56,12 @@ public class BusStopDetailCategoryDTO {
 	}
 	public void setBusStopCategory(String busStopCategory) {
 		this.busStopCategory = busStopCategory;
+	}
+	public String getCount() {
+		return count;
+	}
+	public void setCount(String count) {
+		this.count = count;
 	}
 	
 

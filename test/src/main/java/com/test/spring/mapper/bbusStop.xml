@@ -56,7 +56,15 @@
    
    <!-- 셔틀 세부 종류 가져오기 -->
    <select id="busStopDetailCategory" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
-      SELECT BUSSTOPDETAILCATEGORYNAME AS BusStopDetailCategoryName, BUSSTOPDETAILCATEGORYSEQ AS BusStopDetailCategorySeq          FROM BUSSTOP_DETAIL_CATEGORY
-            WHERE BUSSTOPCATEGORYSEQ = #{seq} AND BUSSTOPDETAILCATEGORYSTAT = 'show';
+            SELECT COUNT(*) AS count,BS.BUSSTOPDETAILCATEGORYSEQ AS BusStopDetailCategorySeq, BDC.BUSSTOPDETAILCATEGORYNAME AS BusStopDetailCategoryName FROM BUSSTOP BS
+			INNER JOIN BUSSTOP_DETAIL_CATEGORY BDC
+			ON BDC.BUSSTOPDETAILCATEGORYSEQ = BS.BUSSTOPDETAILCATEGORYSEQ
+			WHERE BDC.BUSSTOPCATEGORYSEQ =  #{seq} AND BUSSTOPDETAILCATEGORYSTAT = 'show'
+			group by BUSSTOPDETAILCATEGORYSEQ;
+   </select>
+   
+   <!-- 정류장 갯수 가져오기 -->
+   <select id="busStopCount" parameterType="String" resultType="Integer">
+   	   SELECT COUNT(*) FROM BUSSTOP WHERE BUSSTOPDETAILCATEGORYSEQ = #{seq};
    </select>
 </mapper>

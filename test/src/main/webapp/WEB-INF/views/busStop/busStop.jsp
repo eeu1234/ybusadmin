@@ -280,28 +280,14 @@ html, body {
 
                                                 $(list)
                                                       .each(
-                                                            function(
-                                                                  index,
-                                                                  item) {
-                                                               var seq = $(
-                                                                     item)
-                                                                     .find(
-                                                                           "seq")
-                                                                     .text();
-                                                               var name = $(
-                                                                     item)
-                                                                     .find(
-                                                                           "name")
-                                                                     .text();
+                                                            function(index,item) {
+                                                               var seq = $(item).find("seq").text();
+                                                               var name = $(item).find("name").text();
+                                                               var count = $(item).find("count").text();
                                                                //alert(seq);
                                                                // alert(name);
 
-                                                               $(
-                                                                     "#detailCategorySel")
-                                                                     .append(
-                                                                           "<option value='"+seq+"'>"
-                                                                                 + name
-                                                                                 + "</option>");
+                                                               $( "#detailCategorySel").append("<option value='"+seq+"'>"  + name  + "(정류장 갯수 : "+count+"개)</option>");
 
                                                             });
 

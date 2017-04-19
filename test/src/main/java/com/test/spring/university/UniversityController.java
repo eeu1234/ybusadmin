@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -263,6 +264,7 @@ public class UniversityController {
 
 	//대학교 삭제
 	@RequestMapping(method = { RequestMethod.GET }, value = "/university/universityDel.action")
+	@Transactional
 	public String universityDel(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
 		try{
 			int result = dao.universityDel(seq);
@@ -271,10 +273,13 @@ public class UniversityController {
 			
 			return "university/universityDeleteOk";
 		} catch (Exception e) {
-			session.invalidate();
+			//여기서 세션을 날리면 로그아웃 처리됨.
+			//session.invalidate();
 			try {
-	            
-				response.sendRedirect("/spring/admin/adminLogin.action");
+				
+				request.setAttribute("result", 0);
+				//실패했다고 보내주자.
+				return "university/universityDeleteOk";
 				
 
 			} catch (Exception e2) {

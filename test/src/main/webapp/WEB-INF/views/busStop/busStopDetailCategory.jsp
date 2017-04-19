@@ -5,6 +5,7 @@
       <item>
          <seq>${dto.busStopDetailCategorySeq}</seq>
          <name>${dto.busStopDetailCategoryName}</name>
+         <count>${dto.count}</count>
       </item>
    </c:forEach>
 </list>    

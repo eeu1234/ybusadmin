@@ -17,7 +17,7 @@
 			location.href="/spring/university/universityList.action";
 		</c:if>
 		<c:if test="${result==0}">
-			alert("삭제 실패");
+			alert("대학에 연결된 데이터가 존재합니다.");
 			history.back();
 		</c:if>
 	});

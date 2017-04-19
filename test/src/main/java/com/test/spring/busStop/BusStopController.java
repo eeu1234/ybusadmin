@@ -133,7 +133,7 @@ public class BusStopController {
 		try {
 	         
 
-			// 노선 종류 가져오기
+			// 노선 종류 가져오기 + 쩡류짱꺴쑤
 			List<BusStopDetailCategoryDTO> busStopDetailCategory = bdao.busStopDetailCategory(seq);
 			
 			request.setAttribute("busStopDetailCategory", busStopDetailCategory);
