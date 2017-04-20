@@ -89,6 +89,13 @@ public class BusStopDAO {
 	   }
 
 
+	   //노선의 정류장 갯수 가져옴
+	public String busStopCount(String busStopDetailCategorySeq) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("bbusStop.busStopCount",busStopDetailCategorySeq);
+	}
+
+
 
 	
 	

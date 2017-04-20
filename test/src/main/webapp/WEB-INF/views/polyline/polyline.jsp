@@ -537,7 +537,7 @@ $(function(){
 	   <div id="searchForm">
 	
 	      <div id="operationTime">
-	         <input type="text" id="start" name="startTime" class='datetimepicker' value="" readonly> ~ <input type="text" id="end" name="endTime" class='datetimepicker' value="" readonly> 
+	         <input type="text" id="start" name="startTime" class='datetimepicker' value="" > ~ <input type="text" id="end" name="endTime" class='datetimepicker' value="" > 
 	            
 	
 	         <div id="btnForm">

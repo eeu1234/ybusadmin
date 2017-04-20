@@ -60,13 +60,13 @@ public class DeviceManageController {
 	
 	//단말기에 학교 정보 입력
 	@RequestMapping(method= {RequestMethod.GET}, value="/device/deviceAddUniv.action")
-	public String deviceAddUniv(HttpServletRequest request,HttpSession session, HttpServletResponse response, String seq, String universityName) {
+	public String deviceAddUniv(HttpServletRequest request,HttpSession session, HttpServletResponse response, String seq,String universitySeq) {
 		
 		HashMap<String, String> dmap = new HashMap<String, String>();
 		
 		try{
 			dmap.put("seq", seq);
-			dmap.put("universityName", universityName);
+			dmap.put("universitySeq", universitySeq);
 			
 			int result = dao.deviceAddUniv(dmap);
 			

@@ -17,3 +17,9 @@ body {
 	    padding-top: 15px;
     padding-bottom: 15px;
 }
+
+#topInc{
+	max-width: 1440px;
+	margin: 0px auto;
+	
+}

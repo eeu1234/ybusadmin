@@ -199,7 +199,9 @@ public class BusStopMapController {
 			}
 			map.put("busStopDetailCategorySeq", busStopDetailCategorySeq);
 			
-			
+			System.out.println("busstop:"+busStopCategorySeq);
+			System.out.println("asdlfkjasd"+universitySeq);
+			System.out.println("alskfjaoefoi"+busStopDetailCategorySeq);
 		
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
 			
@@ -209,28 +211,42 @@ public class BusStopMapController {
 			UniversityDTO unidto = dao.getUniversityArea(universitySeq);
 			
 			//request.setAttribute("bsdcdto", bsdcdto);
-			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
+			
+			
+	
+			double distancekilometer =0;
+	        // 미터(Meter) 단위
+			if(avgBSdto!=null){
+				distancekilometer =
+	            distance(Double.parseDouble(avgBSdto.getMinLat()), Double.parseDouble(avgBSdto.getMinLon()), Double.parseDouble(avgBSdto.getMaxLat()), Double.parseDouble(avgBSdto.getMaxLon()), "kilometer");
+				System.out.println("distanceMeter="+distancekilometer);
+			}else{
+				avgBSdto = new BusStopAvgLatLonDTO();
+				avgBSdto.setAvgLat(unidto.getUniversityLatitude());
+				avgBSdto.setAvgLon(unidto.getUniversityLongitude());
+				avgBSdto.setMaxLat(unidto.getUniversityLatitude());
+				avgBSdto.setMaxLon(unidto.getUniversityLongitude());
+				avgBSdto.setMinLat(unidto.getUniversityLatitude());
+				avgBSdto.setMinLon(unidto.getUniversityLongitude());
+				distancekilometer =
+			            distance(Double.parseDouble(avgBSdto.getMinLat()), Double.parseDouble(avgBSdto.getMinLon()), Double.parseDouble(avgBSdto.getMaxLat()), Double.parseDouble(avgBSdto.getMaxLon()), "kilometer");
+			}
+	        request.setAttribute("distancekilometer", distancekilometer);
+	        request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 			request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
 			request.setAttribute("bsdcList", bsdcList);
 			request.setAttribute("cblList", cblList);
 			request.setAttribute("avgBSdto", avgBSdto);
 			request.setAttribute("unidto", unidto);
 			request.setAttribute("bsList", bsList);
-			
-	
-	         
-	        // 미터(Meter) 단위
-	        double distancekilometer =
-	            distance(Double.parseDouble(avgBSdto.getMinLat()), Double.parseDouble(avgBSdto.getMinLon()), Double.parseDouble(avgBSdto.getMaxLat()), Double.parseDouble(avgBSdto.getMaxLon()), "kilometer");
-			System.out.println("distanceMeter="+distancekilometer);
-			
-	        request.setAttribute("distancekilometer", distancekilometer);
-			
+	        
 		 } catch (Exception e) {
+			 System.out.println(e.toString());
 		    session.invalidate();
 		    try {
 		       
 		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    	return "";
 		    } catch (Exception e2) {
 		       // TODO: handle exception
 		    }

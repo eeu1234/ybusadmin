@@ -37,9 +37,9 @@
 <body>
 	<%@include file="/inc/top.jsp" %>
 
-	<h1 class = "menuTitle">버스 정보 관리</h1>
 	<form method="POST" action="/spring/admin/busStopCategoryMatchOk.action">
-	<table id = "tblBusInfo" class="table table-striped">
+	<h1 class = "menuTitle">활성화된 버스 정보 관리</h1>
+	<table id = "tblShowBusInfo" class="table table-striped">
 		<tr>
 			<th>버스 번호</th>
 			<th>버스 이름</th>
@@ -48,25 +48,58 @@
 			<th>관리</th>
 		</tr>
 		<c:forEach items="${blist}" var="bdto">
-		<tr>
-			<input type="hidden" value="${bdto.busInfoSeq}" id="busInfoSeq${bdto.busInfoSeq}" name="busInfoSeq">
-			<td>${bdto.busInfoNum}</td>
-			<td>${bdto.busInfoName}</td>
-			<td>${bdto.busStopCategory}</td>
-			<td>${bdto.busInfoStat}</td>
+			<c:if test="${bdto.busInfoStat=='show'}">
 			
-			<td>
-			<input type="button" class="btn btn-warning" value="수정" onclick="busEdit(${bdto.busInfoSeq});">
-			<input type="button" class="btn btn-danger" value="삭제" onclick="busDelete(${bdto.busInfoSeq});">
-			
-			</td>
-		</tr>
+			<tr>
+				<input type="hidden" value="${bdto.busInfoSeq}" id="busInfoSeq${bdto.busInfoSeq}" name="busInfoSeq">
+				<td>${bdto.busInfoNum}</td>
+				<td>${bdto.busInfoName}</td>
+				<td>${bdto.busStopCategory}</td>
+				<td>${bdto.busInfoStat}</td>
+				
+				<td>
+				<input type="button" class="btn btn-warning" value="수정" onclick="busEdit(${bdto.busInfoSeq});">
+				<input type="button" class="btn btn-danger" value="삭제" onclick="busDelete(${bdto.busInfoSeq});">
+				
+				</td>
+			</tr>
+			</c:if>
 		</c:forEach>
-	
+		
 	</table>
-			<div class="btnForm">
+	<h1 class = "menuTitle">비활성화된 버스 정보 관리</h1>
+	<table id = "tblHideBusInfo" class="table table-striped">
+		<tr>
+			<th>버스 번호</th>
+			<th>버스 이름</th>
+			<th>이전 분류</th>
+			<th>버스 상태</th>
+			<th>관리</th>
+		</tr>
+		<c:forEach items="${blist}" var="bdto">
+			<c:if test="${bdto.busInfoStat=='hide'}">
+			
+			<tr>
+				<input type="hidden" value="${bdto.busInfoSeq}" id="busInfoSeq${bdto.busInfoSeq}" name="busInfoSeq">
+				<td>${bdto.busInfoNum}</td>
+				<td>${bdto.busInfoName}</td>
+				<td>${bdto.busStopCategory}</td>
+				<td>${bdto.busInfoStat}</td>
+				
+				<td>
+				<input type="button" class="btn btn-warning" value="수정" onclick="busEdit(${bdto.busInfoSeq});">
+				<input type="button" class="btn btn-danger" value="삭제" onclick="busDelete(${bdto.busInfoSeq});">
+				
+				</td>
+			</tr>
+			</c:if>
+		</c:forEach>
+		
+	</table>
+	
+	<div class="btnForm">
 	<input type="button" class="btn btn-primary" value="버스 추가" onclick="badd();">
-			</div>
+	</div>
 	</form>
 </body>
 </html>

@@ -14,11 +14,12 @@
 	#tbl1 th, #tbl1 td { text-align: center; }
 	 
 	#tbl1 th:nth-child(1) { width: 5%;}
-	#tbl1 th:nth-child(2) { width: 50%; }
-	#tbl1 th:nth-child(3) { width: 20%; } 
-	#tbl1 th:nth-child(4) { width: 5%; }
+	#tbl1 th:nth-child(2) { width: 45%; }
+	#tbl1 th:nth-child(3) { width: 15%; } 
+	#tbl1 th:nth-child(4) { width: 10%; }
 	#tbl1 th:nth-child(5) { width: 5%; }
-	#tbl1 th:nth-child(6) { width: 15%; }
+	#tbl1 th:nth-child(6) { width: 5%; }
+	#tbl1 th:nth-child(7) { width: 15%; }
 	
 	#tbl2 { width: 500px; margin: 20px auto; margin-bottom: 100px;}
 	
@@ -91,6 +92,7 @@
 				<th>번호</th>
 				<th>제목</th>
 				<th>작성일자</th>
+				<th>글쓴이</th>
 				<th>조회수</th>
 				<th>상태값</th>
 				<th>관리</th>
@@ -109,6 +111,7 @@
 						<input type="hidden" value="${dto.noticeSeq}" name="seq">
 			</form>
 						<td>${dto.noticeRegdate}</td>
+						<td>${dto.adminID}</td>
 						<td>${dto.noticeReadCount}</td>
 						<td>${dto.noticeStatus}</td>
 						

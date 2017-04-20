@@ -9,14 +9,35 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
 <title>학교 갈 땐 CAMBUS</title>
-<!-- <link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" /> -->
+<link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
 <style>
 html, body {
+max-width:2440px;
    width: 100%;
    height: 100%;
    margin: 0 auto;
    padding: 0;
 }
+.controls {
+        background-color: #fff;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        height: 29px;
+        margin-left: 17px;
+        margin-top: 10px;
+        outline: none;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+.controls:focus {
+        border-color: #4d90fe;
+      }
 #title {
    text-align: center;
    width:90%;
@@ -31,6 +52,8 @@ html, body {
 }
 
 #mapForm {
+	position:relative;
+	max-width : 1440px;
    width: 90%;
    height: 50%;
    margin: 0px auto;
@@ -38,13 +61,13 @@ html, body {
 
 #map {
    float: left;
-   width: 75%;
+   width: 100%;
    height: 100%;
 }
 
 #pano {
    float: left;
-   width: 25%;
+   width: 100%;
    height: 100%;
    position: relative;
    background-color:#eee;
@@ -58,6 +81,7 @@ html, body {
 
 #searchForm {
    border: 0px solid gray;
+   max-width : 1440px;
    width: 90%;
    height: auto;
    margin: 0 auto;
@@ -99,9 +123,8 @@ html, body {
 
 <script type="text/javascript"
    src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=c5wa0CTc7jalj6c4Y0tw&submodules=panorama"></script>
-<script async defer
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap"></script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&libraries=places&callback=initMap"
+        async defer></script>
 
 <script type="text/javascript">
    var map;
@@ -606,7 +629,7 @@ html, body {
    function initMap(lat, lng) {
 	  try{
 	      console.log(markers.length);
-	
+	      
 	      var myLatlng = new google.maps.LatLng(lat, lng);
 	      var myOptions = {
 	         zoom : 15,
@@ -629,6 +652,47 @@ html, body {
 	         console.log(event.latLng.lat());
 	         console.log(event.latLng.lng());
 	      });
+	      
+	    //주소검색
+	      var input = document.getElementById('pac-input');
+	      var autocomplete = new google.maps.places.Autocomplete(input, {placeIdOnly: true});
+	      autocomplete.bindTo('bounds', map);
+	      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	      var geocoder = new google.maps.Geocoder;
+	      var infowindow = new google.maps.InfoWindow();
+	      /* var marker = new google.maps.Marker({
+	          map: map
+	        }); */
+	      autocomplete.addListener('place_changed', function() {
+	          infowindow.close();
+	          var place = autocomplete.getPlace();
+
+	          if (!place.place_id) {
+	            return;
+	          }
+	          geocoder.geocode({'placeId': place.place_id}, function(results, status) {
+
+	            if (status !== 'OK') {
+	              window.alert('Geocoder failed due to: ' + status);
+	              return;
+	            }
+	            map.setZoom(16);
+	            map.setCenter(results[0].geometry.location);
+	            // Set the position of the marker using the place ID and location.
+	            /* marker.setPlace({
+	              placeId: place.place_id,
+	              location: results[0].geometry.location
+	            });
+	            marker.setVisible(true); */
+	            //document.getElementById('place-name').textContent = place.name;
+	            //document.getElementById('place-id').textContent = place.place_id;
+	            //document.getElementById('place-address').textContent =
+	                //results[0].formatted_address;
+	            //infowindow.setContent(document.getElementById('infowindow-content'));
+	            //infowindow.open(map, marker);
+	          });
+	        });     
+	      //========================
 	  }
 	  catch(error){
 		alert("지도 불러오기 실패");
@@ -690,7 +754,7 @@ html, body {
                            + location.lat()
                            + "</td><td id='lng"+dragMarkers.length+"'>"
                            + location.lng()
-                           + "</td><td><select id='line"+dragMarkers.length+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down'>하행</option><option value='turn'>회차점</option></select></td><td><input type='button' value='삭제' id='delbusstop"
+                           + "</td><td><select id='line"+dragMarkers.length+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down'>하행</option><option value='turn'>회차점</option><option value='pass'>미정차</option></select></td><td><input type='button' value='삭제' id='delbusstop"
                            + dragMarkers.length
                            + "' class='btn btn-primary'  onclick='deleteOneMarkers("
                            + dragMarkers.length + ");'></td></tr>");
@@ -1083,7 +1147,7 @@ html, body {
                                                          + lat
                                                          + "</td><td id='lng"+order+"'>"
                                                          + lng
-                                                         + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up' selected>상행</option>   <option value='down'>하행</option><option value='turn'>회차점</option></select></td><td><input type='button' value='삭제' id='delBusStop"
+                                                         + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up' selected>상행</option>   <option value='down'>하행</option><option value='turn'>회차점</option><option value='pass'>미정차</option></select></td><td><input type='button' value='삭제' id='delBusStop"
                                                          + order
                                                          + "' class='btn btn-danger' onclick='deleteOneMarkers("
                                                          + order
@@ -1097,7 +1161,7 @@ html, body {
                                                          + lat
                                                          + "</td><td id='lng"+order+"'>"
                                                          + lng
-                                                         + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down' selected>하행</option><option value='turn'>회차점</option></select></td><td><input type='button' value='삭제' id='delBusStop"
+                                                         + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down' selected>하행</option><option value='turn'>회차점</option><option value='pass'>미정차</option></select></td><td><input type='button' value='삭제' id='delBusStop"
                                                          + order
                                                          + "' class='btn btn-danger' onclick='deleteOneMarkers("
                                                          + order
@@ -1111,7 +1175,7 @@ html, body {
                                                          + lat
                                                          + "</td><td id='lng"+order+"'>"
                                                          + lng
-                                                         + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down'>하행</option><option value='turn' selected>회차점</option></select></td><td><input type='button' value='삭제' id='delBusStop"
+                                                         + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down'>하행</option><option value='turn' selected>회차점</option><option value='pass'>미정차</option></select></td><td><input type='button' value='삭제' id='delBusStop"
                                                          + order
                                                          + "' class='btn btn-danger' onclick='deleteOneMarkers("
                                                          + order
@@ -1126,22 +1190,23 @@ html, body {
                });//ajax 
       }
    }
-   function xyz(){
-	   console.log("pan : "+ pano.getPov().pan);
-       console.log("tilt : "+ pano.getPov().tilt);
-       console.log("fov : "+ pano.getPov().fov);
-   }
+   function captureReturnKey(e) {
+	    if(e.keyCode==13 && e.srcElement.type != 'textarea')
+	    return false;
+	}
+
 </script>
 
 
 
 </head>
 
-<body>
+<body >
    <%@include file="/inc/top.jsp"%>
    <h1 id="menuTitle"><img src="/spring/images/logo.PNG"> 버스 정류장 관리</h1>
-
-   <form id="frm" method="POST" action="/spring/busStop/busStopOK.action">
+   <input id="pac-input" class="controls" type="text"
+        placeholder="주소를 입력하세요">
+   <form id="frm" method="POST" action="/spring/busStop/busStopOK.action" onkeydown="return captureReturnKey(event)">
    <div id="searchForm">
          <div id="university">
             <select id="universitySel" name="universitySel" class="form-control" value="${adto.universitySeq}">
@@ -1170,13 +1235,14 @@ html, body {
          <div style="clear:both"></div>
       
 
-      </div>
+   </div>
    
    
    <div id="mapForm">
       <div id="map"></div>
       <div id="pano"></div>
    </div>
+   <div>
       <table id="tbl" class="table table-striped">
          <thead>
             <tr>
@@ -1198,8 +1264,8 @@ html, body {
             <input type="button" id="updateBtn" value="정류장 수정" class="btn btn-warning" onclick="updateBusStop();"> 
                <input   type="submit" id="saveBtn" value="정류장 저장" class="btn btn-primary">
          </div>
-
-      </div>
+   </div>
    </form>
+   
 </body>
 </html>

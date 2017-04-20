@@ -132,9 +132,17 @@ public class BusStopController {
 	public String busStopDetailCategory(HttpServletRequest request,HttpSession session,HttpServletResponse response, String seq) {
 		try {
 	         
-
+			String count;
 			// 노선 종류 가져오기 + 쩡류짱꺴쑤
 			List<BusStopDetailCategoryDTO> busStopDetailCategory = bdao.busStopDetailCategory(seq);
+			
+			// 노선의 정류장 갯수
+			for(int i=0;i<busStopDetailCategory.size();i++){
+				count = bdao.busStopCount(busStopDetailCategory.get(i).getBusStopDetailCategorySeq());
+				System.out.println("count : "+count);
+				busStopDetailCategory.get(i).setCount(count);
+			}
+			
 			
 			request.setAttribute("busStopDetailCategory", busStopDetailCategory);
 			

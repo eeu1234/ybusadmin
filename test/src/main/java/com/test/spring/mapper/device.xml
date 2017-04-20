@@ -23,7 +23,7 @@
 
 	<!-- 학교 디바이스에 추가 -->
 	<update id="addUniversity" parameterType="java.util.HashMap">
-		UPDATE DEVICE SET UNIVERSITYSEQ = (SELECT UNIVERSITYSEQ FROM UNIVERSITY WHERE UNIVERSITYNAME = #{universityName}) WHERE DEVICESEQ = #{seq}
+		UPDATE DEVICE SET UNIVERSITYSEQ = #{universitySeq} WHERE DEVICESEQ = #{seq}
 	</update>
 	
 	<!-- 

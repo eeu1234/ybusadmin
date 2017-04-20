@@ -24,8 +24,11 @@
 	});
 
 	function add(seq) {
+		univSeq = $("#universityName"+seq).val();
+	
 		if(confirm("등록하시겠습니까?")){
-			location.href="/spring/device/deviceAddUniv.action?seq="+seq +"&universityName="+$("#universityName").val();
+			
+			location.href="/spring/device/deviceAddUniv.action?seq="+seq +"&universitySeq="+univSeq;
 		}
 
 	}
@@ -52,9 +55,9 @@
 			<td>${ddto.deviceModel}</td>
 			<td>${ddto.deviceTel}</td>
 			<td>
-			<select id="universityName" name="universityName" class="form-control">
+			<select id="universityName${ddto.deviceSeq}" class="form-control">
 				<c:forEach items="${ulist}" var="udto">
-				<option>${udto.universityName}</option><br>
+				<option value="${udto.universitySeq}">${udto.universityName}</option><br>
 				</c:forEach>
 				
 			</select>
