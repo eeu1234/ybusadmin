@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.test.spring.android.DAO.androidDAO;
+import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.LocationDTO;
 import com.test.spring.dto.VirtualBusStopDTO;
@@ -30,7 +31,9 @@ public class location {
 		
 		//거리 오차 조정
 		double gap = 50;
+		//2.위경도 전송 주소
 		
+		String newUrl = "http://eeu1234.iptime.org:8090/spring/android/location.action";
 		
 		
 		
@@ -43,9 +46,7 @@ public class location {
 			String deviceSeq = androidDao.findDeviceSeq(deviceId);
 			System.out.println(deviceSeq);
 			
-			//2.위경도 전송 주소
-							
-			String newUrl = "http://eeu1234.iptime.org:8090/spring/android/location.action";
+			
 			
 			//3.버스 상세 구역 intervalTime
 			BusStopDetailCategoryDTO busDetailDto = androidDao.findDeviceInterval(deviceId);
@@ -128,16 +129,90 @@ public class location {
 			
 			
 			if(tempList.size() ==1){//50m 이하인 정류장이 1개이면
-				
+
 				//정류장 리스트 중 해당 정류장seq를 가져온다.
 				int tempNum =tempList.get(0);
 				
-				String myBusStop = busStopList.get(tempNum).getVirtualBusStopSeq();
+				
+				String myBusStop = busStopList.get(tempNum).getVirtualBusStopSeq();//정류장 seq 호출
 				
 				//업데이트 한다.
 				int result = androidDao.updateBusStop(locationSeq,myBusStop);
 				System.out.println("***********************************");
 				System.out.println(myBusStop);
+				
+				
+			}else if(tempList.size() == 2 ){
+				
+				try {
+
+					
+				//2개이상
+				int tempNum1 =tempList.get(0)+1;//첫정류장 order번호
+				int tempNum2 =tempList.get(1)+1;//두번째정류장order번호
+				
+				
+					BusStopDTO busStopDto = androidDao.myLastBusStop(deviceSeq);
+					int myLastBusStop = Integer.parseInt(busStopDto.getBusStopOrder());//이기기의 최신 이전 정류장
+					
+					System.out.println("*********************************************************************************************");
+					System.out.println("myLastBusStop:"+myLastBusStop);
+					System.out.println(tempNum1);
+					System.out.println(tempNum2);
+					
+					if(myLastBusStop == tempNum1 ||myLastBusStop == tempNum2){
+						//이전정류장이랑 같은놈이있으면 작동을 끝낸다.
+						/*
+						  ex)myLastBusStop ==3
+						  tempNum1 이나 tempNum2 가 3이있을 때
+						 
+						 */
+						return;
+					}
+					
+					
+					if(myLastBusStop<tempNum1 && myLastBusStop<tempNum2){//가지고있던 정류장보다 새로운 정류장이 클 때
+						if(tempNum1 < tempNum2){
+							System.out.println("tempNum1:" + tempNum1);
+							String myBusStop = busStopList.get(tempNum1-1).getVirtualBusStopSeq();//정류장 seq 호출
+							androidDao.updateBusStop(locationSeq,myBusStop);
+						}else{
+							
+							String myBusStop = busStopList.get(tempNum2-1).getVirtualBusStopSeq();//정류장 seq 호출
+							System.out.println("tempNum2:" + tempNum2);
+							androidDao.updateBusStop(locationSeq,myBusStop);
+							
+						}
+				
+					}else if(myLastBusStop<tempNum1){
+						String myBusStop = busStopList.get(tempNum1-1).getVirtualBusStopSeq();//정류장 seq 호출 배열은 0부터 시작이라 다시 -1 해준다
+						androidDao.updateBusStop(locationSeq,myBusStop);
+						System.out.println("tempNum1:" + tempNum1);
+					}else if( myLastBusStop<tempNum2){
+						String myBusStop = busStopList.get(tempNum2-1).getVirtualBusStopSeq();//정류장 seq 호출
+						androidDao.updateBusStop(locationSeq,myBusStop);
+						System.out.println("tempNum2:" + tempNum2);
+					
+					
+					}else{
+					//둘다 작을땐 할게없다. 버스는 작은데서 크게 발전하기때문
+					System.out.println("둘다작음");	
+				
+					}
+					
+					
+					
+					
+				
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
+				
+			}else{
+				//3개이상
+				
+				
 			}
 			
 			

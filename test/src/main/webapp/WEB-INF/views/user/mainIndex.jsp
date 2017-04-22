@@ -459,7 +459,7 @@ var isMobile = {
 	
 	
 	
-	$(".iconBox").click(function(){
+	$(".mvpage").click(function(){
 		
 		
 		 
@@ -762,7 +762,7 @@ function appendCategory(){
 	
 		var iconBox = document.createElement("div");
 		//iconBox.setAttribute("class","iconBox");
-		iconBox.setAttribute("class","iconBox bscs${status.count}");
+		iconBox.setAttribute("class","iconBox bscs${status.count} mvpage");
 		var text = document.createElement("span");
 		text.innerText="위치조회";
 		

@@ -560,6 +560,7 @@ max-width:2440px;
    var nlng;
 
    function initPanorama(nlat, nlng) {
+	  $("#pano").children("div").remove();
       console.log(nlat + ":" + nlng);
       nlat = Number(nlat);
       nlng = Number(nlng);
@@ -695,7 +696,7 @@ max-width:2440px;
 	      //========================
 	  }
 	  catch(error){
-		alert("지도 불러오기 실패");
+		//alert("지도 불러오기 실패");
 		location.reload();
 	  }
       
@@ -756,7 +757,7 @@ max-width:2440px;
                            + location.lng()
                            + "</td><td><select id='line"+dragMarkers.length+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down'>하행</option><option value='turn'>회차점</option><option value='pass'>미정차</option></select></td><td><input type='button' value='삭제' id='delbusstop"
                            + dragMarkers.length
-                           + "' class='btn btn-primary'  onclick='deleteOneMarkers("
+                           + "' class='btn btn-info'  onclick='deleteOneMarkers("
                            + dragMarkers.length + ");'></td></tr>");
       } else {
          alert("정류장 수정 버튼을 누른후에 사용해 주세요.");
@@ -1010,7 +1011,9 @@ max-width:2440px;
       //alert($("#buscategorysel").val());
       //alert($("#detailcategorysel").val());
       //카테고리를 하나라도 선택하지 않았다면
+      $("#pano").children("div").remove();
       clearAllMarkers();
+      
       for (var i = 0; i < dragMarkers.length; i++) {
           dragMarkers[i].setMap(null);
        }
@@ -1180,7 +1183,21 @@ max-width:2440px;
                                                          + "' class='btn btn-danger' onclick='deleteOneMarkers("
                                                          + order
                                                          + ");'></td></tr>");
-                                    }
+                                    }else if (line == "pass") {
+                                        $("#tbl tbody")
+                                        .append(
+                                              "<tr><input type='hidden' id='seq"+seq+"' name='seq' value='"+seq+"'><td id='order"+order+"'>"
+                                                    + order
+                                                    + "</td><td><input type='text' id='busStopName"+order+"' class='busStopName' value='"+name+"'></td><td id='lat"+order+"'>"
+                                                    + lat
+                                                    + "</td><td id='lng"+order+"'>"
+                                                    + lng
+                                                    + "</td><td><select id='line"+order+"' class='form-control'><option value='-1'>라인 종류</option><option value='up'>상행</option>   <option value='down'>하행</option><option value='turn'>회차점</option><option value='pass' selected>미정차</option></select></td><td><input type='button' value='삭제' id='delBusStop"
+                                                    + order
+                                                    + "' class='btn btn-danger' onclick='deleteOneMarkers("
+                                                    + order
+                                                    + ");'></td></tr>");
+                               }
                                  });
 
                   },

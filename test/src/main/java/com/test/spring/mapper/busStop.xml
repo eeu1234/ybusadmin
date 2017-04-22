@@ -95,7 +95,7 @@
                      INNER JOIN DEVICE_BUS D ON C.BUSINFOSEQ = D.BUSINFOSEQ
                         INNER JOIN DEVICE E ON D.DEVICESEQ = E.DEVICESEQ
                            INNER JOIN LOCATION F ON E.DEVICESEQ = F.DEVICESEQ
-                              WHERE A.UNIVERSITYSEQ = #{universitySeq} AND B.BUSSTOPCATEGORYSEQ = #{busStopCategorySeq} GROUP BY E.DEVICESEQ ORDER BY LOCATIONTIME DESC LIMIT 0,50) AS MAX_TIME);
+                              WHERE A.UNIVERSITYSEQ = #{universitySeq} AND B.BUSSTOPCATEGORYSEQ = #{busStopCategorySeq} AND D.DEVICEBUSSTAT ='show' GROUP BY E.DEVICESEQ ORDER BY LOCATIONTIME DESC LIMIT 0,50) AS MAX_TIME);
    </select>
    
    <select id="getAvgBusStopLanLon" parameterType="map" resultType="com.test.spring.dto.BusStopAvgLatLonDTO">

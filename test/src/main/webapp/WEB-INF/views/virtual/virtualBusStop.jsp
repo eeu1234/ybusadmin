@@ -380,6 +380,7 @@ html, body {
    var nlng;
 
    function initPanorama(nlat, nlng) {
+	   $("#pano").children("div").remove();
       console.log(nlat + ":" + nlng);
       nlat = Number(nlat);
       nlng = Number(nlng);

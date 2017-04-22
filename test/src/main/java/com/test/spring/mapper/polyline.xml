@@ -28,14 +28,14 @@
 	<!-- 셔틀 종류 가져오기 -->
 	<select id="busStopCategory" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
 		SELECT BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSSTOPCATEGORY AS busStopCategory FROM BUSSTOP_CATEGORY
-			WHERE UNIVERSITYSEQ = #{seq}
+			WHERE UNIVERSITYSEQ = #{seq} AND BUSSTOPCATEGORYSTAT = 'show'
 	</select>
 	
 	<!-- 셔틀 세부 종류 가져오기 -->
 	<select id="busStopDetailCategory" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
 		SELECT BUSSTOPDETAILCATEGORYSEQ AS BusStopDetailCategorySeq, BUSSTOPDETAILCATEGORYNAME AS BusStopDetailCategoryName 
 			FROM BUSSTOP_DETAIL_CATEGORY
-				WHERE BUSSTOPCATEGORYSEQ = #{seq}
+				WHERE BUSSTOPCATEGORYSEQ = #{seq} AND BUSSTOPDETAILCATEGORYSTAT = 'show'
 	</select>
 	
 	<!-- 셔틀 정보 가져오기 -->
@@ -45,7 +45,7 @@
 				ON BC.BUSSTOPCATEGORYSEQ = BI.BUSSTOPCATEGORYSEQ
 					INNER JOIN BUSSTOP_DETAIL_CATEGORY BDC
 						ON BC.BUSSTOPCATEGORYSEQ = BDC.BUSSTOPCATEGORYSEQ	
-							WHERE BDC.BUSSTOPDETAILCATEGORYSEQ = #{seq}
+							WHERE BDC.BUSSTOPDETAILCATEGORYSEQ = #{seq} AND BUSINFOSTAT = 'show'
 	</select>
 	<!-- 정류장 가져오기  -->
 	<select id="busStop" parameterType="String" resultType="com.test.spring.dto.BusStopDTO">

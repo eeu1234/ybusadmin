@@ -64,14 +64,6 @@ body, html {
 	background-color: #003d4f;
 }
 
-#txtLogo {
-	position: relative;
-	width: 60%;
-	height: 80%;
-	padding-top: 2.5%;
-	margin: 0 auto;
-	font-weight: bold;
-}
 
 #logo {
 	position: absolute;
@@ -258,7 +250,7 @@ body, html {
 	position: absolute;
 	width: 50%;
 	height: 30%;
-	font-size: 0.3em;
+	font-size: 0.8em;
 	padding-top: 20%;
 	padding-left: 22px;
 }
@@ -355,7 +347,7 @@ body, html {
 			<div id="header">
 			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="back();" />
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="back();" />
 					<div id="txtLogo">
 					
 					셔틀버스 위치조회

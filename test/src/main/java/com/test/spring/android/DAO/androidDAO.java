@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.LocationDTO;
 import com.test.spring.dto.VirtualBusStopDTO;
@@ -90,6 +91,14 @@ public class androidDAO {
 			dto.setLocationSeq(locationSeq);
 			dto.setBusStopSeq(myBusStop);
 			return sql.update("android.updateBusStop",dto);
+		}
+
+
+		public BusStopDTO myLastBusStop(String deviceSeq) {
+
+			
+			
+			return sql.selectOne("android.myLastBusStop",deviceSeq);
 		}
 
 

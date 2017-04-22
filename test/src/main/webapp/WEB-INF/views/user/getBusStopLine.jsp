@@ -161,6 +161,14 @@ body, html {
 	width: 35%;
 	height: 100%;
 }
+
+.busBox{
+	width:100%;
+	height:100%;
+	position:absolute;
+	
+	
+}
 /* 타임라인 시작 정류장  */
 #startPoint {
 	position: absolute;
@@ -379,8 +387,8 @@ function moveMap(){
 
 			<div id="btnArea">
 				<div id="btnGroup">
-					<div id="upBtn" class="goBtn">터미널 방면</div>
-					<div id="downBtn" class="goBtn">용인대 방면</div>
+					<div id="upBtn" class="goBtn">상행 방면</div>
+					<div id="downBtn" class="goBtn">하행 방면</div>
 				</div>
 			</div>
 					<div id="footer">
@@ -475,14 +483,21 @@ function moveMap(){
 										<img src="/spring/images/timeLine/turnImg.png" class="lineImg" />
 										</div>
 									</c:if>
+									<c:if test="${dto.busStopLine == 'pass'}">
+										<div class="turnLine">
+										<img src="/spring/images/timeLine/passImg.png" class="lineImg" />
+										</div>
+									</c:if>
 								<c:forEach items='${cblList }' var='cbldto'>
 									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
-										<div class="busNum">
-											<div class="busTxt">${cbldto.businfoName} </div>
-											<img src="/spring/images/timeLine/busNum.png" alt="" />
-										</div>
-										<div class="busIcon">
-											<img src="/spring/images/timeLine/busIcon.png" alt="" />
+										<div class="busBox">
+											<div class="busNum">
+												<div class="busTxt">${cbldto.businfoName} </div>
+												<img src="/spring/images/timeLine/busNum.png" alt="" />
+											</div>
+											<div class="busIcon">
+												<img src="/spring/images/timeLine/busIcon.png" alt="" />
+											</div>
 										</div>
 									</c:if>
 								</c:forEach>

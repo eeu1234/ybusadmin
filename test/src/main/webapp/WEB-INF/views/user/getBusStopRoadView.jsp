@@ -86,7 +86,7 @@ $(function() {
 	});
 
 	naver.maps.Event.addListener(marker, "click", function(e) {
-	alert("marker clicked");
+	//alert("marker clicked");
 	});
 
 	$("#marker").on("click", function(e) {

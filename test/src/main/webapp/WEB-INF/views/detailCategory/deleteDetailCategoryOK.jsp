@@ -17,7 +17,7 @@
 			location.href="/spring/detailCategory/adminDetailCategory.action";
 		</c:if>
 		<c:if test="${result == 0}">
-			alert("다른곳에 해당데이터가 연결되있어 삭제 할수 없습니다");
+			alert("다른곳에 해당데이터가 연결되있어 삭제 할수 없습니다(소분류(정류장),시간표,버스-노선 매칭,버스-기기 매칭)");
 			history.back();
 		</c:if>
 	});

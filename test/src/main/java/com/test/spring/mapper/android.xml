@@ -86,6 +86,19 @@ WHERE A.DEVICEMODEL=#{deviceId} AND B.DEVICEBUSSTAT = 'show'
 
     </update>
    
+   
+   
+	<select id ="myLastBusStop" parameterType="String" resultType="com.test.spring.dto.BusStopDTO">
+	 
+	
+
+     	 SELECT B.BUSSTOPORDER AS busStopOrder,A.BUSSTOPSEQ AS busStopSeq FROM LOCATION A
+	INNER JOIN BUSSTOP B ON A.BUSSTOPSEQ = B.BUSSTOPSEQ
+ WHERE LOCATIONTIME = (SELECT MAX(LOCATIONTIME) FROM LOCATION WHERE DEVICESEQ = #{deviceSeq} AND BUSSTOPSEQ 
+IS NOT NULL);
+   </select>
+   
+   
 </mapper>
 
 
