@@ -252,16 +252,16 @@ body, html {
 
 /* 버스 아이콘 관련 시작 */
 .busIcon {
-	position: relative;
+	position: absolute;
 	width: 50%;
 	height: 90%;
-	float: left;
+	padding-left:48%;
 	padding-top:4%;
 	text-align:left;
 }
 
 .busNum {
-	position: relative;
+	position: absolute;
 	float: left;
 	width: 50%;
 	height: 90%;
@@ -275,7 +275,7 @@ body, html {
 	width: 70%;
 	height: 35%;
 	font-size: 0.3em;
-	padding-top: 20%;
+	padding-top: 17%;
 	padding-left: 10px;
 	<%-- background-image: url('/spring/images/timeLine/busNum.png'); --%>
 	
@@ -410,6 +410,8 @@ function moveMap(){
 				
 					</div>
 		</div>
+		
+		
 		<div id="contents">
 			<div id="lineArea">
 				

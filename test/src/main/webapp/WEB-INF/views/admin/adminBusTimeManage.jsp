@@ -346,9 +346,9 @@ function delLine(){
 					<div id="addTable">
 						<table id="addScheduleTbl" class="table table-striped">
 							<tr>
-								<td><input type="number" name="hour" min="0"
+								<td><input type="number" name="hour" min="0" maxlength="2"
 									max="23" required class="hour form-control" placeholder="시" /></td>
-								<td><input type="number" name="minute" min="0"
+								<td><input type="number" name="minute" min="0" maxlength="2"
 									max="59" required class="minute form-control" placeholder="분" /></td>
 								<td><input type="text" name="courseName" required
 									class="courseName form-control" placeholder="목적지" /></td>

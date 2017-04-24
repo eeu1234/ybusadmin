@@ -31,7 +31,7 @@
       					INNER JOIN BUSSTOP_CATEGORY B) A INNER JOIN UNIVERSITY B ON A.universitySeq = B.UNIVERSITYSEQ) A 
       						WHERE universitySeq = #{universitySeq} and busStopCategorySeq = #{busStopCategorySeq} and busStopDetailCategoryStat ='show' and busStopCategoryStat = 'show' 
    </select>
-  <select id="getCurrBusStopLocation" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
+  <select id="OLDgetCurrBusStopLocation" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
       SELECT H.*,I.BUSINFOSEQ AS busInfoSeq, I.BUSINFONUM AS businfoNum, I.BUSINFONAME AS businfoName FROM
          (SELECT F.*,G.DEVICEBUSSEQ,G.BUSINFOSEQ AS businfoSeq FROM
             (SELECT * FROM LOCATION WHERE LOCATIONTIME IN      
@@ -48,7 +48,7 @@
 	
 	
 	<!-- 타임라인 각 해당 차량 불러오기 -->
-   <select id="getCurrBusStopLocation2" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
+   <select id="OLDgetCurrBusStopLocation2" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
       SELECT Z.* FROM (SELECT Y.*,D.LOCATIONSEQ AS locationSeq, D.LOCATIONLATITUDE AS locationLatitude, D.LOCATIONLONGITUDE AS locationLongitude, D.LOCATIONTIME AS locationTime,D.BUSSTOPSEQ AS busStopSeq FROM (SELECT X.*, C.UNIVERSITYSEQ AS universitySeq, C.DEVICEMODEL AS deviceModel, C.DEVICETEL AS deviceTel FROM (SELECT B.DEVICEBUSSTAT AS deviceBusStat, B.DEVICEBUSREGDATE AS deviceBusRegdate, B.DEVICESEQ AS deviceSeq, A.BUSINFOSEQ AS busInfoSeq, A.BUSINFONUM AS busInfoNum, A.BUSINFONAME AS busInfoName, A.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq FROM BUS_INFO A
 		INNER JOIN DEVICE_BUS B ON A.BUSINFOSEQ = B.BUSINFOSEQ
 			WHERE B.DEVICEBUSSTAT='show') X
@@ -59,7 +59,7 @@
 					
    </select>
    <!-- 타임라인 각 해당 차량 불러오기(한개만) -->
-   <select id="getCurrBusStopLocation3" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
+   <select id="OLDgetCurrBusStopLocation3" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
    		SELECT Z.* FROM (SELECT Y.*,D.LOCATIONSEQ AS locationSeq, D.LOCATIONLATITUDE AS locationLatitude, D.LOCATIONLONGITUDE AS locationLongitude, D.LOCATIONTIME AS locationTime,D.BUSSTOPSEQ AS busStopSeq FROM (SELECT X.*, C.UNIVERSITYSEQ AS universitySeq, C.DEVICEMODEL AS deviceModel, C.DEVICETEL AS deviceTel FROM (SELECT B.DEVICEBUSSTAT AS deviceBusStat, B.DEVICEBUSREGDATE AS deviceBusRegdate, B.DEVICESEQ AS deviceSeq, A.BUSINFOSEQ AS busInfoSeq, A.BUSINFONUM AS busInfoNum, A.BUSINFONAME AS busInfoName, A.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq FROM BUS_INFO A
 			INNER JOIN DEVICE_BUS B ON A.BUSINFOSEQ = B.BUSINFOSEQ
 				WHERE B.DEVICEBUSSTAT='show') X
@@ -78,6 +78,21 @@
 	   
    </select>
    
+   <!-- 돌고있는 버스 타임라인에 보여주기 -->
+   <select id="getCurrBusStopLocation3" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
+   		SELECT Y.*, D.BUSINFONAME, D.BUSINFONUM, D.BUSINFOSTAT, D.BUSSTOPCATEGORYSEQ, D.BUSSTOPDETAILCATEGORYSEQ FROM	(SELECT X.*, C.DEVICEBUSSTAT, C.BUSINFOSEQ FROM
+			(SELECT A.*,B.DEVICETEL, B.UNIVERSITYSEQ FROM (SELECT ODBYLO.* FROM(
+				SELECT * FROM LOCATION
+				WHERE BUSSTOPSEQ IS NOT NULL AND LOCATIONTIME > DATE_FORMAT(DATE_ADD(now(),INTERVAL -10 MINUTE),'%Y-%m-%d %H:%i:%s')
+				ORDER BY LOCATIONTIME DESC LIMIT 0,500) ODBYLO
+				GROUP BY DEVICESEQ
+				HAVING MAX(LOCATIONTIME)) A
+					INNER JOIN DEVICE B ON B.DEVICESEQ = A.DEVICESEQ ) X
+						INNER JOIN (SELECT * FROM DEVICE_BUS WHERE DEVICEBUSSTAT = 'show') C ON C.DEVICESEQ = X.DEVICESEQ) Y
+							INNER JOIN (SELECT * FROM BUS_INFO WHERE BUSINFOSTAT='show') D ON D.BUSINFOSEQ = Y.BUSINFOSEQ
+								WHERE Y.UNIVERSITYSEQ = #{universitySeq} AND D.BUSSTOPCATEGORYSEQ = #{busStopCategorySeq} AND D.BUSSTOPDETAILCATEGORYSEQ = #{busStopDetailCategorySeq}
+										
+   </select>
    
    <select id="getCurrBusLocation" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
       SELECT A.*,B.*,C.*,D.*,E.*,F.* FROM UNIVERSITY A                        
@@ -134,13 +149,14 @@
    
    <select id="getSpecipicBusStop" parameterType="map" resultType="com.test.spring.dto.BusStopDTO">
       SELECT * FROM
-         (SELECT Y.*,D.BUSSTOPSEQ AS busStopSeq, D.BUSSTOP AS busStop, D.BUSSTOPLATITUDE AS busStopLatitude, D.BUSSTOPLONGITUDE AS busStopLongitude,D.BUSSTOPLINE AS busStopLine  FROM
+         (SELECT Y.*,D.BUSSTOPSEQ AS busStopSeq, D.BUSSTOP AS busStop, D.BUSSTOPLATITUDE AS busStopLatitude, D.BUSSTOPLONGITUDE AS busStopLongitude,D.BUSSTOPLINE AS busStopLine, D.BUSSTOPORDER AS busStopOrder  FROM
             (SELECT X.* FROM
                (SELECT B.BUSSTOPCATEGORYSTAT AS busStopCategoryStat, B.UNIVERSITYSEQ AS universitySeq, B.BUSSTOPCATEGORYSEQ, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, A.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName,A.BUSSTOPDETAILCATEGORYSTAT AS busStopDetailCategoryStat FROM BUSSTOP_DETAIL_CATEGORY A 
                   INNER JOIN BUSSTOP_CATEGORY B ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ) X
                      INNER JOIN UNIVERSITY C ON X.universitySeq=C.UNIVERSITYSEQ) Y
                         INNER JOIN BUSSTOP D ON Y.busStopDetailCategorySeq = D.BUSSTOPDETAILCATEGORYSEQ ) Z
                            WHERE universitySeq = #{universitySeq} AND BUSSTOPCATEGORYSEQ=#{busStopCategorySeq} AND busStopDetailCategorySeq = #{busStopDetailCategorySeq} and busStopDetailCategoryStat ='show' and busStopCategoryStat = 'show'
+                           	ORDER BY busStopOrder
    </select>
     
 </mapper>

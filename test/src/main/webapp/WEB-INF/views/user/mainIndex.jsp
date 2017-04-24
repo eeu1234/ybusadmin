@@ -4,11 +4,19 @@
 <!doctype html>
 <html lang="ko">
 <head>
+<!-- 애드센스 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8286656279172992",
+    enable_page_level_ads: true
+  });
+</script>
 <meta charset="utf-8">
 <title>Cambus</title>
 
 <%@include file="/inc/asset.jsp" %>
-
+<link rel="apple-touch-icon" href="/spring/images/ico/favicon.ico">
 <style>
 @font-face {
 	font-family: "notoFont-medium";

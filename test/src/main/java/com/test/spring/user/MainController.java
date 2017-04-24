@@ -48,9 +48,9 @@ public class MainController {
 		try {
 	        
 	        //내용
-			StringBuffer url = request.getRequestURL();
+			
 		
-			String urlStr = url.toString();
+			String urlStr = request.getParameter("fromUrl");
 			UniversityDTO universityDto;
 			//도메인에 따른 universitySeq를 가져옴
 		
@@ -242,12 +242,17 @@ public class MainController {
 	
 	@RequestMapping(method={RequestMethod.GET},value="/selectUniversity.action")
 	public String selectUniversity(HttpServletRequest request, HttpSession session, HttpServletResponse response){
-		
-		List<UniversityDTO> uniList = dao.getAllUniversity();
-		
-		
-		request.setAttribute("uniList", uniList);
-		return "user/selectUniversity";
+		try {
+			List<UniversityDTO> uniList = dao.getAllUniversity();
+			
+			
+			request.setAttribute("uniList", uniList);
+			return "user/selectUniversity";
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "user/mainIndex";
+		}
 	}
 	
 	

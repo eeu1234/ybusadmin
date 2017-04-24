@@ -229,16 +229,16 @@ body, html {
 
 /* 버스 아이콘 관련 시작 */
 .busIcon {
-	position: relative;
+
 	width: 50%;
 	height: 90%;
-	float: left;
+	
 	padding-top:4%;
 }
 
 .busNum {
-	position: relative;
-	float: left;
+
+	
 	width: 50%;
 	height: 90%;
 	text-align: right;
@@ -247,7 +247,7 @@ body, html {
 }
 
 .busTxt {
-	position: absolute;
+
 	width: 50%;
 	height: 30%;
 	font-size: 0.8em;

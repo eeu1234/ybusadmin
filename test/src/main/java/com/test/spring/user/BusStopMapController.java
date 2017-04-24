@@ -155,7 +155,11 @@ public class BusStopMapController {
 			List<CurrBusLocationDTO> cblList = dao.getCurrBusStopLocation(map);//현재 버스 위치
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
 			UniversityDTO unidto = dao.getUniversityArea(universitySeq);
-			
+			/*
+			for(int i =0; i<bsList.size(); i++){
+				System.out.println("bsList"+i+"bsOrder"+bsList.get(i).getBusStopOrder());
+			}
+			*/
 			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 			request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
 			request.setAttribute("bsdcList", bsdcList);

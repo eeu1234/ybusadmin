@@ -33,7 +33,7 @@ public class location {
 		double gap = 50;
 		//2.위경도 전송 주소
 		
-		String newUrl = "http://eeu1234.iptime.org:8090/spring/android/location.action";
+		String newUrl = "http://cambus.kr/spring/android/location.action";
 		
 		
 		
