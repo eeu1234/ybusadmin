@@ -44,6 +44,7 @@ public class AuthCheck {
 	   
 	//일반관리자 - AdminLoginController는 제외할 것. 로그인창 자체를 접근못함.
    @Pointcut("execution(String *.BusStopController.*(..)) "
+		   + "|| execution(String *.AdminMainController.adminMain(..))"
 		   + "|| execution(String *.busSchedule.AdminBusScheduleManage.*(..))"  //버스스케쥴관리
 		   + "|| execution(String *.PolyLineController.*(..))"  
 		   + "|| execution(String *.DeviceManageController.*(..))"
