@@ -347,7 +347,7 @@ body, html {
 			<div id="header">
 			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="back();" />
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="back();" />
 					<div id="txtLogo">
 					
 					셔틀버스 위치조회
@@ -414,6 +414,7 @@ zoom: zoomLevel
 	    draggable: false,
 	    animation: google.maps.Animation.DROP,
 	    icon: '/spring/images/timeLine/busStopMaker.png',
+	    zIndex:1,
 	    info: '${bsdto.busStop}',
 	    title: '${bsdto.busStop}',
 	    position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}}
@@ -434,7 +435,9 @@ zoom: zoomLevel
 		    animation: google.maps.Animation.DROP,
 		    icon:'/spring/images/timeLine/busMaker.png',
 		    title: '${cbldto.businfoName}',
+		    zIndex:100,
 		    position: {lat: ${cbldto.locationLatitude}, lng: ${cbldto.locationLongitude}}
+		    
 		});
 		markerCBL${cbldto.businfoSeq}.addListener('click', function(){
 			infowindowCBL${cbldto.businfoSeq}.open(mapAP,markerCBL${cbldto.businfoSeq});

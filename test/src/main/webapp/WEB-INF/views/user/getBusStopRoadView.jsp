@@ -23,7 +23,7 @@
 	position: relative;
 	width: 60%;
 	height: 80%;
-	padding-top: 3.5%;
+	padding-top: 4%;
 	margin: 0 auto;
 	font-weight: bold;
 }

@@ -43,6 +43,7 @@
 	#rightTemp {
 		font-size: 2em;
 	}
+
 }
 /* iphone6~ */
 @media screen and (min-width: 360px) and (max-width: 520px) {
@@ -64,7 +65,7 @@
 /* ipad*/
 @media screen and (min-width: 768px) and (max-width: 1023px) {
 	#headerArea #notice_content {
-		font-size: 1.5em;
+		font-size: 2em;
 	}
 	#weatherText {
 		font-size: 1.5em;
@@ -77,6 +78,8 @@
 	#rightTemp {
 		font-size: 2.5em;
 	}
+	
+
 }
 
 @media screen and (min-width: 1024px) {
@@ -94,6 +97,7 @@
 	#rightTemp {
 		font-size: 4em;
 	}
+
 }
 
 body, html, p, ul, img, span, div, a {
@@ -146,19 +150,23 @@ body, html {
 #headerArea #notice_content {
 	float: left;
 	width: 80%;
-	height: 95%;
+	height: 100%;
+	
 	color: #444;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	word-wrap: normal;
 	overflow: hidden;
 	margin: 0 auto;
-	line-height:2;
+	line-height: 2;
+
+
 }
 
 #headerArea img {
 	padding-left: 15%;
-	position: relative;
+	padding-top:8%;
+	padding-bottom:8%;
 	position: relative;
 	width: auto;
 	height: 100%;
@@ -403,9 +411,9 @@ var isMobile = {
 				</div>
 			</div>
 			<div id="cityBus">
-				<div class="iconBox" onclick="location.href='http://m.gbis.go.kr/common/main.do?osInfoType=M'">
+				<div class="iconBox" onclick="location.href='https://m.map.naver.com/bus/search.nhn'">
             	<div class="iconImg"><img src="./images/mainImage/cityBus.png" alt="" /></div>
-               	<div class="iconInfo">경기버스</div>
+               	<div class="iconInfo">시외버스</div>
 	            	위치조회
 	            </div>
 			</div>
@@ -427,21 +435,21 @@ var isMobile = {
 			</div>
 			<div id="fifthBox" class="BSC5">
 				<div class="iconBox">
-            	<div class="iconImg"><img src="./images/mainImage/tempIcon.png" alt="" /></div>
+            	<div class="iconImg"><img src="./images/mainImage/camsns.png" alt="" /></div>
                	<div class="iconInfo"></div>
-	               	학교위치
+	               	CAMSNS
 	            </div>
 			</div>
 			<div id="sixthBox" class="BSC6" onclick="location.href='/spring/user/makeIcon.action'">
 				<div class="iconBox">
             	<div class="iconImg"><img src="./images/mainImage/howToAdd.png" alt="" /></div>
                	<div class="iconInfo"></div>
-	               	App 등록
+	               	<span style="color:#e85514;">어플</span>처럼<br>사용<span style="color:#e85514;">하기</span>
 	            </div>
 			</div>
 			<div class="clear"></div>
 		</div>
-		<div id="bottom">Copyright C. All right reserved. Servie by	CAMBUS.</div>
+		<div id="bottom">Copyright C. All right reserved. Service by	CAMBUS.</div>
 
 	</div>
 

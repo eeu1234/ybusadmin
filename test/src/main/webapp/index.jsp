@@ -17,6 +17,12 @@
   ga('send', 'pageview');
 
 </script>
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+if(!wcs_add) var wcs_add = {};
+wcs_add["wa"] = "171aefb65e5675";
+wcs_do();
+</script>
 <script>
 <%
 StringBuffer getUrl = request.getRequestURL();

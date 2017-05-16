@@ -72,7 +72,7 @@ body, html {
 	position: relative;
 	width: 60%;
 	height: 80%;
-	padding-top: 2.5%;
+	padding-top: 4%;
 	margin: 0 auto;
 	font-weight: bold;
 }
@@ -375,7 +375,7 @@ function moveMap(){
 			<div id="header">
 			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
 				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:1.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
 					<div id="txtLogo">
 					
 					셔틀버스 위치조회

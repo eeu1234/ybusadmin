@@ -152,7 +152,7 @@ opacity:0.6;
 	<div id="header">
 		<div id="infoPage">
 			<input type="button" value="<" style=" color:white;position:
-				absolute; font-size:1.5em;left: 3%;margin-top:1%; width: 8%; height: 55%;  background-color:
+				absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 55%;  background-color:
 				transparent !important; border-color:
 				transparent;"	onclick="location.href='/spring/index.action';" />
 			<div id="txtLogo">공지사항</div>

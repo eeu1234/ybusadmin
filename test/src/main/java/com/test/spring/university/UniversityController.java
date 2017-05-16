@@ -23,6 +23,9 @@ public class UniversityController {
 	@Autowired
 	private UniversityDAO dao;
 	
+	
+	String path = "";   //업로드 경로!!
+	
 	//대학 관리 메인
 	@RequestMapping(method={RequestMethod.GET}, value="/university/universityCrud.action")
 	public String universityMain(HttpServletRequest request,HttpSession session,HttpServletResponse response){
@@ -121,8 +124,8 @@ public class UniversityController {
 				
 				String temp = getFileName(mfile.getOriginalFilename());
 				
-				
-				File file = new File ("D:\\"+temp);
+				 path = request.getRealPath("/images/logo/");
+				File file = new File (path+temp);
 				
 				try {
 					

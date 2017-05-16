@@ -63,7 +63,7 @@ public class MainController {
 				
 				if(universityDto==null){
 		
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/selectUniversity.action");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("./selectUniversity.action");
 					dispatcher.forward(request, response);
 				
 				}else{
@@ -106,7 +106,7 @@ public class MainController {
 	        session.invalidate();
 	        try {
 	    
-	           response.sendRedirect("/selectUniversity.action");
+	           response.sendRedirect("./selectUniversity.action");
 	        } catch (Exception e2) {
 	           // TODO: handle exception
 	    
