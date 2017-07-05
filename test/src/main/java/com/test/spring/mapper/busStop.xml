@@ -130,7 +130,7 @@
             (SELECT B.UNIVERSITYSEQ AS universitySeq, B.BUSSTOPCATEGORYSEQ, A.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq,B.BUSSTOPCATEGORYSTAT AS busStopCategoryStat, A.BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName, A.BUSSTOPDETAILCATEGORYSTAT AS busStopDetailCategoryStat FROM BUSSTOP_DETAIL_CATEGORY A 
                INNER JOIN BUSSTOP_CATEGORY B ON A.BUSSTOPCATEGORYSEQ = B.BUSSTOPCATEGORYSEQ) X
                   INNER JOIN UNIVERSITY C ON X.universitySeq=C.UNIVERSITYSEQ) Y
-                     WHERE universitySeq = #{universitySeq} AND BUSSTOPCATEGORYSEQ = #{busStopCategorySeq} and busStopDetailCategoryStat ='show' and busStopCategoryStat = 'show' limit 0,1 
+                     WHERE universitySeq = #{universitySeq} AND BUSSTOPCATEGORYSEQ = #{busStopCategorySeq} and busStopDetailCategoryStat ='show' and busStopCategoryStat = 'show' ORDER BY Y.busStopDetailCategorySeq ASC limit 0,1  
    </select>
    
    <select id="getSpecipicBusStopDetailCategory" parameterType="map" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">

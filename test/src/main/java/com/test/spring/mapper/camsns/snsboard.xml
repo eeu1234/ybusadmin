@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="snsboard">
+
+   
+	<!-- 글 로딩 -->
+   <select id ="boardList" resultType="com.test.spring.dto.camsns.SnsboardCategoryDTO" parameterType="map">
+   		SELECT A.* FROM (SELECT A.*, B.* FROM 
+      (SELECT B.UNIVERSITYSEQ AS universitySeq, B.UNIVERSITYNAME AS universityName,A.USER_EMAIL_ID AS userEmailId, A.USER_REGDATE AS userRegDate, A.USER_LEVEL AS userLevel, A.UNIVERSITY_SEQ_FK AS universitySeqFk FROM USER A INNER JOIN UNIVERSITY B ON A.UNIVERSITY_SEQ_FK = B.UNIVERSITYSEQ) A INNER JOIN
+      (SELECT B.CATEGORY_NAME AS categoryName, B.CATEGORY_TYPE AS categoryType, A.SNSBOARD_SEQ AS snsboardSeq, A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_CONTENT AS snsboardContent, A.SNSBOARD_REGDATE AS snsboardRegdate, A.SNSBOARD_BLIND AS snsboardBlind, A.SNSBOARD_STAT AS snsboardStat, A.USER_EMAIL_ID_FK AS userEmailIdFk , A.CATEGORY_SEQ_FK AS categorySeqFk FROM SNSBOARD A INNER JOIN SNSCATEGORY B ON A.CATEGORY_SEQ_FK = B.CATEGORY_SEQ) B ON
+      A.userEmailId = B.userEmailIdFk) A
+      WHERE (snsboardStat ='show' 
+    
+      <if test="universitySeq != null">
+      AND universitySeq = #{universitySeq}
+      </if>
+      )
+		
+		<if test="word != null">
+		AND (snsboardSubject like CONCAT('%',#{word},'%') OR snsboardContent like CONCAT('%',#{word},'%'))
+		</if>
+		 
+		ORDER BY snsboardSeq DESC LIMIT ${index},5
+		 
+    </select>
+
+	<!-- 글 번호 1개일 때 1글 만 가져옴 -->
+   <select id ="boardOne" resultType="com.test.spring.dto.camsns.SnsboardCategoryDTO" parameterType="String">
+    SELECT A.SNSBOARD_SEQ AS snsboardSeq, A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_CONTENT AS snsboardContent, A.SNSBOARD_REGDATE AS snsboardRegdate, A.SNSBOARD_BLIND AS snsboardBlind, A.SNSBOARD_STAT AS snsboardStat, A.USER_EMAIL_ID_FK AS userEmailIdFk , B.CATEGORY_NAME AS categoryName,B.CATEGORY_TYPE AS categoryType FROM SNSBOARD A INNER JOIN SNSCATEGORY B WHERE A.CATEGORY_SEQ_FK = B.CATEGORY_SEQ  AND  A.SNSBOARD_SEQ= #{boardSeq}
+    </select>
+   
+   
+   
+	<!-- 각 글 파일 가져옴 -->
+   <select id ="fileSelect" resultType="com.test.spring.dto.camsns.SnsboardfileDTO" parameterType="String">
+    SELECT SNSBOARDFILE_SEQ AS snsboardfileSeq, SNSBOARDFILE_FILENAME AS snsboardfileFileName, SNSBOARD_SEQ_FK AS snsboardSeqFk FROM SNSBOARDFILE WHERE SNSBOARD_SEQ_FK= #{boardSeq}
+    </select>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   <!-- 글 갯수  -->
+      <select id ="countList" resultType="Integer" parameterType="map">
+   		SELECT count(*) FROM (SELECT A.*,B.* FROM (SELECT A.*, B.* FROM 
+		(SELECT B.UNIVERSITYSEQ AS universitySeq, B.UNIVERSITYNAME AS universityName,A.USER_EMAIL_ID AS userEmailId, A.USER_REGDATE AS userRegDate, A.USER_LEVEL AS userLevel, A.UNIVERSITY_SEQ_FK AS universitySeqFk FROM USER A INNER JOIN UNIVERSITY B ON A.UNIVERSITY_SEQ_FK = B.UNIVERSITYSEQ) A INNER JOIN
+		(SELECT B.CATEGORY_NAME AS categoryName, B.CATEGORY_TYPE AS categoryType, A.SNSBOARD_SEQ AS snsboardSeq, A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_CONTENT AS snsboardContent, A.SNSBOARD_REGDATE AS snsboardRegdate, A.SNSBOARD_BLIND AS snsboardBlind, A.SNSBOARD_STAT AS snsboardStat, A.USER_EMAIL_ID_FK AS userEmailIdFk , A.CATEGORY_SEQ_FK AS categorySeqFk FROM SNSBOARD A INNER JOIN SNSCATEGORY B ON A.CATEGORY_SEQ_FK = B.CATEGORY_SEQ) B ON
+		A.userEmailId = B.userEmailIdFk) A LEFT OUTER JOIN SNSBOARDFILE B ON A.snsboardSeq = B.SNSBOARD_SEQ_FK) A 
+		WHERE (universitySeq = #{universitySeq} AND snsboardStat ='show') 
+		<if test="word != null">
+		AND (snsboardSubject like CONCAT('%',#{word},'%') OR snsboardContent like CONCAT('%',#{word},'%'))
+		</if>
+		 
+    </select>
+   
+   
+
+   
+   <!-- 글 추가하기 -->
+	<insert id="writeBoard" parameterType="com.test.spring.dto.camsns.SnsboardDTO" >
+		
+		INSERT INTO SNSBOARD (SNSBOARD_SUBJECT, SNSBOARD_CONTENT, USER_EMAIL_ID_FK, CATEGORY_SEQ_FK,UNIVERSITYSEQ) VALUES (#{snsboardSubject}, #{snsboardContent}, #{userEmailIdFk}, #{categorySeqFk},#{universitySeq});
+	</insert>
+	
+	
+	<!--글 쓴거 글번호가져오기 -->
+ 	<select id ="writeSeq" parameterType="String" resultType="com.test.spring.dto.camsns.SnsboardDTO">
+   	 SELECT SNSBOARD_SEQ AS snsboardSeq,USER_EMAIL_ID_FK AS userEmailIdFk FROM SNSBOARD WHERE USER_EMAIL_ID_FK = #{userEmailIdFk} ORDER by SNSBOARD_SEQ DESC LIMIT 0,1; 
+    </select>
+    
+    
+   <!-- 파일 입력 -->
+	<insert id="writeFile" parameterType="map" >
+		INSERT INTO SNSBOARDFILE (SNSBOARDFILE_FILENAME, SNSBOARD_SEQ_FK) VALUES (#{fileName}, #{boardSeq});
+	</insert>
+	
+	
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<!-- 댓글 추가 -->
+	<insert id="cAdd" parameterType="com.test.spring.dto.camsns.SnscommentDTO">
+		INSERT INTO SNSCOMMENT (SNSCOMMENT_CONTENT, USER_EMAIL_ID_FK, SNSBOARD_SEQ_FK,SNSCOMMENT_FILENAME) VALUES (#{snscommentContent}, #{userEmailIdFk}, #{snsboardSeqFk}, #{snscommentFilename})
+	</insert>
+   
+   	<!-- 댓글 리스트 -->
+   	<select id="cList" parameterType="String" resultType ="com.test.spring.dto.camsns.SnscommentDTO">
+   		SELECT C.SNSCOMMENT_SEQ AS snscommentSeq, C.SNSCOMMENT_CONTENT AS snscommentContent, C.SNSCOMMENT_REGDATE AS snscommentRegdate, C.SNSCOMMENT_BLIND AS snscommentBlind, C.SNSCOMMENT_THREAD AS snscommentThread, C.SNSCOMMENT_DEPTH AS snscommentDepth, C.SNSCOMMENT_FILENAME AS snscommentFilename, C.USER_EMAIL_ID_FK AS userEmailIdFk, C.SNSBOARD_SEQ_FK AS snsboardSeqFk FROM SNSCOMMENT AS C WHERE C.SNSBOARD_SEQ_FK = #{boardSeq}
+   	</select>
+   	
+   	<!-- 댓글 삭제 -->
+   	<delete id="cDel" parameterType="String">
+   		DELETE FROM SNSCOMMENT WHERE SNSCOMMENT_SEQ = ${snscommentSeq}
+   	</delete>
+   	
+</mapper>
+
+
+
