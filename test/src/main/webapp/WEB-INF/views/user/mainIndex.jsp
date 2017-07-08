@@ -17,6 +17,7 @@
 
 <%@include file="/inc/asset.jsp" %>
 <link rel="apple-touch-icon" href="/spring/images/ico/favicon.ico">
+<link rel="shortcut icon" href="/spring/images/ico/favicon.ico">
 <style>
 @font-face {
 	font-family: "notoFont-medium";

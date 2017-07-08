@@ -189,6 +189,8 @@ public class MainController {
 			WeatherStatDTO wsdto = apiExplorer(Double.parseDouble(universityDto.getUniversityLatitude()),Double.parseDouble(universityDto.getUniversityLongitude()));
 			
 			
+			System.out.println("온도:"+wsdto.getTemperature());
+			
 			
 			request.setAttribute("nList", nList);
 			request.setAttribute("wsdto", wsdto);

@@ -8,7 +8,7 @@
 <title>Cambus</title>
 <%@include file="/inc/userAsset.jsp" %>
 
-
+<link rel="apple-touch-icon" href="/spring/images/ico/favicon.ico">
 <style>
 img {
 	width: 60%;
