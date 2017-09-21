@@ -4,6 +4,9 @@
 <!doctype html>
 <html lang="ko">
 <head>
+
+
+
 <!-- 애드센스 -->
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
@@ -330,6 +333,8 @@ ul,li{
 
 <script>
 $(function(){
+	
+	getWeather();
 	if(isMobile.any()){
 	    if(isMobile.Android()){
 	 
@@ -395,10 +400,11 @@ var isMobile = {
 			<div id="weatherInfo">
 				<div id="infoMent">
 					<div id="weatherText">
-						Have a nice day<br> ${wsdto.sky }
+						Have a nice day<br>
+						<span id="weatherTxt"></span>
 					</div>
 					<div id="temp">
-						<div id="frontTemp">${wsdto.temperature}</div>
+						<div id="frontTemp"></div>
 						<div id="rightTemp">º</div>
 					</div>
 				</div>
@@ -415,7 +421,7 @@ var isMobile = {
 				<div class="iconBox" onclick="location.href='https://m.map.naver.com/bus/search.nhn'">
             	<div class="iconImg"><img src="./images/mainImage/cityBus.png" alt="" /></div>
                	<div class="iconInfo">시외버스</div>
-	            	위치조회
+	         		조회하기
 	            </div>
 			</div>
 
@@ -430,11 +436,11 @@ var isMobile = {
 																						 
 				<div class="iconBox">
             	<div class="iconImg"><img src="./images/mainImage/busTimeTable.png" alt="" /></div>
-               	<div class="iconInfo">전체버스</div>
-	            	시간표
+               	<div class="iconInfo">Suttle</div>
+	            	Timetable
 	            </div>
 			</div>
-			<div id="fifthBox" class="BSC5">
+			<div id="fifthBox" class="BSC5" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">
 				<div class="iconBox">
             	<div class="iconImg"><img src="./images/mainImage/camsns.png" alt="" /></div>
                	<div class="iconInfo"></div>
@@ -781,7 +787,7 @@ function appendCategory(){
 		//iconBox.setAttribute("class","iconBox");
 		iconBox.setAttribute("class","iconBox bscs${status.count} mvpage");
 		var text = document.createElement("span");
-		text.innerText="위치조회";
+		text.innerText="Location";
 		
 		iconImg.appendChild(img);
 		iconInfo.innerText = "${bscDto.busStopCategory}";
@@ -811,6 +817,28 @@ function appendCategory(){
 
 
 </script>
-
+<script>
+function getWeather() {
+	  var url = 'http://api.openweathermap.org/data/2.5/weather?lat=${universityDto.universityLatitude}&lon=${universityDto.universityLongitude}&APPID=62790597231fb6fa089bb576c8f8b650';
+	  $.ajax({
+	    dataType: "jsonp",
+	    url: url,
+	    jsonCallback: 'jsonp',
+	
+	    cache: false,
+	    success: function (data) {
+	     
+	    	//날씨 나타내기
+	    	$("#frontTemp").text(Math.round(data.main.temp-273.15));
+	    	$("#weatherTxt").text(data.weather[0].main);
+	   		
+	    	//data.weather[0].main
+	
+	     //console.log(data.weather[0].main);
+	     //   console.log(data);
+	    }
+	  });
+	}
+      </script>
 </body>
 </html>

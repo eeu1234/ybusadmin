@@ -210,7 +210,7 @@ function schedule(seq){
 				absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 55%;  background-color:
 				transparent !important; border-color:
 				transparent;"	onclick="location.href='/spring/index.action';" />
-			<div id="txtLogo">버스 시간표</div>
+			<div id="txtLogo">Bus Timetable</div>
 
 			<img src="/spring/images/logo/${universityDto.universityImg}"
 				id="logo" />
@@ -228,9 +228,9 @@ function schedule(seq){
 			<div>
 				<select id="weekDays" class="form-control">
 					<option value="normal"
-						<c:if test="${weekDays == 'normal'}">selected</c:if>>평일</option>
+						<c:if test="${weekDays == 'normal'}">selected</c:if>>Week</option>
 					<option value="weekends"
-						<c:if test="${weekDays == 'weekends'}">selected</c:if>>주말</option>
+						<c:if test="${weekDays == 'weekends'}">selected</c:if>>Weekend</option>
 				</select>
 			</div>
 
@@ -253,8 +253,8 @@ function schedule(seq){
 				<div class="timeContent">
 					<div class="timeHeader">
 						${dlist.busStopDetailCategoryName}
-						<c:if test="${weekDays == 'normal' }"> 평일시간표</c:if>
-						<c:if test="${weekDays == 'weekends' }"> 주말시간표</c:if>
+						<c:if test="${weekDays == 'normal' }"> Week</c:if>
+						<c:if test="${weekDays == 'weekends' }"> Weekend</c:if>
 					</div>
 					<!-- 시간없으면 출력하는 jstl if조건문 -->
 					<c:forEach items="${slist}" var="slist" varStatus="in">

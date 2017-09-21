@@ -350,7 +350,7 @@ body, html {
 					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="back();" />
 					<div id="txtLogo">
 					
-					셔틀버스 위치조회
+					Bus Location
 					
 					</div>
 					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>

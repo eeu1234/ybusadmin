@@ -33,7 +33,8 @@ public class location {
 		double gap = 50;
 		//2.위경도 전송 주소
 		
-		String newUrl = "http://cambus.kr/spring/android/location.action";
+	//	String newUrl = "http://cambus.kr/spring/android/location.action";
+		String newUrl = "http://192.168.1.243:8080/spring/android/location.action";
 		
 		
 		
@@ -76,6 +77,46 @@ public class location {
 		}
 		
 		
+		@RequestMapping(value = "/android/signLog.action", method = {RequestMethod.POST})
+		@Transactional
+		public void signLog(HttpServletRequest request
+								,HttpServletResponse response
+								,String busLogPerson
+								,String busLogDistance
+								,String busLogSignimg
+								,String busLogStartTime
+								,String busLogEndTime
+								,String deviceSeq) throws IOException {
+
+			//1.기기 seq와 함게 insert
+			int key = androidDao.insertBusLog(busLogPerson,busLogDistance,busLogSignimg,busLogStartTime,busLogEndTime,deviceSeq);
+			
+			
+			
+			
+			
+			
+			JSONObject obj = new JSONObject();
+			JSONObject confirmKey = new JSONObject();
+			
+			
+			obj.put("key", key);
+	
+			
+			confirmKey.put("confirmKey",obj);
+			response.setCharacterEncoding("utf-8");
+			//System.out.println(businfo.toJSONString());
+			response.getWriter().print(confirmKey.toJSONString());
+					
+			
+			
+			
+			
+		}
+		
+		
+		
+		
 		
 		@RequestMapping(value = "/android/location.action", method = {RequestMethod.POST})
 		@Transactional
@@ -85,8 +126,7 @@ public class location {
 											,String deviceLat
 												,String deviceLng) {
 			
-			
-			
+		
 			//1.기기 seq와 함게 insert
 			androidDao.insertBusLocation(deviceSeq,deviceLat,deviceLng);
 			

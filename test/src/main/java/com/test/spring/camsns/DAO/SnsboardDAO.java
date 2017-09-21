@@ -26,25 +26,25 @@ public class SnsboardDAO {
 		map.put("universitySeq", universitySeq);
 		map.put("word", word);// ?번째 부터 ?번째 글
 		// System.out.println("행 갯수 :"+sql.selectOne("countList",map));
-		return sql.selectOne("countList", map);
+		return sql.selectOne("snsboard.countList", map);
 	}
 
 	// 글 로딩
 	public List<SnsboardCategoryDTO> boardList(String universitySeq, String index, String word) {
 		// System.out.println(universitySeq +":"+index +":"+word);
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("universitySeq", universitySeq);
+		//map.put("universitySeq", universitySeq);
 		map.put("index", index);// ?번째 부터 ?번째 글
 		map.put("word", word);// 검색어
 
 		// 임시로 배열에 글 저장
-		List<SnsboardCategoryDTO> tempBoard = sql.selectList("boardList", map);
+		List<SnsboardCategoryDTO> tempBoard = sql.selectList("snsboard.boardList", map);
 
 		//List<List<SnsboardfileDTO>> fileDto = new ArrayList<List<SnsboardfileDTO>>();
 
 		// 각 글 파일 담기
 		for (int i = 0; i < tempBoard.size(); i++) {
-			List<SnsboardfileDTO> file = sql.selectList("fileSelect", tempBoard.get(i).getSnsboardSeq());
+			List<SnsboardfileDTO> file = sql.selectList("snsboard.fileSelect", tempBoard.get(i).getSnsboardSeq());
 			tempBoard.get(i).setFilelist(file);
 		}
 
@@ -52,15 +52,28 @@ public class SnsboardDAO {
 	}
 
 	
+	
+	//view 파일 불러오기
+	public List<SnsboardfileDTO> boardFiles(String boardSeq) {
+		
+	
+		
+		
+		return sql.selectList("adminSnsboard.boardFiles", boardSeq);
+	}
+
+	
+	
+	
 
 	// 글 쓰기
 	public int writeBoard(SnsboardDTO boardDto, ArrayList<SnsboardfileDTO> fileList) {
 		int result = 0;
 
-		result = sql.insert("writeBoard", boardDto);
+		result = sql.insert("snsboard.writeBoard", boardDto);
 		// System.out.println("글쓰기 성공 : " + writeResult);
 
-		boardDto = sql.selectOne("writeSeq", boardDto.getUserEmailIdFk());
+		boardDto = sql.selectOne("snsboard.writeSeq", boardDto.getUserEmailIdFk());
 		// System.out.println("글번호" + boardDto.getSnsboardSeq());
 		String boardSeq = boardDto.getSnsboardSeq();
 
@@ -71,7 +84,7 @@ public class SnsboardDAO {
 			String fileName = fileList.get(i).getSnsboardfileFileName();
 			map.put("fileName", fileName);
 
-			int count = sql.insert("writeFile", map);
+			int count = sql.insert("snsboard.writeFile", map);
 			result += count;
 		}
 
@@ -80,7 +93,7 @@ public class SnsboardDAO {
 
 	public SnsboardCategoryDTO boardOne(String boardSeq) {
 
-		return sql.selectOne("boardOne", boardSeq);
+		return sql.selectOne("snsboard.boardOne", boardSeq);
 	}
 
 }

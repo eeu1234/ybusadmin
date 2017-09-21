@@ -57,8 +57,11 @@
 								<li><a href="/spring/virtual/virtualBusStop.action">가상정류장 관리</a></li>
 
 							</ul></li>
+							
+							<li style="background-color: #496486;"><a href="/spring/camsns/admin/adminSnsboardList.action">Camsns</a></li>
 					</c:if>
-
+					
+					
 
 
 		
@@ -91,8 +94,22 @@
 						</ul></li>
 
 
-					<li><a href="/spring/admin/adminBusTimeManage.action">운행시간표 관리</a></li>
-					<li><a href="/spring/polyline/polyline.action" style="background-color:#252859;">운행 기록</a></li>
+				
+				<li class="dropdown" style="background-color:#252859;"><a class="dropdown-toggle" 
+						data-toggle="dropdown" href="#">운행 관리<span class="caret"></span>
+					</a>
+
+						<ul class="dropdown-menu">
+						
+								<li><a href="/spring/admin/adminBusTimeManage.action">운행시간표 관리</a></li>
+								<li><a href="/spring/polyline/polyline.action" >운행 기록조회</a></li>
+								<li><a href="/spring/buslog/buglogList.action" >차량 운행대장</a></li>
+				
+						</ul>
+					</li>
+				
+				
+				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<ul class="nav navbar-nav navbar-right">

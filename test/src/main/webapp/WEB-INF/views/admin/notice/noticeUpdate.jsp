@@ -327,11 +327,11 @@ function getFileType(filePath)
 						</div>
 					</div>
 					
-					<div id="middleBox"><div id="titleContent"><span>내용</span></div><textarea name="content" id="content">${noticeContent.noticeContent}</textarea></div>
+					<div id="middleBox"><textarea name="content" id="content">${noticeContent.noticeContent}</textarea></div>
 				
 				<div id="down">
 					<div id="titleDown"><div>파일명</div></div>	
-					<div id="fileBox" style="overflow: scroll;">
+					<div id="fileBox" style="overflow: scroll;border:1px solid black;">
 						<c:forEach items="${noticeContent.filelist}" var="dto">
 							<c:if test="${dto.noticeFileType!='png'&&dto.noticeFileType!='jpg'&&dto.noticeFileType!='jpeg'&&dto.noticeFileType!='gif'&&dto.noticeFileType!='bmp'&&dto.noticeFileType!='PNG'&&dto.noticeFileType!='JPG'&&dto.noticeFileType!='JPEG'&&dto.noticeFileType!='GIF'&&dto.noticeFileType!='BMP'}">
 								<a href="/spring/images/notice/${dto.noticeFileName}" download><input type="button" name="downLoad" id="downLoad${dto.noticeFileSeq}" value="${dto.noticeFileName}" readonly class="btn btn-primary imageShow"></a>
@@ -361,6 +361,9 @@ function getFileType(filePath)
 				</div>
 			
 		</form>
-	</div>
+	</div>	
+	<script>
+	CKEDITOR.replace('content');
+	</script>
 </body>
 </html>

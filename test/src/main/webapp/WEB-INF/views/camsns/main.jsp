@@ -33,6 +33,10 @@ $(function() {
         	index = 0;
         	//이전에 감춰뒀던 로딩이미지 보이기
         	$("#loading").show();
+        	setTimeout(function(){
+				$("#loading").hide();
+				
+			}, 500);
         	
         	
 	        var word = $(this).val();//검색어 가져옴
@@ -75,7 +79,7 @@ $(function() {
 						
 					index +=5;
 					var word= $("#searchBox").val();
-					
+					console.log(index);
 						$.ajax({
 							type : "GET",
 							url : "/spring/camsns/snsMain.action",
@@ -113,7 +117,7 @@ $(function() {
 											
 											
 											 $.each(currentElement.fileList, function(key, file) {
-												html += '	<img src="./images/board/'+file.fileName+'" /> ';
+												html += '	<img src="/spring/images/camsns/board/'+file.fileName+'" /> ';
 											
 											}); 
 											
@@ -226,7 +230,7 @@ function search(word){
 						
 						
 						 $.each(currentElement.fileList, function(key, file) {
-								html += '	<img src="./images/board/'+file.fileName+'" /> ';
+								html += '	<img src="/spring/images/camsns/board/'+file.fileName+'" /> ';
 							
 							}); 
 						
@@ -306,7 +310,7 @@ function search(word){
 
 						<c:forEach items="${boardDtoList.filelist}" var="filedto">
 							 <c:if test="${filedto.snsboardfileFileName != null}"> 
-								<img src="./images/board/${filedto.snsboardfileFileName}" />
+								<img src="/spring/images/camsns/board/${filedto.snsboardfileFileName}" />
 							 </c:if>  
 					 </c:forEach> 
 					</div>
@@ -325,6 +329,7 @@ function search(word){
 	</div>
 	<div id="loading" style="background-color:white;width:100%;height:50px;text-align:center;">
 		<img src="/spring/images/camsns/loading.gif" style="width:10%;height:auto;" />
+		위로 잡았다 놓아주세요 ↑
 	</div>
 
 

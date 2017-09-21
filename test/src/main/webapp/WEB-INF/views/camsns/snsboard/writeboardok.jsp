@@ -18,7 +18,7 @@ $(document).ready(function(){
 
 	<c:if test="${result>0}">
 	alert("글쓰기 성공!!");
-	location.href ="/camsns/main.action";
+	location.href ="/spring/camsns/snsMain.action";
 	</c:if>
 
 	<c:if test="${result==0}">

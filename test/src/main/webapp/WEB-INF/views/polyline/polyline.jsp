@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="/inc/asset.jsp"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset=UTF-8">
 <title>CamBus 폴리라인</title>
 
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+
 
 <style>
 html, body {
@@ -37,6 +36,10 @@ html, body {
    text-align: center;
    margin: 10px 0px 10px 0px;
    font-weight: bold;
+}
+
+#totalKm{
+	color:red;
 }
 
 
@@ -126,6 +129,53 @@ html, body {
 
 
 
+
+
+
+/*컨텐츠*/
+	
+	#tbl1 { width: 1440px; margin: 30px auto;}
+	#tbl1 th, #tbl1 td { text-align: center; }
+	 
+
+	
+	#tbl2 { width: 500px; margin: 20px auto; margin-bottom: 100px;}
+	
+	#searchMsg { text-align: center; }
+	
+	#btnSubject{
+		background-color: window;
+		border: 0px solid white;
+	}
+	
+	#btnSubject:hover{
+		color: orange;
+		cursor: pointer;
+	}
+	
+	#btnSel{
+		border: 0px solid black;
+		width: 150px;
+		height: 30px;
+		margin-left: 20px;
+		text-align: center;
+	}
+	
+	#btnEdit{
+		position: relative;
+		height: 30px;
+		top: 0px;
+		left: -20px;
+	}
+	
+	#btnDel{
+		position: relative;
+		height: 30px;
+		top: -46px;
+		left: 40px;
+	}
+	
+
 </style>
 
 <script>
@@ -135,7 +185,10 @@ var lati="";   //학교 위도
 var longi="";   //학교 경도
 
 $(document).ready(function(){
-   
+
+	
+	
+
 
       //학교 Select-옵션 클릭시 버스종류 옵션 생성!!         
       if($("#universitySel option").size()==1){ 
@@ -300,7 +353,7 @@ $(document).ready(function(){
 <!-- ---------------------------------구글맵 연동, 폴리라인 표시------------------------------------ -->
 
 <script>
-
+var totalKm = 0 ;
 var maker;
 var locationLati = [];
 var locationLongi = [];
@@ -326,15 +379,37 @@ function initMap(lens,lati,longi) {
 
    //폴리라인 그리기
    function drawPloyLine() {
+	   totalKm = 0 ;
+		var oldLati=0;
+		var oldLngi=0;
          
           $(list).each(
                   function(index, item) {
-
+					
                      if (list.length != index) {
+                    
+                    	 
+                    	 
+                    	
+                    	
                         point = new google.maps.LatLng($(item).find(
                               "locationLati").text(), $(item).find(
                               "locationLongi").text());
+                    	
                         flightPlanCoordinates.push(point);
+                        
+                        
+                        
+                        if(oldLati!=0 && oldLngi!=0){
+                        	totalKm +=  getDistanceFromLatLonInKm($(item).find(
+                             "locationLati").text(),$(item).find(
+                             "locationLongi").text(),oldLati,oldLngi);
+                        }
+                             oldLati = $(item).find("locationLati").text(); 
+                             oldLngi =$(item).find("locationLongi").text();
+                        
+                        
+                        
 
                      }
 
@@ -349,9 +424,19 @@ function initMap(lens,lati,longi) {
             });
                
             flightPath.setMap(map);//list
-
+			
+    
+            //총거리 게산 소수점3자리 반올림
+            $("#totalKm").text("기간동안 총거리는 약 " + totalKm.toFixed(3) + " KM");
+            
+           
+        	
+          
    }//function drawPloyLine() 
 
+   
+   
+   
    //정류장 마커 찍기
    function drawMarker(order, blat, blng) {
 
@@ -376,6 +461,19 @@ function initMap(lens,lati,longi) {
    
    }
 
+   function getDistanceFromLatLonInKm(lat1,lng1,lat2,lng2) {
+	    function deg2rad(deg) {
+	        return deg * (Math.PI/180)
+	    }
+
+	    var R = 6371; // Radius of the earth in km
+	    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+	    var dLon = deg2rad(lng2-lng1);
+	    var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+	    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	    var d = R * c; // Distance in km
+	    return d;
+	}
 </script>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqkSVH4lOztiSHYWlitRMnFPXC3--QX_8&callback=initMap"></script>
@@ -433,6 +531,81 @@ function search(){
                
                   list = $(data).find("item");
                   drawPloyLine();
+                  
+                  
+                  listLog = $(data).find("busLog");
+                  $('#tbl1 tbody').empty();
+                  $('#tbl1 > tbody:last').append('<tr></tr>');
+                  
+                  
+                  //운행기록 km
+                  var	 logTotalKm = 0 ;
+ 
+                  
+                  $(listLog).each(
+                          function(index, item) {
+                        	  
+                        	  console.log($(item).find("busLogSeq").text());
+                        	  /*운행 대장 테이블 업데이트*/
+
+								
+
+								//	console.log(key);
+								//console.log(value);
+								//categoryType,boardSeq,boardCotent,boardRegdate,boardSubject
+								//console.log(currentElement.boardCategoryName);
+								//console.log(currentElement.boardCategoryName);
+								
+							
+		
+								var html ="";
+								html += '<tr>';
+								html += '<td>'+$(item).find("busLogSeq").text()+'</td>';
+								html += '<td>'+$(item).find("busLogPerson").text()+'</td>';
+								html += '<td>'+$(item).find("busLogDestination").text()+'</td>';
+								html += '<td>'+$(item).find("busLogStartTime").text()+'</td>';
+								html += '<td>'+$(item).find("busLogEndTime").text()+'</td>';
+								html += '<td>'+$(item).find("busLogDistance").text()+'</td>';
+								html += '<td>'+$(item).find("busLogRegdate").text()+'</td>';
+								html += '<td>'+$(item).find("busLogSignimg").text()+'</td>';
+								html += '</tr>';
+								
+								
+								
+								$('#tbl1 tr:last').after(html);
+								
+								
+				
+								logTotalKm +=  parseInt($(item).find("busLogDistance").text());
+			                     
+			                          
+                          });
+                        	  
+                        	  
+                        	  
+                  //총거리 게산 소수점3자리 반올림
+                  $("#logTotalKm").text("운행기록은 " + logTotalKm.toFixed(3) + " KM");
+                        	  
+                        	  
+                        	  
+                        	  
+                        	  
+                        	  
+                        	  
+                        	  
+                        	  
+        		
+                  
+                  
+                  
+                  
+                    flightPath = new google.maps.Polyline({
+                       path : flightPlanCoordinates,
+                       geodesic : true,
+                       strokeColor : 'blue',
+                       strokeOpacity : 1.0,
+                       strokeWeight : 2
+                    });
                   
                    
                },
@@ -492,7 +665,9 @@ function search(){
 $(function(){
     $('.datetimepicker').appendDtpicker({'locale':'ko'});
 
-   
+
+	
+
 });
 </script>
 
@@ -533,6 +708,7 @@ $(function(){
          
 	         <div id="timeLogo">
 	            <span>기간 선택</span>
+	            <span id="totalKm" style="float:right;"></span>
 	         </div>
 	   <div id="searchForm">
 	
@@ -552,5 +728,51 @@ $(function(){
  </div>
 
 
+
+<hr />
+<!-- 동승자 로그 시작  -->
+<div id="container">
+		<h1 class="menuTitle">운행 대장</h1>
+		<table id="tbl1" class="table table-striped">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>동승자</th>
+				<th>행선지</th>
+				<th>운행시작</th>
+				<th>운행종료</th>
+				<th>거리</th>
+				<th>등록일자</th>
+				<th>서명</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:if test="${empty alist || alist.size() == 0}">
+				<tr>
+					<td colspan="8">게시물이 존재하지 않습니다.</td>
+				</tr>
+			</c:if>
+
+					<c:forEach items="${busLogList}" var="log" varStatus="stat">
+					<tr>
+						<td>${log.busLogSeq}</td>
+		
+						<td>${log.busLogPerson}</td>
+						<td>${log.busLogDestination}</td>
+						<td>${log.busLogDistance}</td>
+						<td>${log.noticeStatus}</td>
+						<td>${log.busLogStartTime}</td>
+						<td>${log.busLogEndTime}</td>
+						<td>${log.busLogSignimg}</td>
+						
+				
+					</tr>
+					</c:forEach>
+			</tbody>
+		</table>
+	      <span id="logTotalKm" style="float:right;"></span>
+		
+
+	</div><!-- content -->
 </body>
 </html>

@@ -9,4 +9,18 @@
 			<locationTime>${dto.locationTime}</locationTime>
 		</item>
 	</c:forEach>
+	
+		<c:forEach items="${busLogList}" var="log">
+		<busLog>
+			<busLogSeq>${log.busLogSeq}</busLogSeq>
+			<busLogPerson>${log.busLogPerson}</busLogPerson>
+			<busLogDestination>${log.busLogDestination}</busLogDestination>
+			<busLogDistance>${log.busLogDistance}</busLogDistance>
+			<busLogSignimg>${log.busLogSignimg}</busLogSignimg>
+			<busLogStartTime>${log.busLogStartTime}</busLogStartTime>
+			<busLogEndTime>${log.busLogEndTime}</busLogEndTime>
+			<busLogRegdate>${log.busLogRegdate}</busLogRegdate>
+			
+		</busLog>
+	</c:forEach>
 </list>

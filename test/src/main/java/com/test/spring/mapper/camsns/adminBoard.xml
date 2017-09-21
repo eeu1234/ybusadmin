@@ -6,9 +6,9 @@
 
  <!-- 계정 가져오는 쿼리 - 검색 있음 -->
     <select id="adminBoardList" resultType="com.test.spring.dto.camsns.SnsboardDTO" parameterType="com.test.spring.dto.camsns.SearchDTO">
-SELECT A.SNSBOARD_SEQ AS snsboardSeq , A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_REGDATE AS snsboardRegdate, A.USER_EMAIL_ID_FK AS userEmailIdFk, A.SNSBOARD_BLIND AS snsboardBlind,A.SNSBOARD_STAT AS snsboardStat, B.UNIVERSITY_NAME AS universityName 
+SELECT A.SNSBOARD_SEQ AS snsboardSeq , A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_REGDATE AS snsboardRegdate, A.USER_EMAIL_ID_FK AS userEmailIdFk, A.SNSBOARD_BLIND AS snsboardBlind,A.SNSBOARD_STAT AS snsboardStat, B.UNIVERSITYNAME AS universityName 
 	FROM SNSBOARD A
-		INNER JOIN UNIVERSITY B ON A.UNIVERSITY_SEQ = B.UNIVERSITY_SEQ
+		INNER JOIN UNIVERSITY B ON A.UNIVERSITY_SEQ = B.UNIVERSITYSEQ
 				${whereWord}
 					ORDER BY SNSBOARD_SEQ DESC	LIMIT #{start}, 10
     </select>
@@ -19,6 +19,39 @@ SELECT A.SNSBOARD_SEQ AS snsboardSeq , A.SNSBOARD_SUBJECT AS snsboardSubject, A.
     </select>
 
 
+ <!-- view페이지 파일 리스트 -->
+    <select id="boardFiles" resultType="com.test.spring.dto.camsns.SnsboardfileDTO" parameterType="String">
+SELECT SNSBOARDFILE_SEQ AS snsboardFileSeq , SNSBOARDFILE_FILENAME AS snsboardFileFileName
+	FROM SNSBOARDFILE 
+		WHERE SNSBOARD_SEQ_FK = #{boardSeq}
+			ORDER BY SNSBOARDFILE_SEQ DESC
+    </select>
+
+	
+ <!-- 게시글 블라인드, 보이기 -->
+    <update id="changeValue"  parameterType="map" >
+    	UPDATE SNSBOARD SET
+    	
+    		<if test="type == 'blindBtn'">
+    		SNSBOARD_BLIND = #{value}
+    		</if>
+    		<if test="type == 'onOffBtn'">
+    		SNSBOARD_STAT = #{value}
+   			</if> 		
+    			WHERE SNSBOARD_SEQ = #{boardSeq}
+    </update>
+    
+    
+ <!-- 코멘트 블라인드, 보이기 -->
+    <update id="commChangeValue"  parameterType="map" >
+    	UPDATE SNSCOMMENT SET
+    	
+    	
+    		SNSCOMMENT_BLIND = #{value}
+    	
+    	
+    			WHERE SNSCOMMENT_SEQ = #{commSeq}
+    </update>
    
 </mapper>
 

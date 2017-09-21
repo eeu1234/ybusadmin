@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.test.spring.dto.AdminUniversityDTO;
 import com.test.spring.dto.BusInfoDTO;
+import com.test.spring.dto.BusLogDTO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
@@ -78,6 +79,16 @@ public class PolyLineDAO {
 		map.put("start",start);
 		map.put("end",end);
 		return sql.selectList("polyline.location",map);
+	}
+	
+	
+	//운행 대장
+	public List<BusLogDTO> busLogList(String seq, String start, String end) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("seq",seq);
+		map.put("start",start);
+		map.put("end",end);
+		return sql.selectList("polyline.busLogList",map);
 	}
 
 	

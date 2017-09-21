@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -95,21 +95,32 @@ table tr td:nth-child(1) {
 <script>
 	$(function() {
 		
+		
+		$("#confirm").click(function(){
+			if(CKEDITOR.instances.content.getData().length < 1){
+				alert("내용을 입력해 주세요.");
+				return;
+			}else{
+				$("#content").val(CKEDITOR.instances.content.getData()); 
+				$("#frm").submit();
+			}
+		})
+		
 	})
 	
 	//자동가입 방지문자 refresh
 	function imgRefresh(){
-		    $("#captchaImg").attr("src", "<%=request.getContextPath() %>/captcha?id=" + Math.random());
+		    $("#captchaImg").attr("src", "<%=request.getContextPath() %>/camsns/captcha?id=" + Math.random());
 		}
 </script>
 
 </head>
 <body>
-	<%@include file="/inc/top.jsp"%>
+	<%@include file="/inc/camsns.jsp"%>
 
 	<div id="container">
 		<!--제목,컨텐츠,아이디,카테고리  -->
-		<form action="/camsns/snsboard/writeBoardOk.action" method="POST"
+		<form action="/spring/camsns/snsboard/writeBoardOk.action" method="POST" id="frm"
 			enctype="multipart/form-data">
 			<table class="table table-striped">
 
@@ -130,7 +141,7 @@ table tr td:nth-child(1) {
 				</tr>
 
 				<tr>
-					<td colspan="2"><textarea rows="5" cols="30" name="content"
+					<td colspan="2"><textarea rows="5" cols="30" name="content" id="content"
 							class="form-control" /></textarea></td>
 
 				</tr>
@@ -146,12 +157,12 @@ table tr td:nth-child(1) {
 			</div>
 			<hr />
 			<div id="captcha">
-				<img src="<%=request.getContextPath() %>/captcha" id="captchaImg" alt="captcha img">
+				<img src="<%=request.getContextPath() %>/camsns/captcha" id="captchaImg" alt="captcha img">
 			
 			
 				<div id="typeCaptcha" style="height:50px;margin-top:10px;">
 				 <input	type="text" placeholder="보안문자를 입력하세요" name="captcha" style="width:50%;height:30px;"> 
-				 <a	onclick="imgRefresh()" id="refreshBtn" > <img src="/camsns/images/snsUtil/refreshBtn.png" style="margin-left:10px;height:30px;" /></a>
+				 <a	onclick="imgRefresh()" id="refreshBtn" > <img src="/spring/images/camsns/snsUtil/refreshBtn.png" style="margin-left:10px;height:30px;" /></a>
 				</div>
 				
 				 <input type="hidden" name="userId" value="" />
@@ -161,7 +172,7 @@ table tr td:nth-child(1) {
 			<div id="btnGroup">
 				<input type="button" value="취소" class="btn btn-danger"
 					onclick="history.back();" />
-				<input type="submit" value="확인" class="btn btn-primary" style="float: right;" />
+				<input type="button" value="확인" class="btn btn-primary" style="float: right;" id="confirm" />
 
 			</div>
 			
@@ -179,6 +190,10 @@ table tr td:nth-child(1) {
 
 	</div>
 
+
+<script>
+	CKEDITOR.replace('content');
+</script>
 
 </body>
 </html>

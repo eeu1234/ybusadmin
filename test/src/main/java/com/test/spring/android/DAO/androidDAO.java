@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.test.spring.dto.BusLogDTO;
 import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.LocationDTO;
@@ -52,7 +53,7 @@ public class androidDAO {
 			dto.setDeviceSeq(deviceSeq);
 			dto.setLocationLatitude(deviceLat);
 			dto.setLocationLongitude(deviceLng);
-
+	
 			
 			return sql.insert("busData",dto);
 				
@@ -99,6 +100,24 @@ public class androidDAO {
 			
 			
 			return sql.selectOne("android.myLastBusStop",deviceSeq);
+		}
+
+		//싸인패드 운행대장
+		
+		public int insertBusLog(String busLogPerson, String busLogDistance, String busLogSignimg,
+				String busLogStartTime, String busLogEndTime, String deviceSeq) {
+
+			BusLogDTO dto = new BusLogDTO();
+			dto.setBusLogPerson(busLogPerson);
+			dto.setBusLogDistance(busLogDistance);
+			dto.setBusLogSignimg(busLogSignimg);
+			dto.setBusLogStartTime(busLogStartTime);
+			dto.setBusLogEndTime(busLogEndTime);
+			dto.setDeviceSeq(deviceSeq);
+			
+			
+			return sql.insert("android.sign",dto);
+			
 		}
 
 

@@ -17,12 +17,12 @@
 $(document).ready(function(){
 
 	<c:if test="${cResult>0}">
-	alert("글쓰기 성공!!");
-	location.href ="/camsns/snsboard/snsboardview.action?boardSeq=${boardSeq}";
+	alert("댓글쓰기 성공!!");
+	location.href ="/spring/camsns/snsboard/snsboardview.action?boardSeq=${boardSeq}";
 	</c:if>
 
 	<c:if test="${cResult==0}">
-	alert("글쓰기 실패!!");
+	alert("댓글쓰기 실패!!");
 	history.back();
 	</c:if>
 });

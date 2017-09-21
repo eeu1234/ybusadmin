@@ -378,7 +378,7 @@ function moveMap(){
 					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
 					<div id="txtLogo">
 					
-					셔틀버스 위치조회
+					Now Location
 					
 					</div>
 					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>
@@ -387,8 +387,8 @@ function moveMap(){
 
 			<div id="btnArea">
 				<div id="btnGroup">
-					<div id="upBtn" class="goBtn">상행 방면</div>
-					<div id="downBtn" class="goBtn">하행 방면</div>
+					<div id="upBtn" class="goBtn">UP</div>
+					<div id="downBtn" class="goBtn">DOWN</div>
 				</div>
 			</div>
 					<div id="footer">

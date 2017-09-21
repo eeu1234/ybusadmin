@@ -27,3 +27,5 @@
 <!-- import 끝 -->
 <!-- 카카오톡 링크 api -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<!-- ck에디터 -->
+<script src="/spring/util/ckeditor/ckeditor.js"></script>

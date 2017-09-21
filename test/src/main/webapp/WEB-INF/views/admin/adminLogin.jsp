@@ -9,21 +9,66 @@
 
 
 <script>
+var agent = navigator.userAgent.toLowerCase();
+var filter = "win16|win32|win64|mac";
+
+
+
+
 
 	$(function(){
-		$(".content").hide();
-		$("#loginLayout").hide();
-		$(".content").fadeIn("slow");
- 		
-		setTimeout(function(){
-			$("#loginLayout").fadeIn("slow");
-			
-		}, 500);
 		
 		
+		
+		if(navigator.platform){
+			if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+				$(".content").hide();
+				$(".door").hide();
+			}else{
+				
+
+				$(".content").hide();
+				$("#loginLayout").hide();
+				$(".content").fadeIn("slow");
+		 		
+				setTimeout(function(){
+					$("#loginLayout").fadeIn("slow");
 					
+				}, 500);
+				
+				if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
+					
+					
+					$("#up").animate({
+						
+						left: '+=60%',
+						}, 500, function() { // Animation complete.
+					}); 
+			 		
+			 		$("#down").animate({
+					
+			 			left: '-=25%',
+						}, 500, function() { // Animation complete.
+					}); 
+			 	
 			 		$("#up").animate({
+						
+						top: '+=70%',
+						}, 300, function() { // Animation complete.
+					}); 
+			 		
+			 		$("#down").animate({
 					
+			 			top: '-=25%',
+						}, 300, function() { // Animation complete.
+					}); 
+				
+				
+					}
+				else {
+				
+					$("#up").animate({
+						
 						left: '+=25%',
 						}, 500, function() { // Animation complete.
 					}); 
@@ -36,7 +81,7 @@
 			 	
 			 		$("#up").animate({
 						
-						top: '+=25%',
+						top: '+=50%',
 						}, 300, function() { // Animation complete.
 					}); 
 			 		
@@ -45,6 +90,21 @@
 			 			top: '-=25%',
 						}, 300, function() { // Animation complete.
 					}); 
+					
+					
+				}
+
+						
+				
+				
+				
+			}
+		}
+		
+		
+		
+			
+			 	
 	})
 		
 		

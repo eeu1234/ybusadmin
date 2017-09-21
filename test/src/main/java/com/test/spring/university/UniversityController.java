@@ -126,6 +126,7 @@ public class UniversityController {
 				
 				 path = request.getRealPath("/images/logo/");
 				File file = new File (path+temp);
+			
 				
 				try {
 					
@@ -201,9 +202,10 @@ public class UniversityController {
 				
 				
 				String temp = getFileName(mfile.getOriginalFilename());
-				
-				
-				File file = new File ("D:\\"+temp);
+				path = request.getRealPath("/images/logo/");
+				System.out.println("path:"+path);
+				System.out.println("path:"+path+temp);
+				File file = new File (path+temp);
 				
 				try {
 					
@@ -248,7 +250,8 @@ public class UniversityController {
 		String ext = filename.substring(index);//.txt
 		
 			while(true){
-			File file = new File("D:\\"+filename);
+//			File file = new File("D:\\"+filename);
+			File file = new File(path+filename);
 			
 			if(file.exists()){
 				//홍길동.txt

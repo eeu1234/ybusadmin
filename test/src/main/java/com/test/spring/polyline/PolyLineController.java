@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.dto.AdminUniversityDTO;
 import com.test.spring.dto.BusInfoDTO;
+import com.test.spring.dto.BusLogDTO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
@@ -175,6 +175,7 @@ public class PolyLineController {
 
 			// 내용
 			List<BusInfoDTO> busInfo = dao.busInfo(seq);
+	
 
 			request.setAttribute("busInfo", busInfo);
 
@@ -210,7 +211,25 @@ public class PolyLineController {
 
 			// 버스 정보 가져오기
 			List<LocationDTO> location = dao.location(seq, start, end);
+			List<BusLogDTO> busLogList = dao.busLogList(seq, start, end);
 
+			
+			int totalLog =0;
+			
+			for(int i=0;i<busLogList.size();i++){
+				totalLog += Integer.parseInt(busLogList.get(i).getBusLogDistance());
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			request.setAttribute("busLogList", busLogList);
 			request.setAttribute("location", location);
 			
 			return "polyline/location";

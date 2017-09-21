@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,16 @@ public class SnscommentController {
 	
 	
 	@RequestMapping(method={RequestMethod.POST}, value = "/snsboard/addComment.action")
-	public String addComment(HttpServletRequest request) {
-		path = request.getRealPath("/images/comment/");
+	public String addComment(HttpServletRequest request
+			,HttpSession session
+			, HttpServletResponse response
+			,String snsboardSeqFk
+			,String snscommentContent
+			
+			
+			
+			) {
+		path = request.getRealPath("/images/camsns/comment/");
 		String fileName ="";
 		
 		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
@@ -51,25 +60,22 @@ public class SnscommentController {
 		
 		
 		
-		HttpSession session = request.getSession();
-		String boardSeq = request.getParameter("snsboardSeqFk");
-		String content = request.getParameter("snscommentContent");
-		
+		session = request.getSession();
 		
 		
 		SnscommentDTO cdto = new SnscommentDTO();
 
 		cdto.setSnscommentFilename(fileName);
-		cdto.setSnscommentContent(content);
-		cdto.setUserEmailIdFk("eeu1234@naver.com"); // 세션으로 변경할것 session.getId()
-		cdto.setSnsboardSeqFk(boardSeq);
+		cdto.setSnscommentContent(snscommentContent);
+		cdto.setUserEmailIdFk("unknown"); // 세션으로 변경할것 session.getId()
+		cdto.setSnsboardSeqFk(snsboardSeqFk);
 
 		int cResult = dao.addComment(cdto);
 
-		request.setAttribute("boardSeq", boardSeq);
+		request.setAttribute("boardSeq", snsboardSeqFk);
 		request.setAttribute("cResult", cResult);
 
-		return "snsboard/commentwriteok";
+		return "/camsns/snsboard/commentwriteok";
 	}
 
 	
@@ -114,7 +120,10 @@ public class SnscommentController {
 	
 	
 	@RequestMapping(method = { RequestMethod.GET }, value = "/snsboard/listComment.action")
-	public String listComment(HttpServletRequest request, String boardSeq) {
+	public String listComment(HttpServletRequest request
+			,HttpSession session
+			, HttpServletResponse response
+			, String boardSeq) {
 
 		List<SnscommentDTO> clist = dao.listComment(boardSeq);
 
@@ -125,7 +134,10 @@ public class SnscommentController {
 	}
 
 	@RequestMapping(method = { RequestMethod.GET }, value = "/snsboard/delComment.action")
-	public String delComment(HttpServletRequest request, String seq) {
+	public String delComment(HttpServletRequest request
+			,HttpSession session
+			, HttpServletResponse response,
+			String seq) {
 
 		int dcResult = dao.delComment(seq);
 

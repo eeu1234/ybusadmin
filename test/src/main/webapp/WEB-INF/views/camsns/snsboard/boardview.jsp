@@ -150,7 +150,7 @@ html,body {
 	padding: 7px;
 	width: 100%;
 	height: 5%;
-	min-height: 60px;
+	min-height: 270px;
 	font-size: 0.8em;
 	border-bottom:2px solid  #bfbfbf;
 }
@@ -159,8 +159,10 @@ html,body {
 
 .addComment {
 	width: 100%;
-	height: 30px;
+	height: 100%;
+	margin-top:10px;
 	margin-bottom:10px;
+	color:#888;
 }
 
 .commentText {
@@ -177,6 +179,7 @@ html,body {
 	height: 30px;
 	color: gray;
 	margin-left: 5px;
+	margin-top:5px;
 }
 
 .clear {
@@ -225,6 +228,7 @@ img {
 	width: 100%;
 	height: 100;
 	max-width: 600px;
+	margin-top:10px;
 	margin-bottom:8%;
 	 
 }
@@ -244,7 +248,7 @@ img {
 	width:50%;
 	height:100%;
 	background-color: #dadada;
-	padding-top:2%;
+	padding-top:1%;
 	padding-left:2%;
 	color: #3b5998;
 	
@@ -259,7 +263,7 @@ img {
 	height:100%;
 	text-align:right;
 	background-color: #dadada;
-	padding-top:2%; 
+	padding-top:1%; 
 	padding-right:2%;
 	color: #bfbfbf;
 }
@@ -333,12 +337,24 @@ function share(){
 		}); 
 		
 		
+		$("#commConfirm").click(function(){
+			if(CKEDITOR.instances.content.getData().length < 1){
+				alert("내용을 입력해 주세요.");
+				return;
+			}else{
+				$("#content").val(CKEDITOR.instances.content.getData()); 
+				$("#frm").submit();
+			}
+			
+		});
+		
+		
+		
+		
+		
 	})
 	
-	function enterComment(seq){
-		
-		$(this).parent().parent().parent().submit();
-	}
+
 </script>
 </head>
 <body>
@@ -378,21 +394,25 @@ function share(){
 					<!-- <img src="/images/ad1.JPG" /> -->
 					<!-- 이미지있으면 띄우기 -->
 				</div>
-
+				<c:forEach items="${listFile}" var="fileDto">
+				<img src="/spring/images/camsns/comment/${fileDto.snsboardfileFileName}" style="width:100px;height:auto;"><br><br>
+				 
+				</c:forEach> 
 				${boardDto.snsboardContent}
 
 			</div>
 
 			<div class="comment">
 							<div class="addComment">
-							<form  action="/camsns/snsboard/addComment.action" method="POST"  enctype="multipart/form-data">
-						
+							<form  action="/spring/snsboard/addComment.action" method="POST"  enctype="multipart/form-data" id="frm">
+								Comment
 								<input type="hidden" value="${boardDto.snsboardSeq}" name="snsboardSeqFk">
-								<input type="text" class="commentText form-control" id="content" name="snscommentContent" onkeydown="javascript: if(event.keyCode==13 ){alert(${boardDto.snsboardSeq}); enterComment(${boardDto.snsboardSeq});} "/>
+								<input type="textarea" class="commentText form-control" id="content" name="snscommentContent"  required/>
 	
 		
+								<button id="commConfirm" class="form-control" style="width:85%;height:32px;float:left;margin-top:5px;">submit</button>
 								<div id="picUpBtn">
-									<label for="ex_file" class="glyphicon glyphicon-camera">
+									<label for="ex_file" class="glyphicon glyphicon-camera" s>
 									</label> <input type="file" id="snscommentFilename" name="snscommentFilename">
 								</div>
 							</form>
@@ -410,7 +430,8 @@ function share(){
 	
 			<div class="commentArea">
 				<div class="commInfo">
-					<div class="userEmail">${cdto.userEmailIdFk}</div>
+					<!-- 					<div class="userEmail">${cdto.userEmailIdFk}</div> -->
+					<div class="userEmail">Camsns</div>
 					<div class="commRegdate">${cdto.snscommentRegdate}</div>
 					
 					<!-- <button class="commDel">X</button> 삭제버튼--> 
@@ -459,6 +480,19 @@ Kakao.init('497e3896cc14549676d2ada05a95e0fd');
 }
 //]]>
 </script>
+
+	<script>
+	CKEDITOR.replace('content',{
+		width:'100%',
+		height:'100%',
+		toolbar :['/']
+		
+		
+	});
+	
+	
+	
+	</script>
 </div><!-- 컨테이너 -->
 </body>
 </html>

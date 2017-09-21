@@ -6,7 +6,14 @@ public class LocationDTO {
 	private String locationLatitude;			//위도
 	private String locationLongitude;			//경도
 	private String locationTime;				//해당시간
+	private String staffName;  					//staffName
 	private String deviceSeq;					//장비 seq
+	public String getStaffName() {
+		return staffName;
+	}
+	public void setStaffName(String staffName) {
+		this.staffName = staffName;
+	}
 	private String busStopSeq;					//버스정류장 seq
 	public String getLocationSeq() {
 		return locationSeq;

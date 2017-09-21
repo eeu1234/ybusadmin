@@ -48,6 +48,118 @@ $(function() {
 
 		
 	});
+	
+	
+</script>
+</head>
+<body>
+	<div id="container">
+		<div id ="top">
+			<div id="header">
+			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
+				<div id="infoPage">
+					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 55%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
+					<div id="txtLogo">
+					
+						${bsdto.busStop} 
+					
+					</div>
+				
+					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'" />
+				</div>
+			</div>
+		</div>
+
+		<div id="contents">
+			<div class="tab">
+				<a href="javascript:void(0)" class="tablinks" style="border-left: 1px solid #003140; border-bottom: 5px solid #003d4f;" id="busStopview" onclick="location.href='/spring/getBusStopRoadView.action?busStopSeq='+${bsdto.busStopSeq}">Stop View</a> 
+				<a href="javascript:void(0)" style="border-left: 1px solid #003140; border-right: 1px solid #003140;" class="tablinks" onclick="location.href='/spring/getBusStopMapView.action?busStopSeq='+${bsdto.busStopSeq}">Stop Map</a>
+				
+			</div>
+			
+				<div id="street-view"style="width:100%;height:400px;"></div>
+
+			<div id="infoAround">
+				<div id="infoTitle">
+					 
+					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">Aroung place ${bsdto.busStop}  </div>
+				</div>
+				<div id="mapAP"></div>
+			    <script type="text/javascript">
+			
+					var mapAP;
+					var marker;
+					
+					function initMap() {
+					  	//정류장 맛집 맵
+						mapAP = new google.maps.Map(document.getElementById('mapAP'), {
+						
+					    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
+					    zoom: 15
+					  	});
+						
+						//정류장 마커
+						<c:forEach items="${apList}" var="apdto">
+							var infowindow${apdto.aroundPlaceSeq} = new google.maps.InfoWindow({
+								content:'${apdto.aroundPlaceName}',
+							});
+							
+							marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
+							    map: mapAP,
+							    draggable: false,
+							    animation: google.maps.Animation.DROP,
+							    info: '${apdto.aroundPlaceName}',
+							    title: '${apdto.aroundPlaceName}',
+							    position: {lat: ${apdto.aroundPlaceLatitude}, lng: ${apdto.aroundPlaceLongitude}}
+							});
+							marker${apdto.aroundPlaceSeq}.addListener('click', function(){
+								infowindow${apdto.aroundPlaceSeq}.open(mapAP,marker${apdto.aroundPlaceSeq});
+							});
+								
+						</c:forEach>
+					
+						
+						
+						/* 구글 스트리트뷰 */
+						var panorama;
+					   
+				        panorama = new google.maps.StreetViewPanorama(
+				            document.getElementById('street-view'),
+				            {
+				              position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
+				              pov: {heading: 165, pitch: 0},
+				              zoom: 1
+				         });
+					     
+				        
+				     // Set up the markers on the map
+				        var Marker = new google.maps.Marker({
+				            position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
+				            map: panorama,
+				            icon: '/spring/images/timeLine/busStopMaker2.png',
+				            title: 'BusStop'
+				        });
+					}
+	
+			    </script>
+			    <script async defer
+			      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap">
+			    </script>
+			</div>
+		</div>
+
+
+
+
+	</div>
+
+
+
+
+</body>
+<!-- 
+
+	
 	//네이버 로드뷰
 	var HOME_PATH = window.HOME_PATH || '.',
 	pano = null;
@@ -106,91 +218,7 @@ $(function() {
 	naver.maps.onJSContentLoaded = initPanorama;
 	
 	
-</script>
-</head>
-<body>
-	<div id="container">
-		<div id ="top">
-			<div id="header">
-			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
-				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 55%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
-					<div id="txtLogo">
-					
-						${bsdto.busStop} 
-					
-					</div>
-				
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'" />
-				</div>
-			</div>
-		</div>
 
-		<div id="contents">
-			<div class="tab">
-				<a href="javascript:void(0)" class="tablinks" style="border-left: 1px solid #003140; border-bottom: 5px solid #003d4f;" id="busStopview" onclick="location.href='/spring/getBusStopRoadView.action?busStopSeq='+${bsdto.busStopSeq}">정류장 뷰</a> 
-				<a href="javascript:void(0)" style="border-left: 1px solid #003140; border-right: 1px solid #003140;" class="tablinks" onclick="location.href='/spring/getBusStopMapView.action?busStopSeq='+${bsdto.busStopSeq}">정류장 지도</a>
-				
-			</div>
-			
-				<div id="pano"style="width:100%;height:400px;"></div>
-			
+ -->
 
-			<div id="infoAround">
-				<div id="infoTitle">
-					 
-					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">${bsdto.busStop} 주변정보 </div>
-				</div>
-				<div id="mapAP"></div>
-			    <script type="text/javascript">
-			
-					var mapAP;
-					var marker;
-					
-					function initMap() {
-					  	//정류장 맛집 맵
-						mapAP = new google.maps.Map(document.getElementById('mapAP'), {
-						
-					    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
-					    zoom: 15
-					  	});
-						
-						//정류장 마커
-						<c:forEach items="${apList}" var="apdto">
-							var infowindow${apdto.aroundPlaceSeq} = new google.maps.InfoWindow({
-								content:'${apdto.aroundPlaceName}',
-							});
-							
-							marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
-							    map: mapAP,
-							    draggable: false,
-							    animation: google.maps.Animation.DROP,
-							    info: '${apdto.aroundPlaceName}',
-							    title: '${apdto.aroundPlaceName}',
-							    position: {lat: ${apdto.aroundPlaceLatitude}, lng: ${apdto.aroundPlaceLongitude}}
-							});
-							marker${apdto.aroundPlaceSeq}.addListener('click', function(){
-								infowindow${apdto.aroundPlaceSeq}.open(mapAP,marker${apdto.aroundPlaceSeq});
-							});
-								
-						</c:forEach>
-					
-					}
-	
-			    </script>
-			    <script async defer
-			      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap">
-			    </script>
-			</div>
-		</div>
-
-
-
-
-	</div>
-
-
-
-
-</body>
 </html>

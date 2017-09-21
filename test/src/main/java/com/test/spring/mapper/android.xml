@@ -99,6 +99,17 @@ IS NOT NULL);
    </select>
    
    
+   
+   
+   
+
+	<!-- 위,경도 insert -->
+	<insert id="sign" parameterType="com.test.spring.dto.BusLogDTO" >
+
+		
+		INSERT INTO BUS_LOG (BUSLOGPERSON,BUSLOGDESTINATION,BUSLOGDISTANCE,BUSLOGSIGNIMG,BUSLOGSTARTTIME,BUSLOGENDTIME,DEVICESEQ) VALUES (#{busLogPerson}, #{busLogDestination}, #{busLogDistance}, #{busLogSignimg}, #{busLogStartTime}, #{busLogEndTime}, #{deviceSeq});
+	</insert>
+	
 </mapper>
 
 

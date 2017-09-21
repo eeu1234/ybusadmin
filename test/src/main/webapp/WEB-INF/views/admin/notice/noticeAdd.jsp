@@ -131,11 +131,21 @@ $(document).ready(function() {
 			}
 		});
 	
+  	
+
 });
 
   	//용량체크
     function fileCheck(fileValue)
     {
+  		
+    	if(CKEDITOR.instances.content.getData().length < 1){
+			alert("내용을 입력해 주세요.");
+			return;
+		}else{
+			$("#content").val(CKEDITOR.instances.content.getData()); 
+			$("#frm").submit();
+		}
 
         //확장자 체크
         var src = getFileType(fileValue);
@@ -208,12 +218,12 @@ $(document).ready(function() {
 	</div>
 	
 	<div id="totalBox">
-		<form method="POST" action="/spring/admin/notice/noticeAddOk.action" enctype="multipart/form-data" name="frm">
+		<form method="POST" action="/spring/admin/notice/noticeAddOk.action" enctype="multipart/form-data" name="frm" id="frm">
 			<div id="mainBox">
 				<div id="topBox">
 					<div id="titleSubject">제목</div><input type="text" name="subject" id="subject">
 				</div>
-				<div id="middleBox"><div id="titleContent"><span>내용</span></div><textarea name="content" id="content"></textarea></div>
+				<div id="middleBox"><textarea name="content" id="content"></textarea></div>
 				<div id="bottomBox">
 		<div id="files">
 			<div class="file"><input type="file" name="filename" id="filename" multiple="multiple"></div>
@@ -226,7 +236,9 @@ $(document).ready(function() {
 			</div>
 		</form>
 	</div>
-	
+	<script>
+	CKEDITOR.replace('content');
+	</script>
 
 </body>
 </html>

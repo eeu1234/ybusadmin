@@ -9,9 +9,7 @@
 
 <meta name="mobile-web-app-capable" content="yes">
 <!-- import 시작 -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -28,3 +26,13 @@
 <!-- 카카오톡 링크 api -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <link href="/spring/css/top.css" rel="stylesheet">
+
+
+<!-- ck에디터 -->
+<script src="/spring/util/ckeditor/ckeditor.js"></script>
+
+
+<!-- datatable -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>

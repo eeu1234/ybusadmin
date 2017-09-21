@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import com.test.spring.camsns.DAO.SnsAdminDAO;
+import com.test.spring.dto.AdminUniversityDTO;
 import com.test.spring.dto.camsns.SearchDTO;
+import com.test.spring.dto.camsns.SnsboardCategoryDTO;
 import com.test.spring.dto.camsns.SnsboardDTO;
+import com.test.spring.dto.camsns.SnsboardfileDTO;
+import com.test.spring.dto.camsns.SnscommentDTO;
 
 @Controller("adminSnsboardController")
 public class AdminSnsboardController {
@@ -25,15 +29,21 @@ public class AdminSnsboardController {
 	
 	//admin 관리 메인 페이지로 이동, 모든 대학 관리자 내역 가져옴
 	@RequestMapping(method={RequestMethod.GET}
-					, value="/admin/adminSnsboardList.action")
+					, value="/camsns/admin/adminSnsboardList.action")
 	public String adminSnsboardListlist(HttpServletRequest request
 		,HttpSession session
 		,HttpServletResponse response
 		,String page
 		,SearchDTO sdto){
 
-		//학교번호 //세션으로변경하기
-		String universitySeq ="1"; 
+		
+		
+		try {
+			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+			
+			String universitySeq = adto.getUniversitySeq();
+			
+		
 		
 		
 		//페이징 -> 게시판의 꽃
@@ -106,7 +116,7 @@ public class AdminSnsboardController {
 				if(n == 1) {
 					pagebar += String.format("<li class='disabled'><a href='#' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>");
 				} else {
-					pagebar += String.format("<li><a href='/camsns/admin/adminSnsboardList.action?page=%d&column=%s&word=%s' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>", n-1, column, word);
+					pagebar += String.format("<li><a href='/spring/camsns/admin/adminSnsboardList.action?page=%d&column=%s&word=%s' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>", n-1, column, word);
 				}
 				
 				while (!(loop > blockSize || n > totalPage)) {
@@ -114,7 +124,7 @@ public class AdminSnsboardController {
 					if (n == nowpage) {
 						pagebar += String.format("<li class='active'><a href='#'>%d</a></li>", n);
 					} else {
-						pagebar += String.format("<li><a href='/camsns/admin/adminSnsboardList.action?page=%d&column=%s&word=%s'>%d</a></li>", n, column, word, n);
+						pagebar += String.format("<li><a href='/spring/camsns/admin/adminSnsboardList.action?page=%d&column=%s&word=%s'>%d</a></li>", n, column, word, n);
 					}
 					
 					n++;
@@ -125,7 +135,7 @@ public class AdminSnsboardController {
 				if (n > totalPage) {
 					pagebar += String.format("<li class='disabled'><a href='#' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
 				} else {
-					pagebar += String.format("<li><a href='/camsns/admin/adminSnsboardList.action?page=%d&column=%s&word=%s' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>", n, column, word);
+					pagebar += String.format("<li><a href='/spring/camsns/admin/adminSnsboardList.action?page=%d&column=%s&word=%s' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>", n, column, word);
 				}
 				
 				pagebar += "</ul></nav>";
@@ -134,9 +144,90 @@ public class AdminSnsboardController {
 				request.setAttribute("sdto", sdto);
 				request.setAttribute("pagebar", pagebar);
 				
-				return "admin/adminSnsboardList";
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+				
+				return "/camsns/admin/adminSnsboardList";
 	}
 	
+	
+	
+	
+	//blind,show update 바꾸는 부분
+	@RequestMapping(method={RequestMethod.GET}
+	, value="/camsns/admin/changeBoard.action")
+	public String changeBoard(HttpServletRequest request
+			,HttpSession session
+			,HttpServletResponse response,
+											String type,
+											String value,
+											String boardSeq){
+			System.out.println(type);							
+			System.out.println(value);
+			System.out.println(boardSeq);
+			
+			
+			dao.changeValue(type,value,boardSeq);
+		 
+		
+		return "/camsns/admin/adminSnsboardList";
+	}
+	
+	//comment blind,show update 바꾸는 부분
+		@RequestMapping(method={RequestMethod.GET}
+		, value="/camsns/admin/commChangeBoard.action")
+		public String commChangeBoard(HttpServletRequest request
+				,HttpSession session
+				,HttpServletResponse response,
+												String value,
+												String commSeq
+												){
+										
+				System.out.println(value);
+				System.out.println(commSeq);
+				
+				
+				dao.commChangeValue(value,commSeq);
+			 
+			
+			return "/camsns/admin/adminSnsboardView";
+		}
+	
+	
+	
+	
+	//게시판 뷰페이지
+	@RequestMapping(method={RequestMethod.GET}
+	, value="camsns/admin/adminSnsboardView.action")
+	public String viewBoard(HttpServletRequest request
+			,HttpSession session
+			,HttpServletResponse response,
+			String boardSeq){
+		System.out.println(boardSeq);
+		
+		SnsboardCategoryDTO boardDto = dao.boardOne(boardSeq);
+		
+		
+		// 각 글 파일 담기
+	
+		 List<SnsboardfileDTO> listFile = dao.boardFiles(boardSeq);
+
+				
+		
+		
+		
+		request.setAttribute("boardDto", boardDto);
+		request.setAttribute("listFile", listFile);
+		
+		//댓글불러오기
+		List<SnscommentDTO> clist = dao.listComment(boardSeq);
+		request.setAttribute("clist", clist);
+		
+
+		
+		return "/camsns/admin/adminSnsboardView";
+	}
 	
 	
 	
@@ -144,13 +235,14 @@ public class AdminSnsboardController {
 	@RequestMapping(method={RequestMethod.GET}
 		, value="/admin/getUniversityList.action")
 	public String getUniversityList(HttpServletRequest request
-					,HttpSession session){
+			,HttpSession session
+			,HttpServletResponse response){
 		
 		//List<AdminDTO> alist = dao.alist();
 		
 		//request.setAttribute("alist", alist);
 		
-		return "admin/adminSnsboardList";
+		return "/camsns/admin/adminSnsboardList";
 	}
 }
 	

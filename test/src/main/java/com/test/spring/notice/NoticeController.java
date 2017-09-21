@@ -3,17 +3,12 @@ package com.test.spring.notice;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.SynchronousQueue;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.test.spring.dto.AdminDTO;
 import com.test.spring.dto.AdminUniversityDTO;
-import com.test.spring.dto.LocationDTO;
 import com.test.spring.dto.NoticeDTO;
 import com.test.spring.dto.NoticeFileDTO;
 import com.test.spring.dto.SearchDTO;
@@ -38,7 +31,8 @@ public class NoticeController {
    
    // 공지사항 글 출력
    @RequestMapping(method = { RequestMethod.GET }, value = "/admin/notice/notice.action")
-   public String notice(HttpServletRequest request, HttpSession session, HttpServletResponse response, String page,
+   public String notice(HttpServletRequest request, HttpSession session, HttpServletResponse response, 
+		   String page,
          SearchDTO sdto) {
 
       try {

@@ -62,24 +62,38 @@ public class SnsboardController {
 						,HttpSession session
 						, HttpServletResponse response
 						, String num
-						, String word)
+						, String word
+						, String universitySeq)
 			throws IOException {
 		// 톰캣경로설정
-		path = request.getRealPath("/images/board/");
+		path = request.getRealPath("/images/camsns/board/");
 		System.out.println(path);
 		// 그냥 로딩 word = null
 
 		
 		
-	
+		//universitySeq = "1";
 		
 		if(session.getAttribute("universityDto") != null){
 			universityDto = (UniversityDTO) session.getAttribute("universityDto");
 			universitySeq = universityDto.getUniversitySeq();
 			
+			
+			
 		}else{
-			response.sendRedirect("../selectUniversity.action");
+			if(universitySeq == null || universitySeq == ""){
+				response.sendRedirect("../selectUniversity.action");
+				
+			}else{
+				universityDto.setUniversitySeq(universitySeq);
+				session.setAttribute("universityDto", universityDto);
+			}
+			
+		
+		
 		}
+		
+		
 		
 		// 총 게시물 수
 		int cntList = boardDao.countList(universitySeq, word);
@@ -88,9 +102,7 @@ public class SnsboardController {
 		// System.out.println("글갯수" + cntList);
 		if (num == null && word == null) {// 첫 로딩시 //num 파라메터가 없다
 
-			// 메인페이지라 요청 시 top에 학교리스트도 불러온다.
-			List<UniversityDTO> universityDtoList = universityDao.list();
-			request.setAttribute("universityDtoList", universityDtoList);
+
 
 			num = "0"; // 0부터 5개 게시글
 
@@ -165,9 +177,19 @@ public class SnsboardController {
 		request.setAttribute("boardDto", boardDto);
 
 		
+		
+		 List<SnsboardfileDTO> listFile = boardDao.boardFiles(boardSeq);
+			request.setAttribute("listFile", listFile);
+			
+			
+			
+		
+		
 		//댓글불러오기
 		List<SnscommentDTO> clist = commDao.listComment(boardSeq);
 		request.setAttribute("clist", clist);
+		
+		
 
 
 		return "/camsns/snsboard/boardview";
@@ -232,7 +254,13 @@ public class SnsboardController {
 				}
 	
 	
-			String userId = "eeu1234@naver.com";
+			String userId = "";
+			
+			
+			universityDto = (UniversityDTO) session.getAttribute("universityDto");
+			universitySeq = universityDto.getUniversitySeq();
+			
+			
 			System.out.println("********"+universitySeq);
 			SnsboardDTO boardDto = new SnsboardDTO();
 			boardDto.setCategorySeqFk(categoryVal);

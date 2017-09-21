@@ -50,6 +50,7 @@ public class AuthCheck {
 		   + "|| execution(String *.DeviceManageController.*(..))"
 		   + "|| execution(String *.UniversityController.*(..))"
 		   + "|| execution(String *.BusStopManageController.*(..))"
+		   + "|| execution(String *.*.AdminSnsboardController.*(..))"
 		   + "|| execution(String *.AdminManageController.*(..))")
    public void member(){}
    
@@ -111,6 +112,7 @@ public class AuthCheck {
 		   + "|| execution(String *.AdminManageController.adminManagelist(..))"
 		   + "|| execution(String *.AdminManageController.adminDelete(..))"
 		   + "|| execution(String *.AdminManageController.adminAdd(..))"
+		   + "|| execution(String *.*.AdminSnsboardController.*(..))"
 		   + "|| execution(String *.AdminManageController.adminManage(..))")
    public void root(){}
    

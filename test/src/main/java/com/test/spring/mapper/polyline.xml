@@ -59,7 +59,7 @@
    </select>
    
   
-	<!-- 버스 위치 가져오기  -->
+	<!-- 버스 좌표 로그 가져오기  -->
 	<select id="location" parameterType="map" resultType="com.test.spring.dto.LocationDTO">
 	  SELECT L.LOCATIONSEQ AS locationSeq, L.LOCATIONLATITUDE AS locationLatitude, L.LOCATIONLONGITUDE AS locationLongitude, L.LOCATIONTIME AS locationTime, L.DEVICESEQ AS deviceSeq FROM LOCATION L
 		INNER JOIN DEVICE D
@@ -71,5 +71,22 @@
 								WHERE BI.BUSINFOSEQ = #{seq} AND (L.LOCATIONTIME between #{start} AND #{end})
 									ORDER BY L.LOCATIONTIME ASC
    	</select>
+
+
+
+	<!-- 버스 동승자 로그 가져오기  -->
+	<select id="busLogList" parameterType="map" resultType="com.test.spring.dto.BusLogDTO">
+		SELECT L.BUSLOGSEQ AS busLogSeq, L.BUSLOGPERSON AS busLogPerson, L.BUSLOGDESTINATION AS busLogDestination, L.BUSLOGDISTANCE AS busLogDistance, L.BUSLOGSIGNIMG AS busLogSignimg, L.BUSLOGSTARTTIME AS busLogStartTime, L.BUSLOGENDTIME AS busLogEndTime, L.BUSLOGREGDATE AS busLogRegDate, L.DEVICESEQ AS deviceSeq FROM BUS_LOG L
+			INNER JOIN DEVICE D
+				ON L.DEVICESEQ = D.DEVICESEQ
+					INNER JOIN DEVICE_BUS DB
+						ON D.DEVICESEQ = DB.DEVICESEQ
+							INNER JOIN BUS_INFO BI
+								ON DB.BUSINFOSEQ = BI.BUSINFOSEQ
+									WHERE BI.BUSINFOSEQ = #{seq} AND (L.BUSLOGSTARTTIME between #{start} AND #{end}) ORDER BY L.BUSLOGSTARTTIME 
+									ASC;
+   	</select>
+
+
 
 </mapper>

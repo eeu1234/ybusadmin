@@ -21,22 +21,7 @@
 					<li class="active"><a href="/spring/camsns/snsMain.action">메인으로</a></li>
 
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-							Login</a></li> -->
-					<!-- <li><a id="kakao-login-btn"></a></li> -->
-					<li><a id="custom-login-btn" href="javascript:loginWithKakao()">
-<img src="/spring/images/camsns/kakao_login_btn_small_ov.png" style="width:auto;margin-top:-10px;"/>
-</a></li>
-					<li>
-						<select name="" id="" class="form-control">
-							<option value="" selected>- 학교 선택 -</option>
-							<c:forEach items="${universityDtoList}" var="universityDtoList">
-								<option value="${universityDtoList.universitySeq}">${universityDtoList.universityName}
-								</option>
-							</c:forEach>
-					</select></li>
-				</ul>
+			
 			</div>
 		</div>
 	</nav>
