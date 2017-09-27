@@ -40,7 +40,8 @@ public class location {
 		//2.위경도 전송 주소
 		
 	//	String newUrl = "http://cambus.kr/spring/android/location.action";
-		String newUrl = "http://192.168.1.243:8080/spring/android/location.action";
+		String newUrl = "http://eeu1234.iptime.org:8080/spring/android/location.action";
+//		String newUrl = "http://192.168.1.243:8080/spring/android/location.action";
 		
 		String path = "";   //업로드 경로!!
 		

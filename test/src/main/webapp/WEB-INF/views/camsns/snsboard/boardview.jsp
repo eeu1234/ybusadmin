@@ -439,10 +439,12 @@ function share(){
 					<div style="clear:both;"></div>
 				</div>
 				<div class="commContent">
-				 <c:if test="${cdto.snscommentFilename != null}"> 
+				 <c:if test="${cdto.snscommentFilename != null}">
+				 	<c:if test="${cdto.snscommentFilename != ''}"> 
 					<div style="width:100%;text-align:center;margin-bottom:10spx;">
 									<img src="/spring/images/camsns/comment/${cdto.snscommentFilename}" style="margin-top:10px;margin-bottom:10px;" />
 					</div>
+					 </c:if> 
 				 </c:if> 
 				${cdto.snscommentContent}
 				</div>
