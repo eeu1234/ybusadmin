@@ -88,7 +88,7 @@ public class PolyLineDAO {
 		map.put("seq",seq);
 		map.put("start",start);
 		map.put("end",end);
-		return sql.selectList("polyline.busLogList",map);
+		return sql.selectList("polyline.busLog",map);
 	}
 
 	

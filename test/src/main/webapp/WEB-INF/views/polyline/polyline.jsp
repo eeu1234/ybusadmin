@@ -538,53 +538,56 @@ function search(){
                   $('#tbl1 > tbody:last').append('<tr></tr>');
                   
                   
+                  
                   //운행기록 km
-                  var	 logTotalKm = 0 ;
+                  var logTotalKm = 0 ;
  
                   
                   $(listLog).each(
                           function(index, item) {
                         	  
-                        	  console.log($(item).find("busLogSeq").text());
+                    
                         	  /*운행 대장 테이블 업데이트*/
 
 								
 
-								//	console.log(key);
-								//console.log(value);
-								//categoryType,boardSeq,boardCotent,boardRegdate,boardSubject
-								//console.log(currentElement.boardCategoryName);
-								//console.log(currentElement.boardCategoryName);
 								
 							
 		
 								var html ="";
 								html += '<tr>';
-								html += '<td>'+$(item).find("busLogSeq").text()+'</td>';
-								html += '<td>'+$(item).find("busLogPerson").text()+'</td>';
+							 	html += '<td>'+$(item).find("busLogSeq").text()+'</td>';
+							 	html += '<td>'+$(item).find("busLogStaff").text()+'</td>';
+								html += '<td>'+$(item).find("busLogDriver").text()+'</td>';
 								html += '<td>'+$(item).find("busLogDestination").text()+'</td>';
+								html += '<td>'+$(item).find("busLogPurpose").text()+'</td>';
 								html += '<td>'+$(item).find("busLogStartTime").text()+'</td>';
 								html += '<td>'+$(item).find("busLogEndTime").text()+'</td>';
 								html += '<td>'+$(item).find("busLogDistance").text()+'</td>';
 								html += '<td>'+$(item).find("busLogRegdate").text()+'</td>';
-								html += '<td>'+$(item).find("busLogSignimg").text()+'</td>';
-								html += '</tr>';
+								html += '<td><a href="/spring/images/sign/'+$(item).find("busLogSignimg").text()+'" target="_blank">'+"서명보기"+'</a></td>';
+							 	html += '</tr>';
 								
 								
 								
 								$('#tbl1 tr:last').after(html);
 								
 								
+								console.log( parseInt($(item).find("busLogDistance").text()));
+								
 				
-								logTotalKm +=  parseInt($(item).find("busLogDistance").text());
+								if(isNaN( parseInt($(item).find("busLogDistance").text())) != true){
+									
+									logTotalKm = logTotalKm +   parseInt($(item).find("busLogDistance").text());
+								}
 			                     
 			                          
                           });
                         	  
+		                  //총거리 게산 소수점3자리 반올림
+		                  $("#logTotalKm").text("운행기록은 " + logTotalKm + " KM");
+		                        	  
                         	  
-                        	  
-                  //총거리 게산 소수점3자리 반올림
-                  $("#logTotalKm").text("운행기록은 " + logTotalKm.toFixed(3) + " KM");
                         	  
                         	  
                         	  
@@ -733,12 +736,15 @@ $(function(){
 <!-- 동승자 로그 시작  -->
 <div id="container">
 		<h1 class="menuTitle">운행 대장</h1>
+	      <span id="logTotalKm" style="float:right;font-size:2em;"></span>
 		<table id="tbl1" class="table table-striped">
 		<thead>
 			<tr>
 				<th>번호</th>
 				<th>동승자</th>
+				<th>운전자</th>
 				<th>행선지</th>
+				<th>목적</th>
 				<th>운행시작</th>
 				<th>운행종료</th>
 				<th>거리</th>
@@ -749,28 +755,13 @@ $(function(){
 		<tbody>
 			<c:if test="${empty alist || alist.size() == 0}">
 				<tr>
-					<td colspan="8">게시물이 존재하지 않습니다.</td>
+					<td colspan="10">게시물이 존재하지 않습니다.</td>
 				</tr>
 			</c:if>
 
-					<c:forEach items="${busLogList}" var="log" varStatus="stat">
-					<tr>
-						<td>${log.busLogSeq}</td>
-		
-						<td>${log.busLogPerson}</td>
-						<td>${log.busLogDestination}</td>
-						<td>${log.busLogDistance}</td>
-						<td>${log.noticeStatus}</td>
-						<td>${log.busLogStartTime}</td>
-						<td>${log.busLogEndTime}</td>
-						<td>${log.busLogSignimg}</td>
-						
-				
-					</tr>
-					</c:forEach>
+			
 			</tbody>
 		</table>
-	      <span id="logTotalKm" style="float:right;"></span>
 		
 
 	</div><!-- content -->

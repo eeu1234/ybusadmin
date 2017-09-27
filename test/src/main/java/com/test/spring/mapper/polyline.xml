@@ -75,8 +75,8 @@
 
 
 	<!-- 버스 동승자 로그 가져오기  -->
-	<select id="busLogList" parameterType="map" resultType="com.test.spring.dto.BusLogDTO">
-		SELECT L.BUSLOGSEQ AS busLogSeq, L.BUSLOGPERSON AS busLogPerson, L.BUSLOGDESTINATION AS busLogDestination, L.BUSLOGDISTANCE AS busLogDistance, L.BUSLOGSIGNIMG AS busLogSignimg, L.BUSLOGSTARTTIME AS busLogStartTime, L.BUSLOGENDTIME AS busLogEndTime, L.BUSLOGREGDATE AS busLogRegDate, L.DEVICESEQ AS deviceSeq FROM BUS_LOG L
+	<select id="busLog" parameterType="map" resultType="com.test.spring.dto.BusLogDTO">
+		SELECT L.BUSLOGSEQ AS busLogSeq, L.BUSLOGSTAFF AS busLogStaff,L.BUSLOGDRIVER AS busLogDriver, L.BUSLOGDESTINATION AS busLogDestination, L.BUSLOGPURPOSE AS busLogPurpose, L.BUSLOGDISTANCE AS busLogDistance, L.BUSLOGSIGNIMG AS busLogSignimg, L.BUSLOGSTARTTIME AS busLogStartTime, L.BUSLOGENDTIME AS busLogEndTime, L.BUSLOGREGDATE AS busLogRegDate, L.DEVICESEQ AS deviceSeq FROM BUS_LOG L
 			INNER JOIN DEVICE D
 				ON L.DEVICESEQ = D.DEVICESEQ
 					INNER JOIN DEVICE_BUS DB
@@ -84,7 +84,7 @@
 							INNER JOIN BUS_INFO BI
 								ON DB.BUSINFOSEQ = BI.BUSINFOSEQ
 									WHERE BI.BUSINFOSEQ = #{seq} AND (L.BUSLOGSTARTTIME between #{start} AND #{end}) ORDER BY L.BUSLOGSTARTTIME 
-									ASC;
+									DESC;
    	</select>
 
 

@@ -13,14 +13,15 @@
 		<c:forEach items="${busLogList}" var="log">
 		<busLog>
 			<busLogSeq>${log.busLogSeq}</busLogSeq>
-			<busLogPerson>${log.busLogPerson}</busLogPerson>
+			<busLogStaff>${log.busLogStaff}</busLogStaff>
+			<busLogDriver>${log.busLogDriver}</busLogDriver>
 			<busLogDestination>${log.busLogDestination}</busLogDestination>
 			<busLogDistance>${log.busLogDistance}</busLogDistance>
+			<busLogPurpose>${log.busLogPurpose}</busLogPurpose>
 			<busLogSignimg>${log.busLogSignimg}</busLogSignimg>
 			<busLogStartTime>${log.busLogStartTime}</busLogStartTime>
 			<busLogEndTime>${log.busLogEndTime}</busLogEndTime>
 			<busLogRegdate>${log.busLogRegdate}</busLogRegdate>
-			
 		</busLog>
 	</c:forEach>
 </list>

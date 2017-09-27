@@ -104,19 +104,13 @@ public class androidDAO {
 
 		//싸인패드 운행대장
 		
-		public int insertBusLog(String busLogPerson, String busLogDistance, String busLogSignimg,
-				String busLogStartTime, String busLogEndTime, String deviceSeq) {
+		public int insertBusLog(
+				BusLogDTO logDto) {
 
-			BusLogDTO dto = new BusLogDTO();
-			dto.setBusLogPerson(busLogPerson);
-			dto.setBusLogDistance(busLogDistance);
-			dto.setBusLogSignimg(busLogSignimg);
-			dto.setBusLogStartTime(busLogStartTime);
-			dto.setBusLogEndTime(busLogEndTime);
-			dto.setDeviceSeq(deviceSeq);
+		
 			
 			
-			return sql.insert("android.sign",dto);
+			return sql.insert("android.sign",logDto);
 			
 		}
 

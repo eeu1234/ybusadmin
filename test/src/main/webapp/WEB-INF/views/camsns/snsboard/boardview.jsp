@@ -131,8 +131,9 @@ html,body {
 .contentPic {
 	position: relative;
 	margin: 10px auto;
-	width: 50%;
+	width: 100%;
 	height: auto;
+	text-align:center;
 }
 
 .contentRegdate {
@@ -393,11 +394,11 @@ function share(){
 				<div class="contentPic">
 					<!-- <img src="/images/ad1.JPG" /> -->
 					<!-- 이미지있으면 띄우기 -->
-				</div>
 				<c:forEach items="${listFile}" var="fileDto">
-				<img src="/spring/images/camsns/comment/${fileDto.snsboardfileFileName}" style="width:100px;height:auto;"><br><br>
+				<img src="/spring/images/camsns/board/${fileDto.snsboardfileFileName}" style="width:80%;height:auto;"><br><br>
 				 
 				</c:forEach> 
+				</div>
 				${boardDto.snsboardContent}
 
 			</div>
@@ -440,7 +441,7 @@ function share(){
 				<div class="commContent">
 				 <c:if test="${cdto.snscommentFilename != null}"> 
 					<div style="width:100%;text-align:center;margin-bottom:10spx;">
-									<img src="/images/comment/${cdto.snscommentFilename}" />
+									<img src="/spring/images/camsns/comment/${cdto.snscommentFilename}" style="margin-top:10px;margin-bottom:10px;" />
 					</div>
 				 </c:if> 
 				${cdto.snscommentContent}

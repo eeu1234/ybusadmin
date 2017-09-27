@@ -103,7 +103,6 @@
 						
 								<li><a href="/spring/admin/adminBusTimeManage.action">운행시간표 관리</a></li>
 								<li><a href="/spring/polyline/polyline.action" >운행 기록조회</a></li>
-								<li><a href="/spring/buslog/buglogList.action" >차량 운행대장</a></li>
 				
 						</ul>
 					</li>

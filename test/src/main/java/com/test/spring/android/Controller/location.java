@@ -1,5 +1,6 @@
 package com.test.spring.android.Controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.test.spring.android.DAO.androidDAO;
+import com.test.spring.dto.BusLogDTO;
 import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.LocationDTO;
@@ -36,7 +42,7 @@ public class location {
 	//	String newUrl = "http://cambus.kr/spring/android/location.action";
 		String newUrl = "http://192.168.1.243:8080/spring/android/location.action";
 		
-		
+		String path = "";   //업로드 경로!!
 		
 		
 		
@@ -77,41 +83,73 @@ public class location {
 		}
 		
 		
-		@RequestMapping(value = "/android/signLog.action", method = {RequestMethod.POST})
-		@Transactional
-		public void signLog(HttpServletRequest request
+		@ResponseBody
+		@RequestMapping(value = "/android/signLog.action", headers=("content-type=multipart/*"),method=RequestMethod.POST)	
+		public void  signLog(HttpServletRequest  request
 								,HttpServletResponse response
-								,String busLogPerson
-								,String busLogDistance
-								,String busLogSignimg
-								,String busLogStartTime
-								,String busLogEndTime
-								,String deviceSeq) throws IOException {
+									,String staffName
+									,String driverName
+									,String distance
+									,String destination
+									,String purpose
+									,String startTime
+									,String endTime
+									,String deviceSeq
+									,String imgName
+									
+							) throws IOException {
+//,File imgName
+			
 
-			//1.기기 seq와 함게 insert
-			int key = androidDao.insertBusLog(busLogPerson,busLogDistance,busLogSignimg,busLogStartTime,busLogEndTime,deviceSeq);
-			
-			
-			
-			
-			
-			
-			JSONObject obj = new JSONObject();
-			JSONObject confirmKey = new JSONObject();
-			
-			
-			obj.put("key", key);
-	
-			
-			confirmKey.put("confirmKey",obj);
-			response.setCharacterEncoding("utf-8");
-			//System.out.println(businfo.toJSONString());
-			response.getWriter().print(confirmKey.toJSONString());
-					
-			
-			
-			
-			
+			try {
+				
+				System.out.println("staffName:"+staffName);
+				System.out.println("driverName:"+driverName);
+				System.out.println("distance:"+distance);
+				System.out.println("destination:"+destination);
+				System.out.println("purpose:"+purpose);
+				System.out.println("startTime:"+startTime);
+				System.out.println("endTime:"+endTime);
+				System.out.println("imgName:"+imgName);
+				System.out.println("deviceSeq:"+deviceSeq);
+				
+				BusLogDTO logDto = new BusLogDTO();
+				logDto.setBusLogStaff(staffName);
+				logDto.setBusLogDriver(driverName);
+				logDto.setBusLogDistance(distance);
+				logDto.setBusLogDestination(destination);
+				logDto.setBusLogPurpose(purpose);
+				logDto.setBusLogStartTime(startTime);	
+				logDto.setBusLogEndTime(endTime);
+				logDto.setBusLogSignimg(imgName);
+				logDto.setDeviceSeq(deviceSeq);
+				
+				MultipartRequest multi = (MultipartRequest) request;
+				
+				MultipartFile mfile = ((MultipartRequest) multi).getFile("signImg");
+				 System.out.println(multi.getFile("signImg").getName()); 
+				 System.out.println(multi.getFile("signImg").getSize());
+			 
+			 
+			    path = request.getRealPath("/images/sign/");
+	               System.out.println("path:"+path);
+
+	            //   fileName = getFileName(mfile.getOriginalFilename());
+
+	               File file = new File(path + imgName);
+	               // DB -> temp(물리명)
+	               // -> mfile.getOriginalFilename()(원본명)
+
+	               mfile.transferTo(file); // 파일 업로드 실행
+
+	               //1.기기 seq와 함게 insert
+	               int key = androidDao.insertBusLog(logDto);
+	               
+			 
+			} catch (Exception e) {
+				System.out.println(e);
+				System.out.println("예외 상황 발생..! ");
+			}
 		}
 		
 		
@@ -309,4 +347,31 @@ public class location {
 		private static double rad2deg(double rad) {
 			return (rad * 180 / Math.PI);
 		}
+		
+		
+		
+		
+		//중복되지 않는 파일명 얻어오기
+		   public String getFileName(String filename) {
+		   
+		      int n = 1;
+		      
+		      int index = filename.lastIndexOf(".");
+		      String oname = filename.substring(0, index);
+		      String ext = filename.substring(index);
+		      
+		      
+		      while(true) {
+		         File file = new File(path + filename);
+
+		         if (file.exists()) {
+		            //홍길동.txt
+		            filename = oname + "_" + n + ext; //홍길동_1.txt
+		            n++;
+		         } else {
+		            return file.getName();
+		         }
+		      }
+		      
+		   }
 }

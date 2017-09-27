@@ -214,11 +214,7 @@ public class PolyLineController {
 			List<BusLogDTO> busLogList = dao.busLogList(seq, start, end);
 
 			
-			int totalLog =0;
-			
-			for(int i=0;i<busLogList.size();i++){
-				totalLog += Integer.parseInt(busLogList.get(i).getBusLogDistance());
-			}
+		
 			
 			
 			
