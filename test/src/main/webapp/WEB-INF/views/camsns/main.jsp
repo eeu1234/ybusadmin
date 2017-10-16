@@ -177,7 +177,7 @@ function share(){
 						var name = $(this).attr('name');
 						
 						var boardSeq = $(this).val();
-						var hostUrl = "http://eeu1234.iptime.org:8090";
+						var hostUrl = "http://eeu1234.iptime.org:8080";
 //						var hostUrl = "http://eeu1234.iptime.org:8090";
 						var shareUrl = "/spring/camsns/snsboard/snsboardview.action?boardSeq="	+ boardSeq;
 						var url = hostUrl +shareUrl
