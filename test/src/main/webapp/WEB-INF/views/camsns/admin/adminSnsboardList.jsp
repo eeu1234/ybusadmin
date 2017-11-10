@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset=UTF-8">
-<title>Insert title here</title>
+<title>Cambus:: 관리자 페이지</title>
 <%@include file="/inc/asset.jsp"%>
 
 <style>

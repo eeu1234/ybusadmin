@@ -564,28 +564,30 @@ function search(){
 								html += '<td>'+$(item).find("busLogStartTime").text()+'</td>';
 								html += '<td>'+$(item).find("busLogEndTime").text()+'</td>';
 								html += '<td>'+$(item).find("busLogDistance").text()+'</td>';
+								//html += '<td>'+(parseInt($(item).find("busLogDistance").text())-parseInt($(item).find("busLogLastDistance").text()))+'</td>';
 								html += '<td>'+$(item).find("busLogRegdate").text()+'</td>';
 								html += '<td><a href="/spring/images/sign/'+$(item).find("busLogSignimg").text()+'" target="_blank">'+"서명보기"+'</a></td>';
 							 	html += '</tr>';
 								
 								
 								
-								$('#tbl1 tr:last').after(html);
+								$('#tbl1 tr:last').after(html); 
+								 
 								
-								
-								console.log( parseInt($(item).find("busLogDistance").text()));
-								
+//								console.log( parseInt($(item).find("busLogDistance").text()));
+	//							console.log( parseInt($(item).find("busLogLastDistance").text()));
+		
 				
 								if(isNaN( parseInt($(item).find("busLogDistance").text())) != true){
 									
-									logTotalKm = logTotalKm +   parseInt($(item).find("busLogDistance").text());
+									logTotalKm = logTotalKm +   (parseInt($(item).find("busLogDistance").text())-parseInt($(item).find("busLogLastDistance").text()));
 								}
 			                     
 			                          
                           });
                         	  
 		                  //총거리 게산 소수점3자리 반올림
-		                  $("#logTotalKm").text("운행기록은 " + logTotalKm + " KM");
+		                  $("#logTotalKm").text("운행기록 총 거리는 " + logTotalKm + " KM");
 		                        	  
                         	  
                         	  
@@ -747,7 +749,7 @@ $(function(){
 				<th>목적</th>
 				<th>운행시작</th>
 				<th>운행종료</th>
-				<th>거리</th>
+				<th>총거리</th>
 				<th>등록일자</th>
 				<th>서명</th>
 			</tr>

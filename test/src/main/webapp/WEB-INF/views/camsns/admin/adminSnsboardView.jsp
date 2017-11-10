@@ -325,7 +325,7 @@ function share(){
 						var name = $(this).attr('name');
 						
 						var boardSeq = $(this).val();
-						var hostUrl = "http://127.0.0.1:8090";
+						var hostUrl = "http://cambus.kr/spring";
 //						var hostUrl = "http://eeu1234.iptime.org:8090";
 						var shareUrl = "/camsns/snsboard/snsboardview.action?boardSeq="	+ boardSeq;
 						var url = hostUrl +shareUrl

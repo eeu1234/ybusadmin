@@ -317,8 +317,8 @@ function share(){
 						var name = $(this).attr('name');
 						
 						var boardSeq = $(this).val();
-						//var hostUrl = "http://127.0.0.1:8090";
-					var hostUrl = "http://eeu1234.iptime.org:8080";
+						/ar hostUrl = "http://cambus.kr";
+				//	var hostUrl = "http://eeu1234.iptime.org:8080";
 						var shareUrl = "/spring/camsns/snsboard/snsboardview.action?boardSeq="	+ boardSeq;
 						var url = hostUrl +shareUrl
 						

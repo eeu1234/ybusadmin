@@ -32,7 +32,7 @@ public class DeviceInfoManageDAO {
 	//디바이스 수정
 	public int updateDevice(String seq, String deviceModel, String deviceTel,String universitySel) {
 		// TODO Auto-generated method stub
-		HashMap<String, String> map = new HashMap<>();
+		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("seq", seq);
 		map.put("deviceModel", deviceModel);
 		map.put("deviceTel", deviceTel);

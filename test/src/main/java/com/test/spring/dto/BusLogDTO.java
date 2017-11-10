@@ -6,8 +6,11 @@ public class BusLogDTO {
 	private String busLogDriver;
 	private String busLogDestination;
 	private String busLogDistance;
+	private String busLogLastDistance;
+	
 	private String busLogPurpose;
 	private String busLogSignimg;
+
 	private String busLogStartTime;
 	private String busLogEndTime;
 	private String busLogRegdate;
@@ -77,5 +80,11 @@ public class BusLogDTO {
 	}
 	public void setDeviceSeq(String deviceSeq) {
 		this.deviceSeq = deviceSeq;
+	}
+	public String getBusLogLastDistance() {
+		return busLogLastDistance;
+	}
+	public void setBusLogLastDistance(String busLogLastDistance) {
+		this.busLogLastDistance = busLogLastDistance;
 	}
 }

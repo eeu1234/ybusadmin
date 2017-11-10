@@ -17,6 +17,7 @@
 			<busLogDriver>${log.busLogDriver}</busLogDriver>
 			<busLogDestination>${log.busLogDestination}</busLogDestination>
 			<busLogDistance>${log.busLogDistance}</busLogDistance>
+			<busLogLastDistance>${log.busLogLastDistance}</busLogLastDistance>
 			<busLogPurpose>${log.busLogPurpose}</busLogPurpose>
 			<busLogSignimg>${log.busLogSignimg}</busLogSignimg>
 			<busLogStartTime>${log.busLogStartTime}</busLogStartTime>

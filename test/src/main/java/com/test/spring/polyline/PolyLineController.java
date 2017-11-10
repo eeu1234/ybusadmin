@@ -1,5 +1,8 @@
 package com.test.spring.polyline;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.test.spring.dto.AdminUniversityDTO;
 import com.test.spring.dto.BusInfoDTO;
 import com.test.spring.dto.BusLogDTO;
 import com.test.spring.dto.BusStopCategoryDTO;
@@ -209,9 +213,52 @@ public class PolyLineController {
 			List<UniversityDTO> university = dao.list();
 			request.setAttribute("university", university);
 
+	
+			//몽골 시차 맞출필요없음 조회 기준이 운행 시작임.
+			List<BusLogDTO> busLogList = dao.busLogList(seq, start, end);
+			if(session.getAttribute("adto") != null){
+				AdminUniversityDTO adto = (AdminUniversityDTO) session.getAttribute("adto");
+				System.out.println(adto.getUniversitySeq());
+			
+				
+				
+				
+				
+				//miu 시차 설정
+				if(adto.getUniversitySeq().equals("10028")){
+					
+					SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					
+		
+					Date startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(start);
+					Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(end);
+					
+					Calendar calStart = Calendar.getInstance();
+					Calendar calEnd = Calendar.getInstance();
+					calStart.setTime(startDate);
+					calStart.add(Calendar.HOUR,+1);
+					
+					calEnd.setTime(endDate);
+					calEnd.add(Calendar.HOUR,+1);
+					
+
+					
+					start=  transFormat.format(calStart.getTime());
+					end=  transFormat.format(calEnd.getTime());
+	
+					System.out.println(start);
+					System.out.println(end);
+					
+				}	
+			}
+			
+			
+		
 			// 버스 정보 가져오기
 			List<LocationDTO> location = dao.location(seq, start, end);
-			List<BusLogDTO> busLogList = dao.busLogList(seq, start, end);
+			
+		
+		
 
 			
 		
@@ -244,6 +291,11 @@ public class PolyLineController {
 			return null;
 		}
 
+	}
+
+	private int parseInt(String start) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	// 정류장 가져오기

@@ -135,7 +135,7 @@ table tr td:nth-child(1) {
 				</tr>
 
 				<tr>
-					<td><input type="text" name="subject" class="form-control"
+					<td><input type="text" name="subject" class="form-control" maxlength="10"
 						placeholder="제목" /></td>
 
 				</tr>

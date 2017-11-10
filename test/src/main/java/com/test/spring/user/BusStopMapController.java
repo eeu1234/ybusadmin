@@ -58,6 +58,9 @@ public class BusStopMapController {
 		    try {
 		       
 		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    	return "user/selectUniversity";
+
+ 
 		    } catch (Exception e2) {
 		       // TODO: handle exception
 		    }
@@ -87,6 +90,7 @@ public class BusStopMapController {
 		    try {
 		       
 		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    	return "user/selectUniversity";
 		    } catch (Exception e2) {
 		       // TODO: handle exception
 		    }
@@ -117,6 +121,7 @@ public class BusStopMapController {
 		    try {
 		       
 		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    	return "user/selectUniversity";
 		    } catch (Exception e2) {
 		       // TODO: handle exception
 		    }
@@ -172,6 +177,7 @@ public class BusStopMapController {
 		    try {
 		       
 		    	response.sendRedirect("/spring/user/selectUniversity.action");
+		    	return "user/selectUniversity";
 		    } catch (Exception e2) {
 		       // TODO: handle exception
 		    }
@@ -250,7 +256,7 @@ public class BusStopMapController {
 		    try {
 		       
 		    	response.sendRedirect("/spring/user/selectUniversity.action");
-		    	return "";
+		    	return "user/selectUniversity";
 		    } catch (Exception e2) {
 		       // TODO: handle exception
 		    }

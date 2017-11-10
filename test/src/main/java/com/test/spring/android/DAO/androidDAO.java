@@ -102,6 +102,13 @@ public class androidDAO {
 			return sql.selectOne("android.myLastBusStop",deviceSeq);
 		}
 
+		
+		//버스 마지막 운행거리 겟
+		public String lastBusDistance(String deviceSeq){
+			
+			return sql.selectOne("android.lastBusDistance",deviceSeq);
+		}
+		
 		//싸인패드 운행대장
 		
 		public int insertBusLog(

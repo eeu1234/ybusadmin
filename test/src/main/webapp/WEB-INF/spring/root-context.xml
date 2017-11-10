@@ -8,13 +8,24 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- org.springframework.jdbc.datasource.DriverManagerDataSource -->
-	 
+
+
+	<bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://220.66.67.249:3306/cambusdb" />
+		<property name="username" value="cambusadmin" />
+		<property name="password" value="thskxk" />
+	</bean>
+
+	
+<!-- 
 	<bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://eeu1234.iptime.org:3306/ybusadmin" />
 		<property name="username" value="eeu1234" />
 		<property name="password" value="thskxk4889" />
 	</bean>
+ -->	
 <!-- 	
  	<bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />

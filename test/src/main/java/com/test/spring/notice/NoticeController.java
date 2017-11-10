@@ -165,7 +165,7 @@ public class NoticeController {
          // 공지사항 게시글 정보 가져오기
          NoticeDTO noticeContent = dao.notice(seq);
 
-         List<NoticeFileDTO> listFileType = new ArrayList<>();
+         List<NoticeFileDTO> listFileType = new ArrayList<NoticeFileDTO>();
          for (int i = 0; i < noticeContent.getFilelist().size(); i++) {
 
             String str = noticeContent.getFilelist().get(i).getNoticeFileName();
@@ -325,7 +325,7 @@ public class NoticeController {
          // 공지사항 게시글 정보 가져오기
          NoticeDTO noticeContent = dao.notice(seq);
          
-         List<NoticeFileDTO> listFileType = new ArrayList<>();
+         List<NoticeFileDTO> listFileType = new ArrayList<NoticeFileDTO>();
          for (int i = 0; i < noticeContent.getFilelist().size(); i++) {
 
             String str = noticeContent.getFilelist().get(i).getNoticeFileName();

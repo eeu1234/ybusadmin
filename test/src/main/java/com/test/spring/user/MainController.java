@@ -77,7 +77,7 @@ public class MainController {
 						RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");			
 						//response.sendRedirect("/spring/mainIndex.action");
 						dispatcher.forward(request, response);
-				
+						
 					} catch (IOException e) {
 		
 						e.printStackTrace();
@@ -107,6 +107,8 @@ public class MainController {
 	        try {
 	    
 	           response.sendRedirect("./selectUniversity.action");
+	           
+	           return;
 	        } catch (Exception e2) {
 	           // TODO: handle exception
 	    
@@ -163,6 +165,8 @@ public class MainController {
 			
 			if(universityDto==null){
 				response.sendRedirect("/index.action");
+				return "";
+
 				
 			}else{
 				
@@ -234,6 +238,7 @@ public class MainController {
 	         try {
 	            
 	        	 response.sendRedirect("/selectUniversity.action");
+	        	 return "";
 	         } catch (Exception e2) {
 	            // TODO: handle exception
 	         }
@@ -274,7 +279,7 @@ public class MainController {
 	      NoticeDTO noticeContent = noticeDao.notice(seq);
 
 	      
-	      List<NoticeFileDTO> listFileType = new ArrayList<>();
+	      List<NoticeFileDTO> listFileType = new ArrayList<NoticeFileDTO>();
 	      for(int i=0; i<noticeContent.getFilelist().size(); i++){
 	         
 	         String str = noticeContent.getFilelist().get(i).getNoticeFileName();

@@ -100,15 +100,22 @@ IS NOT NULL);
    
    
    
-   
+   	<select id ="lastBusDistance" parameterType="String" resultType="String">
+	 
+	
+
+		SELECT BUSLOGDISTANCE FROM BUS_LOG 
+		 WHERE DEVICESEQ = #{deviceSeq} 
+			ORDER BY BUSLOGSEQ DESC LIMIT 0,1;
+   </select>
    
 
 	<!-- 위,경도 insert -->
 	<insert id="sign" parameterType="com.test.spring.dto.BusLogDTO" >
 
 		
-		INSERT INTO BUS_LOG (BUSLOGSTAFF   ,BUSLOGDRIVER   ,BUSLOGDESTINATION    ,BUSLOGDISTANCE    ,BUSLOGPURPOSE    ,BUSLOGSIGNIMG       ,BUSLOGSTARTTIME ,BUSLOGENDTIME    ,DEVICESEQ) 
-		             VALUES (#{busLogStaff},#{busLogDriver}, #{busLogDestination}, #{busLogDistance},#{busLogPurpose} , #{busLogSignimg}, #{busLogStartTime}, #{busLogEndTime}, #{deviceSeq});
+		INSERT INTO BUS_LOG (BUSLOGSTAFF   ,BUSLOGDRIVER   ,BUSLOGDESTINATION    ,BUSLOGDISTANCE,BUSLOGLASTDISTANCE    ,BUSLOGPURPOSE    ,BUSLOGSIGNIMG       ,BUSLOGSTARTTIME ,BUSLOGENDTIME    ,DEVICESEQ) 
+		             VALUES (#{busLogStaff},#{busLogDriver}, #{busLogDestination}, #{busLogDistance},#{busLogLastDistance},#{busLogPurpose} , #{busLogSignimg}, #{busLogStartTime}, #{busLogEndTime}, #{deviceSeq});
 	</insert>
 	
 </mapper>
