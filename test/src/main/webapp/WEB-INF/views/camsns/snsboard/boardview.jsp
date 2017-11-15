@@ -102,6 +102,9 @@ html,body {
 	padding-top: 8px;
 	margin: 0;
 	font-weight: bold;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;">
 }
 
 .shareArea {

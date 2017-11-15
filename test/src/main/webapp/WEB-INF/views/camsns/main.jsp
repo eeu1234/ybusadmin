@@ -281,7 +281,11 @@ function search(word){
 	<div id="container">
 		<!-- 공지사항 -->
 
-
+		<div style="margin:5%;background-color:#5AAEFF;border-radius:5%;color:white;">
+		 익명으로 대신 전해드립니다.
+관리자가 상시 확인하여 필터링 후 게시합니다.
+또 우측 상단 화살표를 누르시면 카카오톡으로 해당 글 공유가 가능합니다.
+		</div>
 
 
 
@@ -294,7 +298,7 @@ function search(word){
 				<!-- 머리부분 -->
 				<div class="contentHeader ${boardDtoList.categoryType} }">
 					<div class="contentNum">#${boardDtoList.snsboardSeq}</div>
-					<div class="title">${boardDtoList.snsboardSubject}</div>
+					<div class="title" style="  text-overflow: ellipsis;white-space: nowrap; overflow: hidden;">${boardDtoList.snsboardSubject}</div>
 
 						<div class="shareArea">
 						<button value="${boardDtoList.snsboardSeq}" name="${boardDtoList.snsboardSeq}"	class="shareBtn glyphicon glyphicon-share-alt ${boardDtoList.categoryType}"></button>
