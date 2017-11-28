@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="virtualBusStop">
+	
+	<delete id="deleteVirtualBusStop" parameterType="String">
+		DELETE FROM VIRTUAL_BUSSTOP WHERE BUSSTOPDETAILCATEGORYSEQ = #{detailCategorySel};
+	</delete>
+	
+	
+	<select id="copyBusStop" parameterType="String" resultType="com.test.spring.dto.BusStopDTO">
+		SELECT BUSSTOPSEQ AS busStopSeq, BUSSTOPORDER AS busStopOrder, BUSSTOP AS busStop, BUSSTOPLATITUDE AS busStopLatitude, BUSSTOPLONGITUDE AS busStopLongitude, BUSSTOPLINE as busStopLine, BDC.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq from BUSSTOP_DETAIL_CATEGORY AS BDC
+		INNER JOIN BUSSTOP B
+		ON B.BUSSTOPDETAILCATEGORYSEQ = BDC.BUSSTOPDETAILCATEGORYSEQ
+		WHERE B.BUSSTOPDETAILCATEGORYSEQ = #{detailCategorySel};
+	</select>
+	
+	<insert id="pasteVirtualBusStop" parameterType="com.test.spring.dto.BusStopDTO">
+		INSERT INTO VIRTUAL_BUSSTOP(VIRTUALBUSSTOPSEQ,VIRTUALBUSSTOP,VIRTUALBUSSTOPLATITUDE,VIRTUALBUSSTOPLONGITUDE,VIRTUALBUSSTOPLINE,VIRTUALBUSSTOPORDER,BUSSTOPDETAILCATEGORYSEQ)
+		VALUES(#{busStopSeq},#{busStop},#{busStopLatitude},#{busStopLongitude},#{busStopLine},#{busStopOrder},#{busStopDetailCategorySeq});
+	</insert>
+	
+	<update id="saveVirtualBusStop" parameterType="com.test.spring.dto.VirtualBusStopDTO">
+		UPDATE VIRTUAL_BUSSTOP SET VIRTUALBUSSTOPLATITUDE = #{virtualBusStopLatitude} , VIRTUALBUSSTOPLONGITUDE = #{virtualBusStopLongitude} WHERE VIRTUALBUSSTOPSEQ = #{virtualBusStopSeq}; 
+	</update>
+	
+	
+	<!-- 가상버스정류장 리스트 가져오기 -->
+	<select id="virtualBusStopList" parameterType="String" resultType="com.test.spring.dto.VirtualBusStopDTO">
+		SELECT VIRTUALBUSSTOPSEQ AS virtualBusStopSeq, VIRTUALBUSSTOP AS virtualBusStop, VIRTUALBUSSTOPLATITUDE AS virtualBusStopLatitude, VIRTUALBUSSTOPLONGITUDE AS virtualBusStopLongitude,
+		VIRTUALBUSSTOPLINE AS virtualBusStopLine, VIRTUALBUSSTOPORDER AS virtualBusStopOrder FROM VIRTUAL_BUSSTOP WHERE BUSSTOPDETAILCATEGORYSEQ= #{bseq};
+	</select>
+</mapper>

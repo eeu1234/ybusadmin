@@ -1,0 +1,85 @@
+<!-- 스케줄러 ON 하기 -->
+SET GLOBAL event_scheduler = ON;
+SET @@global.event_scheduler = ON;
+SET GLOBAL event_scheduler = 1;
+SET @@global.event_scheduler = 1; 
+
+
+<!-- 스케줄러 ON 체크 -->
+show variables like 'event%' ;
+
+
+
+<!-- DB선택 -->
+use cambusdb;
+
+
+
+
+
+<!-- 프로시저 만들기 -->
+	
+		DELIMITER //
+		
+		
+		CREATE PROCEDURE backup_location_pr()
+		BEGIN
+        
+			SET @tablename = 'LOCATION';
+
+				SELECT @query := CONCAT('RENAME TABLE `', @tablename, '` TO `', 
+					date_format(now(), '%Y%m'), @tablename, '`');
+
+				PREPARE STMT FROM @query;
+				EXECUTE STMT;
+        
+        
+	
+            
+		CREATE TABLE `LOCATION` (
+		  `LOCATIONSEQ` int(100) unsigned NOT NULL AUTO_INCREMENT,
+		  `LOCATIONLATITUDE` varchar(50) NOT NULL,
+		  `LOCATIONLONGITUDE` varchar(50) NOT NULL,
+		  `LOCATIONTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		  `DEVICESEQ` int(10) unsigned DEFAULT NULL,
+		  `BUSSTOPSEQ` int(10) unsigned DEFAULT NULL,
+		  PRIMARY KEY (`LOCATIONSEQ`),
+		  KEY `DEVICESEQ` (`DEVICESEQ`),
+		  KEY `BUSSTOPSEQ` (`BUSSTOPSEQ`),
+		  FOREIGN KEY (`DEVICESEQ`) REFERENCES `DEVICE` (`DEVICESEQ`),
+		  FOREIGN KEY (`BUSSTOPSEQ`) REFERENCES `BUSSTOP` (`BUSSTOPSEQ`)
+		); 
+		
+			
+		END
+		//
+
+		DELIMITER ;
+		
+		
+		
+		
+		
+
+
+<!-- 스케쥴러 만들기 -->
+CREATE EVENT IF NOT EXISTS cambusdb.backup_location -- DB명.스케쥴러명
+
+    ON SCHEDULE
+
+	
+        
+        EVERY 1 MONTH -- event scheduler 실행 간격(년,월,일,시,분,초)
+        STARTS '2017-12-01 00:00:00' -- scheduler 등록시간 
+
+    DO
+
+        call cambusdb.backup_location_pr(); -- DB명.프로시저명(); event scheduler로 등록할 쿼리구문	
+		
+		
+		
+		
+SHOW PROCEDURE STATUS;
+DROP PROCEDURE backup_location_pr;
+show EVENTS ;
+DROP EVENT backup_location;

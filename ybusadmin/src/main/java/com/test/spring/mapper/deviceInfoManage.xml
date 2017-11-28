@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="deviceInfoManage">
+
+   <select id="diviceList" resultType="com.test.spring.dto.DeviceDTO">
+	   SELECT DEVICESEQ AS deviceSeq, DEVICEMODEL AS deviceModel, DEVICETEL AS deviceTel, U.UNIVERSITYSEQ AS universitySeq
+		,U.UNIVERSITYNAME AS universityName
+		FROM DEVICE D
+		LEFT JOIN UNIVERSITY U
+		ON U.UNIVERSITYSEQ = D.UNIVERSITYSEQ;
+   </select>
+   
+   <select id="universityList" resultType="com.test.spring.dto.UniversityDTO">
+   		SELECT UNIVERSITYSEQ AS universitySeq,UNIVERSITYNAME AS universityName FROM UNIVERSITY;
+   </select>
+   
+	<update id="updateDevice" parameterType="map">
+		update DEVICE SET DEVICEMODEL = #{deviceModel},DEVICETEL = #{deviceTel}, UNIVERSITYSEQ = ${universitySel} WHERE DEVICESEQ = #{seq};
+	</update>
+   
+   <!-- 디바이스 삭제 -->
+   <delete id="deleteDevice" parameterType="String">
+   		delete from DEVICE where DEVICESEQ = #{seq};
+   </delete>
+   
+</mapper>
+
+
+
+
+
+
+
+

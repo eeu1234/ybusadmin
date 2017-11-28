@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="timeTable">
+
+   
+   
+	
+	<!-- 버스 시간 테이블 -->
+	<!-- 버스스탑카테고리 가져오기 -->
+	<select id="getCategoryList" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
+		SELECT BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSSTOPCATEGORY AS busStopCategory
+			FROM BUSSTOP_CATEGORY
+				WHERE UNIVERSITYSEQ = #{universitySeq} AND BUSSTOPCATEGORYSTAT = 'show'
+	</select>
+	
+	<!-- 버스스탑디테일카테고리 가져오기 -->
+	<select id="getDetailCategoryDTO" parameterType="String" resultType="com.test.spring.dto.BusStopDetailCategoryDTO">
+		SELECT BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, BUSSTOPDETAILCATEGORYNAME AS busStopDetailCategoryName
+			FROM BUSSTOP_DETAIL_CATEGORY
+				WHERE BUSSTOPCATEGORYSEQ = #{busStopCategorySeq} AND BUSSTOPDETAILCATEGORYSTAT = 'show'
+	</select>
+	
+	<!-- 버스시간표 가져오기 -->
+	<select id="getBusSchedule" parameterType="String" resultType="com.test.spring.dto.BusScheduleDTO">
+		SELECT SUBSTR(BS.BUSTIME,1,5) busTime, BS.COURSENAME AS courseName, BS.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq
+			FROM BUSSCHEDULE BS
+				INNER JOIN BUSSTOP_DETAIL_CATEGORY BD
+					ON BS.BUSSTOPDETAILCATEGORYSEQ = BD.BUSSTOPDETAILCATEGORYSEQ
+						WHERE BS.BUSSTOPDETAILCATEGORYSEQ = #{busStopDetailCategorySeq} AND WEEKDAYS = #{weekDays}
+							ORDER BY BUSTIME ASC;
+	</select>
+	
+	<!-- 버스시간표 가져오기 -->
+	<select id="getBusSchedule2" parameterType="String" resultType="com.test.spring.dto.BusScheduleDTO">
+		SELECT BS.BUSTIME AS busTime, BS.COURSENAME AS courseName, BS.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq
+			FROM BUSSCHEDULE BS
+				INNER JOIN BUSSTOP_DETAIL_CATEGORY BD
+					ON BS.BUSSTOPDETAILCATEGORYSEQ = BD.BUSSTOPDETAILCATEGORYSEQ
+						WHERE BS.BUSSTOPDETAILCATEGORYSEQ = #{busStopCategorySeq} AND WEEKDAYS = #{weekDays}
+							ORDER BY BUSTIME ASC;
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
