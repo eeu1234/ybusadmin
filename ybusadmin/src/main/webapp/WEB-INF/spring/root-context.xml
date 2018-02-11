@@ -8,7 +8,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- org.springframework.jdbc.datasource.DriverManagerDataSource -->
 
-
+ 
 
 	<!-- <bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource"> 
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> <property 
