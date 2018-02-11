@@ -137,6 +137,7 @@ body {
 	padding: 8px;
 	box-shadow: 0px 7px 10px 0 silver inset;
 	text-align:left;
+	word-wrap : break-word;
 }
 
 .contentPic {

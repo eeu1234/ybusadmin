@@ -456,7 +456,11 @@ a:link,a:visited,a:active,a:hover{
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-
+.another_box3{
+	background-image:url("/spring/images/mainImage/another_box_background_3.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 .another_icon_container{
 	float:left;
 	margin-left:10%;
@@ -609,17 +613,23 @@ a:link,a:visited,a:active,a:hover{
 				<div class="another_text_container">학식 메뉴보기</div>
 				<div style="clear:both;"></div>
 			</div>
-			<div class="another_box another_box2" onclick="location.href='https://total.yongin.ac.kr'">
+			<div class="another_box another_box2" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">
+				<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_food.png"></div>
+				<div class="another_text_container">등교길 게시판</div>
+				<div style="clear:both;"></div>
+			</div>
+			<div class="another_box another_box3" onclick="location.href='https://total.yongin.ac.kr'">
 				<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_yiu.png"></div>
 				<div class="another_text_container">용인대 종합정보서비스</div>
 				<div style="clear:both;"></div>
 			</div>
-			<div class="another_box another_box3" onclick="location.href='/spring/cambus.action'">
+			<div class="another_box another_box1" onclick="location.href='/spring/cambus.action'">
 				<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_cambus.png"></div>
 				<div class="another_text_container">ABOUT CAMBUS</div>
 				<div style="clear:both;"></div>
 			</div>
-			
+				
+		
 			
 			<!--명지대-->
 			

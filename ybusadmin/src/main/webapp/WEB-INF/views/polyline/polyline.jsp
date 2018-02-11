@@ -632,9 +632,44 @@ function search(){
                    
                },
                error : function(){
-                  alert("실패하였습니다.");
-               }
-            });//ajax
+                  alert("최대 30일의 데이터만 조회가 가능합니다. 다시 시도해주세요.");
+               },
+               
+               beforeSend: function () {//로딩이미지
+               
+	               var width = 0;
+	               var height = 0;
+	               var left = 0;
+	               var top = 0;
+	
+	               width = 400;
+	               height = 400;
+	
+	
+	               top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+	               left = 40;
+
+  
+
+	               if($("#div_ajax_load_image").length != 0) {
+	                      $("#div_ajax_load_image").css({
+	                             "top": top+"px",
+	                             "left": left+"%"
+	                      });
+	                      $("#div_ajax_load_image").show();
+	               }
+	               else {
+	                      $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + '%; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="/spring/images/cambus/image/ajax_loader6.gif" style="width:400px; height:400px;"></div>');
+	               }
+
+		        },
+		        complete: function () {
+		                      $("#div_ajax_load_image").hide();
+		        }
+
+
+
+     	  });//ajax
 
             /* ------------------------------------------정류장---------------------------------- */
               

@@ -1,5 +1,6 @@
 package com.test.spring.polyline;
 
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -212,13 +213,82 @@ public class PolyLineController {
 			// 대학교 다시 가져오기
 			List<UniversityDTO> university = dao.list();
 			request.setAttribute("university", university);
+			
+			
+			SimpleDateFormat transFormatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date startFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(start);
+			Date endFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(end);
+			
+			
+			
+			
+		    // 시간차이를 시간,분,초를 곱한 값으로 나누면 하루 단위가 나옴
+	        long diff = endFormat.getTime() - startFormat.getTime();
+	        long diffDays = diff / (24 * 60 * 60 * 1000);
+	 
+	        System.out.println("날짜차이=" + diffDays);
 
+	        //30일 까지만 조회가능
+	        if(diffDays >30) {
+	  	        	return "";
+	        }
+
+	
+		
+			Calendar monthStart = Calendar.getInstance();
+			Calendar monthEnd = Calendar.getInstance();
+			
+			Calendar nowCalendar = Calendar.getInstance( );
+			monthStart.setTime(startFormat);
+			monthEnd.setTime(endFormat);
+			System.out.println("현재 월: " + (nowCalendar.get(Calendar.MONTH) + 1));
+		    System.out.println("현재 일: " +  nowCalendar.get(Calendar.DAY_OF_MONTH));
+			
+
+			
+			start=  transFormatDate.format(monthStart.getTime());
+			end=  transFormatDate.format(monthEnd.getTime());
+			
+				//월 형태 변형(01,02,03...)
+				String sMonth = "";
+				String eMonth = "";
+				String nowMonth = "";
+				if (monthStart.get(monthStart.MONTH)+1 < 10) {
+				    sMonth = "0"+String.valueOf(monthStart.get(monthStart.MONTH)+1);
+				} else {
+				    sMonth = String.valueOf(monthStart.get(monthStart.MONTH)+1);
+				}
+				if (monthEnd.get(monthEnd.MONTH)+1 < 10) {
+					eMonth = "0"+String.valueOf(monthEnd.get(monthEnd.MONTH)+1);
+				} else {
+					eMonth = String.valueOf(monthEnd.get(monthEnd.MONTH)+1);
+				}
+				if (nowCalendar.get(Calendar.MONTH)+1 < 10) {
+					nowMonth = "0"+String.valueOf(monthEnd.get(monthEnd.MONTH)+1);
+				} else {
+					nowMonth = String.valueOf(monthEnd.get(monthEnd.MONTH)+1);
+				}
+
+			String startTable = monthStart.get(monthStart.YEAR)+""+sMonth;
+			String endTable = monthEnd.get(monthEnd.YEAR)+""+eMonth;
+			String nowYearMonth = nowCalendar.get(Calendar.YEAR)+nowMonth;
+			System.out.println("nowyearMonth:"+nowYearMonth);
+		
+			//현재와 일치하는 달은 LOCATION 테이블이기때문에 빈문자열로 치환
+			if(startTable.equals(nowYearMonth)) {
+				startTable ="";
+			}else if(endTable.equals(nowYearMonth)) {
+				endTable ="";
+			};
 	
 			//몽골 시차 맞출필요없음 조회 기준이 운행 시작임.
 			List<BusLogDTO> busLogList = dao.busLogList(seq, start, end);
 			if(session.getAttribute("adto") != null){
 				AdminUniversityDTO adto = (AdminUniversityDTO) session.getAttribute("adto");
 				System.out.println(adto.getUniversitySeq());
+			
+				
+				
 			
 				
 				
@@ -255,7 +325,7 @@ public class PolyLineController {
 			
 		
 			// 버스 정보 가져오기
-			List<LocationDTO> location = dao.location(seq, start, end);
+			List<LocationDTO> location = dao.location(seq, start, end,startTable,endTable);
 			
 		
 		

@@ -73,11 +73,13 @@ public class PolyLineDAO {
 	}
 	
 	//버스 위치 정보 분류
-	public List<LocationDTO> location(String seq, String start, String end) {
+	public List<LocationDTO> location(String seq, String start, String end,String startTable,String endTable) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("seq",seq);
 		map.put("start",start);
 		map.put("end",end);
+		map.put("startTable",startTable);
+		map.put("endTable",endTable);
 		return sql.selectList("polyline.location",map);
 	}
 	

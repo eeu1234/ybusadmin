@@ -8,6 +8,9 @@ public class LocationDTO {
 	private String locationTime;				//해당시간
 	private String staffName;  					//staffName
 	private String deviceSeq;					//장비 seq
+	
+	private String startTable;
+	private String endTable;
 	public String getStaffName() {
 		return staffName;
 	}
@@ -50,5 +53,17 @@ public class LocationDTO {
 	}
 	public void setBusStopSeq(String busStopSeq) {
 		this.busStopSeq = busStopSeq;
+	}
+	public String getStartTable() {
+		return startTable;
+	}
+	public void setStartTable(String startTable) {
+		this.startTable = startTable;
+	}
+	public String getEndTable() {
+		return endTable;
+	}
+	public void setEndTable(String endTable) {
+		this.endTable = endTable;
 	}
 }
