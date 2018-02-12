@@ -6,7 +6,6 @@
 <list>
 	<c:forEach items="${location}" var="dto">
 		<item>
-			
 			<locationLati>${dto.locationLatitude}</locationLati>
 			<locationLongi>${dto.locationLongitude}</locationLongi>
 			<locationTime>${dto.locationTime}</locationTime>

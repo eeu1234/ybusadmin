@@ -522,6 +522,7 @@ function search(){
                type : "GET",
                url : "/spring/polyline/location.action",
                data : "seq="+busnumSel+"&start="+start+"&end="+end,
+               dataType: "text",
                success : function(data){
                
                   list = [];
@@ -531,6 +532,7 @@ function search(){
                   
                
                   list = $(data).find("item");
+                
                   drawPloyLine();
                   
                   
@@ -631,7 +633,10 @@ function search(){
                   
                    
                },
-               error : function(){
+               error : function(request,status,error){
+            	//   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+            	   
                   alert("최대 30일의 데이터만 조회가 가능합니다. 다시 시도해주세요.");
                },
                

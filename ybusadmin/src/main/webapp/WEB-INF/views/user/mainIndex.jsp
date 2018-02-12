@@ -221,7 +221,7 @@ body {
 	overflow: hidden;
 	
 	margin-left:4%;
-	margin-top: -1px;
+	margin-top: -1.5px;
 	
 	font-size:0.8em;
 	font-family: 'NotoSansCJKkr-DemiLight';
@@ -373,7 +373,7 @@ a:link,a:visited,a:active,a:hover{
 	
 	margin-left:2.5%;
 	margin-right:2.5%;
-	margin-bottom:2%;
+	margin-bottom:20px;
 }
 #app_register_box img{
 	
@@ -456,8 +456,8 @@ a:link,a:visited,a:active,a:hover{
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-.another_box3{
-	background-image:url("/spring/images/mainImage/another_box_background_3.png");
+.another_box4{
+	background-image:url("/spring/images/mainImage/another_box_background_4.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -541,7 +541,7 @@ a:link,a:visited,a:active,a:hover{
 
 	
 	
-	<div id="ad_container" onclick="location.href='/spring/user/makeIcon.action'">
+	<div id="ad_container">
 	
 		
 	<!-- Swiper -->
@@ -569,11 +569,13 @@ a:link,a:visited,a:active,a:hover{
 			</div>
 			
 			<div class="bus_icon bus_icon_right bus_button" id="bus_icon2">
-				<div class="iconBox BSC2">
+				<div class="iconBox BSC2" <c:if test="${universityDto.universitySeq==10020}">onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';"> <!-- 명지대 처리용 --><div class="iconImg"><img src="/spring/images/mainImage/icon_route.png" alt="등교루트" /></div><div class="iconInfo">등교길<br>게시판</div></c:if><c:if test="${universityDto.universitySeq!=10020}">></c:if>
 				<!-- 
 					<div class="iconImg "><img src="/spring/images/mainImage/icon_secondBus.png" alt="시외버스" /></div>
 					<div class="iconInfo">노란버스<br>조회하기</div>
-				 -->
+				 --> 
+				 
+			
 				</div>
 			</div>
 			<div style="clear:both;"></div>
@@ -606,36 +608,89 @@ a:link,a:visited,a:active,a:hover{
 	<div id="another_container">
 		<div id="another_text">ANOTHER</div>
 		<div id="another_contents">
-		
-			<!--용인대-->
-			<div class="another_box another_box1">
-				<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_food.png"></div>
-				<div class="another_text_container">학식 메뉴보기</div>
-				<div style="clear:both;"></div>
-			</div>
-			<div class="another_box another_box2" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">
-				<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_food.png"></div>
-				<div class="another_text_container">등교길 게시판</div>
-				<div style="clear:both;"></div>
-			</div>
-			<div class="another_box another_box3" onclick="location.href='https://total.yongin.ac.kr'">
-				<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_yiu.png"></div>
-				<div class="another_text_container">용인대 종합정보서비스</div>
-				<div style="clear:both;"></div>
-			</div>
-			<div class="another_box another_box1" onclick="location.href='/spring/cambus.action'">
-				<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_cambus.png"></div>
-				<div class="another_text_container">ABOUT CAMBUS</div>
-				<div style="clear:both;"></div>
-			</div>
+	
+			<c:choose>
+				<c:when test="${universityDto.universitySeq==1}">
+							
+					<!--용인대-->
+					<div class="another_box another_box1" onclick="location.href='/spring/user/yiuFood.action'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_food.png"></div>
+						<div class="another_text_container">학식 메뉴보기</div>
+						<div style="clear:both;"></div>
+					</div>
+					<div class="another_box another_box2" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_route.png"></div>
+						<div class="another_text_container">등교길 게시판</div>
+						<div style="clear:both;"></div>
+					</div>
+					<div class="another_box another_box3" onclick="location.href='https://total.yongin.ac.kr'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_yiu.png"></div>
+						<div class="another_text_container">용인대 종합정보서비스</div>
+						<div style="clear:both;"></div>
+					</div>
+					<div class="another_box another_box4" onclick="location.href='/spring/cambus.action'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_cambus.png"></div>
+						<div class="another_text_container" style="font-size: 0.7em;">ABOUT CAMBUS</div>
+						<div style="clear:both;"></div>
+					</div>
+						
 				
+			
+				</c:when>
+				<c:when test="${universityDto.universitySeq==10020}">
+			
+					<!--명지대-->
+					
+				
+					<div class="another_box another_box1" onclick="location.href='/spring/user/yiuFood.action'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_food.png"></div>
+						<div class="another_text_container">학식 메뉴보기</div>
+						<div style="clear:both;"></div>
+					</div>
+					<div class="another_box another_box2" onclick="location.href='https://sso.mju.ac.kr/swift/login/login_myiweb.jsp?RSP=myiweb.mju.ac.kr&RelayState=index_SSO.jsp'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_mju.png"></div>
+						<div class="another_text_container">명지대 마이아이웹</div>
+						<div style="clear:both;"></div>
+					</div>
+					<div class="another_box another_box3" onclick="location.href='http://www.mju.ac.kr/mbs/mjukr/index.jsp?SWIFT_SESSION_CHK=false'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_mju.png"></div>
+						<div class="another_text_container">명지대학교 홈페이지</div>
+						<div style="clear:both;"></div>
+					</div>
+					<div class="another_box another_box4" onclick="location.href='/spring/cambus.action'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_cambus.png"></div>
+						<div class="another_text_container" style="font-size: 0.7em;">ABOUT CAMBUS</div>
+						<div style="clear:both;"></div>
+					</div>
+						
+					
+				</c:when>
+				<c:when test="${universityDto.universitySeq==10028}">
+						
+					<!--몽골국제대-->
+					<div class="another_box another_box1" onclick="location.href='http://http://miu.edu.mn/'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_miu.png"></div>
+						<div class="another_text_container"> MIU page</div>
+						<div style="clear:both;"></div>
+					</div>
+					<div class="another_box another_box2" onclick="location.href='http://http://wise.miu.edu.mn/common/login/login_form.php'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_miu.png"></div>
+						<div class="another_text_container">MIU::W.I.S.E</div>
+						<div style="clear:both;"></div>
+					</div>
+					<div class="another_box another_box3" onclick="location.href='/spring/cambus.action'">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_cambus.png"></div>
+						<div class="another_text_container" style="font-size: 0.7em;">ABOUT CAMBUS</div>
+						<div style="clear:both;"></div>
+					</div>
+				</c:when>
+			</c:choose>
+							
+		
+		
 		
 			
-			<!--명지대-->
-			
-			
-			
-			<!--몽골국제대-->
+		
 			
 			
 			
@@ -655,7 +710,10 @@ a:link,a:visited,a:active,a:hover{
 		
 				The UNIV BIS::CAMBUS made by Cambus Team.2016 All right ⒞ reserved. <br>
 				KAKAO : @CAMBUS<br>
-				<a href="mailto:eeu4327@gmail.com" style="color: #bdbdbd;text-decoration-line:underline;">Mail : CAMBUS</a> 
+				
+				<a href="mailto:eeu4327@gmail.com" style="color: #bdbdbd;text-decoration-line:underline;">Mail : CAMBUS</a><br>
+				<a href="/spring/uploadUniversity.action?universitySeq=${universityDto.universitySeq}&oldVersion='yes'" style="color: #bdbdbd;text-decoration-line:underline;">2017버전으로 보기</a><br>
+				 
 		 
 
 
@@ -699,7 +757,7 @@ function appendCategory(){
 		<c:choose>
 			<c:when test="${status.count==1}">
 				img.setAttribute("src","./images/mainImage/icon_firstBus.png");
-			</c:when>
+			</c:when> 
 			<c:when test="${status.count==2}">
 			img.setAttribute("src","./images/mainImage/icon_secondBus.png");
 			</c:when>

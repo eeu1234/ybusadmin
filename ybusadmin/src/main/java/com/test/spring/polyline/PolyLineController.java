@@ -277,7 +277,8 @@ public class PolyLineController {
 			//현재와 일치하는 달은 LOCATION 테이블이기때문에 빈문자열로 치환
 			if(startTable.equals(nowYearMonth)) {
 				startTable ="";
-			}else if(endTable.equals(nowYearMonth)) {
+			}
+			if(endTable.equals(nowYearMonth)) {
 				endTable ="";
 			};
 	
@@ -329,11 +330,6 @@ public class PolyLineController {
 			
 		
 		
-
-			
-		
-			
-			
 			
 			
 			

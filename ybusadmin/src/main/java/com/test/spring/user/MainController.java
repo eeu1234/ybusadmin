@@ -1,13 +1,7 @@
 package com.test.spring.user;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +23,6 @@ import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.NoticeDTO;
 import com.test.spring.dto.NoticeFileDTO;
 import com.test.spring.dto.UniversityDTO;
-import com.test.spring.dto.WeatherStatDTO;
 import com.test.spring.notice.NoticeDAO;
 
 @Controller("MainController")
@@ -120,7 +112,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(method={RequestMethod.GET}, value="/uploadUniversity.action")
-	public void uploadUniversity(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq){
+	public void uploadUniversity(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String oldVersion){
 		
 		
 		UniversityDTO universityDTO = new UniversityDTO();
@@ -133,10 +125,17 @@ public class MainController {
 			
 			
 			try{
-				
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");			
+				if(oldVersion==null){
+					
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex.action");			
+					dispatcher.forward(request, response);
+				}else {
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/mainIndex2017.action");			
+					dispatcher.forward(request, response);
+					
+				}
+					
 				//response.sendRedirect("/spring/mainIndex.action");
-				dispatcher.forward(request, response);
 			}catch(Exception e){
 				e.toString();
 			}
@@ -219,6 +218,74 @@ public class MainController {
 	        	 return "";
 	         }
 	      }
+		
+	}
+	
+	@RequestMapping(method={RequestMethod.GET}, value="/mainIndex2017.action")
+	public String mainIndex2017(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,UniversityDTO universityDto){
+		
+		try {
+			
+			
+			//내용
+			universityDto = (UniversityDTO) session.getAttribute("universityDto");
+			
+			if(universityDto==null){
+				response.sendRedirect("/index.action");
+				return "";
+				
+				
+			}else{
+				
+				universitySeq = universityDto.getUniversitySeq();
+				
+			}
+			//busStopCategorySeq ="2";
+			
+			HashMap<String,String> map = new HashMap<String,String>();
+			map.put("busStopCategorySeq", busStopCategorySeq);
+			map.put("universitySeq", universitySeq);
+			//이학교에 있는 노선을 메인 화면에 띄워주어야함
+			//노선목록 들고옴.
+			//공지사항목록 들고옴.
+			
+			List<NoticeDTO> nList = dao.getAllNotice();
+			
+			List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
+			
+			List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			request.setAttribute("nList", nList);
+			
+			request.setAttribute("bsdcList", bsdcList);
+			request.setAttribute("bscList", bscList);
+			request.setAttribute("universityDto", universityDto);
+			
+			return "user/mainIndex2017";
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			session.invalidate();
+			try {
+				
+				response.sendRedirect("/selectUniversity.action");
+				return "";
+			} catch (Exception e2) {
+				// TODO: handle exception
+				System.out.println(e2.toString());
+				
+				return "";
+			}
+		}
 		
 	}
 	
@@ -308,7 +375,9 @@ public class MainController {
 	      
 	      return "user/noticeView";
 	   }
-	   //공지사항 내용 가져옴
+	   
+	   
+	   //애널리틱스용 서울버스
 	   @RequestMapping(method={RequestMethod.GET}
 	   , value="/user/seoulBus.action")
 	   public String seoulBus(HttpServletRequest request, HttpSession session, HttpServletResponse response
@@ -317,5 +386,53 @@ public class MainController {
 		
 		   
 		   return "user/seoulBus";
+	   }
+	   
+	   
+	   
+	   //용인대학교 학식 크롤링 
+	   @RequestMapping(method={RequestMethod.GET}, value="/user/yiuFood.action")
+	   public String yiuFood(HttpServletRequest request, HttpSession session, HttpServletResponse response,String universitySeq,String searchValue,String typeValue
+			  ) throws IOException{
+		   System.out.println(universitySeq);
+		   
+		   UniversityDTO udto = (UniversityDTO) session.getAttribute("universityDto");
+		   
+		
+		if(searchValue == null) {
+			
+		}else if(searchValue.equals("1") || searchValue.equals("2") || searchValue.equals("3")) {
+			//용인대 학식 파싱
+			org.jsoup.nodes.Document doc = Jsoup.connect("http://mt.yongin.ac.kr/life/menu?searchValue="+searchValue).get();
+			Elements table = doc.select(".tableType1");
+		//	System.out.println(table.toString());
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(table.toString().replace("(메뉴는 식자재 수급사정 상 변동될 수 있음을 양해부탁드립니다. 원산지는 식당 내 게시된 메뉴표를 참조하여 주시기 바랍니다.)", ""));
+			return null;
+		}
+		else if(typeValue != null) {
+				//명지대 학식 파싱
+			   org.jsoup.nodes.Document doc = Jsoup.connect("http://www.mju.ac.kr/mbs/mjukr/jsp/restaurant/restaurant.jsp?configIdx="+typeValue+"&id=mjukr_="+searchValue).get();
+			   System.out.println(searchValue+"///////////////////////"+typeValue);
+			   Elements table = doc.select(".sub");
+			   	System.out.println(table.toString());
+			   response.setCharacterEncoding("utf-8");
+			   response.getWriter().print(table.toString().replace("(메뉴는 식자재 수급사정 상 변동될 수 있음을 양해부탁드립니다. 원산지는 식당 내 게시된 메뉴표를 참조하여 주시기 바랍니다.)", ""));
+			   return null;
+		   }
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			request.setAttribute("universityDto", udto);
+		
+		
+		   return "user/yiuFood";
 	   }
 }
