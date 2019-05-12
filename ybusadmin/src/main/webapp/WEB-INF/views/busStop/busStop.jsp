@@ -121,9 +121,10 @@ max-width:2440px;
 }
 </style>
 
-<script type="text/javascript"
-   src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=c5wa0CTc7jalj6c4Y0tw&submodules=panorama"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&libraries=places&callback=initMap"
+
+   <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=c5wa0CTc7jalj6c4Y0tw&submodules=panorama"></script>
+<script 
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9sI7_yAlqc5XrEulhJ8v4ZtnhXGrED4k&callback=initMap"
         async defer></script>
 
 <script type="text/javascript">
@@ -696,8 +697,8 @@ max-width:2440px;
 	      //========================
 	  }
 	  catch(error){
-		//alert("지도 불러오기 실패");
-		location.reload();
+		alert("지도 불러오기 실패");
+		//location.reload();
 	  }
       
       //infowindow.open(map); 윈도우창 열기

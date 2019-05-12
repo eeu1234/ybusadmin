@@ -31,11 +31,28 @@
 	integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
 	crossorigin="anonymous"></script>
 
+<!-- Analitics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-93928507-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+if(!wcs_add) var wcs_add = {};
+wcs_add["wa"] = "171aefb65e5675";
+wcs_do();
+</script>
 
 	
 <script>
 
-<c:if test="${universityDto.universitySeq} == 1">
+
 
 	$(function(){
 		$("#StudentHall").click(function(){
@@ -78,67 +95,8 @@
 			  });	
 		})		
 });
-</c:if>
-<c:if test ="${universityDto.universitySeq} == 10020">
 	
-	$(function(){
-		$("#StudentHall").click(function(){
-			  $.ajax({
-			          type: 'get'
-			        , url: '/spring/user/yiuFood.action'
-			        , data : "searchValue="+'051002050000'+"&universitySeq=${universityDto.universitySeq}&typeValue"+"36337"
-					, dataType : 'text'
-			        , success: function(data) {
-			        	$("#listDiv").html(data);
-			          }
-			  });	
-		})		
-})
-
-	$(function(){
-		$("#domitori").click(function(){
-			  $.ajax({
-			          type: 'get'
-			        , url: '/spring/user/yiuFood.action'
-                 	, data : "searchValue="+'051002020000'+"&universitySeq=${universityDto.universitySeq}&typeValue"+"36548"
-					, dataType : 'html'
-			        , success: function(data) {
-			        	$("#listDiv").html(data);
-			          }
-			  });	
-		})		
-})
-
-	$(function(){
-		$("#Hwangyeong").click(function(){
-			  $.ajax({
-		          type: 'get'
-	        	    , url: '/spring/user/yiuFood.action'
-	        	    , data : "searchValue="+'051002030000'+"&universitySeq=${universityDto.universitySeq}&typeValue"+"36550"
-					, dataType : 'html'
-			        , success: function(data) {
-			        	$("#listDiv").html(data);
-			          }
-			  });	
-		})		
-});
-
 	
-	$(function(){
-		$("#mjuProf").click(function(){
-			  $.ajax({
-		          type: 'get'
-	        	    , url: '/spring/user/yiuFood.action'
-	        	    , data : "searchValue="+'051002040000'+"&universitySeq=${universityDto.universitySeq}&typeValue"+"58976"
-					, dataType : 'html'
-			        , success: function(data) {
-			        	$("#listDiv").html(data);
-			          }
-			  });	
-		})		
-});
-	
-</c:if>	
 </script>
 	
 

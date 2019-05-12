@@ -1,14 +1,24 @@
 package com.test.spring.android.Controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.test.spring.android.DAO.androidDAO;
@@ -25,6 +34,7 @@ import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.LocationDTO;
 import com.test.spring.dto.VirtualBusStopDTO;
+import com.test.spring.user.BusStopMapDAO;
 
 @Controller("location")
 public class location {
@@ -33,7 +43,8 @@ public class location {
 		@Autowired
 		androidDAO androidDao;
 		
-		
+		@Autowired
+		BusStopMapDAO busStopMapDao; 
 		
 		//거리 오차 조정
 		double gap = 50;
@@ -167,7 +178,20 @@ public class location {
 											,String deviceLat
 												,String deviceLng) {
 			
+			locationCalculate(deviceSeq,deviceLat,deviceLng);
+			
+			
+			
+		}
+
 		
+		
+		/*2019-05-11 GPER 연동을 위해 기존 location.action에서 알고리즘 분리*/
+		public void locationCalculate(String deviceSeq,String deviceLat,String deviceLng ) {
+			
+		
+			
+			
 			//1.기기 seq와 함게 insert
 			androidDao.insertBusLocation(deviceSeq,deviceLat,deviceLng);
 			
@@ -182,10 +206,10 @@ public class location {
 			
 			
 			
-			 
+			// System.out.println("3.DeviceSeq");
 			 //3. 기기id 가지고오기
 			 String deviceId = androidDao.findDeviceId(deviceSeq);
-			 
+			 System.out.println("deviceId:"+deviceId);
 			 //해당 기기 정류장 리스트 
 			 List<VirtualBusStopDTO> busStopList = androidDao.getMyBusStop(deviceId);
 			
@@ -296,10 +320,7 @@ public class location {
 				
 			}
 			
-			
 		}
-
-		
 		
 		
 
@@ -377,4 +398,133 @@ public class location {
 		      }
 		      
 		   }
+		   
+		   
+		   
+		
+			
+			
+		   
+		   
+		   //GPER 위경도 요청
+			public  JSONArray getAPICertKey(String busStopCategorySeq) {
+			    String api= "api.common.group.get.group.object.list";
+					//그룹으로 된 단말리스트 불러오는 api 주소//
+				String api_key= "ae113180b09d8e3180913218039c03605d30febc";
+					
+				String server_key="1d1c2e20aed289dcea01c3150bc30ee04d406016";
+					
+				long timestamp = new Date().getTime();
+				
+				
+				
+				
+				//인증 Cert_key 받는 부분
+				String hash_in = timestamp+"|"+api_key+"|"+server_key;
+			    String cert_key = "";
+			    byte[] input = hash_in.getBytes();
+
+			    try {
+			        MessageDigest messageDigest = MessageDigest.getInstance("SHA1");
+			        messageDigest.update(input, 0, input.length);
+			        cert_key = new BigInteger(1, messageDigest.digest()).toString(16);
+			    } catch (NoSuchAlgorithmException e) {
+			        // TODO Auto-generated catch block
+			        e.printStackTrace();
+			    }
+			    
+			    
+			    //여기서 busStopCategorySeq 가지고 그룹키를받야아함  
+			    
+			    
+			    
+			    
+//			    String group_key = "da4c8768d4def293944f4f613e3089bb4e42124e";
+			    String group_key = busStopMapDao.getGroupHashKey(busStopCategorySeq);
+			    
+	
+				// GPER그룹키 - 현재 : 큰셔틀버스 그룹키   ->  추후 노란셔틀버스도 추가할것
+				
+			    
+			    
+			    
+			    
+			    
+				BufferedReader in = null;
+				try {
+					String url = "http://cms.catchloc.com/api.partner.common.php";
+					
+					//System.out.println(url +"?api="+api+"&"+"api_key="+api_key+"&"+"timestamp="+timestamp	+"&"+"cert_key="+cert_key+"&"+"group_key="+group_key);
+					
+					
+					URL obj = new URL(url +"?api="+api+"&"+"api_key="+api_key+"&"+"timestamp="+timestamp
+							+"&"+"cert_key="+cert_key+"&"+"group_key="+group_key); //호출할 url 
+			         
+					HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+			         
+			         	con.setRequestMethod("GET");
+			         	in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+			         	String line = in.readLine();
+			         	
+			         	
+			         	JSONParser memberparser = new JSONParser();
+			         	JSONArray busgroup = (JSONArray) memberparser.parse(line);
+			         	
+			         	//삭제 될 부분 2019-05-11 23:48
+			         	for(int i=0;i<busgroup.size();i++){
+			         		JSONObject tmp=(JSONObject)busgroup.get(i);
+			         		String member_name = (String)tmp.get("member_name"); //gper 단말기 이름
+			         		String member_key = (String)tmp.get("member_key"); //gper 버스분류
+			         		double last_latitude = (Double)tmp.get("last_latitude"); //위도
+			         		double last_longitude = (Double)tmp.get("last_longitude"); //경도
+			         		long last_check_date = (Long)tmp.get("last_check_date"); //마지막 체크 시간
+/*
+
+			         		System.out.println("member_key : "+member_key);
+			         		System.out.println("member_name : "+member_name);
+			         		System.out.println("last_latitude : "+last_latitude); 
+			         		System.out.println("last_longitude : "+last_longitude);
+			         		System.out.println("last_check_date : "+last_check_date);
+*/			         		
+			         		
+			         	}
+			         	
+			         	  return busgroup;
+			         	
+			         	
+			         	
+			    //예외 처리
+				}catch(Exception e) { 
+					e.printStackTrace();
+		         } 
+		          
+	            finally {
+	               if(in != null) try { in.close();
+	               } catch(Exception e) {
+	                  e.printStackTrace(); 
+	                  } 
+	               } 
+
+			    
+			    
+				 return null;
+		         	
+			    
+			    
+			    
+			    
+			    
+			    
+			    
+			  
+			    
+			    
+			    
+			    
+			    
+			    
+			   
+			}
+
+		  
 }

@@ -7,11 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.test.spring.android.Controller.location;
+import com.test.spring.android.DAO.androidDAO;
 import com.test.spring.dto.AroundPlaceDTO;
 import com.test.spring.dto.BusStopAvgLatLonDTO;
 import com.test.spring.dto.BusStopDTO;
@@ -34,6 +38,12 @@ public class BusStopMapController {
 	
 	@Autowired
 	BusStopMapDAO dao;
+	
+	@Autowired
+	androidDAO anDao;
+	
+	@Autowired
+	location locationClass;
 	
 	//테스트용 뷰
 	
@@ -136,9 +146,62 @@ public class BusStopMapController {
 	//학교 번호를 받아서 학교의 위경도를 들고가서 지도의 중앙을 찾아줘야함.
 	//해당 노선의 정류장 번호를 받아서 모든 정류장의 위경도 받아다가 지도에 마커 찍어줘야함.
 	//현재 해당 노선에서 운행중인 버스의 실시간 위치를 찍어줘야함.
+	//타임라인 페이지
 	@RequestMapping(method={RequestMethod.GET},value="/getBusStopLine.action")
-	public String getBusStopLine(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq, String busStopDetailCategorySeq,UniversityDTO universityDTO){
+	public String getBusStopLine(HttpServletRequest request
+			, HttpSession session
+			, HttpServletResponse response
+			, String universitySeq
+			, String busStopCategorySeq
+			, String busStopDetailCategorySeq
+			,UniversityDTO universityDTO){
+		
 		try {
+			
+			/*2019-05-11 Gper 단말기 연산을 위해 객체 선언
+			 
+			  GPER은 사용자가 요청시  API로 단말기 위경도를 불러와 현재 정류장을 삽입하도록 한다.
+			*/
+
+		
+		
+		    JSONArray busgroup =  locationClass.getAPICertKey(busStopCategorySeq);
+		    
+		    for(int i=0;i<busgroup.size();i++){
+      
+		    	JSONObject tmp=(JSONObject)busgroup.get(i);
+		    	
+		    	String member_pin=tmp.get("member_pin").toString();//단말기 모델번호
+		    	String last_latitude=tmp.get("last_latitude").toString();
+		    	String last_longitude=tmp.get("last_longitude").toString();
+		    	
+		    	//System.out.println(member_pin);
+		    	//System.out.println("last_latitude : "+last_latitude); 
+         		//System.out.println("last_longitude : "+last_longitude);
+         		
+         		
+		   
+         	
+     			
+         		
+         		try {
+         			//GPER 핀번호로 seq 찾기 -> 단 사전에 GPER 기기 등록을 진행해야 가능
+         			String deviceSeq = anDao.findDeviceSeq(member_pin);
+         			
+         			//단말기 정류장 찾기
+         			locationClass.locationCalculate(deviceSeq,last_latitude,last_longitude);	
+         			
+				} catch (Exception e) {
+					System.out.println(e.toString());
+					// TODO: handle exception
+				}
+         		
+         		
+         		
+         		
+         	}
+		    
+		    
 		    
 			HashMap<String,String> map = new HashMap<String,String>();
 			map.put("busStopCategorySeq", busStopCategorySeq);
@@ -171,7 +234,9 @@ public class BusStopMapController {
 			request.setAttribute("cblList", cblList);
 			request.setAttribute("avgBSdto", avgBSdto);
 			request.setAttribute("unidto", unidto);
-			request.setAttribute("bsList", bsList);    
+			request.setAttribute("bsList", bsList);   
+			
+			
 		 } catch (Exception e) {
 		    session.invalidate();
 		    try {
@@ -209,10 +274,11 @@ public class BusStopMapController {
 			}
 			map.put("busStopDetailCategorySeq", busStopDetailCategorySeq);
 			
+			/*
 			System.out.println("busstop:"+busStopCategorySeq);
-			System.out.println("asdlfkjasd"+universitySeq);
-			System.out.println("alskfjaoefoi"+busStopDetailCategorySeq);
-		
+			System.out.println("대학교SEQ"+universitySeq);
+			System.out.println("정류장소분류"+busStopDetailCategorySeq);
+		*/
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
 			
 			BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);

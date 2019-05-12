@@ -20,6 +20,21 @@ public class BusStopMapDAO {
 	@Autowired
 	SqlSessionTemplate sql;
 	
+	
+	
+	/*
+	 2019-05-12 bustCategorySeq로 GROUPKEY받아오기 
+	  
+	 */
+	public String getGroupHashKey(String busStopCategorySeq) {
+		
+		
+		
+		return sql.selectOne("busStop.getGroupHashKey",busStopCategorySeq);
+			
+	}
+	
+	
 	//학교에 속해있는 정류장 들고옴
 	public List<BusStopDTO> getBusStop(String universitySeq) {
 		// TODO Auto-generated method stub

@@ -33,7 +33,7 @@ public class SnsboardDAO {
 	public List<SnsboardCategoryDTO> boardList(String universitySeq, String index, String word) {
 		// System.out.println(universitySeq +":"+index +":"+word);
 		HashMap<String, String> map = new HashMap<String, String>();
-		//map.put("universitySeq", universitySeq);
+		map.put("universitySeq", universitySeq);
 		map.put("index", index);// ?번째 부터 ?번째 글
 		map.put("word", word);// 검색어
 
