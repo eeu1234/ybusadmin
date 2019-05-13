@@ -65,7 +65,7 @@ max-width:2440px;
    height: 100%;
 }
 
-#pano {
+#street-view {
    float: left;
    width: 100%;
    height: 100%;
@@ -123,9 +123,8 @@ max-width:2440px;
 
 
    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=c5wa0CTc7jalj6c4Y0tw&submodules=panorama"></script>
-<script 
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9sI7_yAlqc5XrEulhJ8v4ZtnhXGrED4k&callback=initMap"
-        async defer></script>
+<script async defer
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap"></script>
 
 <script type="text/javascript">
    var map;
@@ -553,7 +552,7 @@ max-width:2440px;
                               })
 
                });
-
+/*
    //네이버 로드뷰 출력
    var HOME_PATH = window.HOME_PATH || '.', pano = null;
 
@@ -605,7 +604,7 @@ max-width:2440px;
          }
       });
    }
-
+*/
    //로드뷰 마커 클릭함수
    /* naver.maps.Event.addListener(marker, "click", function(e) {
     alert("marker clicked");
@@ -620,7 +619,7 @@ max-width:2440px;
          marker.setMap(null);
          el.val("Marker 추가").removeClass("control-on");
       } else {
-         marker.setMap(pano);
+         marker.setMap(street-view);
          el.val("Marker 제거").addClass("control-on");
       }
    });
@@ -653,6 +652,10 @@ max-width:2440px;
 	         console.log(markers.length);
 	         console.log(event.latLng.lat());
 	         console.log(event.latLng.lng());
+	         
+	         
+	         
+	         
 	      });
 	      
 	    //주소검색
@@ -704,6 +707,25 @@ max-width:2440px;
       //infowindow.open(map); 윈도우창 열기
 
    } // function initialize() 함수 끝
+   
+   function initStreetView(lat,lng){
+   	   /* 구글 스트리트뷰 */
+   		
+   	      
+        	
+   	   console.log(lat+"/"+lng);
+        	var panorama = new google.maps.StreetViewPanorama(
+              document.getElementById('street-view'),
+              {
+                position: {lat: lat, lng: lng},
+                pov: {heading: 165, pitch: 0},
+                zoom: 1
+              });
+        	
+        	 map.setStreetView(panorama);
+        
+      }
+      
 
    //마커 추가 함수
    function addMarker(location) {
@@ -724,7 +746,7 @@ max-width:2440px;
 	      
 	 	  marker.addListener('click', function() {
 	 	    infowindow.open(map, marker);
-	 	   
+	 	   initStreetView(this.position.lat(), this.position.lng());
 	 	  });
          
          
@@ -739,14 +761,16 @@ max-width:2440px;
             $("#tbl tbody tr:nth-child(" + dragMarkers.length + ")")
                   .children().eq(4).text(this.position.lng());
             //console.log("end");
-            initPanorama(this.position.lat(), this.position.lng());
+            
+            console.log(this.position.lat()+"/"+this.position.lng());
+            initStreetView(this.position.lat(), this.position.lng());
             
          });
 
          markerInfo.push(infowindow);
          dragMarkers.push(marker);
          
-         initPanorama(location.lat(), location.lng());
+         initStreetView(location.lat(), location.lng());
          //$("#tbl tbody").append("<tr><td>"+markers.length+"</td><td><input type='text'></td><td>"+location.lat()+"</td><td>"+location.lng()+"</td></tr>");
          $("#tbl tbody")
                .append(
@@ -934,7 +958,7 @@ max-width:2440px;
       
  	  marker.addListener('click', function() {
  		 infowindow.open(map, marker);
- 		initPanorama(this.position.lat(), this.position.lng());
+ 		initStreetView(this.position.lat(), this.position.lng());
  	  });
       
       //마커 이동 함수(이동할떄마다 해당 정류장의 위경도 수정)
@@ -947,7 +971,8 @@ max-width:2440px;
          $("#tbl tbody tr:nth-child(" + this.orders + ")").children().eq(4)
                .text(this.position.lng());
          //console.log("end");
-         initPanorama(this.position.lat(), this.position.lng());
+         console.log(this.position.lat()+"/"+this.position.lng());
+         initStreetView(this.position.lat(), this.position.lng());
       });
       
       markers.push(marker);
@@ -982,7 +1007,7 @@ max-width:2440px;
         
       marker.addListener('click', function() {
    	    infowindow.open(map, marker);
-   	 initPanorama(this.position.lat(), this.position.lng());
+   	 initStreetView(this.position.lat(), this.position.lng());
    	  });
 
   
@@ -997,7 +1022,8 @@ max-width:2440px;
          $("#tbl tbody tr:nth-child(" + this.orders + ")").children().eq(4)
                .text(this.position.lng());
          //console.log("end");
-         initPanorama(this.position.lat(), this.position.lng());
+         console.log(this.position.lat()+"/"+this.position.lng());
+         initStreetView(this.position.lat(), this.position.lng());
       });
 
 
@@ -1258,7 +1284,7 @@ max-width:2440px;
    
    <div id="mapForm">
       <div id="map"></div>
-      <div id="pano"></div>
+      <div id="street-view"></div>
    </div>
    <div>
       <table id="tbl" class="table table-striped">
