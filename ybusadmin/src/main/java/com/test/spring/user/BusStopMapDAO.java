@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.test.spring.dto.AroundPlaceDTO;
 import com.test.spring.dto.BusStopAvgLatLonDTO;
+import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.CurrBusLocationDTO;
@@ -26,7 +27,7 @@ public class BusStopMapDAO {
 	 2019-05-12 bustCategorySeq로 GROUPKEY받아오기 
 	  
 	 */
-	public String getGroupHashKey(String busStopCategorySeq) {
+	public BusStopCategoryDTO getGroupHashKey(String busStopCategorySeq) {
 		
 		
 		

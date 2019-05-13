@@ -1,7 +1,11 @@
 package com.test.spring.user;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -165,43 +169,91 @@ public class BusStopMapController {
 
 		
 		
-		    JSONArray busgroup =  locationClass.getAPICertKey(busStopCategorySeq);
+		    //GPER에 등록되지 않은 노선은 건너 뜀. 2019-05-13
+		    if(locationClass.getAPICertKey(busStopCategorySeq) !=null) {
+			    JSONArray busgroup =  locationClass.getAPICertKey(busStopCategorySeq);
+			    {
+			    	
+				    for(int i=0;i<busgroup.size();i++){
+		      
+				    	JSONObject tmp=(JSONObject)busgroup.get(i);
+				    	
+				    	String member_pin=tmp.get("member_pin").toString();//단말기 모델번호
+				    	String last_latitude=tmp.get("last_latitude").toString();
+				    	String last_longitude=tmp.get("last_longitude").toString();
+				    	String lastCheckDate = tmp.get("last_check_date").toString(); //마지막 체크 시간
+				    	/*
+				    	System.out.println(member_pin);
+				    	System.out.println("last_latitude : "+last_latitude); 
+		         		System.out.println("last_longitude : "+last_longitude);
+				    	System.out.println("last_check_date : "+lastCheckDate);
+		         		
+		         		*/
+				   
+		         	
+		     			
+		         		
+		         		try {
+		         			//GPER 핀번호로 seq 찾기 -> 단 사전에 GPER 기기 등록을 진행해야 가능
+		         			String deviceSeq = anDao.findDeviceSeq(member_pin);
+		         			
+		         			
+		         			//GPER 단말기 마지막 작동 시간 비교 
+		         			//5분이 넘은 데이터라면 삽입하지 않음
+		         			long L = System.currentTimeMillis() / 1000;
+		         			
+		        		
+
+		        			 // System.out.println("현재시간:"+L+"/////"+"마지막조회시간:"+Long.parseLong(lastCheckDate));
+		        			  
+		        			  /*
+		        			  
+		        			  시간 검사기
+		        			  long LL=L-300;
+		        			  Date date = new Date(LL*1000L);
+
+		        			  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+
+		        			  // GMT(그리니치 표준시 +9 시가 한국의 표준시
+
+		        			  sdf.setTimeZone(TimeZone.getTimeZone("GMT+9"));
+
+		        			  String formattedDate = sdf.format(date);
+
+		        			  System.out.println(formattedDate);
+		        			*/
+		        			  
+		         			
+		         			//GPER 단말기 최종 조회 시간이 현재 시간에서 5분을 뺀 것보다 더 최신일 때 수행함 // 위경도 삽입
+		         			if(L-300 < Long.parseLong(lastCheckDate)){
+		         			//단말기 정류장 계산식 삽입
+		         				locationClass.locationCalculate(deviceSeq,last_latitude,last_longitude,lastCheckDate);	
+		         			}
+		         			
+		         			
+		         			
+		         			
+		         			
+		         			
+		         			
+						} catch (Exception e) {
+							System.out.println(e.toString());
+							// TODO: handle exception
+						}
+		         		
+		         		
+		         		
+		         		
+		         	}
+			    }
+		    } 
 		    
-		    for(int i=0;i<busgroup.size();i++){
-      
-		    	JSONObject tmp=(JSONObject)busgroup.get(i);
-		    	
-		    	String member_pin=tmp.get("member_pin").toString();//단말기 모델번호
-		    	String last_latitude=tmp.get("last_latitude").toString();
-		    	String last_longitude=tmp.get("last_longitude").toString();
-		    	
-		    	//System.out.println(member_pin);
-		    	//System.out.println("last_latitude : "+last_latitude); 
-         		//System.out.println("last_longitude : "+last_longitude);
-         		
-         		
-		   
-         	
-     			
-         		
-         		try {
-         			//GPER 핀번호로 seq 찾기 -> 단 사전에 GPER 기기 등록을 진행해야 가능
-         			String deviceSeq = anDao.findDeviceSeq(member_pin);
-         			
-         			//단말기 정류장 찾기
-         			locationClass.locationCalculate(deviceSeq,last_latitude,last_longitude);	
-         			
-				} catch (Exception e) {
-					System.out.println(e.toString());
-					// TODO: handle exception
-				}
-         		
-         		
-         		
-         		
-         	}
 		    
 		    
+		    /*
+		     * 기존 방식
+		     * 
+		     * */
 		    
 			HashMap<String,String> map = new HashMap<String,String>();
 			map.put("busStopCategorySeq", busStopCategorySeq);
@@ -264,7 +316,96 @@ public class BusStopMapController {
 	public String getBusStopLocation(HttpServletRequest request, HttpSession session, HttpServletResponse response, String universitySeq,String busStopCategorySeq,String busStopDetailCategorySeq){
 		
 		try {
+			/*2019-05-11 Gper 단말기 연산을 위해 객체 선언
+			 
+			  GPER은 사용자가 요청시  API로 단말기 위경도를 불러와 현재 정류장을 삽입하도록 한다.
+			*/
+
+		
+		
+		    //GPER에 등록되지 않은 노선은 건너 뜀. 2019-05-13
+		    if(locationClass.getAPICertKey(busStopCategorySeq) !=null) {
+			    JSONArray busgroup =  locationClass.getAPICertKey(busStopCategorySeq);
+			    {
+			    	
+				    for(int i=0;i<busgroup.size();i++){
+		      
+				    	JSONObject tmp=(JSONObject)busgroup.get(i);
+				    	
+				    	String member_pin=tmp.get("member_pin").toString();//단말기 모델번호
+				    	String last_latitude=tmp.get("last_latitude").toString();
+				    	String last_longitude=tmp.get("last_longitude").toString();
+				    	String lastCheckDate = tmp.get("last_check_date").toString(); //마지막 체크 시간
+				    	/*
+				    	System.out.println(member_pin);
+				    	System.out.println("last_latitude : "+last_latitude); 
+		         		System.out.println("last_longitude : "+last_longitude);
+				    	System.out.println("last_check_date : "+lastCheckDate);
+		         		
+		         		
+				   */
+		         	
+		     			
+		         		
+		         		try {
+		         			//GPER 핀번호로 seq 찾기 -> 단 사전에 GPER 기기 등록을 진행해야 가능
+		         			String deviceSeq = anDao.findDeviceSeq(member_pin);
+		         			
+		         			
+		         			//GPER 단말기 마지막 작동 시간 비교 
+		         			//5분이 넘은 데이터라면 삽입하지 않음
+		         			long L = System.currentTimeMillis() / 1000;
+		         			
+		        		
+
+		        			  System.out.println("현재시간:"+L+"/////"+"마지막조회시간:"+Long.parseLong(lastCheckDate));
+		        			  
+		        			 /* 
+		        			  
+		        			  //시간 검사기
+		        			  long LL=L-300;
+		        			  Date date = new Date(LL*1000L);
+
+		        			  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+
+		        			  // GMT(그리니치 표준시 +9 시가 한국의 표준시
+
+		        			  sdf.setTimeZone(TimeZone.getTimeZone("GMT+9"));
+
+		        			  String formattedDate = sdf.format(date);
+
+		        			  System.out.println(formattedDate);
+		        			*/
+		        			  
+		         			
+		         			//GPER 단말기 최종 조회 시간이 현재 시간에서 5분을 뺀 것보다 더 최신일 때 수행함 // 위경도 삽입
+		         			if(L-300 < Long.parseLong(lastCheckDate)){
+		         			//단말기 정류장 계산식 삽입
+		         				locationClass.locationCalculate(deviceSeq,last_latitude,last_longitude,lastCheckDate);	
+		         			}
+		         			
+		         			
+		         			
+		         			
+		         			
+		         			
+		         			
+						} catch (Exception e) {
+							System.out.println(e.toString());
+							// TODO: handle exception
+						}
+		         		
+		         		
+		         		
+		         		
+		         	}
+			    }
+		    } 
 		    
+			
+			
+			
+			
 			HashMap<String,String> map = new HashMap<String,String>();
 			map.put("busStopCategorySeq", busStopCategorySeq);
 			map.put("universitySeq", universitySeq);
