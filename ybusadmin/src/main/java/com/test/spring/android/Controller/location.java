@@ -412,9 +412,9 @@ public class location {
 			public  JSONArray getAPICertKey(String busStopCategorySeq) {
 			    String api= "api.common.group.get.group.object.list";
 					//그룹으로 된 단말리스트 불러오는 api 주소//
-				String api_key= "ae113180b09d8e3180913218039c03605d30febc";
+				String api_key= "";
 					
-				String server_key="1d1c2e20aed289dcea01c3150bc30ee04d406016";
+				String server_key="";
 					
 				long timestamp = new Date().getTime();
 				
