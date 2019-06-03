@@ -6,7 +6,7 @@
 
 	<!-- 학교에 따른 버스 카테고리 불러오기 -->
 	<select id = "bCategoryList" parameterType ="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
-	SELECT B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, B.BUSSTOPCATEGORY AS busStopCategory, B.UNIVERSITYSEQ AS universitySeq,B.BUSSTOPCATEGORYSTAT AS busStopCategoryStat, A.UNIVERSITYNAME AS universityName, GROUPBUSHASH AS groupbusHashkey FROM BUSSTOP_CATEGORY B 
+	SELECT B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, B.BUSSTOPCATEGORY AS busStopCategory, B.UNIVERSITYSEQ AS universitySeq,B.BUSSTOPCATEGORYSTAT AS busStopCategoryStat, A.UNIVERSITYNAME AS universityName FROM BUSSTOP_CATEGORY B 
 	INNER JOIN
 	(SELECT * FROM UNIVERSITY WHERE UNIVERSITYSEQ =#{seq}) A
     	ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ
@@ -16,7 +16,7 @@
 	
 	<!-- 학교에 따른 버스 카테고리 모두 불러오기 -->
 	<select id = "bTCategoryList" parameterType ="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
-	SELECT B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, B.BUSSTOPCATEGORY AS busStopCategory, B.UNIVERSITYSEQ AS universitySeq,B.BUSSTOPCATEGORYSTAT AS busStopCategoryStat, A.UNIVERSITYNAME AS universityName, GROUPBUSHASH AS groupbusHashkey FROM BUSSTOP_CATEGORY B 
+	SELECT B.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, B.BUSSTOPCATEGORY AS busStopCategory, B.UNIVERSITYSEQ AS universitySeq,B.BUSSTOPCATEGORYSTAT AS busStopCategoryStat, A.UNIVERSITYNAME AS universityName FROM BUSSTOP_CATEGORY B 
 	INNER JOIN
 	(SELECT * FROM UNIVERSITY WHERE UNIVERSITYSEQ =#{seq}) A
     	ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ
@@ -87,15 +87,15 @@
 	
 	<!-- 정류장 정보 -->
 	<select id = "editSelCategory" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
-		SELECT A.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, A.BUSSTOPCATEGORY AS busStopCategory, A.UNIVERSITYSEQ AS universitySeq, B.UNIVERSITYNAME AS universityName, A.BUSSTOPCATEGORYSTAT AS busStopCategoryStat, GROUPBUSHASH AS groupbusHashkey FROM UNIVERSITY B
+		SELECT A.BUSSTOPCATEGORYSEQ AS busStopCategorySeq, A.BUSSTOPCATEGORY AS busStopCategory, A.UNIVERSITYSEQ AS universitySeq, B.UNIVERSITYNAME AS universityName, A.BUSSTOPCATEGORYSTAT AS busStopCategoryStat FROM UNIVERSITY B
 		INNER JOIN
-		(SELECT BUSSTOPCATEGORYSEQ, BUSSTOPCATEGORY, UNIVERSITYSEQ, BUSSTOPCATEGORYSTAT, GROUPBUSHASH FROM BUSSTOP_CATEGORY WHERE BUSSTOPCATEGORYSEQ = #{seq}) A
+		(SELECT BUSSTOPCATEGORYSEQ, BUSSTOPCATEGORY, UNIVERSITYSEQ, BUSSTOPCATEGORYSTAT FROM BUSSTOP_CATEGORY WHERE BUSSTOPCATEGORYSEQ = #{seq}) A
 			ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ
 	</select>
 	
 	<!-- 정류장 카테고리 수정 -->
 	<update id = "editCategory" parameterType="com.test.spring.dto.BusStopCategoryDTO">
-		UPDATE BUSSTOP_CATEGORY SET BUSSTOPCATEGORY =#{busStopCategory}, BUSSTOPCATEGORYSTAT = #{busStopCategoryStat}, GROUPBUSHASH = #{groupbusHashkey} WHERE BUSSTOPCATEGORYSEQ = #{busStopCategorySeq}
+		UPDATE BUSSTOP_CATEGORY SET BUSSTOPCATEGORY =#{busStopCategory}, BUSSTOPCATEGORYSTAT = #{busStopCategoryStat} WHERE BUSSTOPCATEGORYSEQ = #{busStopCategorySeq}
 	</update>
 	
 	

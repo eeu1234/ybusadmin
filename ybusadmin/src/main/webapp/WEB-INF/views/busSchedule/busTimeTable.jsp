@@ -14,27 +14,23 @@
 	margin: 0px auto;
 	margin-top: 5%;
 }
-
 #scheduleHead {
 	width: 100%;
 	margin: 0px auto;
 	margin-top: 5%;
 	text-align: center;
 }
-
 .timeContent {
 	position: relative;
 	width: 100%;
 	margin-top: 10%;
 	border-bottom: 1px solid grey;
 }
-
 .totalTable {
 	width: 100%;
 	height: auto;
 	margin: 0px auto;
 }
-
 .timeHeader {
 	position: relative;
 	width: 100%;
@@ -43,7 +39,6 @@
 	text-align: center;
 	margin: 0px auto;
 }
-
 .timeLeft, .timeRight {
 	position: relative;
 	float: left;
@@ -51,7 +46,6 @@
 	line-height: 50px;
 	text-align: center;
 }
-
 .busTime {
 	float: left;
 	width: 30%;
@@ -63,7 +57,6 @@
 	border-bottom: 1px solid #eee;
 	display: inline-block;
 }
-
 .busTimeName {
 	float: left;
 	width: 70%;
@@ -75,7 +68,6 @@
 	border-bottom: 1px solid #eee;
 	display: inline-block;
 }
-
 #txtLogo {
 	position: relative;
 	width: 60%;
@@ -84,7 +76,6 @@
 	margin: 0 auto;
 	font-weight: bold;
 }
-
 #logo {
 	position: absolute;
 	top: 0;
@@ -102,13 +93,11 @@ $(document).ready(function(){
       weekDays = $("#weekDays").val();
       location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
    });
-
  	//시간 가져오는 Date()선언
 	var now = new Date();	
 	var hour = now.getHours(); // 시
 	var minute = now.getMinutes(); // 분
 	var day = 0;
-
 	//평일(1~5)이면 day는 1
 	if(now.getDay() >= 1 && now.getDay() <= 5){
 		day = 1;
@@ -116,7 +105,6 @@ $(document).ready(function(){
 		//주말이면 2의 값을 가진다.
 		day = 2;
 	}
-
 	//현재 시각은 시간*60+분으로 계산.
 	var sum = Number(hour*60) + now.getMinutes();
 	//console.log(sum);
@@ -124,18 +112,19 @@ $(document).ready(function(){
 	//버스시간과 이름 가져오기
 	var time = $(".busTime");
 	var name = $(".busTimeName");
-
 	//깜빡이용 Boolean 선언
 	var shown = true;
 	
 	var busTime = new Array(time.length);
 	var busTimeName = new Array(name.length);
-
 	//중복된 시간이 있기에 배열로 선언
 	var result = new Array();
 	//result index 0부터 시작
 	var intResult = 0;
-
+	
+	//불만들어오게 하는 변수
+	var lightBox = 0;
+	
 	//깜빡이여야 되는 칸 알아내는 반복문
 	for(var k=0;k<time.length;k++){
 		//split으로 시, 분으로 나눈 작업
@@ -152,18 +141,53 @@ $(document).ready(function(){
 		if((busTime[k] - sum) >= 1 && (busTime[k] - sum) <= 5){
 			//result[] 배열에 td 인덱스 넣기
 			result[intResult] = k;
-			console.log("result는 "+result[intResult]);
-			intResult++;
+		//	console.log("result는 "+result[intResult]);
+			intResult++; 
 		}
 	}
-
+	
+	for(var k=0;k<time.length;k++){	
+		if(busTime[k] - sum >=0 && busTime[k] - sum <= 60 && (busTime[k] - sum) >= 5 &&result.length == 0 ){//다음 시간꺼 불 밝히기 새벽시간은 1시간 이내만
+			result[intResult] = k;
+			//console.log("2result는 "+result[intResult]);
+			intResult++;
+			
+			lightBox++;//5분이낸지 아닌지 구분 신호
+			for(var l=0;l<time.length;l++){//동시간대 박스도 같이 불들어오기
+			//	console.log("busTime[k]"+busTime[k]);
+			//	console.log("busTime[l]"+busTime[l]);
+				if(busTime[k] == busTime[l] && k!=l){ 
+					result[intResult] = l; 
+				//	console.log("l은"+ l );
+				};
+			}
+			
+			
+		}
+	
+	}
 	//인터벌 실행, 선택한 값이 주말/평일에 따라 실행
 	if(weekDays == 'weekends' && day == 2){
-		interval = setInterval(toggle, 500);
+		if(lightBox == 0){
+			interval = setInterval(toggle, 500);
+		}else{
+			 for(var i=0;i<result.length;i++){
+				// console.log("i는 "+i+"  result[i]는 "+result[i]);
+				   time.eq(result[i]).css("background-color","#44AABB");
+				   name.eq(result[i]).css("background-color","#44AABB");
+			   }
+		}
 	}else if(weekDays == 'normal' && day == 1){
-		interval = setInterval(toggle, 500);
+		if(lightBox == 0){
+			interval = setInterval(toggle, 500);
+		}else{
+			 for(var i=0;i<result.length;i++){
+				   console.log("i는 "+i+"  result[i]는 "+result[i]);
+				   time.eq(result[i]).css("background-color","#44AABB");
+				   name.eq(result[i]).css("background-color","#44AABB");
+			   }
+		}
 	}
-
 	//5분 뒤 인터벌 종료
 	setTimeout(function(){
 	    clearInterval(interval);
@@ -189,7 +213,6 @@ $(document).ready(function(){
 	}
 	
 });
-
 //버스 시간표 가져오는 함수
 function schedule(seq){
 	
@@ -197,44 +220,32 @@ function schedule(seq){
 	location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
 	
 }
-
 </script>
-
-
 </head>
 <body>
-
 	<div id="header">
 		<div id="infoPage">
 			<input type="button" value="<" style=" color:white;position:
 				absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 55%;  background-color:
 				transparent !important; border-color:
 				transparent;"	onclick="location.href='/spring/index.action';" />
-			<div id="txtLogo">버스 시간표</div>
-
+			<div id="txtLogo">운행시간표</div>
 			<img src="/spring/images/logo/${universityDto.universityImg}"
 				id="logo" />
 		</div>
 	</div>
 	<div id="container">
-
-
-
-
-
 		<!-- 버스 시간표 -->
 		<div id="busTimeTable">
 			<!-- 통학, 셔틀, 노랑 등 선택 -->
 			<div>
 				<select id="weekDays" class="form-control">
 					<option value="normal"
-						<c:if test="${weekDays == 'normal'}">selected</c:if>>주중</option>
+						<c:if test="${weekDays == 'normal'}">selected</c:if>>Week</option>
 					<option value="weekends"
-						<c:if test="${weekDays == 'weekends'}">selected</c:if>>주말</option>
+						<c:if test="${weekDays == 'weekends'}">selected</c:if>>Weekend</option>
 				</select>
 			</div>
-
-
 			<div id="scheduleHead">
 				<c:forEach items="${clist }" var="category">
 					<button class="busStopCategory"
@@ -242,19 +253,13 @@ function schedule(seq){
 				</c:forEach>
 			</div>
 			<div style="clear: both;"></div>
-
-
-
-
-
-
 			<!-- 선택된 버스노선 시간표 -->
 			<c:forEach items="${dlist}" var="dlist" varStatus="out">
 				<div class="timeContent">
 					<div class="timeHeader">
 						${dlist.busStopDetailCategoryName}
-						<c:if test="${weekDays == 'normal' }"> 주중</c:if>
-						<c:if test="${weekDays == 'weekends' }"> 주말</c:if>
+						<c:if test="${weekDays == 'normal' }"> Week</c:if>
+						<c:if test="${weekDays == 'weekends' }"> Weekend</c:if>
 					</div>
 					<!-- 시간없으면 출력하는 jstl if조건문 -->
 					<c:forEach items="${slist}" var="slist" varStatus="in">
@@ -266,11 +271,9 @@ function schedule(seq){
 							</c:if>
 						</c:if>
 					</c:forEach>
-
 					<div class="timeLeft">
 						<c:forEach items="${slist}" var="slist" varStatus="in">
 							<c:if test="${out.count == in.count }">
-
 								<c:forEach items="${slist.timeList}" var="dto" varStatus="stat">
 									<c:if test="${stat.index < slist.timeList.size()/2 }">
 										<div class="busTime">${dto.busTime}</div>
@@ -278,7 +281,6 @@ function schedule(seq){
 									</c:if>
 								</c:forEach>
 					</div>
-
 					<div class="timeRight">
 						<c:forEach items="${slist.timeList}" var="dto" varStatus="stat">
 							<c:if test="${stat.index >= slist.timeList.size()/2 }">

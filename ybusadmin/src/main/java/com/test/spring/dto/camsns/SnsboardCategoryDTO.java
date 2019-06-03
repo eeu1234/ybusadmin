@@ -12,7 +12,6 @@ public class SnsboardCategoryDTO {
 	private String userEmailIdFk;
 	private String categoryName;
 	private String categoryType;
-	
 	private List<SnsboardfileDTO> filelist;
 
 	

@@ -403,7 +403,7 @@ function moveMap(){
 					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
 					<div id="txtLogo">
 					
-					How to Add
+					App 아이콘 등록
 					
 					</div>
 					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>

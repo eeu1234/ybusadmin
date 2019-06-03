@@ -1,16 +1,8 @@
 package com.test.spring.android.Controller;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +22,10 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.test.spring.android.DAO.androidDAO;
 import com.test.spring.dto.BusLogDTO;
-import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.LocationDTO;
 import com.test.spring.dto.VirtualBusStopDTO;
-import com.test.spring.user.BusStopMapDAO;
 
 @Controller("location")
 public class location {
@@ -44,8 +34,7 @@ public class location {
 		@Autowired
 		androidDAO androidDao;
 		
-		@Autowired
-		BusStopMapDAO busStopMapDao; 
+		
 		
 		//거리 오차 조정
 		double gap = 50;
@@ -60,7 +49,7 @@ public class location {
 		
 		
 		@RequestMapping(value = "/android/ajaxFirst.action", method = {RequestMethod.POST})
-		public void ajaxFirst(HttpServletRequest request,HttpServletResponse response,String deviceId) throws IOException {
+		public String ajaxFirst(HttpServletRequest request,HttpServletResponse response,String deviceId) throws IOException {
 
 			//1.기기 seq
 			String deviceSeq = androidDao.findDeviceSeq(deviceId);
@@ -91,7 +80,7 @@ public class location {
 					
 			
 			
-			
+			return businfo.toJSONString();
 			
 		}
 		
@@ -177,25 +166,11 @@ public class location {
 									,HttpServletResponse response
 										,String deviceSeq
 											,String deviceLat
-												,String deviceLng
-												  ,String lastCheckDate) {
-			
-			locationCalculate(deviceSeq,deviceLat,deviceLng,lastCheckDate);
-			
-			
-			
-		}
-
-		
-		
-		/*2019-05-11 GPER 연동을 위해 기존 location.action에서 알고리즘 분리*/
-		public void locationCalculate(String deviceSeq,String deviceLat,String deviceLng,String lastCheckDate) {
+												,String deviceLng) {
 			
 		
-			
-			
 			//1.기기 seq와 함게 insert
-			androidDao.insertBusLocation(deviceSeq,deviceLat,deviceLng,lastCheckDate);
+			androidDao.insertBusLocation(deviceSeq,deviceLat,deviceLng);
 			
 			//2.방금 insert 한 데이터 들고옴
 			//현재 위도,경도, deviceSeq 
@@ -208,10 +183,10 @@ public class location {
 			
 			
 			
-			// System.out.println("3.DeviceSeq");
+			 
 			 //3. 기기id 가지고오기
 			 String deviceId = androidDao.findDeviceId(deviceSeq);
-			 System.out.println("deviceId:"+deviceId);
+			 
 			 //해당 기기 정류장 리스트 
 			 List<VirtualBusStopDTO> busStopList = androidDao.getMyBusStop(deviceId);
 			
@@ -322,7 +297,166 @@ public class location {
 				
 			}
 			
+			
 		}
+
+		
+		@RequestMapping(value = "/android/gper.action", method = {RequestMethod.POST})
+		@Transactional
+		public void getGper(HttpServletRequest request
+				,HttpServletResponse response
+				,JSONObject tmp) throws Exception {//Gper 인자 data 수신
+
+				System.out.println("DATA:"+tmp.toJSONString());
+				//String 객체를 Json 객체로 변환
+				JSONParser memberparser = new JSONParser();
+			
+				
+			
+				//Json에서 꺼내서 변수에 담음
+	         		
+	         		String deviceId = (String)tmp.get("member_key"); //gper key
+	         		String deviceLat = tmp.get("latitude").toString(); //위도
+	         		String deviceLng = tmp.get("longitude").toString(); //경도
+	         		
+
+	         	//DeviceSeq를 찾기 위해 ajaxFirst 페이지로 보냄
+	         	String object = ajaxFirst(request, response, deviceId);	//return type String 이지만  Json 형태임.
+				JSONObject busInfo = (JSONObject)memberparser.parse(object);//따라서 Json object로 변환
+				String deviceSeq = (String) busInfo.get("deviceSeq");// DeviceSeq 얻음
+	         		
+	      
+			
+				//1.기기 seq와 함게 insert
+				androidDao.insertBusLocation(deviceSeq,deviceLat,deviceLng);
+				
+				//2.방금 insert 한 데이터 들고옴
+				//현재 위도,경도, deviceSeq 
+				LocationDTO locationDto = androidDao.getRecentLocation(deviceSeq,deviceLat,deviceLng);
+				System.out.println("위치seq:"+locationDto.getLocationSeq());
+				String locationSeq = locationDto.getLocationSeq();
+				double myLat = Double.parseDouble(locationDto.getLocationLatitude());
+				double myLng = Double.parseDouble(locationDto.getLocationLongitude());
+				
+				
+				
+				
+				
+			
+				
+				//해당 기기 정류장 리스트 
+				List<VirtualBusStopDTO> busStopList = androidDao.getMyBusStop(deviceId);
+				
+				
+				
+				
+				
+				ArrayList<Integer> tempList = new ArrayList();
+				//50m이내 정류장만 구함
+				System.out.println(myLat+":"+myLng);
+				for(int i=0;i<busStopList.size();i++){
+				//내위치와정류장 위치사이 거리구하기
+				double distance = distance(myLat, myLng,Double.parseDouble(busStopList.get(i).getVirtualBusStopLatitude()), Double.parseDouble(busStopList.get(i).getVirtualBusStopLongitude()), "meter");
+				
+				System.out.println(i+"번째 정류장 : "+ distance);
+				
+				if(distance < gap){
+				tempList.add(i);
+				}
+				
+				}//for문
+				
+				
+				if(tempList.size() ==1){//50m 이하인 정류장이 1개이면
+				
+				//정류장 리스트 중 해당 정류장seq를 가져온다.
+				int tempNum =tempList.get(0);
+				
+				
+				String myBusStop = busStopList.get(tempNum).getVirtualBusStopSeq();//정류장 seq 호출
+				
+				//업데이트 한다.
+				int result = androidDao.updateBusStop(locationSeq,myBusStop);
+				System.out.println("***********************************");
+				System.out.println(myBusStop);
+				
+				
+				}else if(tempList.size() == 2 ){
+				
+				try {
+				
+				
+				//2개이상
+				int tempNum1 =tempList.get(0)+1;//첫정류장 order번호
+				int tempNum2 =tempList.get(1)+1;//두번째정류장order번호
+				
+				
+				BusStopDTO busStopDto = androidDao.myLastBusStop(deviceSeq);
+				int myLastBusStop = Integer.parseInt(busStopDto.getBusStopOrder());//이기기의 최신 이전 정류장
+				
+				System.out.println("*********************************************************************************************");
+				System.out.println("myLastBusStop:"+myLastBusStop);
+				System.out.println(tempNum1);
+				System.out.println(tempNum2);
+				
+				if(myLastBusStop == tempNum1 ||myLastBusStop == tempNum2){
+					//이전정류장이랑 같은놈이있으면 작동을 끝낸다.
+					/*
+					  ex)myLastBusStop ==3
+					  tempNum1 이나 tempNum2 가 3이있을 때
+					 
+					 */
+					return;
+				}
+				
+				
+				if(myLastBusStop<tempNum1 && myLastBusStop<tempNum2){//가지고있던 정류장보다 새로운 정류장이 클 때
+					if(tempNum1 < tempNum2){
+						System.out.println("tempNum1:" + tempNum1);
+						String myBusStop = busStopList.get(tempNum1-1).getVirtualBusStopSeq();//정류장 seq 호출
+						androidDao.updateBusStop(locationSeq,myBusStop);
+					}else{
+						
+						String myBusStop = busStopList.get(tempNum2-1).getVirtualBusStopSeq();//정류장 seq 호출
+						System.out.println("tempNum2:" + tempNum2);
+						androidDao.updateBusStop(locationSeq,myBusStop);
+						
+					}
+				
+				}else if(myLastBusStop<tempNum1){
+					String myBusStop = busStopList.get(tempNum1-1).getVirtualBusStopSeq();//정류장 seq 호출 배열은 0부터 시작이라 다시 -1 해준다
+					androidDao.updateBusStop(locationSeq,myBusStop);
+					System.out.println("tempNum1:" + tempNum1);
+				}else if( myLastBusStop<tempNum2){
+					String myBusStop = busStopList.get(tempNum2-1).getVirtualBusStopSeq();//정류장 seq 호출
+					androidDao.updateBusStop(locationSeq,myBusStop);
+					System.out.println("tempNum2:" + tempNum2);
+				
+				
+				}else{
+				//둘다 작을땐 할게없다. 버스는 작은데서 크게 발전하기때문
+				System.out.println("둘다작음");	
+				
+				}
+				
+				
+				
+				
+				
+				} catch (Exception e) {
+				// TODO: handle exception
+				}
+				
+				
+				}else{
+				//3개이상
+				
+				
+				}
+				
+				
+			}
+
 		
 		
 
@@ -400,146 +534,4 @@ public class location {
 		      }
 		      
 		   }
-		   
-		   
-		   
-		
-			
-			
-		   
-		   
-		   //GPER 위경도 요청
-			public  JSONArray getAPICertKey(String busStopCategorySeq) {
-			    String api= "api.common.group.get.group.object.list";
-					//그룹으로 된 단말리스트 불러오는 api 주소//
-				String api_key= "ae113180b09d8e3180913218039c03605d30febc";
-					
-				String server_key="1d1c2e20aed289dcea01c3150bc30ee04d406016";
-					
-				long timestamp = new Date().getTime();
-				
-				
-				
-				
-				//인증 Cert_key 받는 부분
-				String hash_in = timestamp+"|"+api_key+"|"+server_key;
-			    String cert_key = "";
-			    byte[] input = hash_in.getBytes();
-
-			    try {
-			        MessageDigest messageDigest = MessageDigest.getInstance("SHA1");
-			        messageDigest.update(input, 0, input.length);
-			        cert_key = new BigInteger(1, messageDigest.digest()).toString(16);
-			    } catch (NoSuchAlgorithmException e) {
-			        // TODO Auto-generated catch block
-			        e.printStackTrace();
-			    }
-			    
-			    
-			    //여기서 busStopCategorySeq 가지고 그룹키를받야아함  
-			    
-			    
-			    
-			    
-
-			    BusStopCategoryDTO busStopCategoryDto = busStopMapDao.getGroupHashKey(busStopCategorySeq);
-
-			    
-			    
-			    //String group_key = "da4c8768d4def293944f4f613e3089bb4e42124e";
-			    String group_key = busStopCategoryDto.getGroupbusHash();
-			    //System.out.println("group_key"+group_key);
-			    
-			    //GPER에 등록되지 않은 노선
-			    if(group_key.equals("") || group_key == null) {
-			   	 return null;	//함수 수행안함
-			    }
-			    	
-			   
-	
-					// GPER그룹키 - 현재 : 큰셔틀버스 그룹키   ->  추후 노란셔틀버스도 추가할것
-					
-				    
-				    
-				    
-				    
-				    
-					BufferedReader in = null;
-					try {
-						String url = "http://cms.catchloc.com/api.partner.common.php";
-						
-						//System.out.println(url +"?api="+api+"&"+"api_key="+api_key+"&"+"timestamp="+timestamp	+"&"+"cert_key="+cert_key+"&"+"group_key="+group_key);
-						
-						
-						URL obj = new URL(url +"?api="+api+"&"+"api_key="+api_key+"&"+"timestamp="+timestamp
-								+"&"+"cert_key="+cert_key+"&"+"group_key="+group_key); //호출할 url 
-				         
-						HttpURLConnection con = (HttpURLConnection)obj.openConnection();
-				         
-				         	con.setRequestMethod("GET");
-				         	in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
-				         	String line = in.readLine();
-				         	
-				         	
-				         	JSONParser memberparser = new JSONParser();
-				         	JSONArray busgroup = (JSONArray) memberparser.parse(line);
-				         	
-				         	//삭제 될 부분 2019-05-11 23:48
-				         	for(int i=0;i<busgroup.size();i++){
-				         		JSONObject tmp=(JSONObject)busgroup.get(i);
-				         		String member_name = (String)tmp.get("member_name"); //gper 단말기 이름
-				         		String member_key = (String)tmp.get("member_key"); //gper 버스분류
-				         		double last_latitude = (Double)tmp.get("last_latitude"); //위도
-				         		double last_longitude = (Double)tmp.get("last_longitude"); //경도
-				         		long last_check_date = (Long)tmp.get("last_check_date"); //마지막 체크 시간
-	/*
-	
-				         		System.out.println("member_key : "+member_key);
-				         		System.out.println("member_name : "+member_name);
-				         		System.out.println("last_latitude : "+last_latitude); 
-				         		System.out.println("last_longitude : "+last_longitude);
-				         		System.out.println("last_check_date : "+last_check_date);
-	*/			         		
-				         		
-				         	}
-				         	
-				         	  return busgroup;
-				         	
-				         	
-				         	
-				    //예외 처리
-					}catch(Exception e) { 
-						e.printStackTrace();
-			         } 
-			          
-		            finally {
-		               if(in != null) try { in.close();
-		               } catch(Exception e) {
-		                  e.printStackTrace(); 
-		                  } 
-		               } 
-
-		
-			    
-			    
-				 return null;
-		         	
-			    
-			    
-			    
-			    
-			    
-			    
-			    
-			  
-			    
-			    
-			    
-			    
-			    
-			    
-			   
-	}
-
-		  
 }

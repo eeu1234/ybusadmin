@@ -1,9 +1,6 @@
 package com.test.spring.android.DAO;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,14 +47,15 @@ public class androidDAO {
 		
 		
 		//버스SEQ,위도,경도 INSERT
-		public int insertBusLocation(String deviceSeq, String deviceLat, String deviceLng,String lastCheckDate) {
+		public int insertBusLocation(String deviceSeq, String deviceLat, String deviceLng) {
 
 			LocationDTO dto = new LocationDTO();
 			dto.setDeviceSeq(deviceSeq);
 			dto.setLocationLatitude(deviceLat);
 			dto.setLocationLongitude(deviceLng);
 	
-			return sql.insert("android.busData",dto);
+			
+			return sql.insert("busData",dto);
 				
 		}
 
