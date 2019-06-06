@@ -305,13 +305,13 @@ public class location {
 		@Transactional
 		public void getGper(HttpServletRequest request
 				,HttpServletResponse response
-				,JSONObject tmp) throws Exception {//Gper 인자 data 수신
+				,String data) throws Exception {//Gper 인자 data 수신
 
-				System.out.println("DATA:"+tmp.toJSONString());
+				
 				//String 객체를 Json 객체로 변환
 				JSONParser memberparser = new JSONParser();
-			
-				
+				JSONObject tmp = new JSONObject();
+				System.out.println("DATA:"+tmp.toJSONString());
 			
 				//Json에서 꺼내서 변수에 담음
 	         		
