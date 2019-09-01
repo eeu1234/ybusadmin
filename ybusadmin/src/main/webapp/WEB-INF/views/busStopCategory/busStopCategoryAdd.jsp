@@ -50,7 +50,8 @@
 			<th>노선 이름</th>
 			<th>노선 상태</th>
 			<th>소속 학교</th>
-			<th></th>
+			<th class="groupkey">그룹키</th>
+			<th class="editdie"></th>
 
 		</tr>
 		<c:forEach items="${clist}" var="cdto">
@@ -62,6 +63,7 @@
 				<td>${cdto.busStopCategory}</td>
 				<td>${cdto.busStopCategoryStat}</td>
 				<td>${cdto.universityName}</td>
+				<td>${cdto.groupbusHashkey}</td>
 				<td><input type="button"
 					id="categoryEdit${cdto.busStopCategorySeq}" value="수정"
 					class="btn btn-warning"

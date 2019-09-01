@@ -68,7 +68,14 @@ body, html {
 	background-color: #003d4f;
 }
 
-
+#txtLogo {
+	position: relative;
+	width: 60%;
+	height: 80%;
+	padding-top: 4%;
+	margin: 0 auto;
+	font-weight: bold;
+}
 
 #logo {
 	position: absolute;
@@ -130,16 +137,6 @@ body, html {
  #contents{
  padding-top:65%;
  } 
- .busTxt {
-	position: absolute;
-	width: 70%;
-	height: 35%;
-	font-size: 0.3em;
-	padding-top: 23% !important;
-	padding-left: 10px;
-	<%-- background-image: url('/spring/images/timeLine/busNum.png'); --%>
-	
-}
 }
 /* 정류장 타임라인 틀 시작 */
 #lineArea {
@@ -278,7 +275,7 @@ body, html {
 	width: 70%;
 	height: 35%;
 	font-size: 0.3em;
-	padding-top: 20%;
+	padding-top: 17%;
 	padding-left: 10px;
 	<%-- background-image: url('/spring/images/timeLine/busNum.png'); --%>
 	
@@ -381,7 +378,7 @@ function moveMap(){
 					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
 					<div id="txtLogo">
 					
-					Now Location
+					현재 버스 위치
 					
 					</div>
 					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>
@@ -390,8 +387,8 @@ function moveMap(){
 
 			<div id="btnArea">
 				<div id="btnGroup">
-					<div id="upBtn" class="goBtn">UP</div>
-					<div id="downBtn" class="goBtn">DOWN</div>
+					<div id="upBtn" class="goBtn">상행</div>
+					<div id="downBtn" class="goBtn">하행</div>
 				</div>
 			</div>
 					<div id="footer">

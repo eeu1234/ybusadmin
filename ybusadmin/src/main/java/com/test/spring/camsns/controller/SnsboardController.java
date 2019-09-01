@@ -1,21 +1,40 @@
 package com.test.spring.camsns.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -23,6 +42,7 @@ import com.test.spring.camsns.DAO.SnsCategoryDAO;
 import com.test.spring.camsns.DAO.SnsboardDAO;
 import com.test.spring.camsns.DAO.SnscommentDAO;
 import com.test.spring.dto.UniversityDTO;
+import com.test.spring.dto.camsns.CamsnsNoticeDTO;
 import com.test.spring.dto.camsns.CategoryDTO;
 import com.test.spring.dto.camsns.SnsboardCategoryDTO;
 import com.test.spring.dto.camsns.SnsboardDTO;
@@ -35,7 +55,8 @@ import com.test.spring.camsns.DAO.SnsUniversityDAO;
 
 @Controller("SnsboardController")
 public class SnsboardController {
-
+    public static StringBuilder sb;
+    
 	@Autowired
 	private SnsboardDAO boardDao;
 
@@ -306,4 +327,78 @@ public class SnsboardController {
 		}
 
 	}// getFileName
+	
+	/*공지사항*/
+   @RequestMapping(method={RequestMethod.GET}
+   , value="/camsns/snsboard/camsnsNotice")
+   public ModelMap camsnsNotice(HttpServletRequest request
+           ,HttpSession session
+           ,HttpServletResponse response, ModelMap modelMap){
+       List<CamsnsNoticeDTO> noticeList = boardDao.getNotice();
+       modelMap.addAttribute("noticeList", noticeList);
+       
+       return modelMap;
+   }
+   
+   @RequestMapping(method={RequestMethod.GET}, value="/camsns/snsboard/camsnsNews")
+   public String camsnsNews(HttpServletRequest request
+           ,HttpSession session
+           ,HttpServletResponse response){
+       return "camsns/snsboard/camsnsNews";
+    }
+   
+   @RequestMapping(method={RequestMethod.POST}, value="/camsns/snsboard/getNews")
+   @ResponseBody
+   public List<ModelMap> getNews(HttpServletRequest request
+           ,HttpSession session
+           ,HttpServletResponse response, String start, ModelMap modelMap){
+       String clientId = "29slBRM4eDdKuESZzqz8";//애플리케이션 클라이언트 아이디값";
+       String clientSecret = "uiPEBBws13";//애플리케이션 클라이언트 시크릿값";
+       StringBuilder sb;
+       List<ModelMap> list = new ArrayList<ModelMap>();
+       try {
+           String text = URLEncoder.encode("용인대학교", "utf-8");
+           String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&start=" + start + "&display=" + 5 + "&" + "sort=sim";
+           URL url = new URL(apiURL);
+           HttpURLConnection con = (HttpURLConnection) url.openConnection();
+           con.setRequestMethod("GET");
+           con.setRequestProperty("X-Naver-Client-Id", clientId);
+           con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+           int responseCode = con.getResponseCode();
+           BufferedReader br;
+           if (responseCode == 200) { 
+               br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+           } else { 
+               br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+           }
+           sb = new StringBuilder();
+           String line;
+
+           while ((line = br.readLine()) != null) {
+               sb.append(line + "\n");
+           }
+           JSONParser parser = new JSONParser();
+           JSONObject jsonObj = new JSONObject();
+           jsonObj = (JSONObject) parser.parse(sb.toString());
+           JSONArray o = (JSONArray) jsonObj.get("items");
+           for(int i=0; i<o.size(); i++) {
+               ModelMap modelMap2 = new ModelMap();
+               JSONObject newObj = (JSONObject) o.get(i);
+               String title = newObj.get("title").toString();
+               String link = newObj.get("link").toString();
+               String description = newObj.get("description").toString();
+               String date = newObj.get("pubDate").toString();
+               modelMap2.addAttribute("title", title);
+               modelMap2.addAttribute("link", link);
+               modelMap2.addAttribute("description", description);
+               modelMap2.addAttribute("date", date);
+               list.add(modelMap2);
+           }
+           br.close();
+           con.disconnect();
+       } catch (Exception e) {
+           System.out.println("오류가 발생했습니다 : "+e.getMessage());
+       }
+       return list;
+    }
 }

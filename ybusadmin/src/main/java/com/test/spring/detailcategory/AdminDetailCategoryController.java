@@ -30,8 +30,14 @@ public class AdminDetailCategoryController {
 	         
 			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
 			
+			System.out.println("학교:"+adto.getUniversitySeq());
+			
 			//카테고리에 버스 종류 출력
 			List<BusStopCategoryDTO> categoryList = dao.categoryList(adto.getUniversitySeq());
+			for(int i=0;i < categoryList.size();i++) {
+				
+				System.out.println("카테고리:"+categoryList.get(i).getBusStopCategory());
+			}
 			
 			//show인 세부분류 리스트 가져오기
 			List<BusStopDetailCategoryDTO> showDetailCategoryList = dao.showDetailCategoryList(adto.getUniversitySeq());

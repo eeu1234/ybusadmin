@@ -30,7 +30,6 @@
 		      var b = $(this).val();
 		      
 		      if(b != -1){
-		         
 		         //선택한 학교명 받아오기
 		         $.ajax({
 		            type : "GET",
@@ -44,7 +43,6 @@
 		            	  name = $(item).find("name").text();
 		            	  $(".nav .noDeco").text(name);
 		               });
-		               
 
 		            },
 		            error : function(){

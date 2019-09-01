@@ -32,7 +32,6 @@ public class AdminMainController {
 			List<UniversityDTO> university = dao.list();
 			
 			request.setAttribute("university", university);
-		
 			return "admin/adminMain";
 			
 		} catch (Exception e) {
@@ -70,11 +69,9 @@ public class AdminMainController {
 			adto.setUniversityName(temp[1]);
 			
 			session.setAttribute("adto", adto);
-			
 			//대학교 셀렉박스 유지
 			List<UniversityDTO> university = dao.list();
 			request.setAttribute("university", university);
-			
 			//session.setAttribute("universitySeq", universitySeq);
 			
 			return "admin/adminMain";

@@ -169,8 +169,6 @@
 	          	<input type="checkbox"  data-toggle="toggle" class="onOffBtn" value="${dto.snsboardSeq}">	
 	       </c:when>
 	   </c:choose>
-
-
 			</td>
 			
 		</tr>

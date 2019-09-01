@@ -1,5 +1,6 @@
 package com.test.spring.camsns.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,12 +9,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
+
+
+
 import com.test.spring.camsns.DAO.SnsAdminDAO;
 import com.test.spring.dto.AdminUniversityDTO;
+import com.test.spring.dto.camsns.CamsnsNoticeDTO;
 import com.test.spring.dto.camsns.SearchDTO;
 import com.test.spring.dto.camsns.SnsboardCategoryDTO;
 import com.test.spring.dto.camsns.SnsboardDTO;
@@ -173,6 +179,74 @@ public class AdminSnsboardController {
 		
 		return "/camsns/admin/adminSnsboardList";
 	}
+	
+	@RequestMapping(method={RequestMethod.GET}
+    , value="/camsns/admin/adminNotice")
+    public String adminNotice(HttpServletRequest request
+            ,HttpSession session
+            ,HttpServletResponse response
+            ,ModelMap modelMap){
+
+        List<CamsnsNoticeDTO> noticeList = dao.getNotice();
+        modelMap.addAttribute("noticeList", noticeList);
+        
+        return "/camsns/admin/adminNotice";
+    }
+	
+   @RequestMapping(method={RequestMethod.GET}
+    , value="/camsns/admin/adminMessageBoard")
+    public String adminMessageBoard(HttpServletRequest request
+            ,HttpSession session
+            ,HttpServletResponse response
+            ,String type, String value, String boardSeq){
+         
+        
+        return "/camsns/admin/adminMessageBoard";
+    }
+   
+   @RequestMapping(method={RequestMethod.GET}
+   , value="/camsns/admin/getMessageBoardList")
+   public String getMessageBoardList(HttpServletRequest request
+           ,HttpSession session
+           ,HttpServletResponse response
+           ,String type, String value, String boardSeq){
+       
+       return "/camsns/admin/adminMessageBoard";
+   }
+   
+   /*공지사항*/
+   @RequestMapping(method={RequestMethod.GET}
+   , value="/camsns/admin/getNoticeList")
+   public ModelMap getNoticeList(HttpServletRequest request
+           ,HttpSession session
+           ,HttpServletResponse response, ModelMap modelMap){
+       List<CamsnsNoticeDTO> noticeList = dao.getNotice();
+       modelMap.addAttribute("noticeList", noticeList);
+       
+       return modelMap;
+   }
+   
+   @RequestMapping(method={RequestMethod.GET}
+   , value="/camsns/admin/createNotice")
+   public void createNotice(HttpServletRequest request
+           ,HttpSession session
+           ,HttpServletResponse response
+           ,CamsnsNoticeDTO dto){
+       AdminUniversityDTO adto = (AdminUniversityDTO) session.getAttribute("adto");
+       String universitySeq = adto.getUniversitySeq();
+       dao.createNotice(dto, universitySeq);
+   }
+   
+
+   @RequestMapping(method={RequestMethod.GET}
+   , value="/camsns/admin/delNotice")
+   public void delNotice(HttpServletRequest request
+           ,HttpSession session
+           ,HttpServletResponse response
+           ,String noticeSeq){
+       System.out.println("***************" + noticeSeq);
+       dao.delNotice(noticeSeq);
+   }
 	
 	//comment blind,show update 바꾸는 부분
 		@RequestMapping(method={RequestMethod.GET}

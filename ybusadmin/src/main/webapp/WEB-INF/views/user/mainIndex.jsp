@@ -221,7 +221,7 @@ body {
 	overflow: hidden;
 	
 	margin-left:4%;
-	margin-top: -1.5px;
+	margin-top: 1px;
 	
 	font-size:0.8em;
 	font-family: 'NotoSansCJKkr-DemiLight';
@@ -508,13 +508,53 @@ a:link,a:visited,a:active,a:hover{
 }
 </style>
 
+<script>
+$(function(){
+	
+	//날씨받기
+	getWeather();
+	
+
+
+});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 애드센스 -->
+<script>
+
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8286656279172992",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+<!-- Analitics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-93928507-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+if(!wcs_add) var wcs_add = {};
+wcs_add["wa"] = "171aefb65e5675";
+wcs_do();
+</script>
 
 </head>
 
 <body>
+
 <div id="container">
 	<div id="logo_head">
-		<div id="icon_box_left" class="icon_box"><img src="/spring/images/mainImage/weather_icon.png"></div>
+		<div id="icon_box_left" class="icon_box"></div>
 		
 		<div id="logo_box" onClick="window.location.reload();">
 			<div id="logo">
@@ -547,9 +587,8 @@ a:link,a:visited,a:active,a:hover{
 	<!-- Swiper -->
 		  <div class="swiper-container">
 		    <div class="swiper-wrapper">
-		      <div class="swiper-slide"><img src="/spring/images/mainImage/ad_image.png"></div>
-		      <div class="swiper-slide">Slide 2</div>
-		      <div class="swiper-slide">Slide 3</div>
+		<!--       <div class="swiper-slide"><a href="tel:01086068914"><img src="/spring/images/mainImage/ad_image1.jpg"></a></div> -->
+		      <div class="swiper-slide"><img src="/spring/images/mainImage/ad_image.jpg"></div> 
 		    </div>
 		    <!-- Add Pagination -->
 		    <div class="swiper-pagination"></div>
@@ -562,14 +601,14 @@ a:link,a:visited,a:active,a:hover{
 	<div id="bus_icon_container">
 	
 		<div class="bus_icon_box" id="bus_icon_box1">
-			<div class="bus_icon bus_icon_left bus_button" id="bus_icon1">
+			<div class="bus_icon bus_icon_left " id="bus_icon1">
 				<div class="iconBox BSC1">
 				
 				</div>
 			</div>
 			
-			<div class="bus_icon bus_icon_right bus_button" id="bus_icon2">
-				<div class="iconBox BSC2" <c:if test="${universityDto.universitySeq==10020}">onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';"> <!-- 명지대 처리용 --><div class="iconImg"><img src="/spring/images/mainImage/icon_route.png" alt="등교루트" /></div><div class="iconInfo">등교길<br>게시판</div></c:if><c:if test="${universityDto.universitySeq!=10020}">></c:if>
+			<div class="bus_icon bus_icon_right " id="bus_icon2">
+				<div class="iconBox BSC2" <c:if test="${universityDto.universitySeq==10020}"> onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';"> <!-- 명지대 처리용 --><div class="iconImg"><img src="/spring/images/mainImage/icon_route.png" alt="등교루트" /></div><div class="iconInfo">등교길<br>게시판</div></c:if><c:if test="${universityDto.universitySeq!=10020}">></c:if>
 				<!-- 
 					<div class="iconImg "><img src="/spring/images/mainImage/icon_secondBus.png" alt="시외버스" /></div>
 					<div class="iconInfo">노란버스<br>조회하기</div>
@@ -591,7 +630,7 @@ a:link,a:visited,a:active,a:hover{
 			
 			<div class="bus_icon bus_icon_right" id="bus_icon4" onclick="location.href='/spring/busSchedule/busTimeTable.action';">
 					<div class="iconBox">
-					<div class="iconImg "><img src="/spring/images/mainImage/icon_timeTable.png" alt="시외버스" /></div>
+					<div class="iconImg "><img src="/spring/images/mainImage/icon_timeTable.png" alt="시간표" /></div>
 					<div class="iconInfo">셔틀버스<br>시간표</div>
 				</div>
 			</div>
@@ -642,7 +681,7 @@ a:link,a:visited,a:active,a:hover{
 					<!--명지대-->
 					
 				
-					<div class="another_box another_box1" onclick="location.href='/spring/user/yiuFood.action'">
+					<div class="another_box another_box1" onclick="location.href='/spring/user/mjuFood.action'">
 						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_food.png"></div>
 						<div class="another_text_container">학식 메뉴보기</div>
 						<div style="clear:both;"></div>
@@ -739,9 +778,15 @@ a:link,a:visited,a:active,a:hover{
   <!-- Initialize Swiper -->
   <script>
     var swiper = new Swiper('.swiper-container', {
-      pagination: {
-        el: '.swiper-pagination',
-      },
+		autoplay: {
+		    delay: 3000,
+		  },
+		fadeEffect: {
+		    crossFade: true
+		 },
+		 pagination: {
+		   el: '.swiper-pagination',
+		 },
     });
   </script>
 
@@ -763,6 +808,7 @@ function appendCategory(){
 			</c:when>
 			
 		</c:choose>
+	<c:if test="${status.count<=2}">
 		var iconInfo = document.createElement("div");
 		iconInfo.setAttribute("class","iconInfo");
 	
@@ -785,17 +831,12 @@ function appendCategory(){
 		$(".BSC${status.count}").append(iconBox);
 		
 		$("#bus_icon${status.count}").attr("value","${bscDto.busStopCategorySeq}");
+		$("#bus_icon${status.count}").addClass("bus_button");
 		//$("#firstBox").append(iconBox);
 		//$(iconBox).appendTo($("#firstBox"));
 		//$("#firstBox").append("<a>test</a>");
-		
+	</c:if>
 	</c:forEach>
-	 
-	
-	
-}
-
-
 </script>
 
 <script>
@@ -1101,3 +1142,31 @@ return $.fn.vTicker = function(method) {
 
 
 </script>
+
+
+
+<script>
+function getWeather() {
+	  var url = 'http://api.openweathermap.org/data/2.5/weather?lat=${universityDto.universityLatitude}&lon=${universityDto.universityLongitude}&APPID=62790597231fb6fa089bb576c8f8b650';
+	  $.ajax({
+	    dataType: "jsonp",
+	    url: url,
+	    jsonCallback: 'jsonp',
+	
+	    cache: false,
+	    success: function (data) {
+	    	var iconName = data.weather[0].icon;
+	    	$("#icon_box_left").append('<img src="/spring/images/mainImage/weather/'+iconName+'.png">');
+	     	//console.log('<img src="/spring/images/mainImage/weather/'+iconName+'.png"');
+	    	//날씨 나타내기
+	    	//$("#frontTemp").text(Math.round(data.main.temp-273.15));
+	    	//$("#weatherTxt").text(data.weather[0].main);
+	   		
+	    	//data.weather[0].main
+	
+	     //console.log(data.weather[0].main);
+	     //   console.log(data);
+	    }
+	  });
+	}
+      </script>

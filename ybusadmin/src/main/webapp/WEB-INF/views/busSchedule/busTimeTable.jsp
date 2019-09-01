@@ -136,10 +136,6 @@ $(document).ready(function(){
 	//result index 0부터 시작
 	var intResult = 0;
 
-	
-	//불만들어오게 하는 변수
-	var lightBox = 0;
-	
 	//깜빡이여야 되는 칸 알아내는 반복문
 	for(var k=0;k<time.length;k++){
 		//split으로 시, 분으로 나눈 작업
@@ -156,52 +152,16 @@ $(document).ready(function(){
 		if((busTime[k] - sum) >= 1 && (busTime[k] - sum) <= 5){
 			//result[] 배열에 td 인덱스 넣기
 			result[intResult] = k;
-		//	console.log("result는 "+result[intResult]);
-			intResult++; 
-		}
-	}
-	
-	for(var k=0;k<time.length;k++){	
-		if(busTime[k] - sum >=0 && busTime[k] - sum <= 60 && (busTime[k] - sum) >= 5 &&result.length == 0 ){//다음 시간꺼 불 밝히기 새벽시간은 1시간 이내만
-			result[intResult] = k;
-			//console.log("2result는 "+result[intResult]);
+			console.log("result는 "+result[intResult]);
 			intResult++;
-			
-			lightBox++;//5분이낸지 아닌지 구분 신호
-			for(var l=0;l<time.length;l++){//동시간대 박스도 같이 불들어오기
-			//	console.log("busTime[k]"+busTime[k]);
-			//	console.log("busTime[l]"+busTime[l]);
-				if(busTime[k] == busTime[l] && k!=l){ 
-					result[intResult] = l; 
-				//	console.log("l은"+ l );
-				};
-			}
-			
-			
 		}
-	
 	}
+
 	//인터벌 실행, 선택한 값이 주말/평일에 따라 실행
 	if(weekDays == 'weekends' && day == 2){
-		if(lightBox == 0){
-			interval = setInterval(toggle, 500);
-		}else{
-			 for(var i=0;i<result.length;i++){
-				// console.log("i는 "+i+"  result[i]는 "+result[i]);
-				   time.eq(result[i]).css("background-color","#44AABB");
-				   name.eq(result[i]).css("background-color","#44AABB");
-			   }
-		}
+		interval = setInterval(toggle, 500);
 	}else if(weekDays == 'normal' && day == 1){
-		if(lightBox == 0){
-			interval = setInterval(toggle, 500);
-		}else{
-			 for(var i=0;i<result.length;i++){
-				   console.log("i는 "+i+"  result[i]는 "+result[i]);
-				   time.eq(result[i]).css("background-color","#44AABB");
-				   name.eq(result[i]).css("background-color","#44AABB");
-			   }
-		}
+		interval = setInterval(toggle, 500);
 	}
 
 	//5분 뒤 인터벌 종료
@@ -250,7 +210,7 @@ function schedule(seq){
 				absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 55%;  background-color:
 				transparent !important; border-color:
 				transparent;"	onclick="location.href='/spring/index.action';" />
-			<div id="txtLogo">Bus Timetable</div>
+			<div id="txtLogo">버스 시간표</div>
 
 			<img src="/spring/images/logo/${universityDto.universityImg}"
 				id="logo" />
@@ -268,9 +228,9 @@ function schedule(seq){
 			<div>
 				<select id="weekDays" class="form-control">
 					<option value="normal"
-						<c:if test="${weekDays == 'normal'}">selected</c:if>>Week</option>
+						<c:if test="${weekDays == 'normal'}">selected</c:if>>주중</option>
 					<option value="weekends"
-						<c:if test="${weekDays == 'weekends'}">selected</c:if>>Weekend</option>
+						<c:if test="${weekDays == 'weekends'}">selected</c:if>>주말</option>
 				</select>
 			</div>
 
@@ -293,8 +253,8 @@ function schedule(seq){
 				<div class="timeContent">
 					<div class="timeHeader">
 						${dlist.busStopDetailCategoryName}
-						<c:if test="${weekDays == 'normal' }"> Week</c:if>
-						<c:if test="${weekDays == 'weekends' }"> Weekend</c:if>
+						<c:if test="${weekDays == 'normal' }"> 주중</c:if>
+						<c:if test="${weekDays == 'weekends' }"> 주말</c:if>
 					</div>
 					<!-- 시간없으면 출력하는 jstl if조건문 -->
 					<c:forEach items="${slist}" var="slist" varStatus="in">

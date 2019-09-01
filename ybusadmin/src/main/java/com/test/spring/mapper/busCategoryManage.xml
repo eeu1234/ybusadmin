@@ -41,7 +41,7 @@
 	<!-- 버스 대분류 리스트가져오기 대학seq참조 -->
 	<select id="busStopCategory" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
 		SELECT BUSSTOPCATEGORYSEQ AS busStopCategorySeq, BUSSTOPCATEGORY AS busStopCategory, BUSSTOPCATEGORYSTAT AS busStopCategoryStat,
-		UNIVERSITYSEQ AS universitySeq
+		UNIVERSITYSEQ AS universitySeq, GROUPBUSHASH AS groupbusHashkey
 		FROM BUSSTOP_CATEGORY
 		WHERE UNIVERSITYSEQ = #{seq} AND BUSSTOPCATEGORYSTAT = 'show';
 	</select>
