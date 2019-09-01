@@ -42,7 +42,7 @@ html, body {
    height: 100%;
 }
 
-#pano {
+#street-view {
    float: left;
    width: 25%;
    height: 100%;
@@ -97,8 +97,6 @@ html, body {
 }
 </style>
 
-<script type="text/javascript"
-   src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=c5wa0CTc7jalj6c4Y0tw&submodules=panorama"></script>
 <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap"></script>
 
@@ -373,60 +371,10 @@ html, body {
 
                });
 
-   //네이버 로드뷰 출력
-   var HOME_PATH = window.HOME_PATH || '.', pano = null;
-
-   var nlat;
-   var nlng;
-
-   function initPanorama(nlat, nlng) {
-	   $("#pano").children("div").remove();
-      console.log(nlat + ":" + nlng);
-      nlat = Number(nlat);
-      nlng = Number(nlng);
-      if (nlat == "undefined" || nlng == "undefined") {
-         pano = new naver.maps.Panorama("pano", {
-            position : new naver.maps.LatLng(38, 111),
-            pov : {
-               pan : -135,
-               tilt : 29,
-               fov : 100
-            }
-         });
-      } else {
-         pano = new naver.maps.Panorama("pano", {
-            position : new naver.maps.LatLng(nlat, nlng),
-            pov : {
-               pan : -135,
-               tilt : 29,
-               fov : 100
-            }
-         });
-      }
-
-      naver.maps.Event.addListener(pano, "init", function() {
-         marker.setMap(pano);
-
-         var proj = pano.getProjection();
-         var lookAtPov = proj.fromCoordToPov(marker.getPosition());
-         if (lookAtPov) {
-            pano.setPov(lookAtPov);
-         }
-      });
-      var marker = new naver.maps.Marker({
-         position : new naver.maps.LatLng(nlat, nlng),
-         icon : { // 레티나 디스플레이 대응 마커 아이콘
-            url : HOME_PATH + "/img/example/pin_map.png", // 110x72 크기의 원본 이미지
-            size : new naver.maps.Size(55, 36),
-            anchor : new naver.maps.Point(28, 36),
-            origin : new naver.maps.Point(0, 0),
-            scaledSize : new naver.maps.Size(55, 36)
-         }
-      });
-   }
-
+   
   
-
+	  
+	  
    //맵 초기화
    function initMap(lat, lng) {
 	   try{
@@ -444,14 +392,46 @@ html, body {
 	      }
 	
 	      map = new google.maps.Map(document.getElementById("map"), myOptions);
+	      
+
+	      
+	      
+	      
+	      
 	   }
       catch(error){
   		alert("지도 불러오기 실패");
   		location.reload();
   	  }
       
+      
+     
+      
+   
+      
+      
    } // function initialize() 함수 끝
 
+   
+   function initStreetView(lat,lng){
+	   /* 구글 스트리트뷰 */
+		
+	      
+     	
+	   console.log(lat+"/"+lng);
+     	var panorama = new google.maps.StreetViewPanorama(
+           document.getElementById('street-view'),
+           {
+             position: {lat: lat, lng: lng},
+             pov: {heading: 165, pitch: 0},
+             zoom: 1
+           });
+     	
+     	 map.setStreetView(panorama);
+     
+   }
+   
+   
    
    //마커 전부 제거 함수
    function deleteAllMarkers() {
@@ -498,7 +478,7 @@ html, body {
         });
       marker.addListener('click', function() {
   		 infowindow.open(map, marker);
-  		initPanorama(this.position.lat(), this.position.lng());
+  		initStreetView(this.position.lat(), this.position.lng());
   	  });
       //마커 이동 함수(이동할떄마다 해당 정류장의 위경도 수정)
       google.maps.event.addListener(marker, 'dragend', function(event) {
@@ -510,7 +490,8 @@ html, body {
          $("#tbl tbody tr:nth-child(" + this.orders + ")").children().eq(4)
                .text(this.position.lng());
          //console.log("end");
-         initPanorama(this.position.lat(), this.position.lng());
+         initStreetView(this.position.lat(), this.position.lng());
+         
       });
       markers.push(marker);
 
@@ -536,7 +517,7 @@ html, body {
       });
       marker.addListener('click', function() {
 		 infowindow.open(map, marker);
-		initPanorama(this.position.lat(), this.position.lng());
+		 initStreetView(this.position.lat(), this.position.lng());
 	  });
 
       //마커 이동 함수(이동할떄마다 해당 정류장의 위경도 수정)
@@ -549,7 +530,7 @@ html, body {
          $("#tbl tbody tr:nth-child(" + this.orders + ")").children().eq(4)
                .text(this.position.lng());
          //console.log("end");
-         initPanorama(this.position.lat(), this.position.lng());
+         initStreetView(this.position.lat(), this.position.lng());
       });
       dragMarkers.push(marker);
 
@@ -699,6 +680,10 @@ html, body {
                });//ajax 
       }
    }
+   
+   
+  
+   
 </script>
 
 
@@ -745,7 +730,7 @@ html, body {
    
    <div id="mapForm">
       <div id="map"></div>
-      <div id="pano"></div>
+      <div id="street-view"></div>
    </div>
       <table id="tbl" class="table table-striped">
          <thead>

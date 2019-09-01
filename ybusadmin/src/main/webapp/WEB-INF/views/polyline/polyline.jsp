@@ -569,7 +569,6 @@ function search(){
 								html += '<td>'+$(item).find("busLogStartTime").text()+'</td>';
 								html += '<td>'+$(item).find("busLogEndTime").text()+'</td>';
 								html += '<td>'+$(item).find("busLogDistance").text()+'</td>';
-								//html += '<td>'+(parseInt($(item).find("busLogDistance").text())-parseInt($(item).find("busLogLastDistance").text()))+'</td>';
 								html += '<td>'+$(item).find("busLogRegdate").text()+'</td>';
 								html += '<td><a href="/spring/images/sign/'+$(item).find("busLogSignimg").text()+'" target="_blank">'+"서명보기"+'</a></td>';
 							 	html += '</tr>';

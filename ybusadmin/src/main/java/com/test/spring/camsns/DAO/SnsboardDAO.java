@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.test.spring.dto.camsns.CamsnsNoticeDTO;
 import com.test.spring.dto.camsns.SnsboardCategoryDTO;
 import com.test.spring.dto.camsns.SnsboardDTO;
 import com.test.spring.dto.camsns.SnsboardfileDTO;
@@ -33,7 +34,7 @@ public class SnsboardDAO {
 	public List<SnsboardCategoryDTO> boardList(String universitySeq, String index, String word) {
 		// System.out.println(universitySeq +":"+index +":"+word);
 		HashMap<String, String> map = new HashMap<String, String>();
-		//map.put("universitySeq", universitySeq);
+		map.put("universitySeq", universitySeq);
 		map.put("index", index);// ?번째 부터 ?번째 글
 		map.put("word", word);// 검색어
 
@@ -95,5 +96,9 @@ public class SnsboardDAO {
 
 		return sql.selectOne("snsboard.boardOne", boardSeq);
 	}
+	
+    public List<CamsnsNoticeDTO> getNotice() {
+        return sql.selectList("adminNotice.getNotice");
+    }
 
 }

@@ -65,7 +65,7 @@ html, body {
 			</tr>
 			<tr>
 				<td>학교명</td>
-				<td>${bscdto.universityName}</tdh>
+				<td>${bscdto.universityName}</td>
 			</tr>
 			<tr>
 				<td>노선 이름</td>
@@ -84,7 +84,13 @@ html, body {
 					<%-- <input type="radio" name = "busStopCategoryStat" value = "show" <c:if test="${bscdto.busStopCategoryStat=='show'}">checked</c:if>>
 					<input type="radio" name = "busStopCategoryStat" value = "hide" <c:if test="${bscdto.busStopCategoryStat=='hide'}">checked</c:if>> --%>
 				</td>
-			</tr>					
+			</tr>	
+			<tr>
+				<td>그룹키</td>
+				<td>
+					<input type="text" name="groupbusHashkey" class="form-control" value="${bscdto.groupbusHashkey}">
+				</td>
+			</tr>				
 		</table>
 		<input type= "hidden" name="busStopCategorySeq" value = "${bscdto.busStopCategorySeq }">
 		<br>

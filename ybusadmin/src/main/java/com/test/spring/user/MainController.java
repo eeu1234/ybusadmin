@@ -392,16 +392,15 @@ public class MainController {
 	   
 	   //용인대학교 학식 크롤링 
 	   @RequestMapping(method={RequestMethod.GET}, value="/user/yiuFood.action")
-	   public String yiuFood(HttpServletRequest request, HttpSession session, HttpServletResponse response,String universitySeq,String searchValue,String typeValue
+	   public String yiuFood(HttpServletRequest request, HttpSession session, HttpServletResponse response,String universitySeq,String searchValue
 			  ) throws IOException{
-		   System.out.println(universitySeq);
 		   
 		   UniversityDTO udto = (UniversityDTO) session.getAttribute("universityDto");
 		   
 		
 		if(searchValue == null) {
 			
-		}else if(searchValue.equals("1") || searchValue.equals("2") || searchValue.equals("3")) {
+		}else{
 			//용인대 학식 파싱
 			org.jsoup.nodes.Document doc = Jsoup.connect("http://mt.yongin.ac.kr/life/menu?searchValue="+searchValue).get();
 			Elements table = doc.select(".tableType1");
@@ -410,29 +409,55 @@ public class MainController {
 			response.getWriter().print(table.toString().replace("(메뉴는 식자재 수급사정 상 변동될 수 있음을 양해부탁드립니다. 원산지는 식당 내 게시된 메뉴표를 참조하여 주시기 바랍니다.)", ""));
 			return null;
 		}
-		else if(typeValue != null) {
-				//명지대 학식 파싱
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		   return "user/foodYiu";
+	   }
+	   //명지대학교 학식 크롤링 
+	   @RequestMapping(method={RequestMethod.GET}, value="/user/mjuFood.action")
+	   public String mjuFood(HttpServletRequest request, HttpSession session, HttpServletResponse response, String searchValue,String typeValue
+			   ) throws IOException{
+		   
+		   UniversityDTO udto = (UniversityDTO) session.getAttribute("universityDto");
+		   
+		   
+		   if(searchValue == null) {
+			   
+		   }
+		   else{
+			   //명지대 학식 파싱
 			   org.jsoup.nodes.Document doc = Jsoup.connect("http://www.mju.ac.kr/mbs/mjukr/jsp/restaurant/restaurant.jsp?configIdx="+typeValue+"&id=mjukr_="+searchValue).get();
 			   System.out.println(searchValue+"///////////////////////"+typeValue);
 			   Elements table = doc.select(".sub");
-			   	System.out.println(table.toString());
+			   System.out.println(table.toString());
 			   response.setCharacterEncoding("utf-8");
-			   response.getWriter().print(table.toString().replace("(메뉴는 식자재 수급사정 상 변동될 수 있음을 양해부탁드립니다. 원산지는 식당 내 게시된 메뉴표를 참조하여 주시기 바랍니다.)", ""));
+			   response.getWriter().print(table.toString());
 			   return null;
 		   }
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-			request.setAttribute("universityDto", udto);
-		
-		
-		   return "user/yiuFood";
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   return "user/foodMju";
 	   }
+	   
+	   
+	   
+
 }

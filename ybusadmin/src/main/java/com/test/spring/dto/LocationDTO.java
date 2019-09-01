@@ -11,6 +11,10 @@ public class LocationDTO {
 	
 	private String startTable;
 	private String endTable;
+	
+	
+	
+	
 	public String getStaffName() {
 		return staffName;
 	}

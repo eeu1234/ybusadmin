@@ -18,8 +18,9 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="/spring/index.action">CAMBUS</a></li>
+                    <!-- <li class="active"><a href="/spring/camsns/snsboard/camsnsNotice">공지사항</a></li> -->
+                    <li class="active"><a href="/spring/camsns/snsboard/camsnsNews">뉴스</a></li>
 					<li class="active"><a href="/spring/camsns/snsMain.action">메인으로</a></li>
-
 				</ul>
 			
 			</div>

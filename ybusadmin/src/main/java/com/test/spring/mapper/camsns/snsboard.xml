@@ -23,7 +23,7 @@
 	INNER JOIN  SNSCATEGORY B ON A.CATEGORY_SEQ_FK = B.CATEGORY_SEQ
 	 WHERE A.SNSBOARD_STAT ='show'  AND A.SNSBOARD_BLIND = 'n'
        <if test="universitySeq != null">
-    	  AND universitySeq = #{universitySeq}
+    	  AND A.UNIVERSITY_SEQ = #{universitySeq}
    	   </if>
 		
 		<if test="word != null">

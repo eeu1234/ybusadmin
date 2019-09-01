@@ -3,6 +3,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="busStop">
+
+	<!-- 2019-05-12 GPER 단말기 Hashkey 불러오기 -->
+	<select id="getGroupHashKey" parameterType="String" resultType="com.test.spring.dto.BusStopCategoryDTO">
+      SELECT BUSSTOPCATEGORYSEQ,BUSSTOPCATEGORY,GROUPBUSHASH FROM BUSSTOP_CATEGORY WHERE BUSSTOPCATEGORYSEQ =#{busStopCategorySeq};
+   </select>
+
+
    <select id="getBusStop" parameterType="String" resultType="com.test.spring.dto.BusStopDTO">
       SELECT A.* FROM 
       	(SELECT A.*,B.BUSSTOPSEQ AS busStopSeq, B.BUSSTOP AS busStop, B.BUSSTOPLATITUDE AS busStopLatitude, B.BUSSTOPLONGITUDE AS busStopLongitude FROM 
