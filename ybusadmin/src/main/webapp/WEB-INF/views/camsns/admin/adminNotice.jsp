@@ -10,12 +10,18 @@
 
 <style>
 	body{
-	position:relative;
-	width:100%;
-	max-widht:1440px;
-	height:100%;
-	overflow:auto;
-	
+		position:relative;
+		width:100%;
+		max-widht:1440px;
+		height:100%;
+		overflow:auto;
+	}
+	.noticeContent{
+		width:500px;
+		height: 500px;
+	}
+	.noticeTitle{
+		width: 500px;
 	}
 </style>
 <script>
@@ -76,6 +82,9 @@ var tr;
                     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 }
             });
+        },
+        closeModal : function(){
+        	$('#createNoticeModal').modal('hide');
         }
     }
 	$(function(){
@@ -127,9 +136,10 @@ var tr;
                 <div>제목</div>
                 <input type="text" id="noticeTitle" class="noticeTitle">
                 <div>내용</div>
-                <textarea id="noticeContent" class="noticeContent"></textarea>
+                <textarea id="noticeContent" class="noticeContent" style="resize: none;"></textarea>
             </div>
             <div class="modal-footer work-footer">
+            	<button type="button" class="btn btn-primary" onclick="adminNotice.closeModal();">취소</button>
                 <button type="button" class="btn btn-primary btn-blue" onclick="adminNotice.createNotice();">확인</button>
             </div>
         </div>

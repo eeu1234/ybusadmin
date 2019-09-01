@@ -58,7 +58,7 @@
 
 							</ul></li>
 							
-							<li class="dropdown"><a class="dropdown-toggle"
+							<!-- <li class="dropdown"><a class="dropdown-toggle"
                                     data-toggle="dropdown" href="#">게시판 <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="/spring/camsns/admin/adminNotice">1. 공지사항</a></li>
@@ -66,7 +66,8 @@
                                     <li><a href="/spring/camsns/snsboard/camsnsNews">3. 뉴스</a></li>
                                     <li><a href="/spring/camsns/admin/adminMessageBoard">4. 게시판</a></li>
                                 </ul>
-                            </li>
+                            </li> -->
+                            <li class="active"><a href="/spring/camsns/admin/adminSnsboardList.action">camsns</a></li>
 					   </c:if>
 					
 					

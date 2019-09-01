@@ -219,8 +219,22 @@ img {
     border: 0;
 }
 
+#tbl1 {
+    border-top: 1px solid #ccc;
+    width: 95%;
+    margin-left: 3%;
+}
 
+#tbl1 td {
+    border-top: 1px solid #ccc;
+}
+.link {
+    border-bottom: #2px solid #ccc;
+}
 
+#tbl1 thead tr th {
+    text-align: center;
+}
 
 /* 코멘트 */
 
@@ -313,15 +327,15 @@ img {
         getDescription : function(obj) {
             var content = $(obj).data('content');
             var link = $(obj).data('link');
-            if($('#content') != null || $('#content') != 'undefined') {
-                $('#content').remove();
+            if($('#contents') != null || $('#contents') != 'undefined') {
+                $('#contents').remove();
             }
             
             if($('#link') != null || $('#link') != 'undefined') {
                 $('#link').remove();
             }
             
-            var tmpl = '<tr id="content" class="content">';
+            var tmpl = '<tr id="contents" class="contents">';
             tmpl +=         '<td colspan="2">' + content + '</td>';
             tmpl +=    '</tr>';
             tmpl += '<tr id="link" class="link">';
@@ -340,7 +354,7 @@ img {
                    for(var i=0; i<jsonArray.length; i++) {
                        var tmpl = '<tr data-content="' + jsonArray[i].description + '" data-link="' + jsonArray[i].link + '" onclick="camsnsNews.getDescription(this)")>';
                        tmpl += '<td>' + jsonArray[i].title + '</td>';
-                       tmpl += '<td>' + jsonArray[i].date + '</td>';
+                       tmpl += '<td>' + jsonArray[i].date.substring(0, 16) + '</td>';
                        tmpl += '</tr>';
                        
                        $('#tbl1 tbody').append(tmpl);
@@ -349,7 +363,7 @@ img {
                    if($('#btnTr') != 'undefined') {
                        $('#btnTr').remove();
                    }
-                   var btn = '<tr id="btnTr"><td colspan="2"><a onclick="camsnsNews.getNews(' + idx + ')">더보기</a></td></tr>';
+                   var btn = '<tr id="btnTr"><td colspan="2" class="content-td"><a onclick="camsnsNews.getNews(' + idx + ')">더보기</a></td></tr>';
                    $('#tbl1 tbody:last').append(btn);
                },
                error : function(request, status, error){

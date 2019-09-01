@@ -193,26 +193,6 @@ public class AdminSnsboardController {
         return "/camsns/admin/adminNotice";
     }
 	
-   @RequestMapping(method={RequestMethod.GET}
-    , value="/camsns/admin/adminMessageBoard")
-    public String adminMessageBoard(HttpServletRequest request
-            ,HttpSession session
-            ,HttpServletResponse response
-            ,String type, String value, String boardSeq){
-         
-        
-        return "/camsns/admin/adminMessageBoard";
-    }
-   
-   @RequestMapping(method={RequestMethod.GET}
-   , value="/camsns/admin/getMessageBoardList")
-   public String getMessageBoardList(HttpServletRequest request
-           ,HttpSession session
-           ,HttpServletResponse response
-           ,String type, String value, String boardSeq){
-       
-       return "/camsns/admin/adminMessageBoard";
-   }
    
    /*공지사항*/
    @RequestMapping(method={RequestMethod.GET}

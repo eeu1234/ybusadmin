@@ -329,16 +329,16 @@ public class SnsboardController {
 	}// getFileName
 	
 	/*공지사항*/
-   @RequestMapping(method={RequestMethod.GET}
-   , value="/camsns/snsboard/camsnsNotice")
-   public ModelMap camsnsNotice(HttpServletRequest request
-           ,HttpSession session
-           ,HttpServletResponse response, ModelMap modelMap){
-       List<CamsnsNoticeDTO> noticeList = boardDao.getNotice();
-       modelMap.addAttribute("noticeList", noticeList);
-       
-       return modelMap;
-   }
+    /*
+     * @RequestMapping(method={RequestMethod.GET} ,
+     * value="/camsns/snsboard/camsnsNotice") public ModelMap
+     * camsnsNotice(HttpServletRequest request ,HttpSession session
+     * ,HttpServletResponse response, ModelMap modelMap){ List<CamsnsNoticeDTO>
+     * noticeList = boardDao.getNotice(); modelMap.addAttribute("noticeList",
+     * noticeList);
+     * 
+     * return modelMap; }
+     */
    
    @RequestMapping(method={RequestMethod.GET}, value="/camsns/snsboard/camsnsNews")
    public String camsnsNews(HttpServletRequest request
