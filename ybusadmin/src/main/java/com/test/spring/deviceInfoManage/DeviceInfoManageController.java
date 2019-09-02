@@ -1,6 +1,5 @@
 package com.test.spring.deviceInfoManage;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.test.spring.android.DAO.androidDAO;
 import com.test.spring.dto.DeviceDTO;
 import com.test.spring.dto.UniversityDTO;
 
@@ -22,22 +20,6 @@ public class DeviceInfoManageController {
 
 	@Autowired
 	private DeviceInfoManageDAO dao;
-	@Autowired
-	private androidDAO anDao;
-	
-	
-	@RequestMapping(method = { RequestMethod.GET }, value = "/deviceInfoManage/addDevice.action")
-	public String addDevice(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
-		String deviceId = request.getParameter("deviceModel");
-		String seq = anDao.findDeviceSeq(deviceId);
-		String deviceTel = request.getParameter("deviceTel");
-		String universitySel = request.getParameter("universitySel");
-
-		dao.updateDevice(seq, deviceId, deviceTel, universitySel);
-		response.sendRedirect("/spring/deviceInfoManage/deviceInfoManage.action");
-		
-		return null;
-	}
 	
 	//기기정보 수정 페이지
 	@RequestMapping(method = { RequestMethod.GET }, value = "/deviceInfoManage/deviceInfoManage.action")
