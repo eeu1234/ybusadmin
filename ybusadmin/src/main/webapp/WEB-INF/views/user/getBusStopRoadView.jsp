@@ -69,7 +69,7 @@ $(function() {
 				</div>
 			</div>
 		</div>
-
+		
 		<div id="contents">
 			<div class="tab">
 				<a href="javascript:void(0)" class="tablinks" style="border-left: 1px solid #003140; border-bottom: 5px solid #003d4f;" id="busStopview" onclick="location.href='/spring/getBusStopRoadView.action?busStopSeq='+${bsdto.busStopSeq}">정류장 거리뷰</a> 
@@ -78,6 +78,26 @@ $(function() {
 			</div>
 			
 				<div id="street-view"style="width:100%;height:400px;"></div>
+
+
+
+
+			<!-- 애드센스 -->
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-format="fluid"
+			     data-ad-layout-key="-fb+5w+4e-db+86"
+			     data-ad-client="ca-pub-2370297300940223"
+			     data-ad-slot="8826360596"></ins>
+			<script>
+			     (adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+
+
+
+
+
 
 			<div id="infoAround">
 				<div id="infoTitle">

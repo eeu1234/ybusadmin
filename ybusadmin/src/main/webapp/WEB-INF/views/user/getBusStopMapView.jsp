@@ -122,6 +122,29 @@
 			<div id="Tokyo" class="tabcontent">
 				정류장 약도
 			</div>
+	
+		
+		
+			<!-- 애드센스 -->
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-format="fluid"
+			     data-ad-layout-key="-fb+5w+4e-db+86"
+			     data-ad-client="ca-pub-2370297300940223"
+			     data-ad-slot="8826360596"></ins>
+			<script>
+			     (adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+
+
+
+
+
+
+
+
+
 
 
 			<div id="infoAround">

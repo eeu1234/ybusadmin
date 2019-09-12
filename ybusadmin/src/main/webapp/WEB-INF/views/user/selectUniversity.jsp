@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Cambus</title>
+
 <%@include file="/inc/userAsset.jsp" %>
 
 <link rel="apple-touch-icon" href="/spring/images/ico/favicon.ico">
@@ -122,9 +123,9 @@ body, html {
 	position: relative;
 	width: 100%;
 	height: 75%;
-	margin: 0;
+	margin: 0 auto;
 	padding: 0;
-	padding-top:23%;
+	padding-top:20%;
 	text-align:center;
 	background-color: white;
 }
@@ -304,7 +305,7 @@ body, html {
  }
 #selUni{
 	width:100%;
-	height:10%;
+	height:50px;
 	margin:0;
 	padding:0;
 }
@@ -377,9 +378,19 @@ body, html {
 				</select>
 			</form>
 			
-		
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- 학교선택화면 -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-2370297300940223"
+		     data-ad-slot="9489841046"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
 		</div>
-
+	
 		
 	</div>
 </body>

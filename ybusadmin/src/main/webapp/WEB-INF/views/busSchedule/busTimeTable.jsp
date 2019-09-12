@@ -253,6 +253,25 @@ function schedule(seq){
 				</c:forEach>
 			</div>
 			<div style="clear: both;"></div>
+			
+			
+			
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-format="fluid"
+			     data-ad-layout-key="-fb+5w+4e-db+86"
+			     data-ad-client="ca-pub-2370297300940223"
+			     data-ad-slot="8826360596"></ins>
+			<script>
+			     (adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+						
+			
+			
+			
+			
+			
 			<!-- 선택된 버스노선 시간표 -->
 			<c:forEach items="${dlist}" var="dlist" varStatus="out">
 				<div class="timeContent">

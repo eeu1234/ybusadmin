@@ -518,15 +518,7 @@ $(function(){
 
 });
 </script>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 애드센스 -->
-<script>
 
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-8286656279172992",
-    enable_page_level_ads: true
-  });
-</script>
 
 
 
@@ -587,7 +579,20 @@ wcs_do();
 	<!-- Swiper -->
 		  <div class="swiper-container">
 		    <div class="swiper-wrapper">
-		       <div class="swiper-slide"><a href="http://cambus.kr/spring/user/noticeView.action?noticeSeq=293"><img src="/spring/images/mainImage/ad_image.jpg"></a></div> 
+		     
+		     <div class="swiper-slide">
+		     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<ins class="adsbygoogle"
+				     style="display:block;height:130px"
+				     data-ad-format="fluid"
+				     data-ad-layout-key="-fb+5w+4e-db+86"
+				     data-ad-client="ca-pub-2370297300940223"
+				     data-ad-slot="8826360596"></ins>
+				<script>
+				     (adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+			</div> 
+		      <div class="swiper-slide"><a href="http://cambus.kr/spring/user/noticeView.action?noticeSeq=293"><img src="/spring/images/mainImage/ad_image.jpg"></a></div> 
 		      <div class="swiper-slide"><img src="/spring/images/mainImage/ad_image_1.jpg"></div> 
 		    </div>
 		    <!-- Add Pagination -->
