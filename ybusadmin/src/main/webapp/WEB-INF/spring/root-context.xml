@@ -13,9 +13,9 @@
 
 	<bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://220.66.67.245:6612/cambusdb" />
-		<property name="username" value="cbsadmin" />
-		<property name="password" value="Thskxk4889" />
+		<property name="url" value="jdbc:mysql://220.66.67.0:0/0" />
+		<property name="username" value="0" />
+		<property name="password" value="0" />
 	</bean>
 
 
