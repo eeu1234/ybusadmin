@@ -63,7 +63,7 @@
 				<td>${cdto.busStopCategory}</td>
 				<td>${cdto.busStopCategoryStat}</td>
 				<td>${cdto.universityName}</td>
-				<td>${cdto.groupbusHashkey}</td>
+				
 				<td><input type="button"
 					id="categoryEdit${cdto.busStopCategorySeq}" value="수정"
 					class="btn btn-warning"

@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.test.spring.dto.camsns.CamsnsNoticeDTO;
 import com.test.spring.dto.camsns.SnsboardCategoryDTO;
 import com.test.spring.dto.camsns.SnsboardDTO;
 import com.test.spring.dto.camsns.SnsboardfileDTO;
@@ -95,5 +96,9 @@ public class SnsboardDAO {
 
 		return sql.selectOne("snsboard.boardOne", boardSeq);
 	}
+	
+    public List<CamsnsNoticeDTO> getNotice() {
+        return sql.selectList("adminNotice.getNotice");
+    }
 
 }

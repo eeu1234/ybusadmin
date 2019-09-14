@@ -25,14 +25,7 @@
 
 
 
-<!-- 애드센스 -->
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-8286656279172992",
-    enable_page_level_ads: true
-  });
-</script>
+
 <style>
 /* 모바일 기본 설정 */
 @charset "UTF-8";
@@ -243,7 +236,7 @@ a:link,a:visited,a:active,a:hover{
 #ad_container{
 	position:relative;
 	width:96%;
-	height:130px;
+	height:250px;
 	margin-top:15px;
 	margin-bottom:20px;
 	margin-left:2%;
@@ -282,6 +275,7 @@ a:link,a:visited,a:active,a:hover{
 /* 버스 아이콘 컨테이너*/
 #bus_icon_container{
 	position:relative;
+	margin-top:15px;
 	width:100%;
 	height:300px;
 	
@@ -518,15 +512,7 @@ $(function(){
 
 });
 </script>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 애드센스 -->
-<script>
 
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-8286656279172992",
-    enable_page_level_ads: true
-  });
-</script>
 
 
 
@@ -581,20 +567,19 @@ wcs_do();
 
 	
 	
-	<div id="ad_container">
-	
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- 학교선택화면 -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-2370297300940223"
+		     data-ad-slot="9489841046"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
 		
-	<!-- Swiper -->
-		  <div class="swiper-container">
-		    <div class="swiper-wrapper">
-		<!--       <div class="swiper-slide"><a href="tel:01086068914"><img src="/spring/images/mainImage/ad_image1.jpg"></a></div> -->
-		      <div class="swiper-slide"><img src="/spring/images/mainImage/ad_image.jpg"></div> 
-		    </div>
-		    <!-- Add Pagination -->
-		    <div class="swiper-pagination"></div>
-		  </div>
-	</div>
-	
+
 	
 	
 	
@@ -652,9 +637,16 @@ wcs_do();
 				<c:when test="${universityDto.universitySeq==1}">
 							
 					<!--용인대-->
+					<!--  
 					<div class="another_box another_box1" onclick="location.href='/spring/user/yiuFood.action'">
 						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_food.png"></div>
 						<div class="another_text_container">학식 메뉴보기</div>
+						<div style="clear:both;"></div>
+					</div>
+					-->
+					<div class="another_box another_box1" onclick="location.href='/spring/camsns/snsboard/camsnsNews';">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_yiu.png"></div>
+						<div class="another_text_container">오늘의 용인뉴스</div>
 						<div style="clear:both;"></div>
 					</div>
 					<div class="another_box another_box2" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">

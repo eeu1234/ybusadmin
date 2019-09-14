@@ -4,6 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-2370297300940223",
+          enable_page_level_ads: true
+     });
+</script>
 <meta charset="UTF-8">
 <title>Cambus</title>
 <%@include file="/inc/userAsset.jsp" %>
@@ -40,7 +47,7 @@ body, html {
 	max-width: 480px;
 	height: 568px;
 	margin: 0 auto;
-	background-color: yellow;
+	background-color: white;
 }
 
 #top {
@@ -517,7 +524,20 @@ function moveMap(){
 			<!-- lineArea  -->
 
 		</div>
-		
+		<div style="position:relative;width:100%;margin:0 auto;margin-top:15px;">
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- 학교선택화면 -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-2370297300940223"
+		     data-ad-slot="9489841046"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
 	</div>
+	</div>
+	
 </body>
 </html>

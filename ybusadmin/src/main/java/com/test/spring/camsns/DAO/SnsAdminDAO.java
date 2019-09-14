@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.test.spring.dto.camsns.CamsnsNoticeDTO;
 import com.test.spring.dto.camsns.SearchDTO;
 import com.test.spring.dto.camsns.SnsboardCategoryDTO;
 import com.test.spring.dto.camsns.SnsboardDTO;
@@ -84,5 +85,21 @@ public class SnsAdminDAO {
 			result = sql.update("adminSnsboard.commChangeValue", map);
 			
 		}
+		
+		public void createNotice(CamsnsNoticeDTO dto, String universitySeq) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+		    map.put("universitySeq", universitySeq);
+		    map.put("title", dto.getTitle());
+		    map.put("content", dto.getContent());
+		    sql.insert("adminNotice.createNotice", map);
+		}
+		
+		public List<CamsnsNoticeDTO> getNotice() {
+		    return sql.selectList("adminNotice.getNotice");
+		}
+
+        public void delNotice(String notice_seq) {
+            sql.delete("adminNotice.delNotice", notice_seq);
+        }
 	
 }
