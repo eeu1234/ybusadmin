@@ -20,23 +20,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
+import com.test.spring.dto.CurrBusLocationDTO;
 import com.test.spring.dto.NoticeDTO;
 import com.test.spring.dto.NoticeFileDTO;
 import com.test.spring.dto.UniversityDTO;
 import com.test.spring.notice.NoticeDAO;
 
-@Controller("MainController")
+@Controller("MainController") // 스프링 문법
 public class MainController {
 	
-	@Autowired
-	private MainDAO dao;
+	@Autowired // 자동으로 연결한다.
+	private MainDAO dao; // DAO 
 	
 	@Autowired
-	private NoticeDAO noticeDao;
+	private NoticeDAO noticeDao; //공지사항 dao
+	
+	@Autowired
+	private BusStopMapDAO busStopMapDao; // 현재 버스가 돌아다니는지 확인하는 dao
 	
 	
-	@RequestMapping(method={RequestMethod.GET}, value="/index.action")
-	public void index(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
+	@RequestMapping(method={RequestMethod.GET}, value="/index.action") // 스프링 기본 구분 컨트롤러 머리 족에 들어가는 .
+	public void index(HttpServletRequest request,HttpSession session,HttpServletResponse response) { // 요청 응답 둘다 가능... 세션 로그인정보같은... 
 		try {
 	        
 	        //내용
@@ -45,8 +49,8 @@ public class MainController {
 			String urlStr = request.getParameter("fromUrl");
 			UniversityDTO universityDto;
 			//도메인에 따른 universitySeq를 가져옴
-		
-			if(session.getAttribute("universityDto") == null){
+								
+			if(session.getAttribute("universityDto") == null){ 
 				//도메인에 따른 universitySeq를 가져옴
 		
 				universityDto = dao.getUniversitySeq(urlStr);
@@ -170,35 +174,29 @@ public class MainController {
 			}else{
 				
 				universitySeq = universityDto.getUniversitySeq();
-			
+				
 			}
-			//busStopCategorySeq ="2";
 			
 			HashMap<String,String> map = new HashMap<String,String>();
 			map.put("busStopCategorySeq", busStopCategorySeq);
 			map.put("universitySeq", universitySeq);
+			String busStopDetailCategorySeq = busStopMapDao.getDefaultBusStopDetailCategory(map);
+			map.put("busStopDetailCategorySeq",busStopDetailCategorySeq);
 			//이학교에 있는 노선을 메인 화면에 띄워주어야함
 			//노선목록 들고옴.
 			//공지사항목록 들고옴.
 			
 			List<NoticeDTO> nList = dao.getAllNotice();
-			
-			List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
-			
 			List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
-			
-			
-			
-			
-			
-			
-		
+			List<CurrBusLocationDTO> cblList = busStopMapDao.getCurrBusStopLocation(map);
 			
 			
 			request.setAttribute("nList", nList);
-	
-			request.setAttribute("bsdcList", bsdcList);
 			request.setAttribute("bscList", bscList);
+			
+			String universityName = dao.getUniversityDtoSeq(universitySeq).getUniversityName(); // 음 대학교 이름을 불러오는거임. 
+			universityDto.setUniversityName(universityName);
+			
 			request.setAttribute("universityDto", universityDto);
 			
 			return "user/mainIndex";

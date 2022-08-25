@@ -30,13 +30,13 @@ public class MainDAO {
 	}
 
 
-	public List<NoticeDTO> getAllNotice() {
+	public List<NoticeDTO> getAllNotice() { // 테이블의 데이터를 다 가져옴
 		// TODO Auto-generated method stub
 		return sql.selectList("mainIndex.getAllNotice");
 	}
 
 
-	public UniversityDTO getUniversitySeq(String urlStr) {
+	public UniversityDTO getUniversitySeq(String urlStr) {  //유니벌시티DTO 한행을 가져옴.
 		// TODO Auto-generated method stub
 		return sql.selectOne("mainIndex.getUniversitySeq",urlStr);
 	}

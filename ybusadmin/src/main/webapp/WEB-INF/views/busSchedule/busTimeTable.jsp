@@ -1,325 +1,403 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@include file="/inc/asset.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset=UTF-8">
-<title>운행시간표</title>
-<link rel="stylesheet" href="/spring/css/busStop.css">
-<style>
-#busTimeTable {
-	width: 100%;
-	margin: 0px auto;
-	margin-top: 5%;
-}
-#scheduleHead {
-	width: 100%;
-	margin: 0px auto;
-	margin-top: 5%;
-	text-align: center;
-}
-.timeContent {
-	position: relative;
-	width: 100%;
-	margin-top: 10%;
-	border-bottom: 1px solid grey;
-}
-.totalTable {
-	width: 100%;
-	height: auto;
-	margin: 0px auto;
-}
-.timeHeader {
-	position: relative;
-	width: 100%;
-	background-color: #555555;
-	color: white;
-	text-align: center;
-	margin: 0px auto;
-}
-.timeLeft, .timeRight {
-	position: relative;
-	float: left;
-	width: 50%;
-	line-height: 50px;
-	text-align: center;
-}
-.busTime {
-	float: left;
-	width: 30%;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	word-wrap: normal;
-	overflow: hidden;
-	background-color: #CECDCD;
-	border-bottom: 1px solid #eee;
-	display: inline-block;
-}
-.busTimeName {
-	float: left;
-	width: 70%;
-	background-color: white;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	word-wrap: normal;
-	overflow: hidden;
-	border-bottom: 1px solid #eee;
-	display: inline-block;
-}
-#txtLogo {
-	position: relative;
-	width: 60%;
-	height: 80%;
-	padding-top: 4%;
-	margin: 0 auto;
-	font-weight: bold;
-}
-#logo {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	width: auto;
-	opacity: 0.6;
-}
-</style>
-<script>
-$(document).ready(function(){
-	//선택된 평일/주말 값
-	var weekDays = $("#weekDays").val();
-   $("#weekDays").change(function(){
-      weekDays = $("#weekDays").val();
-      location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
-   });
- 	//시간 가져오는 Date()선언
-	var now = new Date();	
-	var hour = now.getHours(); // 시
-	var minute = now.getMinutes(); // 분
-	var day = 0;
-	//평일(1~5)이면 day는 1
-	if(now.getDay() >= 1 && now.getDay() <= 5){
-		day = 1;
-	}else{
-		//주말이면 2의 값을 가진다.
-		day = 2;
-	}
-	//현재 시각은 시간*60+분으로 계산.
-	var sum = Number(hour*60) + now.getMinutes();
-	//console.log(sum);
-	
-	//버스시간과 이름 가져오기
-	var time = $(".busTime");
-	var name = $(".busTimeName");
-	//깜빡이용 Boolean 선언
-	var shown = true;
-	
-	var busTime = new Array(time.length);
-	var busTimeName = new Array(name.length);
-	//중복된 시간이 있기에 배열로 선언
-	var result = new Array();
-	//result index 0부터 시작
-	var intResult = 0;
-	
-	//불만들어오게 하는 변수
-	var lightBox = 0;
-	
-	//깜빡이여야 되는 칸 알아내는 반복문
-	for(var k=0;k<time.length;k++){
-		//split으로 시, 분으로 나눈 작업
-		busTimeSum = time.eq(k).text().split(":");
-		//console.log(busTimeSum[0]+":"+busTimeSum[1]);
-		
-		//나눈 시간을 60*시+분 으로 합산
-		busTime[k] = Number(60*busTimeSum[0]) + Number(busTimeSum[1]);
-		//같이 깜빡이는 버스노선명
-		busTimeName[k] = name.eq(k).text();
-		//console.log(busTime[k] +"-"+sum+"="+(busTime[k] - sum));
-		
-		//현재 시간과 비교하여 5분이하 1분이상인 경우에만 깜빡이기 시작
-		if((busTime[k] - sum) >= 1 && (busTime[k] - sum) <= 5){
-			//result[] 배열에 td 인덱스 넣기
-			result[intResult] = k;
-		//	console.log("result는 "+result[intResult]);
-			intResult++; 
-		}
-	}
-	
-	for(var k=0;k<time.length;k++){	
-		if(busTime[k] - sum >=0 && busTime[k] - sum <= 60 && (busTime[k] - sum) >= 5 &&result.length == 0 ){//다음 시간꺼 불 밝히기 새벽시간은 1시간 이내만
-			result[intResult] = k;
-			//console.log("2result는 "+result[intResult]);
-			intResult++;
-			
-			lightBox++;//5분이낸지 아닌지 구분 신호
-			for(var l=0;l<time.length;l++){//동시간대 박스도 같이 불들어오기
-			//	console.log("busTime[k]"+busTime[k]);
-			//	console.log("busTime[l]"+busTime[l]);
-				if(busTime[k] == busTime[l] && k!=l){ 
-					result[intResult] = l; 
-				//	console.log("l은"+ l );
-				};
-			}
-			
-			
-		}
-	
-	}
-	//인터벌 실행, 선택한 값이 주말/평일에 따라 실행
-	if(weekDays == 'weekends' && day == 2){
-		if(lightBox == 0){
-			interval = setInterval(toggle, 500);
-		}else{
-			 for(var i=0;i<result.length;i++){
-				// console.log("i는 "+i+"  result[i]는 "+result[i]);
-				   time.eq(result[i]).css("background-color","#44AABB");
-				   name.eq(result[i]).css("background-color","#44AABB");
-			   }
-		}
-	}else if(weekDays == 'normal' && day == 1){
-		if(lightBox == 0){
-			interval = setInterval(toggle, 500);
-		}else{
-			 for(var i=0;i<result.length;i++){
-				   console.log("i는 "+i+"  result[i]는 "+result[i]);
-				   time.eq(result[i]).css("background-color","#44AABB");
-				   name.eq(result[i]).css("background-color","#44AABB");
-			   }
-		}
-	}
-	//5분 뒤 인터벌 종료
-	setTimeout(function(){
-	    clearInterval(interval);
-	},300000);
-	
-	//현재 버스시간 깜빡이는 토글
-	function toggle(){//깜빡이는 효과
-	   if(shown) {
-		   for(var i=0;i<result.length;i++){
-			   //console.log("i는 "+i+" shown는 "+shown+" result[i]는 "+result[i]);
-			   time.eq(result[i]).css("background-color","");
-			   name.eq(result[i]).css("background-color","");
-		   }
-		   shown = false;
-	   } else {
-		   for(var i=0;i<result.length;i++){
-			   //console.log("i는 "+i+" shown는 "+shown+" result[i]는 "+result[i]);
-			   time.eq(result[i]).css("background-color","#44AABB");
-			   name.eq(result[i]).css("background-color","#44AABB");
-		   }
-		   shown = true;
-	   }
-	}
-	
-});
-//버스 시간표 가져오는 함수
-function schedule(seq){
-	
-	var weekDays = $("#weekDays").val();
-	location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
-	
-}
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+  <title>운행시간표</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+  <script>
+        var now = new Date(); // 시간을 받아오는 객체 생성
+        var hour = now.getHours(); // 시
+        var minute = now.getMinutes(); // 분
+        var busType_code = 0;  //셀렉트 박스의 정보에 따라 어느 버스인지 파악하는 변수
+
+        var busAddress = [
+        ['url("/spring/images/busSchedule/blue_1.png")','url("/spring/images/busSchedule/blue_2.png")','url("/spring/images/busSchedule/blue_3.png")'],
+        ['url("/spring/images/busSchedule/yellow_1.png")','url("/spring/images/busSchedule/yellow_2.png")','url("/spring/images/busSchedule/yellow_3.png")'],
+        ['url("/spring/images/busSchedule/red_1.png")','url("/spring/images/busSchedule/red_2.png")','url("/spring/images/busSchedule/red_3.png")']
+        ];  // 이미지경로를 담고 있는 배열.
+        
+
+        function checkTime_Logo(){ // 시간에 따른 메인 로고 변경 함수
+
+            if( hour > 7 && hour < 17){
+                $('#header_top').css('background-image',busAddress[busType_code][0]);
+            }
+            else if(hour > 16 && hour < 20){
+                $('#header_top').css('background-image',busAddress[busType_code][1]);
+            }
+            else if(hour > 19 || hour < 7){
+                $('#header_top').css('background-image',busAddress[busType_code][2]);
+            }
+        }
+
+        function changeBox(){
+            var timeList = $('.footer_timeTable_box_schedule');
+            var timeList_pro = [];
+            var spot ;
+            for (var i = 0; i < timeList.length; i++){
+                var timeSplitArr = $(timeList[i]).attr('id').split("_");
+                timeList_pro.push(Number(timeSplitArr[0])*60 + Number(timeSplitArr[1]));
+            }
+
+            console.log(timeList_pro);
+            var nowTime = (hour * 60) + minute;
+
+            for(var i = 0; i<timeList_pro.length; i++){
+                if( nowTime < timeList_pro[i]){
+                    spot = i;
+                    break;
+                }
+                else{
+                    spot = 0;
+                }
+            }
+
+            $(timeList[spot]).children(".footer_timeTable_box_schedule_top").css('color','#142637');
+            $(timeList[spot]).children(".footer_timeTable_box_schedule_bottom").css('background-image','url("/spring/images/busSchedule/순환코스(해당시간)_박스.png")');
+
+            // 회색 긴줄에 네이비 칠해주는 작업
+             $(timeList[spot]).parent().css('border-left','3px solid #142637');
+
+
+        }
+
+        function checkBus_Logo(type){ // 셀렉트박스에서 버스 종류가 가져와서 메인 이미지 변경하는데 필요한 코드를 변경함
+            if(type == 'blueBus' || type == 'blueBus_new'){
+                busType_code = 0;
+            }
+            else if(type == 'yellowBus'){
+                busType_code = 1;
+            }
+            else if(type == 'redBus'){
+                busType_code = 2;
+            }
+        }
+
+        function countChild(){  // 자식요소의 개수를 카운팅하여 시간을 나타내는 div 수직정렬에 가깝게 만듬.
+            var childArray;
+            var i = 1;
+            while(true){
+                childArray = $("#" +i).children();
+                if(childArray.length > 4){
+                    $('#'+i).parent().prev().css('padding-top','11%');
+                }
+                if(childArray.length == 0){
+                    break;
+                }
+                i++;
+             }
+        }
+        
+        function schedule(flag){
+        	
+        	var seq = $("#container_selectBus").val();
+        	var detail_seq = $("#container_selectWay").val();
+        	var weekDays = $("#container_selectDay").val();
+        	if(flag == 1){
+        		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
+        		if(seq == 37){
+        			location.href="/spring/busSchedule/schoolBusTimeTable.action"
+        		}
+        	}else{
+        		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&busStopDetaliCategorySeq="+detail_seq+"&weekDays="+weekDays;
+        	}
+        }
+
+        $(document).ready(function(){
+            checkTime_Logo();
+            changeBox();
+            countChild();
+            $("#container_selectBus").change(function(){
+                var busType = $("#container_selectBus").val(); // 셀렉트 박스에 값 가져오기
+                checkBus_Logo(busType);
+                checkTime_Logo();
+                schedule(1);
+            });
+            $("#container_selectWay").change(function(){
+                schedule();
+            });
+            $("#container_selectDay").change(function(){
+            	var weekDays = $("#container_selectDay").val();
+            	location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
+        	});
+        });
+
+
+    </script>
+
+
+  <style>
+        @font-face {
+			font-family: "Pretendard-Bold";
+			src:url(/spring/css/fonts/2022/Pretendard-Bold.woff) format("truetype");
+	    }
+	    @font-face {
+			font-family: "Pretendard-Medium";
+			src:url(/spring/css/fonts/2022/Pretendard-Medium.woff) format("truetype");
+	    }
+
+        html,body{
+            width: 100%;
+            max-width:600px;
+            min-width:375px;
+            margin: 0 auto;
+            background-color:#fafafc;
+            padding-bottom:5%;
+        }
+        #header{
+            width:100%;
+        }
+        #header_top{
+            width:100%;
+            background:url("./img/blue_1.png");
+            background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        #header_top_text{
+            font-size:1.8em;
+            padding-top:15.37%;
+            padding-bottom:31.5%;
+            padding-left:4.611%;
+            font-family: "Pretendard-Bold";
+            color:#ffffff;
+        }
+        #header_bottom{
+            width:100%;
+            height:16px;
+            padding:5px 0;
+            background-color:#585858;
+        }
+        #header_bottom_layout{
+            height:100%;
+            text-align:center;
+        }
+        #header_bottom_logo{
+            height:100%;
+            padding-right:1%;
+        }
+        #header_bottom_text{
+            width:100%;
+            height:100%;
+            font-family: "Pretendard-Medium";
+            color:#ffffff;
+            font-size:0.75em;
+            float:left;
+        }
+        #container{
+            width:60.18%;
+            margin-left:35.21%;
+            margin-right:4.61%;
+            margin-top:3.074%;
+            margin-bottom:3.074%;
+        }
+        #container_selectBus{
+            width:32%;
+            height:26px;
+            box-shadow: 0px 0px 15px #0F296B1F;
+            border-radius: 13px;
+            text-align: center;
+            font-family: "Pretendard-Bold";
+            color:#142637;
+            border:0;
+			outline:0;
+			font-size:0.9em;
+        }
+        #container_selectWay{
+            width:32%;
+            height:26px;
+            box-shadow: 0px 0px 15px #0F296B1F;
+            border-radius: 13px;
+            text-align: center;
+            font-family: "Pretendard-Bold";
+            color:#142637;
+            border:0;
+			outline:0;
+			font-size:0.9em;
+        }
+        #container_selectDay{
+            width:30%;
+            height:26px;
+            box-shadow: 0px 0px 15px #0F296B1F;
+            border-radius: 13px;
+            text-align: center;
+            font-family: "Pretendard-Bold";
+            color:#142637;
+            border:0;
+			outline:0;
+			font-size:0.9em;
+        }
+        #footer{
+            width:81.534%;
+            margin: 0 4.62%;
+            padding:5.125% 4.613%;
+            box-shadow: 0px 0px 15px #0F296B1F;
+            border-radius: 12px;
+            background-color:#ffffff;
+        }
+        #footer_timeTable{
+            position:relative;
+            width:100%;
+            box-shadow: 0px 0px 15px #0F296B1F;
+            border-radius: 12px;
+            overflow:hidden;
+        }
+        .footer_timeTable_box_left{
+            width:14.14%;
+            float:left;
+            padding-top:5.5%;
+        }
+        .footer_timeTable_box_hour{
+            font-size:0.75em;
+            text-align:center;
+            color:#142637;
+            font-family: "Pretendard-Bold";
+        }
+        .footer_timeTable_box_right{
+            width:83.86%;
+            /*margin-top:4.715%;
+            margin-bottom:4.715%;*/
+            float:left;
+            border-left:3px solid #b4b4b4;
+            padding-top:3%;
+            padding-bottom:3%;
+        }
+        .footer_timeTable_box_right_box{
+            position:relative;
+            left:-3px;
+            width:100%;
+            float:left;
+            border-left:3px solid rgba(0,0,0, .0);
+        }
+        .footer_timeTable_box_schedule{
+            width:19.11%;
+            float:left;
+            margin: 0 2.625%;
+            font-size:0.75em;
+            text-align: center;
+            letter-spacing: -0.3px;
+        }
+        .footer_timeTable_box_schedule_top{
+            width:25%;
+            margin:auto;
+            font-family: "Pretendard-Medium";
+            color:#b4b4b4;
+        }
+        .footer_timeTable_box_schedule_bottom{
+            width:100%;
+            background:url("/spring/images/busSchedule/순환코스_박스.png");
+            background-size: 100% 100%;
+
+            margin:4% auto;
+            max-width:60px;
+            font-family: "Pretendard-Medium";
+            color:#ffffff;
+        }
+        .whiteBox{
+            width:100%;
+            background-color:#FFFFFF;
+        }
+        .grayBox{
+            width:100%;
+            background-color:#fafafc;
+        }
+    </style>
 </head>
 <body>
-	<div id="header">
-		<div id="infoPage">
-			<input type="button" value="<" style=" color:white;position:
-				absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 55%;  background-color:
-				transparent !important; border-color:
-				transparent;"	onclick="location.href='/spring/index.action';" />
-			<div id="txtLogo">운행시간표</div>
-			<img src="/spring/images/logo/${universityDto.universityImg}"
-				id="logo" />
-		</div>
-	</div>
-	<div id="container">
-		<!-- 버스 시간표 -->
-		<div id="busTimeTable">
-			<!-- 통학, 셔틀, 노랑 등 선택 -->
-			<div>
-				<select id="weekDays" class="form-control">
-					<option value="normal"
-						<c:if test="${weekDays == 'normal'}">selected</c:if>>Week</option>
-					<option value="weekends"
-						<c:if test="${weekDays == 'weekends'}">selected</c:if>>Weekend</option>
-				</select>
-			</div>
-			<div id="scheduleHead">
-				<c:forEach items="${clist }" var="category">
-					<button class="busStopCategory"
-						onclick="schedule(${category.busStopCategorySeq});">${category.busStopCategory}</button>
-				</c:forEach>
-			</div>
-			<div style="clear: both;"></div>
-			
-			<div style="width:100%;margin:0 auto; margin-top:15px;">
-				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<!-- 학교선택화면 -->
-				<ins class="adsbygoogle"
-				     style="display:block"
-				     data-ad-client="ca-pub-2370297300940223"
-				     data-ad-slot="9489841046"
-				     data-ad-format="auto"
-				     data-full-width-responsive="true"></ins>
-				<script>
-				     (adsbygoogle = window.adsbygoogle || []).push({});
-				</script>
-			</div>
-			
-			
-			
-			
-			
-			<!-- 선택된 버스노선 시간표 -->
-			<c:forEach items="${dlist}" var="dlist" varStatus="out">
-				<div class="timeContent">
-					<div class="timeHeader">
-						${dlist.busStopDetailCategoryName}
-						<c:if test="${weekDays == 'normal' }"> Week</c:if>
-						<c:if test="${weekDays == 'weekends' }"> Weekend</c:if>
-					</div>
-					<!-- 시간없으면 출력하는 jstl if조건문 -->
-					<c:forEach items="${slist}" var="slist" varStatus="in">
-						<c:if test="${out.count == in.count }">
-							<c:if test="${slist.timeList.size() == 0}">
-								<div
-									style="position: absolute; width: 100%; text-align: center; margin: 0 auto;">시간표가
-									없습니다.</div>
-							</c:if>
-						</c:if>
-					</c:forEach>
-					<div class="timeLeft">
-						<c:forEach items="${slist}" var="slist" varStatus="in">
-							<c:if test="${out.count == in.count }">
-								<c:forEach items="${slist.timeList}" var="dto" varStatus="stat">
-									<c:if test="${stat.index < slist.timeList.size()/2 }">
-										<div class="busTime">${dto.busTime}</div>
-										<div class="busTimeName">${dto.courseName }</div>
-									</c:if>
-								</c:forEach>
-					</div>
-					<div class="timeRight">
-						<c:forEach items="${slist.timeList}" var="dto" varStatus="stat">
-							<c:if test="${stat.index >= slist.timeList.size()/2 }">
-								<div class="busTime">${dto.busTime}</div>
-								<div class="busTimeName">${dto.courseName }</div>
-							</c:if>
-						</c:forEach>
-						</c:if>
-			</c:forEach>
-		</div>
+<div id = "header">
+  <div id = "header_top">
+    <div id = "header_top_text">버스 시간표</div>
+  </div>
+  <div id = "header_bottom">
+    <div id = "header_bottom_layout">
+      <div id = "header_bottom_text">
+        <img id = "header_bottom_logo"  src="/spring/images/busSchedule/안내_아이콘.png">
+        <span style="position:relative; bottom:25%;">지금은 버스운행 시간이 아닙니다.</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div id = "container">
+  <select id = "container_selectBus">
 
-		<div style="clear: both;"></div>
-	</div>
-	<!-- timeContent -->
-	</c:forEach>
-
-	</div>
+    <c:forEach items = "${clist}" var = "category">
+    	<option value="${category.busStopCategorySeq}"  <c:if test="${busStopCategorySeq == category.busStopCategorySeq}">selected</c:if>>${category.busStopCategory}</option>    	
+    </c:forEach>
+  </select>
+  <select id = "container_selectWay">
+  	<c:forEach items = "${dlist}" var = "category">
+    	<option value="${category.busStopDetailCategorySeq}" <c:if test="${busStopDetaliCategorySeq == category.busStopDetailCategorySeq}">selected</c:if>>${category.busStopDetailCategoryName}</option>    	
+    </c:forEach>
+  </select>
+  <select id = "container_selectDay">
+    <option value="normal"  <c:if test="${weekDays == 'normal'}">selected</c:if>>월-목</option>
+    <option value="friday"  <c:if test="${weekDays == 'friday'}">selected</c:if>>금요일</option>
+    <option value="weekends"  <c:if test="${weekDays == 'weekends'}">selected</c:if>>주말</option>
+  </select>
+</div>
 
 
-	</div>
-	<!-- container -->
+<div id = "footer">
+  <div id = "footer_timeTable">
+  
+
+   <%-- <c:forEach items = "${slist}" var = "outSlist" > --%>
+  	<c:forEach items = "${slist.timeList}" var = "time" varStatus = "out">
+  		<c:choose>
+  			<c:when test = "${out.index % 2 eq 0 }">
+  				<div class = "grayBox">
+  					<div class = "footer_timeTable_box_left">
+        				<div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
+      				</div>
+  					<div class = "footer_timeTable_box_right">
+				 		<div id = "${out.count}" class = "footer_timeTable_box_right_box">
+				 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
+          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
+           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
+          						<div class = "footer_timeTable_box_schedule_bottom">시내순환</div>
+        					</div>
+        				</c:forEach>	
+       					</div>		
+   					</div>
+      				<div style="clear:both;"></div>
+      			</div>
+  			
+  			</c:when >
+  			<c:when test = "${out.index % 2 eq 1}">
+  				<div class = "whiteBox">
+  					<div class = "footer_timeTable_box_left">
+        				<div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
+      				</div>
+  					<div class = "footer_timeTable_box_right">
+				 		<div id = "${out.count}" class = "footer_timeTable_box_right_box">
+				 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
+          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
+           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
+          						<div class = "footer_timeTable_box_schedule_bottom">시내순환</div>
+        					</div>
+        				</c:forEach>	
+       					</div>		
+   					</div>
+      				<div style="clear:both;"></div>
+      			</div>
+  			</c:when>
+  		
+      	</c:choose>
+  	  </c:forEach>
+<%--    	</c:forEach> --%>
+  </div>
+  
+  
+  
+  </div>
+
+
+
 </body>
 </html>

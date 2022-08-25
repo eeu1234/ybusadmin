@@ -1,5 +1,7 @@
 package com.test.spring.dto;
 
+import java.util.List;
+
 //버스스케쥴 DTO + join 변수 2개 + 버스노선 이름
 public class BusScheduleDTO {
 	
@@ -14,6 +16,8 @@ public class BusScheduleDTO {
 	private String universitySeq;			//대학seq
 	//버스노선 이름
 	private String busStopCategory;			//버스노선 이름
+	
+	private List<String> busTimeHourMin;
 	
 	
 	public String getBusStopCategory() {
@@ -64,5 +68,11 @@ public class BusScheduleDTO {
 	public void setUniversitySeq(String universitySeq) {
 		this.universitySeq = universitySeq;
 	}
-	
+	public List<String> getBusTimeHourMin() {
+		return busTimeHourMin;
+	}
+	public void setBusTimeHourMin(List<String> busTimeHourMin) {
+		this.busTimeHourMin = busTimeHourMin;
+	}
+
 }
