@@ -33,13 +33,14 @@ public class NoticeDAO {
       return sql.selectOne("notice.totalAdmin", where);
    }
    
-/*   //공지사항 글 정보
-   public List<NoticeDTO> notice(String seq) {
-      
-      
-      return sql.selectOne("notice.noticeContent",seq);
-   }*/
-   
+	public String prevNoticeSeq(String seq) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("notice.preNoticeSeq",seq);
+	}
+	public String afterNoticeSeq(String seq) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("notice.afterNoticeSeq", seq);
+	}
    //글 정보 및 파일명 가져오기
    public NoticeDTO notice(String seq) {
       

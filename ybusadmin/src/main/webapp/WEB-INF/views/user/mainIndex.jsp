@@ -558,7 +558,7 @@ wcs_do();
 		<div id="notice_text_box">
 			<ul>
 				<c:forEach items="${nList}" var="ndto">
-					<li class="nContent" value="${ndto.noticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${ndto.noticeSeq}">${ndto.noticeSubject}</a></li>
+					<li class="nContent" value="${ndto.noticeSeq}"><a href="/spring/user/noticeList.action">${ndto.noticeSubject}</a></li>
 				</c:forEach>
 			</ul>
 		</div>
@@ -625,8 +625,10 @@ wcs_do();
 	</div>
 	
 	<!-- 어플 등록-->
-	<div id="app_register_box" onclick="location.href='/spring/user/makeIcon.action'">
-		<img src="/spring/images/mainImage/howtoapp.png">
+	<div id="app_register_box" >
+		<img src="/spring/images/mainImage/ad_computer.png" style="margin-top;15px;margin-bottom:15px;" onclick="location.href='https://town.daangn.com/bp/1407416'">
+		<img src="/spring/images/mainImage/howtoapp.png" onclick="location.href='/spring/user/makeIcon.action'">
+		
 	</div>
 	
 	<div id="another_container">
@@ -644,14 +646,21 @@ wcs_do();
 						<div style="clear:both;"></div>
 					</div>
 					-->
+						<!--  
 					<div class="another_box another_box1" onclick="location.href='/spring/camsns/snsboard/camsnsNews';">
 						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_yiu.png"></div>
 						<div class="another_text_container">오늘의 용인뉴스</div>
 						<div style="clear:both;"></div>
 					</div>
+					-->
+					<div class="another_box another_box1" onclick="location.href='https://www.yongin.ac.kr/cmn/sym/mnu/mpm/101080200/htmlMenuView.do';">
+						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_yiu.png"></div>
+						<div class="another_text_container">용인대학교 셔틀공지</div>
+						<div style="clear:both;"></div>
+					</div>
 					<div class="another_box another_box2" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">
 						<div class="another_icon_container"><img src="/spring/images/mainImage/another_icon_route.png"></div>
-						<div class="another_text_container">등교길 게시판</div>
+						<div class="another_text_container">셔틀버스 자유게시판</div>
 						<div style="clear:both;"></div>
 					</div>
 					<div class="another_box another_box3" onclick="location.href='https://total.yongin.ac.kr'">
@@ -736,11 +745,11 @@ wcs_do();
 		<div id="footer_container">
 		
 			<div style="font-size:0.8em;padding-top:10px;padding-bottom:30px;color:#bdbdbd;width:100%;background-color:#3e3e3e;text-align:center;	padding-top:20px;">
-				<a href="http://cambus.kr">
+				<a href="http://ybus.kr/spring/admin/adminLogin.action">
 				<img src="/spring/images/mainImage/footer_cambus.png" style="width:25%;padding-bottom:10px;"></a><br>
 		
 				The UNIV BIS::CAMBUS made by Cambus Team.2016 All right ⒞ reserved. <br>
-				KAKAO : @CAMBUS<br>
+				KAKAO : @YBUS<br>
 				
 				<a href="mailto:eeu4327@gmail.com" style="color: #bdbdbd;text-decoration-line:underline;">Mail : CAMBUS</a><br>
 				<a href="/spring/uploadUniversity.action?universitySeq=${universityDto.universitySeq}&oldVersion='yes'" style="color: #bdbdbd;text-decoration-line:underline;">2017버전으로 보기</a><br>

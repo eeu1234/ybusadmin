@@ -21,6 +21,14 @@ A.UNIVERSITYSEQ AS universitySeq, U.UNIVERSITYName AS universityName
 						LIMIT #{start}, 10
     </select>
     
+     <!-- 이전글, 다음글 번호 -->
+    <select id="preNoticeSeq" resultType="String" parameterType="String">
+		SELECT NOTICESEQ FROM NOTICE WHERE NOTICESEQ &lt; #{seq} AND NOTICESTATUS = 'show' ORDER BY NOTICESEQ DESC LIMIT 1 
+    </select>
+    <select id="afterNoticeSeq" resultType="String" parameterType="String">
+		SELECT NOTICESEQ FROM NOTICE WHERE NOTICESEQ &gt; #{seq} AND NOTICESTATUS = 'show' ORDER BY NOTICESEQ DESC LIMIT 1
+    </select>
+    
     <!-- 총 계정 수 가져오는 쿼리, 검색 때문에 대학과 inner join 함 -->
     <select id="totalAdmin" resultType="Integer" parameterType="String">
     	SELECT count(*) FROM NOTICE N

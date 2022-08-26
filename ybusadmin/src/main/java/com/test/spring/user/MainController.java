@@ -193,8 +193,6 @@ public class MainController {
 			
 			
 		
-			
-			
 			request.setAttribute("nList", nList);
 	
 			request.setAttribute("bsdcList", bsdcList);
@@ -338,13 +336,14 @@ public class MainController {
 	               , value="/user/noticeView.action")
 	   public String noticeContent(HttpServletRequest request, HttpSession session, HttpServletResponse response
 	            ,String noticeSeq) throws IOException{
-	      
+
 	      
 		  String seq = noticeSeq;
 	   
 	      // 공지사항 게시글 정보 가져오기
 	      NoticeDTO noticeContent = noticeDao.notice(seq);
-
+	      String prevNoticeSeq = noticeDao.prevNoticeSeq(seq);
+	      String afterNoticeSeq =noticeDao.afterNoticeSeq(seq);
 	      
 	      List<NoticeFileDTO> listFileType = new ArrayList<NoticeFileDTO>();
 	      for(int i=0; i<noticeContent.getFilelist().size(); i++){
@@ -361,21 +360,30 @@ public class MainController {
 	      noticeContent.setFilelist(listFileType);
 	     
 	      request.setAttribute("noticeContent", noticeContent);
-	      
-	      
+	      request.setAttribute("prevNoticeSeq", prevNoticeSeq);
+	      request.setAttribute("afterNoticeSeq", afterNoticeSeq);
 	      //readcount 값 바꾸기, 조회수 추가
 	      if(session.getAttribute("readcount")==null 
 	               || session.getAttribute("readcount").equals("n")){
 	    	  noticeDao.addReadCount(seq);
 	            session.setAttribute("readcount","y");
 	            
-	       System.out.println(session.getAttribute("readcount"));
+	       //System.out.println(session.getAttribute("readcount"));
 	         }
 	      
 	      
 	      return "user/noticeView";
 	   }
 	   
+	 //공지사항 내용 가져옴
+	   @RequestMapping(method={RequestMethod.GET}
+	               , value="/user/noticeList.action")
+	   public String noticeList(HttpServletRequest request, HttpSession session, HttpServletResponse response ) throws IOException{
+		   List<NoticeDTO> nList = dao.getAllNotice();
+	  		request.setAttribute("nList", nList);
+	      
+	      return "user/noticeList";
+	   }
 	   
 	   //애널리틱스용 서울버스
 	   @RequestMapping(method={RequestMethod.GET}
