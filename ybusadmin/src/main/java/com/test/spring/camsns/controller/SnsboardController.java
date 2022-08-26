@@ -121,10 +121,10 @@ public class SnsboardController {
 		request.setAttribute("cntList", cntList);
 
 		// System.out.println("글갯수" + cntList);
-		if (num == null && word == null) {// 첫 로딩시 //num 파라메터가 없다
 
 
 
+			word="";
 			num = "0"; // 0부터 5개 게시글
 
 			// 글불러옴
@@ -141,48 +141,6 @@ public class SnsboardController {
 
 			return "/camsns/main";
 		
-		} else {// 다음 로딩시
-			System.out.println("다음로딩");
-			if (num == null)
-				num = "0";
-
-			List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq, num, word);
-			// System.out.println(boardDtoList.size());//
-
-			JSONArray list = new JSONArray();
-
-			for (int i = 0; i < boardDtoList.size(); i++) {
-				JSONObject obj = new JSONObject();
-				obj.put("boardSeq", boardDtoList.get(i).getSnsboardSeq());// 글번호
-				obj.put("boardSubject", boardDtoList.get(i).getSnsboardSubject());// 글제목
-				obj.put("boardContent", boardDtoList.get(i).getSnsboardContent());// 글내용
-				obj.put("boardRegdate", boardDtoList.get(i).getSnsboardRegdate());// 글등록날짜
-				obj.put("category", boardDtoList.get(i).getCategoryType());// 카테고리
-																			// 타입
-
-				JSONArray list2 = new JSONArray();// 파일을위한 배열
-
-				for (int j = 0; j < boardDtoList.get(i).getFilelist().size(); j++) {
-					JSONObject obj2 = new JSONObject();
-					obj2.put("fileName", boardDtoList.get(i).getFilelist().get(j).getSnsboardfileFileName());
-					obj2.put("fileSeq", boardDtoList.get(i).getFilelist().get(j).getSnsboardfileSeq());
-					obj2.put("boardSeqFk", boardDtoList.get(i).getFilelist().get(j).getSnsboardSeqFk());
-					System.out.println(boardDtoList.get(i).getFilelist().get(j).getSnsboardfileFileName());
-					list2.add(obj2);
-				}
-
-				obj.put("fileList", list2);// 파일 dto
-
-				list.add(obj);
-
-			}
-			System.out.println(list.toJSONString());
-			response.setCharacterEncoding("utf-8");
-			response.getWriter().print(list);
-
-			return null;
-
-		} // else index가있을때
 
 	}
 
