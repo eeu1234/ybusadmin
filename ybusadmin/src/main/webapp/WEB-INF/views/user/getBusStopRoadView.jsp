@@ -96,7 +96,7 @@
 		     (adsbygoogle = window.adsbygoogle || []).push({});
 		</script>
         
-        <!-- 엣날 지도 -->
+        <!-- 엣날 지도
         <div id="infoAround">
 			<div id="infoTitle">
 				<div id="infoTitleText">Around place  ${bsdto.busStop}</div>
@@ -166,6 +166,7 @@
 		      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap">
 		    </script>
 		</div>
+		 -->
 	</div>	
 </div>
 </body>
