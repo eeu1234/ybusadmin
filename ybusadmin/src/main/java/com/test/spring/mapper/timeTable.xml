@@ -24,7 +24,7 @@
 	
 	<!-- 버스시간표 가져오기 -->
 	<select id="getBusSchedule" parameterType="String" resultType="com.test.spring.dto.BusScheduleDTO">
-		SELECT SUBSTR(BS.BUSTIME,1,5) busTime, BS.COURSENAME AS courseName, BS.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq
+		SELECT SUBSTR(BS.BUSTIME,1,5) busTime, BS.COURSENAME AS courseName, BS.BUSSTOPDETAILCATEGORYSEQ AS busStopDetailCategorySeq, BD.BUSSTOPDETAILCATEGORYNAME AS busStopDetaliCategoryName
 			FROM BUSSCHEDULE BS
 				INNER JOIN BUSSTOP_DETAIL_CATEGORY BD
 					ON BS.BUSSTOPDETAILCATEGORYSEQ = BD.BUSSTOPDETAILCATEGORYSEQ

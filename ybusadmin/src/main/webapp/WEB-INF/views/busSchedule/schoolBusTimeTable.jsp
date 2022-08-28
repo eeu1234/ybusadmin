@@ -275,12 +275,12 @@
         }
         .added_box_container_right{
             width:59.5%;
-            height:100%;
+            height:100%;s
             margin-left:5.5%;
             float:left;
         }
         .added_box_container_right_schedule{
-            width:31%;
+            width:29%;
             max-width:50px;
             padding:10px 0;
             margin:0 2%;
@@ -333,7 +333,6 @@
     <select id = "container_selectDay">
         <option value="normal"  <c:if test="${weekDays == 'normal'}">selected</c:if>>월-목</option>
     <option value="friday"  <c:if test="${weekDays == 'friday'}">selected</c:if>>금요일</option>
-    <option value="weekends"  <c:if test="${weekDays == 'weekends'}">selected</c:if>>주말</option>
     </select>
 </div>
 <div id = "footer">
@@ -344,13 +343,14 @@
         
         
         <c:forEach  items = "${dlist}" var = "dlist" varStatus = "out">
-
-	        <div class = "whiteBox_charge" >
-		        <div class = "busCharge_left">${dlist.busStopDetailCategoryName}</div>
-		        <div class = "busCharge_mid"></div>
-		        <div class = "busCharge_right">${dlist.buspee}</div>
-		    	<div style="clear:both;"></div>
-		    </div>
+			<c:if test = "${not empty slist[out.index].timeList[0].busTime}">
+		        <div class = "whiteBox_charge" >
+			        <div class = "busCharge_left">${dlist.busStopDetailCategoryName}</div>
+			        <div class = "busCharge_mid"></div>
+			        <div class = "busCharge_right">${dlist.buspee}</div>
+			    	<div style="clear:both;"></div>
+			    </div>
+		    </c:if>
 		    <div class = "added_box">
 		        <c:forEach items = "${slist}" var = "slist" varStatus = "in">
 			        <c:if test="${out.count == in.count }">
