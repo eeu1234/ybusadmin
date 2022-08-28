@@ -822,7 +822,7 @@
 <body>
     <div id = "content">
         <div id = "header">
-            <div id = "header_logo">
+            <div id = "header_logo" onClick="window.location.reload();">
             </div>
             <div id = "header_notice">
                 <div id = "header_notice_left"></div>
@@ -906,7 +906,7 @@
                         <div id = "container_bottom_menu_sns_top"></div>
                         <div id = "container_bottom_menu_sns_bottom">자유게시판</div>
                     </div>
-                    <div id = "container_bottom_menu_notice">
+                    <div id = "container_bottom_menu_notice" onclick="location.href='/spring/user/noticeList.action';">
                         <div id = "container_bottom_menu_notice_top"></div>
                         <div id = "container_bottom_menu_notice_bottom">공지사항</div>
                     </div>
@@ -929,7 +929,7 @@
         <div id = "footer">
             <div id = "footer_title">YBUS 이용 팁</div>
             <div id = "footer_tip">
-                <div id = "footer_tip_left">
+                <div id = "footer_tip_left" onclick="location.href='/spring/user/makeIcon.action'">
                     <div class = "footer_tip_blank"></div>
                     <div id = "footer_tip_left_top">YBUS 이용 팁</div>
                     <div class = "footer_tip_blank"></div>
@@ -943,6 +943,7 @@
             </div>
         </div>
     </div>
+
 
 </body>
 </html>
