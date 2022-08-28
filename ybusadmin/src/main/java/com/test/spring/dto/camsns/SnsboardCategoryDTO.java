@@ -12,12 +12,12 @@ public class SnsboardCategoryDTO {
 	private String userEmailIdFk;
 	private String categoryName;
 	private String categoryType;
+	private String commentCnt;
+	private String commentFirst;
+
 	
 	private List<SnsboardfileDTO> filelist;
 
-	
-	
-	
 
 	
 	public List<SnsboardfileDTO> getFilelist() {
@@ -80,5 +80,21 @@ public class SnsboardCategoryDTO {
 	public void setCategoryType(String categoryType) {
 		this.categoryType = categoryType;
 	}
+	
+	public String getCommentCnt() {
+		return commentCnt;
+	}
+	public void setCommentCnt(String commentCnt) {
+		this.commentCnt = commentCnt;
+	}
+	public String getCommentFirst() {
+		return commentFirst;
+	}
+	public void setCommentFirst(String commentFirst) {
+		this.commentFirst = commentFirst;
+	}
+
+
+
 
 }

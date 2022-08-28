@@ -4,182 +4,172 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<title>Cambus</title>
-<%@include file="/inc/userAsset.jsp" %>
-
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+ 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Ybus</title>
+    <link rel="stylesheet" href="/spring/css/2022css/busStopHeader.css">
+    <link rel="stylesheet" href="/spring/css/2022css/busStopRoad.css">
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=c5wa0CTc7jalj6c4Y0tw&submodules=panorama"></script>
 
-
-<style>
-#txtLogo {
-	position: relative;
-	width: 60%;
-	height: 80%;
-	padding-top: 4%;
-	margin: 0 auto;
-	font-weight: bold;
-}
-
-#logo {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	width: auto;
-}
-#mapAP { 
-	height: 100%;
-	width:100%;
-}
-
-
-
-</style>
-<script>
-$(function() {
-
-		
-	});
-	
-	
-</script>
-</head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+   crossorigin="anonymous"></script>  
+ </head>
 <body>
-	<div id="container">
-		<div id ="top">
-			<div id="header">
-			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
-				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 55%;  background-color: transparent !important; border-color: transparent;"	onclick="history.back();" />
-					<div id="txtLogo">
-					
-						${bsdto.busStop} 
-					
-					</div>
+<div id="container">
+    <div id="header">
+        <div id="hedaerTop" style='background-image: url("./images/2022busStop/통학버스_배경(낮).png")'>
+            <div id="hedaerTopBackGround">
+                <div id="headerTopContents">
+                    <div id="busTypeZone">
+                        <div id="busType">
+                            통학 버스
+                        </div>
+                    </div>
+                    <div id="buttonsZone">
+                        <div id="buttons">
+                            <div id="btnRouteMapZone">
+                                <div id="btnRouteMap">
+                                </div>
+                            </div>
+                            <div id="btnBusScheduleZone">
+                                <div id="btnBusSchedule">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="busStopNotification">
+            <div id="busStopNotice" >
+                <div id="noticeIconZone" class="busNotice">
+                    <div id="noticeIcon"></div>
+                </div>
+                <div id="busNoticeContents" class="busNotice">
+                    정류장을 클릭하면 해당 위치 로드뷰를 확인 할 수 있습니다.
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <div id="viewType">
+            <div class="viewBtn">
+                <div class="viewBtnName" id="selectedBtn">
+                    정류장 거리뷰
+                </div>
+            </div>
+            <div class="viewBtn">
+                <div class="viewBtnName">
+                    정류장 지도
+                </div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+    <div id="contents">
+        <div id="busStop">
+            <div id="busStopContents">
+                <div id="backBtnZone" class="busStopContents">
+                    <div id="backBtn"></div>
+                </div>
+                <div id="busStopName" class="busStopContents">
+                    ${bsdto.busStop}
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <div id="roadView_MapZone">
+            <div id="roadView_Map">
 				
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'" />
-				</div>
+            </div>
+        </div>
+        
+        <!-- 애드센스 -->
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-format="fluid"
+		     data-ad-layout-key="-fb+5w+4e-db+86"
+		     data-ad-client="ca-pub-2370297300940223"
+		     data-ad-slot="8826360596"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+        
+        <!-- 엣날 지도 -->
+        <div id="infoAround">
+			<div id="infoTitle">
+				<div id="infoTitleText">Around place  ${bsdto.busStop}</div>
 			</div>
-		</div>
+			<div id="mapAP">
+			
+			</div>
+			
+		    <script type="text/javascript">
 		
-		<div id="contents">
-			<div class="tab">
-				<a href="javascript:void(0)" class="tablinks" style="border-left: 1px solid #003140; border-bottom: 5px solid #003d4f;" id="busStopview" onclick="location.href='/spring/getBusStopRoadView.action?busStopSeq='+${bsdto.busStopSeq}">정류장 거리뷰</a> 
-				<a href="javascript:void(0)" style="border-left: 1px solid #003140; border-right: 1px solid #003140;" class="tablinks" onclick="location.href='/spring/getBusStopMapView.action?busStopSeq='+${bsdto.busStopSeq}">정류장 지도</a>
+				var mapAP;
+				var marker;
 				
-			</div>
-			
-				<div id="street-view"style="width:100%;height:400px;"></div>
-
-
-
-
-			<!-- 애드센스 -->
-			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<ins class="adsbygoogle"
-			     style="display:block"
-			     data-ad-format="fluid"
-			     data-ad-layout-key="-fb+5w+4e-db+86"
-			     data-ad-client="ca-pub-2370297300940223"
-			     data-ad-slot="8826360596"></ins>
-			<script>
-			     (adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
-
-
-
-
-
-
-			<div id="infoAround">
-				<div id="infoTitle">
-					 
-					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">Aroung place ${bsdto.busStop}  </div>
-				</div>
-				<div id="mapAP"></div>
-			    <script type="text/javascript">
-			
-					var mapAP;
-					var marker;
+				function initMap() {
+				  	//정류장 맛집 맵
+					mapAP = new google.maps.Map(document.getElementById('mapAP'), {
 					
-					function initMap() {
-					  	//정류장 맛집 맵
-						mapAP = new google.maps.Map(document.getElementById('mapAP'), {
+				    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
+				    zoom: 15
+				  	});
+					
+					//정류장 마커
+					<c:forEach items="${apList}" var="apdto">
+						var infowindow${apdto.aroundPlaceSeq} = new google.maps.InfoWindow({
+							content:'${apdto.aroundPlaceName}',
+						});
 						
-					    center: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
-					    zoom: 15
-					  	});
-						
-						//정류장 마커
-						<c:forEach items="${apList}" var="apdto">
-							var infowindow${apdto.aroundPlaceSeq} = new google.maps.InfoWindow({
-								content:'${apdto.aroundPlaceName}',
-							});
+						marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
+						    map: mapAP,
+						    draggable: false,
+						    animation: google.maps.Animation.DROP,
+						    info: '${apdto.aroundPlaceName}',
+						    title: '${apdto.aroundPlaceName}',
+						    position: {lat: ${apdto.aroundPlaceLatitude}, lng: ${apdto.aroundPlaceLongitude}}
+						});
+						marker${apdto.aroundPlaceSeq}.addListener('click', function(){
+							infowindow${apdto.aroundPlaceSeq}.open(mapAP,marker${apdto.aroundPlaceSeq});
+						});
 							
-							marker${apdto.aroundPlaceSeq} = new google.maps.Marker({
-							    map: mapAP,
-							    draggable: false,
-							    animation: google.maps.Animation.DROP,
-							    info: '${apdto.aroundPlaceName}',
-							    title: '${apdto.aroundPlaceName}',
-							    position: {lat: ${apdto.aroundPlaceLatitude}, lng: ${apdto.aroundPlaceLongitude}}
-							});
-							marker${apdto.aroundPlaceSeq}.addListener('click', function(){
-								infowindow${apdto.aroundPlaceSeq}.open(mapAP,marker${apdto.aroundPlaceSeq});
-							});
-								
-						</c:forEach>
+					</c:forEach>
+				
 					
-						
-						
-						/* 구글 스트리트뷰 */
-						var panorama;
-					   
-				        panorama = new google.maps.StreetViewPanorama(
-				            document.getElementById('street-view'),
-				            {
-				              position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
-				              pov: {heading: 165, pitch: 0},
-				              zoom: 1
-				         });
-					     
-				        
-				     // Set up the markers on the map
-				        var Marker = new google.maps.Marker({
-				            position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
-				            map: panorama,
-				            icon: '/spring/images/timeLine/busStopMaker2.png',
-				            title: 'BusStop'
-				        });
-					}
-	
-			    </script>
-			    <script async defer
-			      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap">
-			    </script>
-			</div>
+					
+					/* 구글 스트리트뷰 */
+					var panorama;
+				   
+			        panorama = new google.maps.StreetViewPanorama(
+			            document.getElementById('roadView_Map'),
+			            {
+			              position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
+			              pov: {heading: 165, pitch: 0},
+			              zoom: 1
+			         });
+				     
+			        
+			     // Set up the markers on the map
+			        var Marker = new google.maps.Marker({
+			            position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}},
+			            map: panorama,
+			            icon: '/spring/images/timeLine/busStopMaker2.png',
+			            title: 'BusStop'
+			        });
+				}
+
+		    </script>
+		    <script async defer
+		      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap">
+		    </script>
 		</div>
-
-
-
-
-	</div>
-
-
-
-
+	</div>	
+</div>
 </body>
 <!-- 
-
-	
 	//네이버 로드뷰
 	var HOME_PATH = window.HOME_PATH || '.',
 	pano = null;
@@ -236,9 +226,5 @@ $(function() {
 	});
 
 	naver.maps.onJSContentLoaded = initPanorama;
-	
-	
-
  -->
-
 </html>

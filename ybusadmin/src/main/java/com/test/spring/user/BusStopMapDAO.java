@@ -69,6 +69,12 @@ public class BusStopMapDAO {
 		return sql.selectList("busStop.getCurrBusStopLocation3",map);
 	}
 	
+	//영광 용인대학교 10분이내로 돈 버스의 리스트를 다 가져옴.
+	public List<CurrBusLocationDTO> getCurrBusStopLocation(String universitySeq) {
+		// TODO Auto-generated method stub
+		return sql.selectList("busStop.getCurrBusStopLocation4",universitySeq);
+	}
+	
 	//해당학교의 기본값 노선번호 한개를 불러옴
 	public String getDefaultBusStopDetailCategory(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
@@ -85,6 +91,12 @@ public class BusStopMapDAO {
 		// TODO Auto-generated method stub
 		return sql.selectList("busStop.getSpecipicBusStop",map);
 	}
+	
+	//해당학교의 해당 버스에 대한 정류장을 모두 불러옴 영광
+	public List<BusStopDTO> getSpecipicBusStop2(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sql.selectList("busStop.getSpecipicBusStop2",map);
+	}// 영광끝
 
 	
 	public BusStopAvgLatLonDTO getSpecipicAvgBusStopLatLon(HashMap<String, String> map) {

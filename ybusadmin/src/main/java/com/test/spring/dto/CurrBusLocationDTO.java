@@ -10,9 +10,18 @@ public class CurrBusLocationDTO {
 	String businfoName;
 	String businfoNum;
 	String businfoSeq;
+	//영광//
+	String busStopCategorySeq;
 	
 	
-	
+	//영광
+	public String getBusStopCategorySeq() {
+		return busStopCategorySeq;
+	}
+	public void setBusStopCategorySeq(String busStopCategorySeq) {
+		this.busStopCategorySeq = busStopCategorySeq;
+	}
+	//영광끝
 	public String getBusinfoName() {
 		return businfoName;
 	}

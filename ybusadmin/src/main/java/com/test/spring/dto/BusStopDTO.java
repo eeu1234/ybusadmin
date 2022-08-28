@@ -16,6 +16,7 @@ public class BusStopDTO {
    private String busStopOrder;						//노선 순서
    private String busStopLine;						//정류장 구분
    private String busStopDetailCategorySeq;      	//소유노선 고유코드
+   private String busStopDetailCategoryName;        //버스 노선 이름 영광
    	
    
    public String getBusStopSeq() {
@@ -60,6 +61,15 @@ public class BusStopDTO {
 	public void setBusStopLine(String busStopLine) {
 		this.busStopLine = busStopLine;
 	}
+	
+	//영광
+	public String getBusStopDetailCategoryName() {
+		return busStopDetailCategoryName;
+	}
+	public void setBusStopDetailCategoryName(String busStopDetailCategoryName) {
+		this.busStopDetailCategoryName = busStopDetailCategoryName;
+	}//영광 끝
+	
    
    
 }

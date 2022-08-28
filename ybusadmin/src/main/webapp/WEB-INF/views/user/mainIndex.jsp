@@ -354,8 +354,17 @@
 		};
 		})(jQuery);
         
-        
-        
+        function checkBusDot(){
+        	var element = $('.container_bus_rayout');
+         	var busStopValue =  $('.container_bus_rayout').val();
+        	<c:forEach items = "${cblList}" var = "dot" varStatus = "cnt">
+	        	<c:choose>
+	        		<c:when test = "${dot.busStopCategorySeq == busStopValue[cnt.index] }">
+	        			elemet[${cnt.index}].clidren('.checkBus_box').css('background-color','green');
+	        		</c:when>
+	        	</c:choose>
+        	</c:forEach>
+        }
         
         
         
@@ -364,6 +373,7 @@
             changeImgByTime();
             getWeather();
             changeDate();
+            checkBusDot();
             $('#header_notice_mid').vTicker();
         });
 
@@ -592,17 +602,6 @@
         position:relative;
         margin-top:5.7%;
     }
-    #container_mid_redBus{
-        position:relative;
-        width:31.04%;
-        background:url("/spring/images/mainIndex/redBus_1.png");
-        background-size: 100% 100%;
-        background-position: center center;
-        background-repeat: no-repeat;
-        float:left;
-        box-shadow: 0px 0px 15px #0F296B1F;
-        border-radius: 12px;
-    }
     .checkBus_box{
         position:absolute;
         width:10%;
@@ -612,6 +611,21 @@
         left:8%;
         border-radius:50%;
     }
+    .container_bus_rayout{
+    	position:relative;
+        width:31.04%;
+        background-size: 100% 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        float:left;
+        box-shadow: 0px 0px 15px #0F296B1F;
+        border-radius: 12px;
+    	
+    }
+    #container_mid_redBus{
+        
+    }
+
     #container_mid_redBus_text{
         padding-top:78.72%;
         padding-bottom:4.55%;
@@ -622,17 +636,7 @@
         color: #142637;
     }
     #container_mid_yellowBus{
-        position:relative;
-        width:31.04%;
-        background:url("/spring/images/mainIndex/yellowBus_1.png");
-        background-size: 100% 100%;
-        background-position: center center;
-        background-repeat: no-repeat;
-        margin-left:3.4%;
-        margin-right:3.4%;
-        float:left;
-        box-shadow: 0px 0px 15px #0F296B1F;
-        border-radius: 12px;
+		margin:0 3.4%;
     }
     #container_mid_yellowBus_text{
         padding-top:78.72%;
@@ -644,15 +648,7 @@
         color: #142637;
     }
     #container_mid_blueBus{
-        position:relative;
-        width:31.04%;
-        background:url("/spring/images/mainIndex/blueBus_1.png");
-        background-size: 100% 100%;
-        background-position: center center;
-        background-repeat: no-repeat;
-        float:left;
-        box-shadow: 0px 0px 15px #0F296B1F;
-        border-radius: 12px;
+        
     }
     #container_mid_blueBus_text{
         padding-top:78.72%;
@@ -867,7 +863,7 @@
                         <div class = "container_top_right_blank" style="clear:both"></div>
                         </div>
                     <div id = "container_top_blank"></div>
-                    <div id = "container_top_schedule" onclick="location.href='/spring/busSchedule/busTimeTable.action'">
+                    <div id = "container_top_schedule" onclick="location.href='/spring/busSchedule/busTimeTable.action';">
                         <div class = "container_top_right_blank"></div>
                         <div id = "container_top_schedule_left"></div>
                         <div id = "container_top_schedule_right">시간표</div>
@@ -877,15 +873,27 @@
                 <div style="clear:both"></div>
             </div>
             <div id = "container_mid">
-                <div id = "container_mid_blueBus" value = "18" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=18';">
-                    <div id = "container_mid_blueBus_dot" class = "checkBus_box"></div>
+                <div id = "container_mid_blueBus" class = "container_bus_rayout" value = "18" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=18';">
+                    <div id = "container_mid_blueBus_dot" class = "checkBus_box"
+                    	<c:forEach items = "${cblList}" var = "list">
+                    		<c:if test = "${list.busStopCategorySeq == 18}">
+                    			style = "background-color:#6DFA5B;"
+                    		</c:if>
+                    	</c:forEach>
+                    ></div>
                     <div id = "container_mid_blueBus_text">시내버스</div>
                 </div>
-                <div id = "container_mid_yellowBus" value = "36" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=36';">
-                    <div id = "container_mid_yellowBus_dot" class = "checkBus_box"></div>
+                <div id = "container_mid_yellowBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=36';">
+                    <div id = "container_mid_yellowBus_dot" class = "checkBus_box"
+                    	<c:forEach items = "${cblList}" var = "list">
+                    		<c:if test = "${list.busStopCategorySeq == 36}">
+                    			style = "background-color:#6DFA5B;"
+                    		</c:if>
+                    	</c:forEach>
+                    ></div>
                     <div id = "container_mid_yellowBus_text">노란버스</div>
                 </div>
-                <div id = "container_mid_redBus">
+                <div id = "container_mid_redBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getSchoolBusStopLine.action';">
                     <div id = "container_mid_redBus_dot" class = "checkBus_box"></div>
                     <div id = "container_mid_redBus_text">통학버스</div>
                 </div>

@@ -1,8 +1,10 @@
 package com.test.spring.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,8 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.test.spring.busSchedule.BusScheduleDAO;
 import com.test.spring.dto.AroundPlaceDTO;
+import com.test.spring.dto.BusScheduleDTO;
+import com.test.spring.dto.BusScheduleSearchDTO;
 import com.test.spring.dto.BusStopAvgLatLonDTO;
+import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.CurrBusLocationDTO;
@@ -34,6 +40,10 @@ public class BusStopMapController {
 	
 	@Autowired
 	BusStopMapDAO dao;
+	
+	@Autowired
+	private BusScheduleDAO timeDAO;
+
 	
 	//테스트용 뷰
 	
@@ -165,6 +175,9 @@ public class BusStopMapController {
 				System.out.println("bsList"+i+"bsOrder"+bsList.get(i).getBusStopOrder());
 			}
 			*/
+			
+			
+			
 			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 			request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
 			request.setAttribute("bsdcList", bsdcList);
@@ -268,7 +281,60 @@ public class BusStopMapController {
 		return "user/getBusStopLocation";
 	}
 	
-    
+	//영광
+	@RequestMapping(method={RequestMethod.GET},value="/getSchoolBusStopLine.action")
+	public String getSchoolBusStopLine(
+			HttpServletRequest request,
+			HttpSession session, 
+			HttpServletResponse response, 
+			String busStopCategorySeq){
+		
+		UniversityDTO adto = null;
+		
+		if(session.getAttribute("universityDto") == null){
+				try {
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/selectUniversity.action");
+					dispatcher.forward(request, response);
+				} catch (Exception e) {
+					System.out.println(e.toString());
+				}
+		
+			
+		}else{
+			 adto = (UniversityDTO)session.getAttribute("universityDto");
+		}
+		
+		
+		//학교 seq 가져오기
+		String universitySeq = adto.getUniversitySeq();
+		
+		// 디비 쿼리를 위한 map변수 학교 번호랑 통학버스 번호 들어가 있음.
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("universitySeq", "1");//학교번호를 넣어줌
+		map.put("busStopCategorySeq", "37");// 통학버스 번호를 넣어줌
+		//버스 정류장을 담는 DTO 리스트
+		List<BusStopDTO> busStopList = dao.getSpecipicBusStop2(map);
+		
+		//해당 학교 busCategory 가져오기
+		List<BusStopDetailCategoryDTO> dlist;
+		
+		dlist = timeDAO.getDetailCategoryList("37"); // 통학버스 노선도를 다 가져옴.
+
+		System.out.println("디테일카테고리값 있니? -> "+ dlist.size());
+		//가져온 버스디테일카테고리로 시간표 가져오기
+		//busDetailCategorySeq가 여러개일 경우도 있으니 for문 사용
+		
+		
+		//버스 디테일 건네주기
+		request.setAttribute("dlist", dlist);
+		//버스 시간표 건네주기
+		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
+		request.setAttribute("busStopList", busStopList); //정류장 번호 넘겨주기
+		
+		return "user/getSchoolBusStopLine";
+	}
+	
+	
 	
 	private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
         

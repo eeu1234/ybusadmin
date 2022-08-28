@@ -52,15 +52,17 @@
             });
             
             $("#container_selectBus").change(function(){
+            	var weekDays = $("#container_selectDay").val();
             	var seq = $("#container_selectBus").val();
 				if(seq != 37){
-            		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq;
+					location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
 				}
 			});
             
             $("#container_selectDay").change(function(){
             	var weekDays = $("#container_selectDay").val();
-            	location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
+            	var seq = $("#container_selectBus").val();
+            	location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
         	});
         });
 
@@ -272,20 +274,22 @@
             font-size:0.5em;
         }
         .added_box_container_right{
-            width:57.5%;
+            width:59.5%;
             height:100%;
-            margin-left:7.5%;
+            margin-left:5.5%;
             float:left;
         }
         .added_box_container_right_schedule{
             width:31%;
             max-width:50px;
             padding:10px 0;
+            margin:0 2%;
             height:30px;
             font-family: "Pretendard-Medium";
             letter-spacing: -0.3px;
             text-align:center;
             font-size:0.8em;
+            float:left;
         }
         .added_box_container_right_schedule_top{
             width:100%;
@@ -344,7 +348,7 @@
 	        <div class = "whiteBox_charge" >
 		        <div class = "busCharge_left">${dlist.busStopDetailCategoryName}</div>
 		        <div class = "busCharge_mid"></div>
-		        <div class = "busCharge_right">요금:1800원</div>
+		        <div class = "busCharge_right">${dlist.buspee}</div>
 		    	<div style="clear:both;"></div>
 		    </div>
 		    <div class = "added_box">
@@ -359,7 +363,7 @@
 						                <c:forEach items = "${timelist.busTimeHourMin}" var = "timeHourMin">
 						                    <div class = "added_box_container_right_schedule">
 					                        	<div class = "added_box_container_right_schedule_top">${timeHourMin}</div>
-					                        	<div class = "added_box_container_right_schedule_bottom">등교</div>
+					                        	<div class = "added_box_container_right_schedule_bottom">${fn:split(dlist.busStopDetailCategoryName,'(')[0]}</div>
 					                    	</div>
 					                    </c:forEach>
 					                	</div>

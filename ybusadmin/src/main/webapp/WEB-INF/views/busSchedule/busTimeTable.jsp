@@ -36,46 +36,45 @@
             }
         }
 
-        function changeBox(){
-            var timeList = $('.footer_timeTable_box_schedule');
-            var timeList_pro = [];
-            var spot ;
+        function changeBox(){ // 현재 시간에서 탈 수 있는 버스표시해주는 함수
+            var timeList = $('.footer_timeTable_box_schedule'); // 버스가 움직이는 시간들이 들어가 있는 배열.
+            var timeList_pro = []; // 시간표를 분단위로 계산하여 넣음.
+            var spot ; //  
             for (var i = 0; i < timeList.length; i++){
-                var timeSplitArr = $(timeList[i]).attr('id').split("_");
-                timeList_pro.push(Number(timeSplitArr[0])*60 + Number(timeSplitArr[1]));
+                var timeSplitArr = $(timeList[i]).attr('id').split("_"); // 시간을 분단위로 변환
+                timeList_pro.push(Number(timeSplitArr[0])*60 + Number(timeSplitArr[1])); // 리스트에 넣어버림
             }
 
-            console.log(timeList_pro);
-            var nowTime = (hour * 60) + minute;
+            var nowTime = (hour * 60) + minute; //현재시간을 분단위로
 
-            for(var i = 0; i<timeList_pro.length; i++){
-                if( nowTime < timeList_pro[i]){
-                    spot = i;
+            for(var i = 0; i<timeList_pro.length; i++){ //현재시간에서 탈 수 있는 가장 가까운거 찾기 위한 반복문
+                if( nowTime < timeList_pro[i]){ // 현재시간이 리스트의 있는 시간보다 작다면
+                    spot = i; // 배열의 인덱스를 저장.
                     break;
                 }
                 else{
-                    spot = 0;
+                	spot = 0;
                 }
             }
-
-            $(timeList[spot]).children(".footer_timeTable_box_schedule_top").css('color','#142637');
-            $(timeList[spot]).children(".footer_timeTable_box_schedule_bottom").css('background-image','url("/spring/images/busSchedule/순환코스(해당시간)_박스.png")');
-
-            // 회색 긴줄에 네이비 칠해주는 작업
-             $(timeList[spot]).parent().css('border-left','3px solid #142637');
-
+			if(spot != 0){
+	            $(timeList[spot]).children(".footer_timeTable_box_schedule_top").css('color','#142637');
+	            $(timeList[spot]).children(".footer_timeTable_box_schedule_bottom").css('background-image','url("/spring/images/busSchedule/순환코스(해당시간)_박스.png")');
+	
+	            // 회색 긴줄에 네이비 칠해주는 작업
+	            $(timeList[spot]).parent().css('border-left','3px solid #142637');
+			}else{
+				$('<img id = "header_bottom_logo"  src="/spring/images/busSchedule/안내_아이콘.png">').prependTo('#header_bottom_text');
+				$('#notice_text').text('지금은 버스운행 시간이 아닙니다.');
+			}
 
         }
 
         function checkBus_Logo(type){ // 셀렉트박스에서 버스 종류가 가져와서 메인 이미지 변경하는데 필요한 코드를 변경함
-            if(type == 'blueBus' || type == 'blueBus_new'){
+            if(type == 18){
                 busType_code = 0;
             }
-            else if(type == 'yellowBus'){
+            else if(type == 36){
                 busType_code = 1;
-            }
-            else if(type == 'redBus'){
-                busType_code = 2;
             }
         }
 
@@ -100,17 +99,20 @@
         	var detail_seq = $("#container_selectWay").val();
         	var weekDays = $("#container_selectDay").val();
         	if(flag == 1){
-        		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
         		if(seq == 37){
-        			location.href="/spring/busSchedule/schoolBusTimeTable.action"
-        		}
+	        		location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
+	        	}else{
+	        		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
+	        	}
         	}else{
-        		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&busStopDetaliCategorySeq="+detail_seq+"&weekDays="+weekDays;
+	        	location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&busStopDetaliCategorySeq="+detail_seq+"&weekDays="+weekDays;
         	}
         }
-
+		
         $(document).ready(function(){
-            checkTime_Logo();
+            var busType = $("#container_selectBus").val();
+            checkBus_Logo(busType);
+        	checkTime_Logo();
             changeBox();
             countChild();
             $("#container_selectBus").change(function(){
@@ -123,9 +125,8 @@
                 schedule();
             });
             $("#container_selectDay").change(function(){
-            	var weekDays = $("#container_selectDay").val();
-            	location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq=${busStopCategorySeq}&weekDays="+weekDays;
-        	});
+				schedule();
+            });
         });
 
 
@@ -317,8 +318,7 @@
   <div id = "header_bottom">
     <div id = "header_bottom_layout">
       <div id = "header_bottom_text">
-        <img id = "header_bottom_logo"  src="/spring/images/busSchedule/안내_아이콘.png">
-        <span style="position:relative; bottom:25%;">지금은 버스운행 시간이 아닙니다.</span>
+        <span id = "notice_text" style="position:relative; bottom:25%;"></span>
       </div>
     </div>
   </div>
@@ -346,51 +346,54 @@
 <div id = "footer">
   <div id = "footer_timeTable">
   
-
-   <%-- <c:forEach items = "${slist}" var = "outSlist" > --%>
-  	<c:forEach items = "${slist.timeList}" var = "time" varStatus = "out">
-  		<c:choose>
-  			<c:when test = "${out.index % 2 eq 0 }">
-  				<div class = "grayBox">
-  					<div class = "footer_timeTable_box_left">
-        				<div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
-      				</div>
-  					<div class = "footer_timeTable_box_right">
-				 		<div id = "${out.count}" class = "footer_timeTable_box_right_box">
-				 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
-          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
-           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
-          						<div class = "footer_timeTable_box_schedule_bottom">시내순환</div>
-        					</div>
-        				</c:forEach>	
-       					</div>		
-   					</div>
-      				<div style="clear:both;"></div>
-      			</div>
-  			
-  			</c:when >
-  			<c:when test = "${out.index % 2 eq 1}">
-  				<div class = "whiteBox">
-  					<div class = "footer_timeTable_box_left">
-        				<div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
-      				</div>
-  					<div class = "footer_timeTable_box_right">
-				 		<div id = "${out.count}" class = "footer_timeTable_box_right_box">
-				 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
-          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
-           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
-          						<div class = "footer_timeTable_box_schedule_bottom">시내순환</div>
-        					</div>
-        				</c:forEach>	
-       					</div>		
-   					</div>
-      				<div style="clear:both;"></div>
-      			</div>
-  			</c:when>
-  		
-      	</c:choose>
-  	  </c:forEach>
-<%--    	</c:forEach> --%>
+	<c:choose>
+		<c:when test = "${slist.timeList.size() == 0}">
+			<div>운행예정인버스가 없습니다.</div>
+		</c:when>
+		<c:otherwise>
+		  	<c:forEach items = "${slist.timeList}" var = "time" varStatus = "out">
+		  		<c:choose>
+		  			<c:when test = "${out.index % 2 eq 0 }">
+		  				<div class = "grayBox">
+		  					<div class = "footer_timeTable_box_left">
+		        				<div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
+		      				</div>
+		  					<div class = "footer_timeTable_box_right">
+						 		<div id = "${out.count}" class = "footer_timeTable_box_right_box">
+						 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
+		          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
+		           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
+		          						<div class = "footer_timeTable_box_schedule_bottom">시내순환</div>
+		        					</div>
+		        				</c:forEach>	
+		       					</div>		
+		   					</div>
+		      				<div style="clear:both;"></div>
+		      			</div>
+		  			
+		  			</c:when >
+		  			<c:when test = "${out.index % 2 eq 1}">
+		  				<div class = "whiteBox">
+		  					<div class = "footer_timeTable_box_left">
+		        				<div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
+		      				</div>
+		  					<div class = "footer_timeTable_box_right">
+						 		<div id = "${out.count}" class = "footer_timeTable_box_right_box">
+						 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
+		          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
+		           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
+		          						<div class = "footer_timeTable_box_schedule_bottom">시내순환</div>
+		        					</div>
+		        				</c:forEach>	
+		       					</div>		
+		   					</div>
+		      				<div style="clear:both;"></div>
+		      			</div>
+		  			</c:when>
+		      	</c:choose>
+		  	  </c:forEach>
+	  	  </c:otherwise>
+  	  </c:choose>
   </div>
   
   

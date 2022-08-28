@@ -162,42 +162,41 @@ public class MainController {
 		
 		try {
 			
-			
+			System.out.println("==============================");
 	         //내용
 			universityDto = (UniversityDTO) session.getAttribute("universityDto");
 			
-			if(universityDto==null){
+			if(universityDto==null){ 
 				response.sendRedirect("/index.action");
 				return "";
-
-				
 			}else{
-				
 				universitySeq = universityDto.getUniversitySeq();
-				
 			}
 			
-			HashMap<String,String> map = new HashMap<String,String>();
-			map.put("busStopCategorySeq", busStopCategorySeq);
-			map.put("universitySeq", universitySeq);
-			String busStopDetailCategorySeq = busStopMapDao.getDefaultBusStopDetailCategory(map);
-			map.put("busStopDetailCategorySeq",busStopDetailCategorySeq);
+			
 			//이학교에 있는 노선을 메인 화면에 띄워주어야함
 			//노선목록 들고옴.
 			//공지사항목록 들고옴.
 			
 			List<NoticeDTO> nList = dao.getAllNotice();
-			List<BusStopCategoryDTO> bscList = dao.getSpecipicBusStopCategory(map);
-			List<CurrBusLocationDTO> cblList = busStopMapDao.getCurrBusStopLocation(map);
+			List<CurrBusLocationDTO> cblList = busStopMapDao.getCurrBusStopLocation(universitySeq);
+			
+			System.out.println("+++++++++++++++++++++++++++++++++++++");
+			for(int i = 0; i<cblList.size();i++) {
+				System.out.print(cblList.size());
+				System.out.println("==========================");
+				System.out.println(cblList.get(i).getBusStopCategorySeq());
+				System.out.println("==========================");
+			}
 			
 			
-			request.setAttribute("nList", nList);
-			request.setAttribute("bscList", bscList);
+			request.setAttribute("nList", nList); // 공지사항 리스트
+			request.setAttribute("cblList", cblList); // 현재 위치
 			
 			String universityName = dao.getUniversityDtoSeq(universitySeq).getUniversityName(); // 음 대학교 이름을 불러오는거임. 
 			universityDto.setUniversityName(universityName);
 			
-			request.setAttribute("universityDto", universityDto);
+			request.setAttribute("universityDto", universityDto); // 날씨 api를 위해 필요
 			
 			return "user/mainIndex";
 			

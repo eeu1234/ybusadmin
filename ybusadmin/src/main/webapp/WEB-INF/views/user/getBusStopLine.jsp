@@ -4,380 +4,260 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+   crossorigin="anonymous"></script>
+   
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({
           google_ad_client: "ca-pub-2370297300940223",
           enable_page_level_ads: true
      });
 </script>
-<meta charset="UTF-8">
-<title>Cambus</title>
-<%@include file="/inc/userAsset.jsp" %>
 
-<style>
-
-
-.busNum	img {
-	width: 90%;
-	height: 90%;
-}
-.busIcon img {
-	width: 70%;
-	height: auto;
-	
-}
-body, html {
-	position: relative;
-	width: 100%;
-	max-width: 480px;
-	height: 100%;
-	font-family: 'notoFont-bold';
-	color: #222;
-	background-color: white;
-	overflow-x: hidden;
-	height: 100%;
-	margin: 0 auto;
-	/* -webkit-overflow-scrolling: touch; 터치부드럽게 상단고정해더가 늦게움직이는현상발생*/
-}
-
-#container {
-	position: relative;
-	width: 100%;
-	max-width: 480px;
-	height: 568px;
-	margin: 0 auto;
-	background-color: white;
-}
-
-#top {
-	position: fixed;
-	max-width: 480px;
-	width: 100%;
-	height: 25%;
-	z-index: 3;
-}
-
-#header {
-	position: relative;
-	width: 100%;
-	height: 50px;
-	background-color: #003d4f;
-	text-align: center;
-	color: white;
-	background-color: #003d4f;
-}
-
-#infoPage {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background-color: #003d4f;
-}
-
-#txtLogo {
-	position: relative;
-	width: 60%;
-	height: 80%;
-	padding-top: 4%;
-	margin: 0 auto;
-	font-weight: bold;
-}
-
-#logo {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	width: auto;
-}
-
-#btnArea {
-	position: relative;
-	width: 100%;
-	height: 60px;
-	background-color: #dfdfdf;
-	padding-top: 30px;
-}
-
-#btnGroup {
-	position: relative;
-	width: 90%;
-	height: 40px;
-	margin: 0 auto;
-	width: 90%;
-}
-
-.goBtn {
-	width: 45%;
-	height: 70%;
-	margin: 0 auto;
-	text-align: center;
-	background-color: #ffffff;
-	padding-top: 1.5%;
-	color: black;
-}
-
-#upBtn {
-	float: left;
-	border-bottom: 5px solid #003d4f;
-}
-
-#downBtn {
-	float: right;
-	border-bottom: 5px solid #eb6100;
-}
-
-/* contents 부분 시작*/
-#contents {
-	position: relative;
-	width: 100%;
-	height: 90%;
-	margin: 0;
-	padding: 0;
-	padding-top:55%;
-	text-align:left;
-	background-color: white;
-}
-/* 아이폰5 */
-@media(max-width:320px) { 
- #contents{
- padding-top:65%;
- } 
-}
-/* 정류장 타임라인 틀 시작 */
-#lineArea {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-
-.busStop {
-	position: relative;
-	width: 100%;
-	height: 50px;
-	background-color: white;
-	border-bottom: 2px solid #b2b2b2;
-}
-
-
-/* 정류장 선 */
-.way {
-	position: relative;
-	float: left;
-	width: 35%;
-	height: 100%;
-}
-
-.busBox{
-	width:100%;
-	height:100%;
-	position:absolute;
-	
-	
-}
-/* 타임라인 시작 정류장  */
-#startPoint {
-	position: absolute;
-/* 	background-image: url("./images/timeLine/startPoint.png");
-	background-repeat: no-repeat;
-	background-size: cover;
- */	width: 100%;
-	height: 100%;
-}
-/* 타임라인 마지막 정류장  */
-#endPoint {
-	position: absolute;
-	top: 0;
-	left: 0;
-	/* background-image: url("./images/timeLine/endPoint.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-	 */width: 100%;
-	height: 100%;
-}
-/* 상행선*/
-.upLine {
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	width: 100%;
-	height: 100%;
-}
-/* 하행선 */
-.downLine {
-	position: absolute;
-	top: 0;
-	left: 0;
-	
-	width: 100%;
-	height: 100%;
-}
-/* 회차  */
-.turnLine {
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	width: 100%;
-	height: 100%;
-}
-
-
-#turnPoint {
-	position: absolute;
-	top: 0;
-	left: 0;
-/* 	background-image: url("./images/timeLine/turnPoint.png");
-	background-repeat: no-repeat;
-	background-size: cover; */
-	width: 100%;
-	height: 100%;
-}
-.lineImg{
-	width:auto;
-	height:105%;
-	float:right;
-	margin-right:25%;
-	z-index:10;
-	
-}
-
-
-
-.stopName {
-	
-	float: left;
-	width: 65%;
-	height: 100%;
-}
-
-.txtName {
-	margin-top: 6%;
-}
-
-/* 버스 아이콘 관련 시작 */
-.busIcon {
-	position: absolute;
-	width: 50%;
-	height: 90%;
-	padding-left:48%;
-	padding-top:4%;
-	text-align:left;
-}
-
-.busNum {
-	position: absolute;
-	float: left;
-	width: 50%;
-	height: 90%;
-	text-align: right;
-	padding-top:4%;
-	
-}
-
-.busTxt {
-	position: absolute;
-	width: 70%;
-	height: 35%;
-	font-size: 0.3em;
-	padding-top: 17%;
-	padding-left: 10px;
-	<%-- background-image: url('/spring/images/timeLine/busNum.png'); --%>
-	
-}
-
-#footer {
-	position: relative;
-	width: 95%;
-	height: 25%;
-	background-color: #bfbfbf;
-	text-align: left;
-	color: #272727;
-	font-size: 0.5em;
-	padding-left:5%;
-}
-#changeMap{
-	position:absolute;
-	 width:auto;
-	 height:80%;
-	 margin:0;
-	 padding:0;
-	 margin-right:17%;
-	 top:10%;
-	 right:0;
-	 cursor:pointer;
-	 
-	 
-}#refreshBtn{
-	position:absolute;
-	 width:auto;
-	 height:80%;
-	 margin:0;
-	 padding:0;
-	 margin-right:5%;
-	 top:10%;
-	 right:0;
-	 cursor:pointer;
-}
-
-#detailLocationSel{
-
-	 width:50%;
-	 height:80%;
-	 margin:0;
-	 padding:0;
-	 margin-right:5%;
-	 margin-top:1%;
-
-
-}
-
-.selectBox{
-	color:#555;
-	background-color: #fff;
-	border:1px solid #ccc;
-	border-radius:4px;
-	text-align:center;
-}
-</style>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Ybus</title>
+    <link rel="stylesheet" href="/spring/css/2022css/busStopHeader.css">
+    <link rel="stylesheet" href="/spring/css/2022css/busStopLine.css">
 
 <script>
-var universitySeq = '${universityDto.universitySeq}';
+
+let universitySeq = '${universityDto.universitySeq}';
 $(document).ready(function(){
 	
-	$(".stopName").click(function(){
-		var busStopCategorySeq = $("#busStopCategorySeq").val();
+	$(".busStopName").click(function(){
+		let busStopCategorySeq = $("#busStopCategorySeq").val();
 		location.href="/spring/getBusStopRoadView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+$(this).attr("busStopSeq");
 	});
 	
 	$("#detailLocationSel").change(function(){
-		var bsdcSeq = $(this).val();
+		let bsdcSeq = $(this).val();
 		//alert($("#busStopCategorySeq").val());
 		//alert($("#busStopCategorySeq").attr("value"))
-		var busStopCategorySeq = $("#busStopCategorySeq").val();
+		let busStopCategorySeq = $("#busStopCategorySeq").val();
 		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 	});
 });
 
 function refresh(){
-	var bsdcSeq = $("#detailLocationSel").val();
-	var busStopCategorySeq = $("#busStopCategorySeq").val();
+	let bsdcSeq = $("#detailLocationSel").val();
+	let busStopCategorySeq = $("#busStopCategorySeq").val();
 	location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
 
 function moveMap(){
-	var bsdcSeq = $("#detailLocationSel").val();
-	var busStopCategorySeq = $("#busStopCategorySeq").val();
+	let bsdcSeq = $("#detailLocationSel").val();
+	let busStopCategorySeq = $("#busStopCategorySeq").val();
 	location.href="/spring/getBusStopLocation.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
-	
+
 </script>
 
 </head>
 <body>
-	<div id="container">
+<div id="container">
+    <div id="header">
+        <div id="hedaerTop" style='background-image: url("./images/2022busStop/시내버스_배경(낮).png")'>
+            <div id="hedaerTopBackGround">
+                <div id="headerTopContents">
+                    <div id="busTypeZone">
+                        <div id="busType">
+                            시내 버스
+                        </div>
+                    </div>
+                    <div id="buttonsZone">
+                        <div id="buttons">
+                            <div id="btnRouteMapZone">
+                                <div id="btnRouteMap">
+                                </div>
+                            </div>
+                            <div id="btnBusScheduleZone">
+                                <div id="btnBusSchedule">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="busStopNotification">
+            <div id="busStopNotice" >
+                <div id="noticeIconZone" class="busNotice">
+                    <div id="noticeIcon"></div>
+                </div>
+                <div id="busNoticeContents" class="busNotice">
+                    정류장을 클릭하면 해당 위치 로드뷰를 확인 할 수 있습니다.
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <div id="viewType">
+            <div class="viewBtn">
+                <div id="selectedBtn" class="viewBtnName">
+                    시내순환
+                </div>
+            </div>
+            <div class="viewBtn">
+                <div class="viewBtnName">
+                    역북지구
+                </div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+    <div id="contents">
+        <div id="lineArea">
+				
+				<c:forEach items="${bsList}" var="dto" varStatus="status">	
+					<c:choose>
+						<c:when test="${status.first}">
+							<div class="busStop" id="startPoint">
+								<div class="busStopLeft">
+									<img src="./images/2022busStop/기점.png" id="startPointImage" class="lineImg">
+																		
+									<c:forEach items='${cblList}' var='cbldto'>
+									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
+										<div class="busBox">
+											<div class="busStatus">
+												<div class="busNumber">
+													${cbldto.businfoName}
+												</div>
+												<div class="busRefreshTime">
+													15:57 갱신
+												</div>
+											</div>
+										</div>
+										</c:if>
+									</c:forEach>
+								</div>
+								<div class="busStopRight">
+									<div class="busStopStatus">
+										<div class="busStopName" busStopSeq='${dto.busStopSeq}'>
+											${dto.busStop}
+										</div>
+										<div class="busStopCondition">
+											<div class="busStopInfo">
+												도착/출발
+											</div>
+											<div class="Estimated-Time-Remaining">
+												5분 남음
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</c:when>
+						<c:when test="${status.last}">
+							<div class="busStop"  id="endPoint">
+								<div class="busStopLeft">
+									<img src="./images/2022busStop/종점.png" id="endPointImg" class="lineImg">
+																		
+									<c:forEach items='${cblList}' var='cbldto'>
+									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
+										<div class="busBox">
+											<div class="busStatus">
+												<div class="busNumber">
+													${cbldto.businfoName}
+												</div>
+												<div class="busRefreshTime">
+													15:57 갱신
+												</div>
+											</div>
+										</div>
+										</c:if>
+									</c:forEach>
+								</div>
+								<div class="busStopRight">
+									<div class="busStopStatus">
+										<div class="busStopName" busStopSeq='${dto.busStopSeq}'>
+											${dto.busStop}
+										</div>
+										<div class="busStopCondition">
+											<div class="busStopInfo">
+
+											</div>
+											<div class="Estimated-Time-Remaining">
+												5분 남음
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</c:when>
+						<c:otherwise>
+							<div class="busStop">
+								<div class="busStopLeft">
+									<c:if test="${dto.busStopLine == 'up'}">
+										<img src="/spring/images/2022busStop/버스라인.png" class="lineImg">
+									</c:if>
+									<c:if test="${dto.busStopLine == 'down'}">
+										<img src="/spring/images/2022busStop/버스라인.png" class="lineImg">
+									</c:if>
+									<c:if test="${dto.busStopLine == 'turn'}">
+										<img src="/spring/images/2022busStop/회차.png" class="lineImg">
+									</c:if>
+									<c:if test="${dto.busStopLine == 'pass'}">
+										<img src="/spring/images/2022busStop/미정차.png" class="lineImg">
+									</c:if>
+									<c:forEach items='${cblList}' var='cbldto'>
+										<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
+											<div class="busBox">
+												<div class="busStatus">
+													<div class="busNumber">
+														${cbldto.businfoName}
+													</div>
+													<div class="busRefreshTime">
+														15:57 갱신
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+								<div class="busStopRight">
+									<div class="busStopStatus">
+										<div class="busStopName" busStopSeq='${dto.busStopSeq}'>
+											${dto.busStop}
+										</div>
+										<div class="busStopCondition">
+											<div class="busStopInfo">
+
+											</div>
+											<div class="Estimated-Time-Remaining">
+												5분 남음
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>	
+					
+			</div>
+    <!-- lineArea  -->
+	<!-- google adsense -->
+    <div style="position:relative;width:100%;margin:0 auto;margin-top:15px;">
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-2370297300940223"
+		     data-ad-slot="9489841046"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true">
+	     </ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+</div>
+	<!--
 		<div id="top">
 			<div id="header">
 			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
@@ -521,23 +401,7 @@ function moveMap(){
 				</c:forEach>	
 					
 			</div>
-			<!-- lineArea  -->
-
-		</div>
-		<div style="position:relative;width:100%;margin:0 auto;margin-top:15px;">
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- 학교선택화면 -->
-		<ins class="adsbygoogle"
-		     style="display:block"
-		     data-ad-client="ca-pub-2370297300940223"
-		     data-ad-slot="9489841046"
-		     data-ad-format="auto"
-		     data-full-width-responsive="true"></ins>
-		<script>
-		     (adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
-	</div>
-	
+		<!-- lineArea  -->
+		<!-- google adsense -->
 </body>
 </html>

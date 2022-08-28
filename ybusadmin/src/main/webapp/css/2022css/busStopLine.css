@@ -1,0 +1,106 @@
+/* contents 부분 시작*/
+#lineArea {
+    width: 90%;
+    margin: 10px auto 0 auto;
+}
+
+.busStop {
+    width: 100%;
+    height: 64px;
+    border-bottom: #C1C1C1 solid 1px;
+}
+
+#startPoint {
+}
+
+#endPoint {
+    border: none;
+}
+
+.busStopRight, .busStopLeft {
+    float: left;
+    height: 50px;
+}
+
+.busStopLeft {
+    position: relative;
+    width: 20%;
+    padding-left: 10%;
+    padding-right: 3%;
+}
+
+.lineImg {
+    object-fit: contain;
+    margin-left: 40%;
+    border: 1px solid black;
+}
+
+.busStopRight {
+}
+
+.busStopStatus{
+    margin-top: 25%;
+}
+
+.busStopName {
+    font-size: 0.875em;
+    font-family : 'Pretendard-Bold';
+    color: #00264D;
+    margin-bottom: 3px;
+}
+
+.busStopCondition {
+    color: #7B7B7B;
+    font-size: 0.75em;
+}
+
+.busStopInfo {
+	font-family : 'Pretendard-Medium';
+}
+
+.Estimated-Time-Remaining {
+    font-family : 'Pretendard-Medium';
+}
+
+.busBox {
+    position: absolute;
+
+    background: url("/spring/images/2022busStop/시내버스_박스.png") no-repeat center 0px;
+    background-size: contain;
+
+    width: 80%;
+    height: 38px;
+    padding-bottom: 0%;
+    margin-top: 13px;
+    z-index: 1;
+    right: 0px;
+    top:0;
+
+    border: 1px solid black;
+}
+
+.busStatus {
+    padding-top: 5%;
+    width: 65%;
+
+    font-size: 10px;
+}
+
+.busBox, .busStatus {
+    margin-left: 8%;
+    margin-right: 17%;
+}
+
+.busNumber {
+    font-family: "Pretendard-Bold";
+    color : #00264D;
+    width: 83%;
+    margin: 0 auto;
+}
+
+.busRefreshTime {
+    font-family: "Pretendard-Medium";
+    color: #B4B4B4;
+    width: 75%;
+    margin: 0 auto;
+}

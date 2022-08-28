@@ -1,6 +1,7 @@
 package com.test.spring.busSchedule;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -46,14 +47,9 @@ public class BusScheduleController {
 				} catch (Exception e) {
 					System.out.println(e.toString());
 				}
-		
-			
 		}else{
 			 adto = (UniversityDTO)session.getAttribute("universityDto");
 		}
-		
-		
-		
 		
 		//학교 seq 가져오기
 		String universitySeq = adto.getUniversitySeq();
@@ -101,9 +97,20 @@ public class BusScheduleController {
 		}
 		//영광끝
 		
+		//무슨요일인지 백에서 해줘야함.
+		Calendar rightNow = Calendar.getInstance();
+		int day_of_week = rightNow.get(Calendar.DAY_OF_WEEK);
 		if(weekDays == null || weekDays.equals("") || weekDays.equals("null")){
-			bsdto.setWeekDays("normal");
-		}else{
+			
+			if(day_of_week == 6) {
+				bsdto.setWeekDays("friday");
+			}else if(day_of_week == 7 || day_of_week == 1) {
+				bsdto.setWeekDays("weekends");
+			}else {
+				bsdto.setWeekDays("normal");
+			}
+			
+		}else{ 	 	
 			bsdto.setWeekDays(weekDays);
 		}
 		
@@ -149,7 +156,6 @@ public class BusScheduleController {
 						if( i == tlist.size()-1) {
 							tlist.get(spot).setBusTimeHourMin(addedTimeList);
 						}
-					
 				}
 			}
 			
@@ -175,6 +181,7 @@ public class BusScheduleController {
 		//조건dto로 버스시간표 가져오고 tableList 에 add
 		//List<BusScheduleDTO> busSchedule = dao.getBusSchedule(bsdto);
 			
+		
 		//버스 카테고리 건네주기
 		request.setAttribute("clist", clist);
 		//버스 디테일 건네주기
@@ -230,19 +237,33 @@ public class BusScheduleController {
 			if(busStopCategorySeq == null || busStopCategorySeq.equals("") || busStopCategorySeq.equals("null")){
 				//해당 학교 clist.get(0)로 busDetailCategorySeq 가져오기
 				dlist = dao.getDetailCategoryList("37"); //파라미터에 정보가 없으면 통학버스 번호를 넣어줌
-				//System.out.println("디테일111 갖고왔니? : "+dlist.get(0).getBusStopDetailCategorySeq());
 			}else{
 				//해당 학교 busCategorySeq로 busDetailCategorySeq 가져오기
-				dlist = dao.getDetailCategoryList("37"); //파라미터에 정보가 없으면 통학버스 번호를 넣어줌
-				//System.out.println("디테일222 갖고왔니? : "+dlist.get(0).getBusStopDetailCategorySeq());
+				dlist = dao.getDetailCategoryList("37"); //파라미터에 정보가 있어도 통학버스 번호를 넣어줌
 			}
 		}else{
 			//없으면 그냥 넘긴다.
-			return "busSchedule/busTimeTable";
+			return "busSchedule/schoolBusTimeTable";
 		}//카테고리 확인 if
 		System.out.println("디테일카테고리값 있니? -> "+ dlist.size());
 		//가져온 버스디테일카테고리로 시간표 가져오기
 		//busDetailCategorySeq가 여러개일 경우도 있으니 for문 사용
+		
+		
+		
+		//dlist에 버스 요금 추가하기 대체로 2천원인데 강북,일산,인천은 3천원이고 성남/분당은 1500임
+		for(int i = 0; i<dlist.size();i++) {
+			String busCourseName = dlist.get(i).getBusStopDetailCategoryName();
+			if(busCourseName.indexOf("강북") != -1 || busCourseName.indexOf("일산") != -1 || busCourseName.indexOf("인천") != -1) {
+				dlist.get(i).setBuspee("요금:3000원");
+			}
+			else if(busCourseName.indexOf("성남") != -1) {
+				dlist.get(i).setBuspee("요금:1500원");
+			}
+			else {
+				dlist.get(i).setBuspee("요금:2000원");
+			}
+		}
 		
 		
 		//조건용 dto 생성 후 값 삽입
@@ -302,7 +323,7 @@ public class BusScheduleController {
 		request.setAttribute("dlist", dlist);
 		//버스 시간표 건네주기
 		request.setAttribute("slist", slist);
-		//request.setAttribute("map", map);
+		
 		request.setAttribute("weekDays", bsdto.getWeekDays());
 		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 		
