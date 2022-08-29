@@ -26,31 +26,29 @@
 <script>
 
 let universitySeq = '${universityDto.universitySeq}';
+let busStopCategorySeq = $("#busStopCategorySeq").val();
+
 $(document).ready(function(){
 	
-	$(".busStopName").click(function(){
-		let busStopCategorySeq = $("#busStopCategorySeq").val();
+	$(".busStopStatus").click(function(){
 		location.href="/spring/getBusStopRoadView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+$(this).attr("busStopSeq");
 	});
 	
 	$("#detailLocationSel").change(function(){
 		let bsdcSeq = $(this).val();
 		//alert($("#busStopCategorySeq").val());
-		//alert($("#busStopCategorySeq").attr("value"))
-		let busStopCategorySeq = $("#busStopCategorySeq").val();
+		//alert($("#busStopCategorySeq").attr("value"));
 		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 	});
 });
 
 function refresh(){
 	let bsdcSeq = $("#detailLocationSel").val();
-	let busStopCategorySeq = $("#busStopCategorySeq").val();
 	location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
 
 function moveMap(){
 	let bsdcSeq = $("#detailLocationSel").val();
-	let busStopCategorySeq = $("#busStopCategorySeq").val();
 	location.href="/spring/getBusStopLocation.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
 
@@ -60,6 +58,7 @@ function moveMap(){
 <body>
 <div id="container">
     <div id="header">
+	    <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
         <div id="hedaerTop" style='background-image: url("./images/2022busStop/시내버스_배경(낮).png")'>
             <div id="hedaerTopBackGround">
                 <div id="headerTopContents">
@@ -134,8 +133,8 @@ function moveMap(){
 									</c:forEach>
 								</div>
 								<div class="busStopRight">
-									<div class="busStopStatus">
-										<div class="busStopName" busStopSeq='${dto.busStopSeq}'>
+									<div class="busStopStatus"  busStopSeq='${dto.busStopSeq}'>
+										<div class="busStopName">
 											${dto.busStop}
 										</div>
 										<div class="busStopCondition">
@@ -172,8 +171,8 @@ function moveMap(){
 									</c:forEach>
 								</div>
 								<div class="busStopRight">
-									<div class="busStopStatus">
-										<div class="busStopName" busStopSeq='${dto.busStopSeq}'>
+									<div class="busStopStatus"  busStopSeq='${dto.busStopSeq}'>
+										<div class="busStopName">
 											${dto.busStop}
 										</div>
 										<div class="busStopCondition">
@@ -220,8 +219,8 @@ function moveMap(){
 									</c:forEach>
 								</div>
 								<div class="busStopRight">
-									<div class="busStopStatus">
-										<div class="busStopName" busStopSeq='${dto.busStopSeq}'>
+									<div class="busStopStatus"  busStopSeq='${dto.busStopSeq}'>
+										<div class="busStopName">
 											${dto.busStop}
 										</div>
 										<div class="busStopCondition">

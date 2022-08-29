@@ -1,0 +1,71 @@
+	@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+	@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+	@font-face {
+		font-family: 'Noto Sans KR';
+		src: url('/spring/css/cambus/font/NotoSansCJKkr-Medium.woff');
+		
+		}
+	@font-face {
+	font-family: 'Noto Sans KR Bold';
+	src: url('/spring/css/cambus/font/NotoSansCJKkr-Bold.woff');
+	
+	}	
+	body{font-family: 'Noto Sans KR', sans-serif; width:100%;}
+	ul { 
+		list-style:none;
+		margin:0;
+		padding:0;
+	}
+	li {
+		list-style:none;
+		margin: 0;
+		padding: 0;
+		border : 0;
+		font-family: 'Noto Sans CJK KR'; 
+		float: left;
+		color:#ffffff; 
+	}
+	button{
+		border: 0;
+		background: none;
+	}
+	div span {
+		display: table-cell;
+		vertical-align: middle;
+	}
+	div span img {
+		display: table-cell;
+		vertical-align: middle;
+	}
+	input[type=text]{outline: none; font-family: "Nanum Gothic";}
+	input:-ms-input-placeholder,textarea:-ms-input-placeholder { color: #a0a0a0; }
+	::-webkit-input-placeholder { color: #a0a0a0; }
+	#board{width:1920px; height:5300px;}
+	#main{height:780px; background-image:url('/spring/images/cambus/image/main.png');}
+	.title{height:90px; z-index:99999;}
+	#mb_bg{width:1920px; height:90px; background-color: rgba( 0, 0, 0, 0.15 );}
+	#main_logo{float: left;  margin-left:445px;}
+	.menu {cursor:pointer; margin-left:40px; margin-top:37px;}
+	.menu a{color:#ffffff; font-size:18.77pt; font-family: 'Noto Sans KR Bold'; text-decoration:none; font-weight:lighter;}
+	#cambus_info{height:553px; background-color:#ff6875;}
+	#mobile{height:1483px; background-image:url('/spring/images/cambus/image/mobile_img.png');}
+	#mobile p {color:#616161; font-size:15pt; line-height:32pt;}
+	#detail {height:754px; background-color:#f7f7f7;}
+	#try_line {width:1920px; height:114px; background-color:#ff6875; display:table;}
+	#try_line p{font-family:"Noto Sans CJK KR"; font-size:23.51pt; font-weight:lighter; color:#ffffff; display:table-cell; text-align:center; vertical-align:middle;}
+	#askView{height:859px; margin:auto; text-align: center;}
+	#ask_title{width:620px; padding-top:150px; margin:auto; text-align: center;}
+	#ask_title p {padding-bottom:20px;}
+	#contents{width:790px; height:357px; margin-left: 460px; margin-bottom:52px;}
+	.div_text{padding-bottom:18px; float: right;}
+	.input_text{width:510px; height:34px; border:1px #dbdbdb solid;}
+	#text{height:169px; resize: none; outline: none; padding-top:10px; font-family: "Nanum Gothic";}
+	#radioBtn img {cursor:pointer;}
+	#owner{background-image:url('/spring/images/cambus/image/owner.png');}
+	#owner_p{width:1920px; height:602px; display:table;}
+	#owner_p p{font-size:45.47pt; color:#fffefe; display:table-cell; text-align:center; vertical-align:middle; font-weight:lighter;}
+	#footer {height:158px; background-color:#333333;}
+	#logoInfo{width:1200px; margin:auto; text-align: center; padding-top:30px;}
+	#footer_info{line-height:160%; font-size:12px; float:left; font-weight:lighter;}
+	#footer_info p {color:#757575; text-align:left;}
+	#footer_logo {float:right; padding-top:30px;}

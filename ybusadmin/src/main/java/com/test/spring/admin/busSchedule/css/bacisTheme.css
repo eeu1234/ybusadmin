@@ -1,0 +1,21 @@
+body{
+	color:#4F4F4F;
+}
+#container{
+	background-color:#FCFCFC;
+}
+.menuTitle{
+	width:100%;
+	margin:10 auto;
+	background-color:#5580A2;
+	color:white;
+	padding-left:20px;
+	border-radius: 15px;
+	padding:10px;
+}
+ .btnForm {
+	width: 100%;
+	height: 60px; 
+	text-align:right;
+	margin-top:10%;
+}

@@ -102,7 +102,7 @@ $(function() {
 			<div id="infoAround">
 				<div id="infoTitle">
 					 
-					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">Aroung place ${bsdto.busStop}  </div>
+					<div style="width:50%;height:80%;float:left;margin-left:3%;padding-top:1.5%;">Around place ${bsdto.busStop}  </div>
 				</div>
 				<div id="mapAP"></div>
 			    <script type="text/javascript">

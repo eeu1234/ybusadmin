@@ -26,7 +26,7 @@ import com.test.spring.virtual.VirtualBusStopDAO;
 @Controller("busStopController2")
 public class BusStopController {
 
-	
+	// root = view folder
 	
 	@Autowired
 	private BusStopDAO bdao;

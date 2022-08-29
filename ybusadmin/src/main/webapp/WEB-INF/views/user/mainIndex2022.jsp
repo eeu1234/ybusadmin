@@ -591,7 +591,6 @@ wcs_do();
 				
 				</div>
 			</div>
-			
 			<div class="bus_icon bus_icon_right " id="bus_icon2">
 				<div class="iconBox BSC2" <c:if test="${universityDto.universitySeq==10020}"> onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';"> <!-- 명지대 처리용 --><div class="iconImg"><img src="/spring/images/mainImage/icon_route.png" alt="등교루트" /></div><div class="iconInfo">등교길<br>게시판</div></c:if><c:if test="${universityDto.universitySeq!=10020}">></c:if>
 				<!-- 
