@@ -363,7 +363,7 @@
 						 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
 		          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
 		           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
-		          						<div class = "footer_timeTable_box_schedule_bottom">시내순환</div>
+		          						<div class = "footer_timeTable_box_schedule_bottom">${fn:split(time.busStopDetaliCategoryName,'-')[0]}</div>
 		        					</div>
 		        				</c:forEach>	
 		       					</div>		
@@ -382,7 +382,7 @@
 						 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
 		          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
 		           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
-		          						<div class = "footer_timeTable_box_schedule_bottom">시내순환</div>
+		          						<div class = "footer_timeTable_box_schedule_bottom">${fn:split(time.busStopDetaliCategoryName,'-')[0]}</div>
 		        					</div>
 		        				</c:forEach>	
 		       					</div>		

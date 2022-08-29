@@ -16,8 +16,10 @@ public class BusScheduleDTO {
 	private String universitySeq;			//대학seq
 	//버스노선 이름
 	private String busStopCategory;			//버스노선 이름
+	private String busStopDetaliCategoryName; // 버스디테일 노선 이름
 	
 	private List<String> busTimeHourMin;
+	
 	
 	
 	public String getBusStopCategory() {
@@ -73,6 +75,12 @@ public class BusScheduleDTO {
 	}
 	public void setBusTimeHourMin(List<String> busTimeHourMin) {
 		this.busTimeHourMin = busTimeHourMin;
+	}
+	public String getBusStopDetaliCategoryName() {
+		return busStopDetaliCategoryName;
+	}
+	public void setBusStopDetaliCategoryName(String busStopDetaliCategoryName) {
+		this.busStopDetaliCategoryName = busStopDetaliCategoryName;
 	}
 
 }

@@ -508,7 +508,7 @@ function search(word){
         <div id="infoPage">
             <div id="txtBox">
                 <div id="txtType">
-                    <img src="/spring/images/camsns/backBtn.png" style="height:20px;width:auto;" onclick="location.href='/spring/camsns/snsboard/writeBoard.action'" /> 자유게시판
+                    <img src="/spring/images/camsns/backBtn.png" style="height:20px;width:auto;" onclick="location.href='/spring/index.action'" /> 자유게시판
                 </div>
             </div>
             <div id="btnBox">

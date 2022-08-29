@@ -14,7 +14,7 @@ public class BusStopDetailCategoryDTO {
 	
 	private String count;//정류장 갯수
 	
-	private String buspee; // 요금 디비에서 관리 안하고 백단에서 관리
+	private String buspee; // 요금 디비에서 관리 안하고 컨트롤러에서 관리
 	
 	
 	public String getBusStopDetailCategorySeq() {
