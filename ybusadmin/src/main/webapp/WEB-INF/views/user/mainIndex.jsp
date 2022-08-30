@@ -354,17 +354,6 @@
 		};
 		})(jQuery);
         
-        function checkBusDot(){
-        	var element = $('.container_bus_rayout');
-         	var busStopValue =  $('.container_bus_rayout').val();
-        	<c:forEach items = "${cblList}" var = "dot" varStatus = "cnt">
-	        	<c:choose>
-	        		<c:when test = "${dot.busStopCategorySeq == busStopValue[cnt.index] }">
-	        			elemet[${cnt.index}].clidren('.checkBus_box').css('background-color','green');
-	        		</c:when>
-	        	</c:choose>
-        	</c:forEach>
-        }
         
         
         
@@ -373,7 +362,6 @@
             changeImgByTime();
             getWeather();
             changeDate();
-            checkBusDot();
             $('#header_notice_mid').vTicker();
         });
 
@@ -426,14 +414,25 @@
         width:100%;
         position:relative;
     }
+    #header_logoBox{
+    	widht:100%;
+    	height:34px;
+    }
     #header_logo{
-        width:20.876%;
+        height:100%;
+        float:left;
         content:url("/spring/images/mainIndex/YBUS_logo.png")
+    }
+    #header_kakao{
+    	height:24px;
+    	padding:4px 0;
+    	float:right;
+   		content:url("/spring/images/mainIndex/kakao.png");
     }
     #header_notice{
         width:100%;
         height:36px;
-        margin-top:5.7%;
+        margin-top:23px;
         border-radius: 23px; 
         background-color:white;
         box-shadow: 0px 0px 15px #0F296B1F;
@@ -560,7 +559,7 @@
     }
     #container_top_findWay_right{
         height:52%;
-        line-height:150%;
+        line-height:175%;
         font-size:0.85em;
         text-align: left;
         letter-spacing: -0.35px;
@@ -589,7 +588,7 @@
     }
     #container_top_schedule_right{
         height:52%;
-        line-height:150%;
+        line-height:175%;
         font-size:0.85em;
         text-align: left;
         letter-spacing: -0.35px;
@@ -822,7 +821,10 @@
 <body>
     <div id = "content">
         <div id = "header">
-            <div id = "header_logo" onClick="window.location.reload();">
+        	<div id = "header_logoBox">
+            <div id = "header_logo" onClick="window.location.reload();"></div>
+            <div id = "header_kakao" onclick="location.href='http://pf.kakao.com/_Rxkxjxeu'"></div>
+            <div style = "clear:both"></div>
             </div>
             <div id = "header_notice">
                 <div id = "header_notice_left"></div>
@@ -856,10 +858,10 @@
                     </div>
                 </div>
                 <div id = "container_top_right">
-                    <div id = "container_top_findWay">
+                    <div id = "container_top_findWay" onclick="location.href='/spring/user/seoulBus.action'">
                         <div class = "container_top_right_blank"></div>
                         <div id = "container_top_findWay_left"></div>
-                        <div id = "container_top_findWay_right">길찾기</div>
+                        <div id = "container_top_findWay_right">대중교통</div>
                         <div class = "container_top_right_blank" style="clear:both"></div>
                         </div>
                     <div id = "container_top_blank"></div>
@@ -894,7 +896,7 @@
                     <div id = "container_mid_yellowBus_text">노란버스</div>
                 </div>
                 <div id = "container_mid_redBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getSchoolBusStopLine.action';">
-                    <div id = "container_mid_redBus_dot" class = "checkBus_box"></div>
+                    <div id = "container_mid_redBus_dot" class = "checkBus_box" style = "background-color:gray;"></div>
                     <div id = "container_mid_redBus_text">통학버스</div>
                 </div>
                 <div style="clear:both;"></div>

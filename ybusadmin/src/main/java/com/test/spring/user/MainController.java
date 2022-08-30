@@ -162,7 +162,6 @@ public class MainController {
 		
 		try {
 			
-			System.out.println("==============================");
 	         //내용
 			universityDto = (UniversityDTO) session.getAttribute("universityDto");
 			
@@ -180,15 +179,6 @@ public class MainController {
 			
 			List<NoticeDTO> nList = dao.getAllNotice();
 			List<CurrBusLocationDTO> cblList = busStopMapDao.getCurrBusStopLocation(universitySeq);
-			
-			System.out.println("+++++++++++++++++++++++++++++++++++++");
-			for(int i = 0; i<cblList.size();i++) {
-				System.out.print(cblList.size());
-				System.out.println("==========================");
-				System.out.println(cblList.get(i).getBusStopCategorySeq());
-				System.out.println("==========================");
-			}
-			
 			
 			request.setAttribute("nList", nList); // 공지사항 리스트
 			request.setAttribute("cblList", cblList); // 현재 위치

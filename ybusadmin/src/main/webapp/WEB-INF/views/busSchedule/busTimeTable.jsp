@@ -127,6 +127,16 @@
             $("#container_selectDay").change(function(){
 				schedule();
             });
+            
+            
+
+            window.onpageshow = function(event) {
+            if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            		window.location.reload();
+            	}
+            }
+            
         });
 
 
@@ -249,6 +259,13 @@
             border-radius: 12px;
             overflow:hidden;
         }
+        #notBusTime{
+        	font-size:1.1em;
+        	font-family: "Pretendard-Medium";
+        	text-align:center;
+        	padding: 7% 0;
+        	letter-spacing:2px;
+        }
         .footer_timeTable_box_left{
             width:14.14%;
             float:left;
@@ -348,7 +365,7 @@
   
 	<c:choose>
 		<c:when test = "${slist.timeList.size() == 0}">
-			<div>운행예정인버스가 없습니다.</div>
+			<div id = "notBusTime">운행예정인버스가 없습니다.</div>
 		</c:when>
 		<c:otherwise>
 		  	<c:forEach items = "${slist.timeList}" var = "time" varStatus = "out">

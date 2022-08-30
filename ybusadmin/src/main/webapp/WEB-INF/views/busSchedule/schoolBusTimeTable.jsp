@@ -33,12 +33,43 @@
                 $('#header_top').css('background-image',busAddress[2]);
             }
         }
+        
+        function changBoxColor(){
+        	var scheduleList = $(".added_box_container_right");
+        	var nowTime = (hour * 60) + minute;
+        	var mainTimeList = [];
+        	var spot = 0;
+        	
+        	for(var i = 0; i<scheduleList.length; i++){  // 시간을 mianTimeList에 담는 작업
+        		var	timeList = $(scheduleList[i]).find('.added_box_container_right_schedule_top'); //시간을 담고
+        		var timeList_pro = [];
+        		for(var j = 0; j<timeList.length; j++){
+        			var time_divide = $(timeList[j]).text().split(':'); //해당시간을 시와 분으로 쪼개둠
+    				var time_ToMin = Number(time_divide[0]*60) + Number(time_divide[1]); //분단위로 시간을 변환
+    				timeList_pro.push(time_ToMin); // 시간을 리스트에 넣기
+        		}
+        		mainTimeList.push(timeList_pro); // 모은 리스트를 메인 리스트에 넣기
+        	}
+        	
+        	for(var i = 0; i<mainTimeList.length; i++){	
+        		for(var j = 0; j<mainTimeList[i].length; j++){
+        			if(mainTimeList[i][j] > nowTime){
+        				spot = j;
+        				var top = $(scheduleList[i]).find('.added_box_container_right_schedule_top')[spot];
+        				var bottom = $(scheduleList[i]).find('.added_box_container_right_schedule_bottom');
+        				$(top).css('color','#142637');
+        				$(bottom).css('background-image','url("/spring/images/busSchedule/순환코스(해당시간)_박스.png")');
+        			}	
+        		}
+        	}
+        }
 		
         
         
         
         $(document).ready(function(){
             checkTime_Logo();
+            changBoxColor();
             $("#container_selectBus").change(function(){
                 var busType = $("#container_selectBus").val(); // 셀렉트 박스에 값 가져오기
                 checkTime_Logo();
@@ -275,7 +306,7 @@
         }
         .added_box_container_right{
             width:59.5%;
-            height:100%;s
+            height:100%;
             margin-left:5.5%;
             float:left;
         }

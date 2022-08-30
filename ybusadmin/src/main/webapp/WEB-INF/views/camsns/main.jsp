@@ -129,7 +129,6 @@
         #searchContainer{
 			position:relative;
             width:100%;
-            height:12%;
 			padding-top:1%;
             margin: 0 auto;
         }
@@ -143,9 +142,7 @@
 			position:relative;
 			width:80%;
             height:80%;
-			padding-left:5%;
-			padding-right:5%;
-			padding-top:4%;
+			padding:3% 5%;
             background-color:white;
             border-radius:15px;
             box-shadow: 5px 10px 30px #e0e0e0;
@@ -175,10 +172,9 @@
         #search{
 			position:relative;
 			margin: 0 auto;
-            height: 35%;
             background-color: #FAFAFC;
             border-radius:30px;
-			padding-top:2%;
+			padding:2% 0;
         }      
 		#searchNotice{
 			position:relative;
@@ -198,13 +194,9 @@
 			font-family : 'Pretendard-Medium';
 		}
 		.search_iconBox{
-			postion:relative;
 			float:left;
-			width:10%;
-			text-align:center;
-			padding-top: 2px;
-			padding-left: 5px;
-		
+			width:11px;
+			padding:1.5px 1.3% 1.5px 3.3%;
 		}
 		.search_iconBox_notice{
 			postion:relative;
@@ -214,16 +206,12 @@
 			
 		}
 		.search_inputBox{
-			postion:relative;
 			float:left;
 			width:86%;
-			
-
 		}
 		
 		#search_icon{
-			width:40%;
-			margin:0 auto;
+			width:100%;
 		}		 
 		#notice_icon{
 			width:45%;
@@ -341,12 +329,13 @@
 			float:left;
 			width:80%;
 			height:19px;
-			padding-top:1%;
-			padding-bottom:1%;
 			padding-left:5px;
 			color:#848484;
 			font-family : 'Pretendard-Medium';
-			word-wrap:break-word; word-break:break-all; text-overflow:ellipsis; overflow:hidden;
+			line-height:19px;
+			display:block;
+			overflow:hidden;
+			white-space:nowrap;
 		}	
 		.txt_padding > p{
 			word-wrap:break-word; word-break:break-all; text-overflow:ellipsis; overflow:hidden;
@@ -538,6 +527,7 @@ function search(word){
 					<div class="search_inputBox" id="searchInputBoxNotice">
 					   셔틀버스 관련 정보를 서로 공유하는 페이지입니다.
 					</div>
+					<div class="clear"></div>
 				</div>
             </div>
         </div>

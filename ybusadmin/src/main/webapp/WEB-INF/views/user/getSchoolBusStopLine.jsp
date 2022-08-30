@@ -52,7 +52,7 @@
 	        });
 	        
 	        $(".added_box_container").click(function(){
-	    		location.href="/spring/getBusStopRoadView.action?busStopSeq="+$(this).attr("busStopSeq");
+	    		location.href="/spring/getBusStopRoadView.action?university=1&busStopcategorySeq=37&busStopSeq="+$(this).attr("busStopSeq");
 	    	});
 	    });
 

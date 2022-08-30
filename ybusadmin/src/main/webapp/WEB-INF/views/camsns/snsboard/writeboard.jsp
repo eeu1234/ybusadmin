@@ -80,6 +80,7 @@
         #infoPage {
             position: relative;
 			width:90%;
+			height:34px;
 			padding-top:5%;
 			padding-left:5%;
 			padding-right:5%;
@@ -111,21 +112,19 @@
         }
         #btnType{
             position: relative;
-            font-weight: bold;
             color : #142637;
-            text-align: right;            
+            height:22px;
+            margin-top:12px;
+            float:right;
         }
 
 
         #writeCancel{
 			border:0;
 			outline:0;
-            postion : relative;
 			float:left;
-            width:35%;
-            padding-top:2%;
-            padding-bottom:2%;
-			margin-left:23%;
+			width:44px;
+			height:22px;
             background-color:white;
             color:#142637;
             font-size:0.7em;
@@ -133,15 +132,17 @@
 			font-family : 'Pretendard-Medium';
 
         }
+        #writeBlank{
+        	float:left;
+        	width:8px;
+        	height:100%;
+        }
 		#writeConfirm{
 			border:0;
 			outline:0;
 			float:left;
-			right:0;
-			width:35%;
-            padding-top:2%;
-            padding-bottom:2%;
-			margin-left:4%;
+			width:44px;
+			height:22px;
             background-color:#142637;
             color:white;
             font-size:0.7em;
@@ -254,6 +255,7 @@
 			padding-top:2%;
 			padding-bottom:1%;
 			text-align:center;
+			max-width:70px;
 			top:78%;
 			right:7%;
 			width:22%;
@@ -379,12 +381,14 @@
                     글쓰기
                 </div>
             </div>
-            <div id="btnBox">
+            
                 <div id="btnType">
                    <input type="button" value="취소" id="writeCancel" 	onclick="location.href='/spring/camsns/snsMain.action?universitySeq=1'" />
+                   <div id = "writeBlank"></div>
                    <input type="button" value="완료" id="writeConfirm" />
+                   <div class="clear"></div>
                 </div>
-            </div>
+
             <div class="clear"></div>
         </div>
     </div>

@@ -173,15 +173,8 @@ public class BusScheduleController {
 			
 			slist.setTimeList(tlist);
 
-		for(int i = 0; i<slist.getTimeList().size(); i++) {
-			System.out.println(slist.getTimeList().get(i).getBusTimeHourMin());
-		}
-		//System.out.println("해쉬맵 사이즈 : "+slist.size());
-		
-		//조건dto로 버스시간표 가져오고 tableList 에 add
-		//List<BusScheduleDTO> busSchedule = dao.getBusSchedule(bsdto);
-			
-		
+
+		System.out.println(bsdto.getBusStopDetailCategorySeq());
 		//버스 카테고리 건네주기
 		request.setAttribute("clist", clist);
 		//버스 디테일 건네주기
@@ -190,8 +183,8 @@ public class BusScheduleController {
 		request.setAttribute("slist", slist);
 		//request.setAttribute("map", map);
 		request.setAttribute("weekDays", bsdto.getWeekDays());
-		request.setAttribute("busStopDetaliCategorySeq",busStopDetaliCategorySeq);
-	    request.setAttribute("busStopCategorySeq", busStopCategorySeq);
+		request.setAttribute("busStopDetaliCategorySeq",bsdto.getBusStopDetailCategorySeq());
+	    request.setAttribute("busStopCategorySeq", bsdto.getBusStopCategorySeq());
 
 		return "busSchedule/busTimeTable";
 		

@@ -123,9 +123,6 @@ body, html {
 	position: relative;
 	width: 100%;
 	height: 75%;
-	margin: 0 auto;
-	padding: 0;
-	padding-top:20%;
 	text-align:center;
 	background-color: white;
 }
@@ -331,8 +328,9 @@ body, html {
 }
 
 #cambusLogo{
-	width:85%;
+	width:60%;
 	height:auto;
+	padding-top:10%;
 
 }
 </style>
@@ -367,7 +365,7 @@ body, html {
 				</div>
 				
 			</div>
-			<img id="cambusLogo"src="/spring/images/logo.PNG" onerror="this.style.display='none'" onclick="location.href='/spring/admin/adminLogin.action'">
+			<img id="cambusLogo"src="/spring/images/mainIndex/YBUS_logo.png" onerror="this.style.display='none'" onclick="location.href='/spring/admin/adminLogin.action'">
 		</div>
 		<div id="contents">
 			<form id="selUni" action="/spring/uploadUniversity.action" method="GET">
