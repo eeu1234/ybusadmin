@@ -230,7 +230,7 @@
 			padding-top:0.5%;
 			border:transparent;
 			background-color:transparent;
-			font-size:0.3em;
+			font-size:0.8em;
 		    color : #767676;
 			font-family : 'Pretendard-Medium';
 			
@@ -241,15 +241,18 @@
 			height:100%;
 		}
 		.postNo{
-			position:absolute;
-			width:100%;
-			top: 15%;
-			text-align:center;
+			height:16px;
+			line-height:16px;
+			background:url("/spring/images/camsns/postNo.png");
+			background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
 			color:#142637;
 			font-weight:bold;
 			font-size:0.5em;
 			text-align:center;
 			font-family : 'Pretendard-Medium';
+			max-width:50px;
 		}
 		
 		.content_title{
@@ -537,7 +540,6 @@ function search(word){
 			<div class="contentsBox">
 				<!-- 글번호-->
 				<div class="content_category">
-					<img src="/spring/images/camsns/postNo.png" class="postNoImg">
 					<div class="postNo">#${boardDtoList.snsboardSeq}</div>
 				</div>
 				
