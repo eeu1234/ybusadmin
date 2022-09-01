@@ -176,8 +176,6 @@ public class BusStopMapController {
 			}
 			*/
 			
-			
-			
 			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 			request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
 			request.setAttribute("bsdcList", bsdcList);

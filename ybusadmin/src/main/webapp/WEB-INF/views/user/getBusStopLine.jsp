@@ -24,9 +24,10 @@
     <link rel="stylesheet" href="/spring/css/2022css/busStopLine.css">
 
 <script>
-
 let universitySeq = '${universityDto.universitySeq}';
-let busStopCategorySeq = $("#busStopCategorySeq").val();
+let busStopCategorySeq = '${busStopCategorySeq}';
+let bsdcList1 = '${bsdcList[0].busStopDetailCategorySeq}';
+let bsdcList2 = '${bsdcList[1].busStopDetailCategorySeq}';
 
 $(document).ready(function(){
 	
@@ -34,11 +35,16 @@ $(document).ready(function(){
 		location.href="/spring/getBusStopRoadView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+$(this).attr("busStopSeq");
 	});
 	
-	$("#detailLocationSel").change(function(){
-		let bsdcSeq = $(this).val();
-		//alert($("#busStopCategorySeq").val());
-		//alert($("#busStopCategorySeq").attr("value"));
-		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
+	$(".viewBtn:eq(0)").click(function(){
+		$(".viewBtnName:eq(1)").removeAttr('id', 'selectedBtn');
+		$(".viewBtnName:eq(0)").attr('id', "selectedBtn");
+		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcList1;
+	});
+	
+	$(".viewBtn:eq(1)").click(function(){
+		$(".viewBtnName:eq(0)").removeAttr('id', 'selectedBtn');
+		$(".viewBtnName:eq(1)").attr('id', "selectedBtn");
+		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcList2;
 	});
 });
 
@@ -51,7 +57,6 @@ function moveMap(){
 	let bsdcSeq = $("#detailLocationSel").val();
 	location.href="/spring/getBusStopLocation.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
-
 </script>
 
 </head>
@@ -95,12 +100,12 @@ function moveMap(){
         </div>
         <div id="viewType">
             <div class="viewBtn">
-                <div id="selectedBtn" class="viewBtnName">
+                <div id="selectedBtn" class="viewBtnName" >
                     시내순환
                 </div>
             </div>
             <div class="viewBtn">
-                <div class="viewBtnName">
+                <div class="viewBtnName" id="">
                     역북지구
                 </div>
             </div>

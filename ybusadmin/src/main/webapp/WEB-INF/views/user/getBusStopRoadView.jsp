@@ -8,8 +8,10 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Ybus</title>
     <link rel="stylesheet" href="/spring/css/2022css/busStopHeader.css">
-    <link rel="stylesheet" href="/spring/css/2022css/busStopRoad.css">
+    <link rel="stylesheet" href="/spring/css/2022css/busStopRoadMap.css">
+    <!--
     <link rel="stylesheet" href="/spring/css/2022css/busStopRoadMapInfo.css">
+    -->
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=c5wa0CTc7jalj6c4Y0tw&submodules=panorama"></script>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -18,27 +20,21 @@
    
 <script>
 let universitySeq = '${universityDto.universitySeq}';
-let busStopCategorySeq = $("#busStopCategorySeq").val();
-let busStopSeq = $("#busStopSeq").val();
+let busStopCategorySeq = '${busStopCategorySeq}';
+let busStopSeq = '${bsdto.busStopSeq}';
 
 $(document).ready(function(){
-	/*
-	$(".viewBtn").first().click(function(){
-		location.href="/spring/getBusStopRoadView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+busStopSeq";
+	$(".viewBtn:eq(0)").click(function(){
+		location.href="/spring/getBusStopRoadView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+busStopSeq;
 	});
 	
-	$(".viewBtn").second().click(function(){
-		location.href="/spring/getBusStopMapView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+busStopSeq";
+	$(".viewBtn:eq(1)").click(function(){
+		location.href="/spring/getBusStopMapView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+busStopSeq;
 	});
-	*/
-	/*
-	$("#detailLocationSel").change(function(){
-		let bsdcSeq = $(this).val();
-		//alert($("#busStopCategorySeq").val());
-		//alert($("#busStopCategorySeq").attr("value"));
-		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
+
+	$("#backBtn").click(function(){
+		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq;
 	});
-	*/
 });
 
 /*
@@ -59,8 +55,8 @@ function moveMap(){
 <body>
 <div id="container">
     <div id="header">
-    	<input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
-    	<input type="hidden" id="busStopSeq" value="${busStopSeq}">
+    	<input type="hidden" id="busStopCategorySeq" value=${busStopCategorySeq}>
+    	<input type="hidden" id="busStopSeq" value=${busStopSeq}>
         <div id="hedaerTop" style='background-image: url("./images/2022busStop/통학버스_배경(낮).png")'>
             <div id="hedaerTopBackGround">
                 <div id="headerTopContents">
@@ -97,12 +93,12 @@ function moveMap(){
         </div>
         <div id="viewType">
             <div class="viewBtn">
-                <div class="viewBtnName" id="selectedBtn" onclick="location.href='/spring/getBusStopRoadView.action?busStopCategorySeq='+${busStopCategorySeq}+'&busStopSeq='+busStopSeq='+${bsdto.busStopSeq}">
+                <div class="viewBtnName" id="selectedBtn">
                     정류장 거리뷰
                 </div>
             </div>
             <div class="viewBtn">
-                <div class="viewBtnName" onclick="location.href='/spring/getBusStopMapView.action?busStopCategorySeq='+${busStopCategorySeq}+'&busStopSeq='+busStopSeq='+${bsdto.busStopSeq}">
+                <div class="viewBtnName">
                     정류장 지도
                 </div>
             </div>
@@ -113,7 +109,7 @@ function moveMap(){
         <div id="busStop">
             <div id="busStopContents">
                 <div id="backBtnZone" class="busStopContents">
-                    <div id="backBtn" onclick="location.href='/spring/getBusStopLine.action?busStopCategorySeq='+${busStopCategorySeq}">
+                    <div id="backBtn">
                     
                     </div>
                 </div>
