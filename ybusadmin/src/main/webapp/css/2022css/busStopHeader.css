@@ -164,13 +164,13 @@ body, html{
  */
 }
 
-    #noticeIcon {
-        background: url("../images/2022busStop/안내사항_아이콘.png") no-repeat center 0px;
-        background-size: contain;
-        width: 100%;
-        height: 0;
-        padding-bottom: 100%;
-    }
+#noticeIcon {
+    background: url("/spring/images/2022busStop/Notice_Icon.png") no-repeat center 0px;
+    background-size: contain;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+}
 
 /* */
 #viewType {
