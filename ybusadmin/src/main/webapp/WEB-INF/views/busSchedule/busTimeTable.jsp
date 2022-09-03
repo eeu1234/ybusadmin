@@ -39,7 +39,7 @@
         function changeBox(){ // 현재 시간에서 탈 수 있는 버스표시해주는 함수
             var timeList = $('.footer_timeTable_box_schedule'); // 버스가 움직이는 시간들이 들어가 있는 배열.
             var timeList_pro = []; // 시간표를 분단위로 계산하여 넣음.
-            var spot ; //  
+            var spot = 0; //  
             for (var i = 0; i < timeList.length; i++){
                 var timeSplitArr = $(timeList[i]).attr('id').split("_"); // 시간을 분단위로 변환
                 timeList_pro.push(Number(timeSplitArr[0])*60 + Number(timeSplitArr[1])); // 리스트에 넣어버림
@@ -62,7 +62,7 @@
 	
 	            // 회색 긴줄에 네이비 칠해주는 작업
 	            $(timeList[spot]).parent().css('border-left','3px solid #142637');
-			}else{
+			}else if(spot == 0 || ${slist.timeList.size() == 0 }){
 				$('<img id = "header_bottom_logo"  src="/spring/images/busSchedule/안내_아이콘.png">').prependTo('#header_bottom_text');
 				$('#notice_text').text('지금은 버스운행 시간이 아닙니다.');
 			}
@@ -100,7 +100,7 @@
         	var weekDays = $("#container_selectDay").val();
         	if(flag == 1){
         		if(seq == 37){
-	        		location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
+	        		location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq="+seq;
 	        	}else{
 	        		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
 	        	}

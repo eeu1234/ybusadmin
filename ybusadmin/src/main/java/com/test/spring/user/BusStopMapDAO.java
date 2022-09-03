@@ -43,15 +43,13 @@ public class BusStopMapDAO {
 		// TODO Auto-generated method stub
 		return sql.selectList("busStop.getAroundPlace",busStopSeq);
 	}
-	
-	
+		
 	//특정 학교의 지정한 노선의 모든 정류장 들고옴
 	public List<BusStopDTO> getAllBusStop(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
 		return sql.selectList("busStop.getAllBusStop",map);
 	}
-	
-	
+		
 	//특정학교의 지정한 노선에 운행중인 버스들의 최신값의 위경도 들고옴
 	public List<CurrBusLocationDTO> getCurrBusLocation(HashMap<String, String> map) {
 		// TODO Auto-generated method stub

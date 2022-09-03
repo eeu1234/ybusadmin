@@ -62,8 +62,24 @@
         			}	
         		}
         	}
+        	if(nowTime > pickMax(mainTimeList)){
+        		$('<img id = "header_bottom_logo"  src="/spring/images/busSchedule/안내_아이콘.png">').prependTo('#header_bottom_text');
+				$('#notice_text').text('지금은 버스운행 시간이 아닙니다.');
+        	}
+        	
         }
 		
+        function pickMax(list){
+        	var max = 0;
+        	for(var i = 0; i<list.length; i++){
+        		for(var j = 0; j<list[i].length;j++){
+        			if(max <= list[i][j]){
+        				max = list[i][j];
+        			}
+        		}
+        	}
+        	return max;
+        }
         
         
         
@@ -349,8 +365,7 @@
     <div id = "header_bottom">
         <div id = "header_bottom_layout">
             <div id = "header_bottom_text">
-                <img id = "header_bottom_logo"  src="/spring/images/busSchedule/안내_아이콘.png">
-                <span style="position:relative; bottom:25%;">지금은 버스운행 시간이 아닙니다.</span>
+                <span id = "notice_text" style="position:relative; bottom:25%;"></span>
             </div>
         </div>
     </div>
