@@ -11,24 +11,24 @@
 #busStopContents {
     width: 90%;
     margin: 0 auto;
-    line-height: 14px;
+    line-height: 30px;
 
 }
 
 .busStopContents {
     float: left;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 3%;
+    padding-bottom: 3%;
 }
 
 #backBtnZone {
-    width: 14px;
+    width: 30px;
     background: no-repeat center 0px;
     background-size: contain;
 }
 
 #backBtn {
-    background: url("/spring/images/2022busStop/뒤로가기_버튼.png") no-repeat center 0px;
+    background: url("/spring/images/2022busStop/Back_Button.png") no-repeat center 0px;
     background-size: contain;
     width: 100%;
     height: 0;
@@ -36,7 +36,7 @@
 }
 
 #busStopName {
-    font-size: 0.75em;
+    font-size: 1em;
     color: #142637;
     font-family : 'Pretendard-Bold';
 }

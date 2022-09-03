@@ -23,20 +23,6 @@ let universitySeq = '${universityDto.universitySeq}';
 let busStopCategorySeq = '${busStopCategorySeq}';
 let busStopSeq = '${bsdto.busStopSeq}';
 
-$(document).ready(function(){
-	$(".viewBtn:eq(0)").click(function(){
-		location.href="/spring/getBusStopRoadView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+busStopSeq;
-	});
-	
-	$(".viewBtn:eq(1)").click(function(){
-		location.href="/spring/getBusStopMapView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+busStopSeq;
-	});
-
-	$("#backBtn").click(function(){
-		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq;
-	});
-});
-
 /*
 function refresh(){
 	let bsdcSeq = $("#detailLocationSel").val();
@@ -51,13 +37,15 @@ function moveMap(){
 }
 */
 </script>
+<script type="text/javascript" src="/spring/js/roadView_Map_SwitchBtn.js"></script>
+<script type="text/javascript" src="/spring/js/headerTopChange.js"></script>
 </head>
 <body>
 <div id="container">
     <div id="header">
     	<input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
     	<input type="hidden" id="busStopSeq" value="${busStopSeq}">
-        <div id="hedaerTop" style='background-image: url("./images/2022busStop/통학버스_배경(낮).png")'>
+        <div id="hedaerTop">
             <div id="hedaerTopBackGround">
                 <div id="headerTopContents">
                     <div id="busTypeZone">

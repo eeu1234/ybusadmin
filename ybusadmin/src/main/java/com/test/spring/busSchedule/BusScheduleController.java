@@ -76,7 +76,7 @@ public class BusScheduleController {
 			//없으면 그냥 넘긴다. 해당학교의 버스정보가 입력되어 있지 않음.
 			return "busSchedule/busTimeTable";
 		}//카테고리 확인 if
-		System.out.println("디테일카테고리값 있니? -> "+ dlist.size());
+		//System.out.println("디테일카테고리값 있니? -> "+ dlist.size());
 		//가져온 버스디테일카테고리로 시간표 가져오기
 		//busDetailCategorySeq가 여러개일 경우도 있으니 for문 사용
 		
@@ -238,7 +238,7 @@ public class BusScheduleController {
 			//없으면 그냥 넘긴다.
 			return "busSchedule/schoolBusTimeTable";
 		}//카테고리 확인 if
-		System.out.println("디테일카테고리값 있니? -> "+ dlist.size());
+		//System.out.println("디테일카테고리값 있니? -> "+ dlist.size());
 		//가져온 버스디테일카테고리로 시간표 가져오기
 		//busDetailCategorySeq가 여러개일 경우도 있으니 for문 사용
 		
