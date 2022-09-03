@@ -17,9 +17,9 @@
         var busType_code = 0;  //셀렉트 박스의 정보에 따라 어느 버스인지 파악하는 변수
 
         var busAddress = [
-        ['url("/spring/images/busSchedule/blue_1.png")','url("/spring/images/busSchedule/blue_2.png")','url("/spring/images/busSchedule/blue_3.png")'],
-        ['url("/spring/images/busSchedule/yellow_1.png")','url("/spring/images/busSchedule/yellow_2.png")','url("/spring/images/busSchedule/yellow_3.png")'],
-        ['url("/spring/images/busSchedule/red_1.png")','url("/spring/images/busSchedule/red_2.png")','url("/spring/images/busSchedule/red_3.png")']
+	        ['url("/spring/images/busSchedule/blue_1.png")','url("/spring/images/busSchedule/blue_2.png")','url("/spring/images/busSchedule/blue_3.png")'],
+	        ['url("/spring/images/busSchedule/yellow_1.png")','url("/spring/images/busSchedule/yellow_2.png")','url("/spring/images/busSchedule/yellow_3.png")'],
+	        ['url("/spring/images/busSchedule/red_1.png")','url("/spring/images/busSchedule/red_2.png")','url("/spring/images/busSchedule/red_3.png")']
         ];  // 이미지경로를 담고 있는 배열.
         
 
