@@ -407,7 +407,6 @@
         width:90.8%;
         position:relative;
         margin: 12.81% 4.611%;
-        padding-bottom:12.81%;
 
     }
     #header{
@@ -523,6 +522,7 @@
         color:#ffffff;
     }
     #container_top_weather_bottom_weatherStatus{
+    	width:38%;
         position:relative;
         font-size:0.75em;
         float:left;
@@ -761,10 +761,10 @@
     }
     #footer{
         width:100%;
+        margin:11.3% 0;
     }
     #footer_title{
         width:100%;
-        margin-top:11.3%;
         font-size:20px;
         letter-spacing: -0.5px;
         font-family: "Pretendard-Bold";
@@ -816,6 +816,47 @@
     }
     #footer_tip_right_bottom{
     }
+        #main_footer{
+        width:90%;
+        padding:0 5%;
+        background-color:gray;
+        color:white;
+    }
+    #logo{
+        width:23.2%;
+        padding:7.2% 0;
+    }
+    #prevVersion{
+        font-family:"Pretendard-semiBold";
+        font-size:0.7em;
+    }
+    #info{
+        width:100%;
+        padding-top:12.8px;
+        padding-bottom:25.6px;
+        font-family:"Pretendard-Medium";
+        font-size:0.7em;
+        letter-spacing:-0.5px;
+    }
+    #info_left{
+        width:80%;
+        float:left;
+    }
+    #info_right{
+        width:20%;
+        float:left;
+    }
+    #info_right_gmail{
+        width:45%;
+        margin-right:10%;
+        float:left;
+        content:url("/spring/images/mainIndex/gmail_logo.png");
+    }
+    #info_right_kakao{
+        width:45%;
+        float:left;
+        content:url("/spring/images/mainIndex/kakao.png");
+    }
     </style>
 </head>
 <body>
@@ -846,12 +887,12 @@
                         <div class = "container_top_weather_blank"></div>
                         <div id = "container_top_weather_top">
                             <div id = "container_top_weather_top_uniName">용인대학교</div>
-                            <div id = "container_top_weather_top_date">2022년 8월 9일 화</div>
+                            <div id = "container_top_weather_top_date"></div>
                         </div>
                         <div id = "container_top_weather_bottom">
                             <div id = "container_top_weather_bottom_weatherIcon"></div>
-                            <div id = "container_top_weather_bottom_temperature">30°</div>
-                            <div id = "container_top_weather_bottom_weatherStatus">구름</div>
+                            <div id = "container_top_weather_bottom_temperature"></div>
+                            <div id = "container_top_weather_bottom_weatherStatus"></div>
                             <div style="clear:both"></div>
                         </div>
                         <div class = "container_top_weather_blank"></div>
@@ -944,9 +985,33 @@
                 <div style="clear:both;"></div>
             </div>
         </div>
+        
+        <div id = "main_footer">
+	        <div id = "logo">
+	        	<img style= "width:100%;" src="/spring/images/mainIndex/YBUS_footer.png"  onclick = "location.href='/spring/admin/adminLogin.action'">
+	        </div>
+	        <div id = "prevVersion">
+	            <span>이전 버전으로 </span>
+	        </div>
+	        <div id = "info">
+	            <div id = "info_left">
+	                <div>
+	                    <span>The UNIV BUS::YBUS made by YBUS Team</span>
+	                </div>
+	                <div>
+	                    <span>2022 All right (C) reserved.</span>
+	                </div>
+	            </div>
+	            <div id = "info_right">
+	                <div id = "info_right_gmail" onclick = "location.href='mailto:eeu4327@gmail.com'"></div>
+	                <div id = "info_right_kakao" onclick="location.href='http://pf.kakao.com/_Rxkxjxeu'"></div>
+	            </div>
+	            <div style ="clear:both;"></div>
+	        </div>
+	    </div>
     </div>
 
-
+	
 </body>
 </html>
  

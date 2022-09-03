@@ -121,10 +121,13 @@ body, html {
 /* contents 부분 시작*/
 #contents {
 	position: relative;
-	width: 100%;
-	height: 75%;
-	text-align:center;
-	background-color: white;
+    width: 100%;
+    height: 75%;
+    margin: 0 auto;
+    padding: 0;
+    padding-top:20%;
+    text-align: center;
+    background-color: white;
 }
 /* 아이폰5 */
 @media(max-width:320px) { 
@@ -330,8 +333,8 @@ body, html {
 #cambusLogo{
 	width:60%;
 	height:auto;
-	padding-top:10%;
-
+	content :url("/spring/images/mainIndex/YBUS_logo.png");
+	margin:0 auto;
 }
 </style>
 <script>
@@ -365,7 +368,8 @@ body, html {
 				</div>
 				
 			</div>
-			<img id="cambusLogo"src="/spring/images/mainIndex/YBUS_logo.png" onerror="this.style.display='none'" onclick="location.href='/spring/admin/adminLogin.action'">
+			<div id="cambusLogo" onerror="this.style.display='none'" onclick="location.href='/spring/admin/adminLogin.action'"></div>
+		
 		</div>
 		<div id="contents">
 			<form id="selUni" action="/spring/uploadUniversity.action" method="GET">
