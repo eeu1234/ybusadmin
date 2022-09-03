@@ -103,7 +103,7 @@ body, html{
 }
 
 #btnRouteMap{
-    background: url("../images/2022busStop/노선도_버튼.png") no-repeat center 0px;
+    background: url("/spring/images/2022busStop/Bus_Line_Buttton.png") no-repeat center 0px;
     background-size: contain;
     width: 100%;
     height: 0;
@@ -116,7 +116,7 @@ body, html{
 }
 
 #btnBusSchedule {
-    background: url("../images/2022busStop/시간표_버튼.png") no-repeat center 0px;
+    background: url("/spring/images/2022busStop/Bus_Schedule_Buttton.png") no-repeat center 0px;
     background-size: contain;
     width: 100%;
     height: 0;

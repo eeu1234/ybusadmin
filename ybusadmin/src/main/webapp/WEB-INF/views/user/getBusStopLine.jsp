@@ -163,7 +163,17 @@ function moveMap(){
 					<c:when test="${status.first}">
 						<div class="busStop" id="startPoint">
 							<div class="busStopLeft">
-								<img src="./images/2022busStop/기점.png" id="startPointImage" class="lineImg">
+								<div class="lineImgZone">
+			                        <div class="lineImg">
+			
+			                        </div>
+			                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Stop.png')">
+			
+			                        </div>
+			                        <div class="lineMark">
+			                            기점
+			                        </div>
+			                    </div>
 									
 								<c:forEach items='${cblList}' var='cbldto'>
 									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
@@ -173,7 +183,7 @@ function moveMap(){
 													${cbldto.businfoName}
 												</div>
 												<div class="busRefreshTime">
-													15:57 갱신
+													<!-- 15:57 갱신 -->
 												</div>
 											</div>
 										</div>
@@ -203,7 +213,17 @@ function moveMap(){
 					
 						<div class="busStop"  id="endPoint">
 							<div class="busStopLeft">
-								<img src="./images/2022busStop/종점.png" id="endPointImg" class="lineImg">
+								<div class="lineImgZone">
+			                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Stop.png')">
+			
+			                        </div>
+			                        <div class="lineImg">
+			
+			                        </div>
+			                        <div class="lineMark">
+			                            종점
+			                        </div>
+			                    </div>
 																	
 								<c:forEach items='${cblList}' var='cbldto'>
 								<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
@@ -246,16 +266,47 @@ function moveMap(){
 							<div class="busStopLeft">
 							
 								<c:if test="${dto.busStopLine == 'up'}">
-									<img src="/spring/images/2022busStop/버스라인.png" class="lineImg">
+									<div class="lineImgZone">
+				                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Stop.png')">
+				
+				                        </div>
+				                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Stop.png')">
+				
+				                        </div>
+			                        </div>
 								</c:if>
 								<c:if test="${dto.busStopLine == 'down'}">
-									<img src="/spring/images/2022busStop/버스라인.png" class="lineImg">
+									<div class="lineImgZone">
+				                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Stop.png')">
+				
+				                        </div>
+				                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Stop.png')">
+				
+				                        </div>
+			                        </div>
 								</c:if>
 								<c:if test="${dto.busStopLine == 'turn'}">
-									<img src="/spring/images/2022busStop/회차.png" class="lineImg">
+									<div class="lineImgZone">
+				                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Stop.png')">
+				
+				                        </div>
+				                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Stop.png')">
+				
+				                        </div>
+				                        <div class="lineMark">
+				                            회차
+				                        </div>
+			                        </div>
 								</c:if>
 								<c:if test="${dto.busStopLine == 'pass'}">
-									<img src="/spring/images/2022busStop/미정차.png" class="lineImg">
+									<div class="lineImgZone">
+				                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Pass.png')">
+				
+				                        </div>
+				                        <div class="lineImg" style="background-image: url('/spring/images/2022busStop/Line_Bus_Pass.png')">
+				
+				                        </div>
+			                        </div>
 								</c:if>
 								<c:forEach items='${cblList}' var='cbldto'>
 									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
