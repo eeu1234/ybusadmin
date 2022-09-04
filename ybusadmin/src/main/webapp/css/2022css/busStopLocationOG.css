@@ -1,46 +1,8 @@
-/* 2022 */
-body, html {
-	position: relative;
-	width: 100%;
-	max-width: 390px;
-	height: 100%;
-	font-family: 'notoFont-bold';
-	overflow-x: hidden;
-	height: 100%;
-	margin: 0 auto;
-	/* -webkit-overflow-scrolling: touch; 터치부드럽게 상단고정해더가 늦게움직이는현상발생*/
-}
-
-#container {
-	position: relative;
-	width: 100%;
-	max-width: 390px;
-	margin: 0 auto;
-}
-
-#header {
-	position: relative;
-	width: 100%;
+img {
+	width: 60%;
 	height: auto;
-	background-color: #003d4f;
-	text-align: center;
-	color: white;
-	background-color: #003d4f;
 }
 
-
-/* 2022 이전 */
-.busNum	img {
-	width: 90%;
-	height: 90%;
-}
-.busIcon img {
-	width: 70%;
-	height: auto;
-	
-}
-
-/*
 body, html {
 	position: relative;
 	width: 100%;
@@ -53,41 +15,35 @@ body, html {
 	height: 100%;
 	margin: 0 auto;
 	/* -webkit-overflow-scrolling: touch; 터치부드럽게 상단고정해더가 늦게움직이는현상발생*/
-/*}
-*/
+}
 
-/*
 #container {
 	position: relative;
 	width: 100%;
 	max-width: 480px;
 	height: 568px;
 	margin: 0 auto;
-	background-color: white;
-}
-*/
 
-/*
+}
+
 #top {
-	position: fixed;
+	position: relative;
 	max-width: 480px;
 	width: 100%;
-	height: 25%;
+	height: 15%;
 	z-index: 3;
+	
 }
-*/
 
-/*
 #header {
 	position: relative;
 	width: 100%;
-	height: auto;
+	height: 50px;
 	background-color: #003d4f;
 	text-align: center;
 	color: white;
 	background-color: #003d4f;
 }
-*/
 
 #infoPage {
 	position: relative;
@@ -96,14 +52,6 @@ body, html {
 	background-color: #003d4f;
 }
 
-#txtLogo {
-	position: relative;
-	width: 60%;
-	height: 80%;
-	padding-top: 4%;
-	margin: 0 auto;
-	font-weight: bold;
-}
 
 #logo {
 	position: absolute;
@@ -153,19 +101,16 @@ body, html {
 #contents {
 	position: relative;
 	width: 100%;
-	height: 90%;
+	height: 75%;
 	margin: 0;
 	padding: 0;
-	padding-top:55%;
-	text-align:left;
+	padding-top:4%;
+
 	background-color: white;
 }
 /* 아이폰5 */
 @media(max-width:320px) { 
- #contents{
- padding-top:65%;
- } 
-}
+	}
 /* 정류장 타임라인 틀 시작 */
 #lineArea {
 	position: relative;
@@ -188,14 +133,6 @@ body, html {
 	float: left;
 	width: 35%;
 	height: 100%;
-}
-
-.busBox{
-	width:100%;
-	height:100%;
-	position:absolute;
-	
-	
 }
 /* 타임라인 시작 정류장  */
 #startPoint {
@@ -266,6 +203,7 @@ body, html {
 }
 
 
+
 .stopName {
 	
 	float: left;
@@ -279,17 +217,16 @@ body, html {
 
 /* 버스 아이콘 관련 시작 */
 .busIcon {
-	position: absolute;
+
 	width: 50%;
 	height: 90%;
-	padding-left:48%;
+	
 	padding-top:4%;
-	text-align:left;
 }
 
 .busNum {
-	position: absolute;
-	float: left;
+
+	
 	width: 50%;
 	height: 90%;
 	text-align: right;
@@ -298,19 +235,18 @@ body, html {
 }
 
 .busTxt {
-	position: absolute;
-	width: 70%;
-	height: 35%;
-	font-size: 0.3em;
-	padding-top: 17%;
-	padding-left: 10px;
-	/* background-image: url('/spring/images/timeLine/busNum.png'); */
+
+	width: 50%;
+	height: 30%;
+	font-size: 0.8em;
+	padding-top: 20%;
+	padding-left: 22px;
 }
 
 #footer {
 	position: relative;
 	width: 95%;
-	height: 25%;
+	height: 65%;
 	background-color: #bfbfbf;
 	text-align: left;
 	color: #272727;
@@ -328,7 +264,6 @@ body, html {
 	 right:0;
 	 cursor:pointer;
 	 
-	 
 }#refreshBtn{
 	position:absolute;
 	 width:auto;
@@ -341,6 +276,13 @@ body, html {
 	 cursor:pointer;
 }
 
+      
+    #mapAP { 
+     height: 100%;
+     width:100%;
+
+ }
+ 
 #detailLocationSel{
 
 	 width:50%;
@@ -352,7 +294,6 @@ body, html {
 
 
 }
-
 .selectBox{
 	color:#555;
 	background-color: #fff;

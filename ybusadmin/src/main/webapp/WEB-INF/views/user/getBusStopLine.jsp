@@ -26,8 +26,9 @@
 <script>
 // BusStopMapController에서 가져온 Seq값들
 let universitySeq = '${universityDto.universitySeq}';
-let busStopCategoryName = '${bsdcList[0].busStopDetailCategoryName}';
 let busStopCategorySeq = '${busStopCategorySeq}';
+let busStopDetailCategorySeq = '${busStopDetailCategorySeq}';
+let busStopDetailCategoryName = '${bsdcList[0].busStopDetailCategoryName}';
 let cityCirculationSeq = '${bsdcList[0].busStopDetailCategorySeq}';
 let YeokbukDistrictSeq = '${bsdcList[1].busStopDetailCategorySeq}';
 
@@ -57,6 +58,17 @@ $(document).ready(function(){
 		// 역북지구 Seq 값으로 Line 페이지 다시 부름
 		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+YeokbukDistrictSeq;
 	});
+	
+	/*
+	if(busStopCategorySeq == 18){
+		$(".busBox").css($({"background": "url('/spring/images/2022busStop/Box_YellowBus.png')"}));		
+	}
+	*/
+	/*
+	else {
+		$(".busBox").css(background: url("/spring/images/2022busStop/Box_YellowBus.png") no-repeat center 0px;);
+	}
+	*/
 });
 
 /*
@@ -72,48 +84,59 @@ function moveMap(){
 */
 </script>
 <script type="text/javascript" src="/spring/js/headerTopChange.js"></script>
+<script type="text/javascript" src="/spring/js/getPageHeaderButtons.js"></script>
 </head>
 <body>
 <div id="container">
     <div id="header">
 	    <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
         <div id="hedaerTop">
-            <div id="hedaerTopBackGround">
-                <div id="headerTopContents">
-                    <div id="busTypeZone">
-                    	<c:choose>
-	                    	<c:when test="${busStopCategorySeq == 18}">
-		                        <div id="busType">
-		                            시내 버스
-		                        </div>
-	                        </c:when>
-	                        <c:otherwise>
-		                        <div id="busType">
-		                            노랑 버스
-		                        </div>
-	                        </c:otherwise>
-                        </c:choose>
-                    </div>
-                    <div id="buttonsZone">
-                        <div id="buttons">
-                            <div id="btnRouteMapZone">
-                                <div id="btnRouteMap">
-                                </div>
-                            </div>
-                            <div id="btnBusScheduleZone">
-                                <div id="btnBusSchedule">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<div id="headerTopContents">
+				<div id="button_Home_Zone">
+					<div id="button_Home">
+						
+					</div>
+				</div>
+			    <div id="busTypeZone">
+			    
+			    	<c:choose>
+						<c:when test="${busStopCategorySeq == 18}">
+							<div id="busType">
+							    시내 버스
+							</div>
+						</c:when>
+						<c:when test="${busStopCategorySeq == 36}">
+							<div id="busType">
+							    노랑 버스
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div id="busType">
+							    통학 버스
+							</div>
+						</c:otherwise>
+					</c:choose>
+					
+			    </div>
+			    <div id="buttonsZone">
+			        <div id="buttons">
+    			        <div id="btnBusScheduleZone">
+			                <div id="btnBusSchedule">
+			                </div>
+			            </div>
+			            <div id="btnRouteMapZone">
+			                <div id="btnRouteMap">
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
         </div>
         <div id="busStopNotification">
             <div id="busStopNotice" >
                 <div id="noticeIconZone" class="busNotice">
                     <div id="noticeIcon">
-                    
+                    	<!-- css background에 이미지 들어있음 -->
                     </div>
                 </div>
                 <div id="busNoticeContents" class="busNotice">
@@ -171,7 +194,9 @@ function moveMap(){
 			
 			                        </div>
 			                        <div class="lineMark">
-			                            기점
+			                            <div class="markName">
+			                            	기점
+			                            </div>
 			                        </div>
 			                    </div>
 									
@@ -221,7 +246,9 @@ function moveMap(){
 			
 			                        </div>
 			                        <div class="lineMark">
-			                            종점
+			                            <div class="markName">
+			                            	종점
+			                            </div>
 			                        </div>
 			                    </div>
 																	
@@ -294,7 +321,9 @@ function moveMap(){
 				
 				                        </div>
 				                        <div class="lineMark">
-				                            회차
+				                            <div class="markName">
+			                            		회차
+			                            	</div>
 				                        </div>
 			                        </div>
 								</c:if>
@@ -362,7 +391,7 @@ function moveMap(){
 		     (adsbygoogle = window.adsbygoogle || []).push({});
 		</script>
 	</div>
+	<!-- container -->
 </div>
 </body>
-
 </html>

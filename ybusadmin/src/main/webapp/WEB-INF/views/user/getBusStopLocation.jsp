@@ -4,453 +4,296 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Cambus</title>
-<%@include file="/inc/userAsset.jsp" %>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+   crossorigin="anonymous"></script>
+   
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
-
-<style>
-img {
-	width: 60%;
-	height: auto;
-}
-
-body, html {
-	position: relative;
-	width: 100%;
-	max-width: 480px;
-	height: 100%;
-	font-family: 'notoFont-bold';
-	color: #222;
-	background-color: white;
-	overflow-x: hidden;
-	height: 100%;
-	margin: 0 auto;
-	/* -webkit-overflow-scrolling: touch; 터치부드럽게 상단고정해더가 늦게움직이는현상발생*/
-}
-
-#container {
-	position: relative;
-	width: 100%;
-	max-width: 480px;
-	height: 568px;
-	margin: 0 auto;
-
-}
-
-#top {
-	position: relative;
-	max-width: 480px;
-	width: 100%;
-	height: 15%;
-	z-index: 3;
-	
-}
-
-#header {
-	position: relative;
-	width: 100%;
-	height: 50px;
-	background-color: #003d4f;
-	text-align: center;
-	color: white;
-	background-color: #003d4f;
-}
-
-#infoPage {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background-color: #003d4f;
-}
-
-
-#logo {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	width: auto;
-}
-
-#btnArea {
-	position: relative;
-	width: 100%;
-	height: 60px;
-	background-color: #dfdfdf;
-	padding-top: 30px;
-}
-
-#btnGroup {
-	position: relative;
-	width: 90%;
-	height: 40px;
-	margin: 0 auto;
-	width: 90%;
-}
-
-.goBtn {
-	width: 45%;
-	height: 70%;
-	margin: 0 auto;
-	text-align: center;
-	background-color: #ffffff;
-	padding-top: 1.5%;
-	color: black;
-}
-
-#upBtn {
-	float: left;
-	border-bottom: 5px solid #003d4f;
-}
-
-#downBtn {
-	float: right;
-	border-bottom: 5px solid #eb6100;
-}
-
-/* contents 부분 시작*/
-#contents {
-	position: relative;
-	width: 100%;
-	height: 75%;
-	margin: 0;
-	padding: 0;
-	padding-top:4%;
-
-	background-color: white;
-}
-/* 아이폰5 */
-@media(max-width:320px) { 
-	}
-/* 정류장 타임라인 틀 시작 */
-#lineArea {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-
-.busStop {
-	position: relative;
-	width: 100%;
-	height: 50px;
-	background-color: white;
-	border-bottom: 2px solid #b2b2b2;
-}
-
-
-/* 정류장 선 */
-.way {
-	position: relative;
-	float: left;
-	width: 35%;
-	height: 100%;
-}
-/* 타임라인 시작 정류장  */
-#startPoint {
-	position: absolute;
-/* 	background-image: url("./images/timeLine/startPoint.png");
-	background-repeat: no-repeat;
-	background-size: cover;
- */	width: 100%;
-	height: 100%;
-}
-/* 타임라인 마지막 정류장  */
-#endPoint {
-	position: absolute;
-	top: 0;
-	left: 0;
-	/* background-image: url("./images/timeLine/endPoint.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-	 */width: 100%;
-	height: 100%;
-}
-/* 상행선*/
-.upLine {
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	width: 100%;
-	height: 100%;
-}
-/* 하행선 */
-.downLine {
-	position: absolute;
-	top: 0;
-	left: 0;
-	
-	width: 100%;
-	height: 100%;
-}
-/* 회차  */
-.turnLine {
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	width: 100%;
-	height: 100%;
-}
-
-
-#turnPoint {
-	position: absolute;
-	top: 0;
-	left: 0;
-/* 	background-image: url("./images/timeLine/turnPoint.png");
-	background-repeat: no-repeat;
-	background-size: cover; */
-	width: 100%;
-	height: 100%;
-}
-.lineImg{
-	width:auto;
-	height:105%;
-	float:right;
-	margin-right:25%;
-	z-index:10;
-	
-}
-
-
-
-.stopName {
-	
-	float: left;
-	width: 65%;
-	height: 100%;
-}
-
-.txtName {
-	margin-top: 6%;
-}
-
-/* 버스 아이콘 관련 시작 */
-.busIcon {
-
-	width: 50%;
-	height: 90%;
-	
-	padding-top:4%;
-}
-
-.busNum {
-
-	
-	width: 50%;
-	height: 90%;
-	text-align: right;
-	padding-top:4%;
-	
-}
-
-.busTxt {
-
-	width: 50%;
-	height: 30%;
-	font-size: 0.8em;
-	padding-top: 20%;
-	padding-left: 22px;
-}
-
-#footer {
-	position: relative;
-	width: 95%;
-	height: 65%;
-	background-color: #bfbfbf;
-	text-align: left;
-	color: #272727;
-	font-size: 0.5em;
-	padding-left:5%;
-}
-#changeMap{
-	position:absolute;
-	 width:auto;
-	 height:80%;
-	 margin:0;
-	 padding:0;
-	 margin-right:17%;
-	 top:10%;
-	 right:0;
-	 cursor:pointer;
-	 
-}#refreshBtn{
-	position:absolute;
-	 width:auto;
-	 height:80%;
-	 margin:0;
-	 padding:0;
-	 margin-right:5%;
-	 top:10%;
-	 right:0;
-	 cursor:pointer;
-}
-
-      
-    #mapAP { 
-     height: 100%;
-     width:100%;
-
- }
- 
-#detailLocationSel{
-
-	 width:50%;
-	 height:80%;
-	 margin:0;
-	 padding:0;
-	 margin-right:5%;
-	 margin-top:1%;
-
-
-}
-.selectBox{
-	color:#555;
-	background-color: #fff;
-	border:1px solid #ccc;
-	border-radius:4px;
-	text-align:center;
-}
-</style>
 <script>
-
-	$(document).ready(function(){
-		
-		$("#detailLocationSel").change(function(){
-			var bsdcSeq = $(this).val();
-			var busStopCategorySeq = $("#busStopCategorySeq").val();
-			location.href="/spring/getBusStopLocation.action?universitySeq="+${universityDto.universitySeq}+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
-		});
-		
-	})
-
-	function refresh(){
-		var bsdcSeq = $("#detailLocationSel").val();
-		var busStopCategorySeq = $("#busStopCategorySeq").val();
-		location.href="/spring/getBusStopLocation.action?universitySeq="+${universityDto.universitySeq}+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
-	}
-	
-	function back(){
-		var bsdcSeq = $("#detailLocationSel").val();
-		var busStopCategorySeq = $("#busStopCategorySeq").val();
-		location.href="/spring/getBusStopLine.action?universitySeq="+${universityDto.universitySeq}+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
-	}
-	
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-2370297300940223",
+          enable_page_level_ads: true
+     });
 </script>
 
-</head>
-<body>
-	<div id="container">
-		<div id="top">
-			<div id="header">
-			<input type="hidden" id = "busStopCategorySeq" value="${busStopCategorySeq}">
-				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="back();" />
-					<div id="txtLogo">
-					
-					현재 버스 위치
-					
-					</div>
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>
-				</div>
-			</div>
-			<div id="footer">
-				
-				<select id = "detailLocationSel" class="selectBox">
-					<c:forEach items="${bsdcList}" var="bsdcDto">
-						<c:choose>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Ybus</title>
+    <link rel="stylesheet" href="/spring/css/2022css/busStopHeader.css">
+    <link rel="stylesheet" href="/spring/css/2022css/busStopRoadMap.css">
 
-							<c:when test="${bsdcDto.busStopDetailCategorySeq==busStopDetailCategorySeq}">
-								<option value="${bsdcDto.busStopDetailCategorySeq}" selected>${bsdcDto.busStopDetailCategoryName}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${bsdcDto.busStopDetailCategorySeq}">${bsdcDto.busStopDetailCategoryName}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
-				<img src="/spring/images/timeLine/refreshBtn.png" id="refreshBtn" onclick="refresh();"/>
-				
-			</div>
-		</div>
-		<div id="contents">
-			<div id="mapAP"></div>
-		</div>
-<script type="text/javascript">
+<script>
+//BusStopMapController에서 가져온 Seq값들
+let universitySeq = '${universityDto.universitySeq}';
+let busStopCategorySeq = '${busStopCategorySeq}';
+let busStopDetailCategorySeq = '${busStopDetailCategorySeq}';
+let busStopDetailCategoryName = '${bsdcList[0].busStopDetailCategoryName}';
+let cityCirculationSeq = '${bsdcList[0].busStopDetailCategorySeq}';
+let YeokbukDistrictSeq = '${bsdcList[1].busStopDetailCategorySeq}';
 
-var mapAP;
-var marker;
-var zoomLevel;
-function initMap() {
-	var distancekilometer = ${distancekilometer};
-	if(distancekilometer < 10){
-		zoomLevel=13;
-	}else if(distancekilometer >= 10 && distancekilometer < 20){
-		zoomLevel=12;
-	}else if(distancekilometer >= 20 && distancekilometer < 30){
-		zoomLevel=11;
-	}else if(distancekilometer >= 30 && distancekilometer < 40){
-		zoomLevel=10;
-	}else{
-		zoomLevel=9;
-	}
-	
-mapAP = new google.maps.Map(document.getElementById('mapAP'), {
+let busStopSeq = '${bsdto.busStopSeq}';
 
-center: {lat: ${avgBSdto.avgLat}, lng: ${avgBSdto.avgLon}},
-zoom: zoomLevel
-	});
+$(document).ready(function(){
 
-
-<c:forEach items="${bsList}" var="bsdto">
-	var infowindowBS${bsdto.busStopSeq} = new google.maps.InfoWindow({
-		content:'${bsdto.busStop}',
+	// 정류장 로드뷰 이동
+	$(".busStopStatus").click(function(){
+		location.href="/spring/getBusStopRoadView.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopSeq="+$(this).attr("busStopSeq");
 	});
 	
-	markerBS${bsdto.busStopSeq} = new google.maps.Marker({
-	    map: mapAP,
-	    draggable: false,
-	    animation: google.maps.Animation.DROP,
-	    icon: '/spring/images/timeLine/busStopMaker.png',
-	    zIndex:1,
-	    info: '${bsdto.busStop}',
-	    title: '${bsdto.busStop}',
-	    position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}}
-	});
-	markerBS${bsdto.busStopSeq}.addListener('click', function(){
-		infowindowBS${bsdto.busStopSeq}.open(mapAP,markerBS${bsdto.busStopSeq});
-	});
+	// 누르면 시내순환 버튼 활성화 및 라인 보여줌
+	$(".viewBtn:eq(0)").click(function(){
+		// 역북지구 버튼 css를 시내순환 버튼으로 옮김
+		$(".viewBtnName:eq(1)").removeAttr('id', 'selectedBtn');
+		$(".viewBtnName:eq(0)").attr('id', "selectedBtn");
 		
-</c:forEach>
-	<c:forEach items="${cblList}" var="cbldto">
-		var infowindowCBL${cbldto.businfoSeq} = new google.maps.InfoWindow({
-			content:'${cbldto.businfoName}',
-		});
+		// 시내순환 Seq 값으로 Location 페이지 다시 부름
+		location.href="/spring/getBusStopLocation.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+cityCirculationSeq;
+	});
+	
+	// 누르면 역북지구 버튼 활성화 및 라인 보여줌
+	$(".viewBtn:eq(1)").click(function(){
+		// 시내순환 버튼 css를 역북지구 버튼으로 옮김
+		$(".viewBtnName:eq(0)").removeAttr('id', 'selectedBtn');
+		$(".viewBtnName:eq(1)").attr('id', "selectedBtn");
 		
-		markerCBL${cbldto.businfoSeq} = new google.maps.Marker({
-		    map: mapAP,
-		    draggable: false,
-		    animation: google.maps.Animation.DROP,
-		    icon:'/spring/images/timeLine/busMaker.png',
-		    title: '${cbldto.businfoName}',
-		    zIndex:100,
-		    position: {lat: ${cbldto.locationLatitude}, lng: ${cbldto.locationLongitude}}
-		    
-		});
-		markerCBL${cbldto.businfoSeq}.addListener('click', function(){
-			infowindowCBL${cbldto.businfoSeq}.open(mapAP,markerCBL${cbldto.businfoSeq});
-		});		
-	</c:forEach>
+		// 역북지구 Seq 값으로 Location 페이지 다시 부름
+		location.href="/spring/getBusStopLocation.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+YeokbukDistrictSeq;
+	});
+	
+	// 뒤로가기
+	$("#backBtn").click(function(){
+		location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq;
+	});
+	
+	// 홈
+	$("#button_Home").click(function(){
+		location.href="/spring/index.action?universitySeq="+universitySeq;
+	});
+});
+
+/*
+function refresh(){
+	let bsdcSeq = $("#detailLocationSel").val();
+	location.href="/spring/getBusStopLine.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
 }
 
-
+function moveMap(){
+	let bsdcSeq = $("#detailLocationSel").val();
+	location.href="/spring/getBusStopLocation.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+bsdcSeq;
+}
+*/
+</script>
+<script type="text/javascript" src="/spring/js/headerTopChange.js"></script>
+<script type="text/javascript" src="/spring/js/getPageHeaderButtons.js"></script>
+</head>
+<body>
+<body>
+<div id="container">
+    <div id="header">
+	    <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
+        <div id="hedaerTop">
+			<div id="headerTopContents">
+				<div id="button_Home_Zone">
+					<div id="button_Home">
+						
+					</div>
+				</div>
+			    <div id="busTypeZone">
+			    
+			    	<c:choose>
+						<c:when test="${busStopCategorySeq == 18}">
+							<div id="busType">
+							    시내 버스
+							</div>
+						</c:when>
+						<c:when test="${busStopCategorySeq == 36}">
+							<div id="busType">
+							    노랑 버스
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div id="busType">
+							    통학 버스
+							</div>
+						</c:otherwise>
+					</c:choose>
+					
+			    </div>
+			    <div id="buttonsZone">
+			        <div id="buttons">
+    			        <div id="btnBusScheduleZone">
+			                <div id="btnBusSchedule">
+			                </div>
+			            </div>
+			            <div id="btnRouteMapZone">
+			                <div id="btnRouteMap">
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+        </div>
+        <div id="busStopNotification">
+            <div id="busStopNotice" >
+                <div id="noticeIconZone" class="busNotice">
+                    <div id="noticeIcon">
+                    	<!-- css background에 이미지 들어있음 -->
+                    </div>
+                </div>
+                <div id="busNoticeContents" class="busNotice">
+                    버스 노선도를 보여주는 페이지입니다.
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <c:if test="${busStopCategorySeq == 18}">
+	        <c:if test = "${busStopDetailCategorySeq == bsdcList[0].busStopDetailCategorySeq}">
+		        <div id="viewType">
+		            <div class="viewBtn">
+		                <div class="viewBtnName" id="selectedBtn">
+		                    시내순환
+		                </div>
+		            </div>
+		            <div class="viewBtn">
+		                <div class="viewBtnName">
+		                    역북지구
+		                </div>
+		            </div>
+		            <div style="clear: both"></div>
+		        </div>
+	        </c:if>
+	        <c:if test = "${busStopDetailCategorySeq == bsdcList[1].busStopDetailCategorySeq}">
+		        <div id="viewType">
+		            <div class="viewBtn">
+		                <div class="viewBtnName">
+		                    시내순환
+		                </div>
+		            </div>
+		            <div class="viewBtn">
+		                <div class="viewBtnName" id="selectedBtn">
+		                    역북지구
+		                </div>
+		            </div>
+		            <div style="clear: both"></div>
+		        </div>
+	        </c:if>
+		</c:if>
+    </div>
+    <div id="contents">
+        <div id="busStop">
+            <div id="busStopContents">
+                <div id="backBtnZone" class="busStopContents">
+                    <div id="backBtn">
+                    
+                    </div>
+                </div>
+                <div id="busStopName" class="busStopContents">
+                    버스 노선도
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <div id="roadView_MapZone">
+            <div id="roadView_Map">
+				
+            </div>
+        </div>
+        
+        <!-- 애드센스 -->
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-format="fluid"
+		     data-ad-layout-key="-fb+5w+4e-db+86"
+		     data-ad-client="ca-pub-2370297300940223"
+		     data-ad-slot="8826360596"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+        
+        <!-- 엣날 지도-->
+        <div id="infoAround">
+			<div id="infoTitle">
+				<div id="infoTitleText">Around place  ${bsdto.busStop}</div>
+			</div>
+			<div id="mapAP">
+			
+			</div>
+		    <script async defer
+		      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap">
+		    </script>
+		</div>
+	</div>	
+</div>
+	<script type="text/javascript">
+		var mapAP;
+		var marker;
+		var zoomLevel;
+		function initMap() {
+			var distancekilometer = ${distancekilometer};
+			if(distancekilometer < 10){
+				zoomLevel=13;
+			}else if(distancekilometer >= 10 && distancekilometer < 20){
+				zoomLevel=12;
+			}else if(distancekilometer >= 20 && distancekilometer < 30){
+				zoomLevel=11;
+			}else if(distancekilometer >= 30 && distancekilometer < 40){
+				zoomLevel=10;
+			}else{
+				zoomLevel=9;
+			}
+			
+		mapAP = new google.maps.Map(document.getElementById('roadView_Map'), {
+		
+		center: {lat: ${avgBSdto.avgLat}, lng: ${avgBSdto.avgLon}},
+		zoom: zoomLevel
+			});
+		
+		
+		<c:forEach items="${bsList}" var="bsdto">
+			var infowindowBS${bsdto.busStopSeq} = new google.maps.InfoWindow({
+				content:'${bsdto.busStop}',
+			});
+			
+			markerBS${bsdto.busStopSeq} = new google.maps.Marker({
+			    map: mapAP,
+			    draggable: false,
+			    animation: google.maps.Animation.DROP,
+			    icon: '/spring/images/timeLine/busStopMaker.png',
+			    zIndex:1,
+			    info: '${bsdto.busStop}',
+			    title: '${bsdto.busStop}',
+			    position: {lat: ${bsdto.busStopLatitude}, lng: ${bsdto.busStopLongitude}}
+			});
+			markerBS${bsdto.busStopSeq}.addListener('click', function(){
+				infowindowBS${bsdto.busStopSeq}.open(mapAP,markerBS${bsdto.busStopSeq});
+			});
+				
+		</c:forEach>
+			<c:forEach items="${cblList}" var="cbldto">
+				var infowindowCBL${cbldto.businfoSeq} = new google.maps.InfoWindow({
+					content:'${cbldto.businfoName}',
+				});
+				
+				markerCBL${cbldto.businfoSeq} = new google.maps.Marker({
+				    map: mapAP,
+				    draggable: false,
+				    animation: google.maps.Animation.DROP,
+				    icon:'/spring/images/timeLine/busMaker.png',
+				    title: '${cbldto.businfoName}',
+				    zIndex:100,
+				    position: {lat: ${cbldto.locationLatitude}, lng: ${cbldto.locationLongitude}}
+				    
+				});
+				markerCBL${cbldto.businfoSeq}.addListener('click', function(){
+					infowindowCBL${cbldto.businfoSeq}.open(mapAP,markerCBL${cbldto.businfoSeq});
+				});		
+			</c:forEach>
+		}
     </script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvu3Ngel84QlOc4Lc4BAszD3UeSMEiWgM&callback=initMap">
     </script>
-		
-	</div>
 </body>
 </html>

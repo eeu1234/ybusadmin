@@ -218,6 +218,7 @@
 	<div id = "header">
 	    <div id = "header_top">
 	        <div id = "header_top_text">
+	            <span style = "float:left;margin-right:10px;"><img src="/spring/images/2022busStop/ButtonHome_White.png" style="height:30px;"></span>
 	            <span style = "float:left;">통학 버스</span>
 	            <div id = "header_top_text_box_schedule" onclick="location.href='/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq=37&weekDays=normal';"></div>
 	        </div>

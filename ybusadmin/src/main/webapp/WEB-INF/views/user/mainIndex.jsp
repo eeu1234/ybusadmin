@@ -508,7 +508,6 @@
     }
     #container_top_weather_bottom_weatherIcon{
         height:100%;
-        content:url("/spring/images/mainIndex/6.png");
         float:left;
     }
     #container_top_weather_bottom_temperature{

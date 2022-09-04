@@ -19,8 +19,14 @@
    crossorigin="anonymous"></script>  
 
 <script>
+//BusStopMapController에서 가져온 Seq값들
 let universitySeq = '${universityDto.universitySeq}';
 let busStopCategorySeq = '${busStopCategorySeq}';
+let busStopDetailCategorySeq = '${busStopDetailCategorySeq}';
+let busStopDetailCategoryName = '${bsdcList[0].busStopDetailCategoryName}';
+let cityCirculationSeq = '${bsdcList[0].busStopDetailCategorySeq}';
+let YeokbukDistrictSeq = '${bsdcList[1].busStopDetailCategorySeq}';
+
 let busStopSeq = '${bsdto.busStopSeq}';
 
 /*
@@ -39,6 +45,7 @@ function moveMap(){
 </script>
 <script type="text/javascript" src="/spring/js/roadView_Map_SwitchBtn.js"></script>
 <script type="text/javascript" src="/spring/js/headerTopChange.js"></script>
+<script type="text/javascript" src="/spring/js/getPageHeaderButtons.js"></script>
 </head>
 <body>
 <div id="container">
@@ -46,32 +53,53 @@ function moveMap(){
     	<input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
     	<input type="hidden" id="busStopSeq" value="${busStopSeq}">
         <div id="hedaerTop">
-            <div id="hedaerTopBackGround">
-                <div id="headerTopContents">
-                    <div id="busTypeZone">
-                        <div id="busType">
-                            통학 버스
-                        </div>
-                    </div>
-                    <div id="buttonsZone">
-                        <div id="buttons">
-                            <div id="btnRouteMapZone">
-                                <div id="btnRouteMap">
-                                </div>
-                            </div>
-                            <div id="btnBusScheduleZone">
-                                <div id="btnBusSchedule">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="headerTopContents">
+				<div id="button_Home_Zone">
+					<div id="button_Home">
+						
+					</div>
+				</div>
+			    <div id="busTypeZone">
+			    
+			    	<c:choose>
+						<c:when test="${busStopCategorySeq == 18}">
+							<div id="busType">
+							    시내 버스
+							</div>
+						</c:when>
+						<c:when test="${busStopCategorySeq == 36}">
+							<div id="busType">
+							    노랑 버스
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div id="busType">
+							    통학 버스
+							</div>
+						</c:otherwise>
+					</c:choose>
+					
+			    </div>
+			    <div id="buttonsZone">
+			        <div id="buttons">
+    			        <div id="btnBusScheduleZone">
+			                <div id="btnBusSchedule">
+			                </div>
+			            </div>
+			            <div id="btnRouteMapZone">
+			                <div id="btnRouteMap">
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
         </div>
         <div id="busStopNotification">
             <div id="busStopNotice" >
                 <div id="noticeIconZone" class="busNotice">
-                    <div id="noticeIcon"></div>
+                    <div id="noticeIcon">
+                    	<!-- css background에 이미지 들어있음 -->
+                    </div>
                 </div>
                 <div id="busNoticeContents" class="busNotice">
                     정류장을 클릭하면 해당 위치 로드뷰를 확인 할 수 있습니다.

@@ -318,7 +318,7 @@ public class BusStopMapController {
 		
 		dlist = timeDAO.getDetailCategoryList("37"); // 통학버스 노선도를 다 가져옴.
 
-		System.out.println("디테일카테고리값 있니? -> "+ dlist.size());
+		//System.out.println("디테일카테고리값 있니? -> "+ dlist.size());
 		//가져온 버스디테일카테고리로 시간표 가져오기
 		//busDetailCategorySeq가 여러개일 경우도 있으니 for문 사용
 		
