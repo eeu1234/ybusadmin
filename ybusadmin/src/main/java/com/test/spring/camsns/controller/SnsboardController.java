@@ -124,12 +124,11 @@ public class SnsboardController {
 
 
 
-			word="";
+			
 			num = "0"; // 0부터 5개 게시글
 
 			// 글불러옴
 			List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq, num, word);
-
 			for (int i = 0; i < boardDtoList.size(); i++) {// 게시글 갯수
 				for (int j = 0; j < boardDtoList.get(i).getFilelist().size(); j++) {
 

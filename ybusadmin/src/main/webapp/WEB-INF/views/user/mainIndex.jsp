@@ -7,7 +7,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    
+    <link rel="apple-touch-icon" href="/spring/images/ico/favicon.ico">
+    <link rel="icon" href="/spring/images/ico/favicon.ico" type="image/x-icon" sizes="16x16">
+    
     <script>
+	    $(document).ready(function(){
+	    	setTimeout(function() {
+	    		  $('.busteam').fadeOut('fast');
+	    		}, 4000); // <-- time in milliseconds
+	    		
+	    		
+	    	$('.busTeam').css("display","inline");	
+	   	});
+    
+    	function showTeam(){
+    			
+    		setTimeout(function() {
+	    		  $('.busteam').fadeOut('fast');
+    		}, 4000); // <-- time in milliseconds
+		};
         var img = {
             redBus:['url(/spring/images/mainIndex/redBus_1.png)','url(/spring/images/mainIndex/redBus_2.png)','url(/spring/images/mainIndex/redBus_3.png)'],
             yellowBus:['url(/spring/images/mainIndex/yellowBus_1.png)','url(/spring/images/mainIndex/yellowBus_2.png)','url(/spring/images/mainIndex/yellowBus_3.png)'],
@@ -48,321 +67,323 @@
         }
         
         function getWeather() {
-      	  var url = 'http://api.openweathermap.org/data/2.5/weather?lat=${universityDto.universityLatitude}&lon=${universityDto.universityLongitude}&APPID=62790597231fb6fa089bb576c8f8b650&units=metric&lang=kr';
-      	  $.ajax({
-      	    dataType: "jsonp",
-      	    url: url,
-      	    jsonCallback: 'jsonp',
-      	
-      	    cache: false,
-      	    success: function (data) {
-      	    	var temp = parseInt(data.main.temp);
-      	    	var waetherIcon = data.weather[0].icon;
-      	    	var status = data.weather[0].description;
-      	    	$("#container_top_weather_bottom_temperature").text(temp+'°');
-      	    	$("#container_top_weather_bottom_weatherIcon").css("content","url('/spring/images/mainIndex/"+waetherIcon+".png')")
- 				$("#container_top_weather_bottom_weatherStatus").text(status);	
-      	    }
-      	  });
-      	}
+           var url = 'http://api.openweathermap.org/data/2.5/weather?lat=${universityDto.universityLatitude}&lon=${universityDto.universityLongitude}&APPID=62790597231fb6fa089bb576c8f8b650&units=metric&lang=kr';
+           $.ajax({
+             dataType: "jsonp",
+             url: url,
+             jsonCallback: 'jsonp',
+         
+             cache: false,
+             success: function (data) {
+                var temp = parseInt(data.main.temp);
+                var waetherIcon = data.weather[0].icon;
+                var status = data.weather[0].description;
+                $("#container_top_weather_bottom_temperature").text(temp+'°');
+                $("#container_top_weather_bottom_weatherIcon").css("content","url('/spring/images/mainIndex/"+waetherIcon+".png')")
+             $("#container_top_weather_bottom_weatherStatus").text(status);   
+             }
+           });
+         }
 
         function convertWeek(code){
-        	if(code == 1){return "월";}
-        	else if(code == 2){return "화";}
-        	else if(code == 3){return "수";}
-        	else if(code == 4){return "목";}
-        	else if(code == 5){return "금";}
-        	else if(code == 6){return "토";}
-        	else if(code == 0){return "일";}
+           if(code == 1){return "월";}
+           else if(code == 2){return "화";}
+           else if(code == 3){return "수";}
+           else if(code == 4){return "목";}
+           else if(code == 5){return "금";}
+           else if(code == 6){return "토";}
+           else if(code == 0){return "일";}
         }
         
         function changeDate(){
-        	var yyyy = now.getFullYear();
-        	var mm = now.getMonth()+1;
-        	var dd = now.getDate();
-        	var week = convertWeek(now.getDay());
-        	
-        	$('#container_top_weather_top_date').text(yyyy+'년 '+mm+'월 '+dd+'일 '+week);
+           var yyyy = now.getFullYear();
+           var mm = now.getMonth()+1;
+           var dd = now.getDate();
+           var week = convertWeek(now.getDay());
+           
+           $('#container_top_weather_top_date').text(yyyy+'년 '+mm+'월 '+dd+'일 '+week);
 
         }
         
         
         /* 공지사항 회전 */
-	(function($) {
+   (function($) {
         var defaults, internal, methods;
-		defaults = {
-		  speed: 150,
-		  pause: 3000,
-		  showItems: 1,
-		  mousePause: true,
-		  height: '100%',
-		  animate: true,
-		  margin: 0,
-		  padding: 0,
-		  startPaused: false,
-		  autoAppend: true
-		};
-		internal = {
-		  moveUp: function(state, attribs) {
-		    return internal.showNextItem(state, attribs, 'up');
-		  },
-		  moveDown: function(state, attribs) {
-		    return internal.showNextItem(state, attribs, 'down');
-		  },
-		  nextItemState: function(state, dir) {
-		    var height, obj;
-		    obj = state.element.children('ul');
-		    height = state.itemHeight;
-		    if (state.options.height > 0) {
-		      height = obj.children('li:first').height();
-		    }
-		    height += state.options.margin + state.options.padding * 2;
-		    return {
-		      height: height,
-		      options: state.options,
-		      el: state.element,
-		      obj: obj,
-		      selector: dir === 'up' ? 'li:first' : 'li:last',
-		      dir: dir
-		    };
-		  },
-		  showNextItem: function(state, attribs, dir) {
-		    var clone, nis;
-		    nis = internal.nextItemState(state, dir);
-		    nis.el.trigger('vticker.beforeTick');
-		    clone = nis.obj.children(nis.selector).clone(true);
-		    if (nis.dir === 'down') {
-		      nis.obj.css('top', '-' + nis.height + 'px').prepend(clone);
-		    }
-		    if (attribs && attribs.animate) {
-		      if (!state.animating) {
-		        internal.animateNextItem(nis, state);
-		      }
-		    } else {
-		      internal.nonAnimatedNextItem(nis);
-		    }
-		    if (nis.dir === 'up' && state.options.autoAppend) {
-		      clone.appendTo(nis.obj);
-		    }
-		    return nis.el.trigger('vticker.afterTick');
-		  },
-		  animateNextItem: function(nis, state) {
-		    var opts;
-		    state.animating = true;
-		    opts = nis.dir === 'up' ? {
-		      top: '-=' + nis.height + 'px'
-		    } : {
-		      top: 0
-		    };
-		    return nis.obj.animate(opts, state.options.speed, function() {
-		      $(nis.obj).children(nis.selector).remove();
-		      $(nis.obj).css('top', '0px');
-		      return state.animating = false;
-		    });
-		  },
-		  nonAnimatedNextItem: function(nis) {
-		    nis.obj.children(nis.selector).remove();
-		    return nis.obj.css('top', '0px');
-		  },
-		  nextUsePause: function() {
-		    var options, state;
-		    state = $(this).data('state');
-		    options = state.options;
-		    if (state.isPaused || internal.hasSingleItem(state)) {
-		      return;
-		    }
-		    return methods.next.call(this, {
-		      animate: options.animate
-		    });
-		  },
-		  startInterval: function() {
-		    var options, state;
-		    state = $(this).data('state');
-		    options = state.options;
-		    return state.intervalId = setInterval((function(_this) {
-		      return function() {
-		        return internal.nextUsePause.call(_this);
-		      };
-		    })(this), options.pause);
-		  },
-		  stopInterval: function() {
-		    var state;
-		    if (!(state = $(this).data('state'))) {
-		      return;
-		    }
-		    if (state.intervalId) {
-		      clearInterval(state.intervalId);
-		    }
-		    return state.intervalId = void 0;
-		  },
-		  restartInterval: function() {
-		    internal.stopInterval.call(this);
-		    return internal.startInterval.call(this);
-		  },
-		  getState: function(from, elem) {
-		    var state;
-		    if (!(state = $(elem).data('state'))) {
-		      throw new Error("vTicker: No state available from " + from);
-		    }
-		    return state;
-		  },
-		  isAnimatingOrSingleItem: function(state) {
-		    return state.animating || this.hasSingleItem(state);
-		  },
-		  hasMultipleItems: function(state) {
-		    return state.itemCount > 1;
-		  },
-		  hasSingleItem: function(state) {
-		    return !internal.hasMultipleItems(state);
-		  },
-		  bindMousePausing: (function(_this) {
-		    return function(el, state) {
-		      return el.bind('mouseenter', function() {
-		        if (state.isPaused) {
-		          return;
-		        }
-		        state.pausedByCode = true;
-		        internal.stopInterval.call(this);
-		        return methods.pause.call(this, true);
-		      }).bind('mouseleave', function() {
-		        if (state.isPaused && !state.pausedByCode) {
-		          return;
-		        }
-		        state.pausedByCode = false;
-		        methods.pause.call(this, false);
-		        return internal.startInterval.call(this);
-		      });
-		    };
-		  })(this),
-		  setItemLayout: function(el, state, options) {
-		    var box;
-		    el.css({
-		      overflow: 'hidden',
-		      position: 'relative'
-		    }).children('ul').css({
-		      position: 'absolute',
-		      margin: 0,
-		      padding: 0
-		    }).children('li').css({
-		      margin: options.margin,
-		      padding: options.padding
-		    });
-		    if (isNaN(options.height) || options.height === 0) {
-		      el.children('ul').children('li').each(function() {
-		        if ($(this).height() > state.itemHeight) {
-		          return state.itemHeight = $(this).height();
-		        }
-		      });
-		      el.children('ul').children('li').each(function() {
-		        return $(this).height(state.itemHeight);
-		      });
-		      box = options.margin + options.padding * 2;
-		      return el.height((state.itemHeight + box) * options.showItems + options.margin);
-		    } else {
-		      return el.height(options.height);
-		    }
-		  },
-		  defaultStateAttribs: function(el, options) {
-		    return {
-		      itemCount: el.children('ul').children('li').length,
-		      itemHeight: 0,
-		      itemMargin: 0,
-		      element: el,
-		      animating: false,
-		      options: options,
-		      isPaused: options.startPaused,
-		      pausedByCode: false
-		    };
-		  }
-		};
-		methods = {
-		  init: function(options) {
-		    var clonedDefaults, el, state;
-		    if (state = $(this).data('state')) {
-		      methods.stop.call(this);
-		    }
-		    state = null;
-		    clonedDefaults = jQuery.extend({}, defaults);
-		    options = $.extend(clonedDefaults, options);
-		    el = $(this);
-		    state = internal.defaultStateAttribs(el, options);
-		    $(this).data('state', state);
-		    internal.setItemLayout(el, state, options);
-		    if (!options.startPaused) {
-		      internal.startInterval.call(this);
-		    }
-		    if (options.mousePause) {
-		      return internal.bindMousePausing(el, state);
-		    }
-		  },
-		  pause: function(pauseState) {
-		    var el, state;
-		    state = internal.getState('pause', this);
-		    if (!internal.hasMultipleItems(state)) {
-		      return false;
-		    }
-		    state.isPaused = pauseState;
-		    el = state.element;
-		    if (pauseState) {
-		      $(this).addClass('paused');
-		      return el.trigger('vticker.pause');
-		    } else {
-		      $(this).removeClass('paused');
-		      return el.trigger('vticker.resume');
-		    }
-		  },
-		  next: function(attribs) {
-		    var state;
-		    state = internal.getState('next', this);
-		    if (internal.isAnimatingOrSingleItem(state)) {
-		      return false;
-		    }
-		    internal.restartInterval.call(this);
-		    return internal.moveUp(state, attribs);
-		  },
-		  prev: function(attribs) {
-		    var state;
-		    state = internal.getState('prev', this);
-		    if (internal.isAnimatingOrSingleItem(state)) {
-		      return false;
-		    }
-		    internal.restartInterval.call(this);
-		    return internal.moveDown(state, attribs);
-		  },
-		  stop: function() {
-		    var state;
-		    state = internal.getState('stop', this);
-		    return internal.stopInterval.call(this);
-		  },
-		  remove: function() {
-		    var el, state;
-		    state = internal.getState('remove', this);
-		    internal.stopInterval.call(this);
-		    el = state.element;
-		    el.unbind();
-		    return el.remove();
-		  }
-		};
-		return $.fn.vTicker = function(method) {
-		  if (methods[method]) {
-		    return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-		  }
-		  if (typeof method === 'object' || !method) {
-		    return methods.init.apply(this, arguments);
-		  }
-		  return $.error('Method ' + method + ' does not exist on jQuery.vTicker');
-		};
-		})(jQuery);
+      defaults = {
+        speed: 150,
+        pause: 3000,
+        showItems: 1,
+        mousePause: true,
+        height: '100%',
+        animate: true,
+        margin: 0,
+        padding: 0,
+        startPaused: false,
+        autoAppend: true
+      };
+      internal = {
+        moveUp: function(state, attribs) {
+          return internal.showNextItem(state, attribs, 'up');
+        },
+        moveDown: function(state, attribs) {
+          return internal.showNextItem(state, attribs, 'down');
+        },
+        nextItemState: function(state, dir) {
+          var height, obj;
+          obj = state.element.children('ul');
+          height = state.itemHeight;
+          if (state.options.height > 0) {
+            height = obj.children('li:first').height();
+          }
+          height += state.options.margin + state.options.padding * 2;
+          return {
+            height: height,
+            options: state.options,
+            el: state.element,
+            obj: obj,
+            selector: dir === 'up' ? 'li:first' : 'li:last',
+            dir: dir
+          };
+        },
+        showNextItem: function(state, attribs, dir) {
+          var clone, nis;
+          nis = internal.nextItemState(state, dir);
+          nis.el.trigger('vticker.beforeTick');
+          clone = nis.obj.children(nis.selector).clone(true);
+          if (nis.dir === 'down') {
+            nis.obj.css('top', '-' + nis.height + 'px').prepend(clone);
+          }
+          if (attribs && attribs.animate) {
+            if (!state.animating) {
+              internal.animateNextItem(nis, state);
+            }
+          } else {
+            internal.nonAnimatedNextItem(nis);
+          }
+          if (nis.dir === 'up' && state.options.autoAppend) {
+            clone.appendTo(nis.obj);
+          }
+          return nis.el.trigger('vticker.afterTick');
+        },
+        animateNextItem: function(nis, state) {
+          var opts;
+          state.animating = true;
+          opts = nis.dir === 'up' ? {
+            top: '-=' + nis.height + 'px'
+          } : {
+            top: 0
+          };
+          return nis.obj.animate(opts, state.options.speed, function() {
+            $(nis.obj).children(nis.selector).remove();
+            $(nis.obj).css('top', '0px');
+            return state.animating = false;
+          });
+        },
+        nonAnimatedNextItem: function(nis) {
+          nis.obj.children(nis.selector).remove();
+          return nis.obj.css('top', '0px');
+        },
+        nextUsePause: function() {
+          var options, state;
+          state = $(this).data('state');
+          options = state.options;
+          if (state.isPaused || internal.hasSingleItem(state)) {
+            return;
+          }
+          return methods.next.call(this, {
+            animate: options.animate
+          });
+        },
+        startInterval: function() {
+          var options, state;
+          state = $(this).data('state');
+          options = state.options;
+          return state.intervalId = setInterval((function(_this) {
+            return function() {
+              return internal.nextUsePause.call(_this);
+            };
+          })(this), options.pause);
+        },
+        stopInterval: function() {
+          var state;
+          if (!(state = $(this).data('state'))) {
+            return;
+          }
+          if (state.intervalId) {
+            clearInterval(state.intervalId);
+          }
+          return state.intervalId = void 0;
+        },
+        restartInterval: function() {
+          internal.stopInterval.call(this);
+          return internal.startInterval.call(this);
+        },
+        getState: function(from, elem) {
+          var state;
+          if (!(state = $(elem).data('state'))) {
+            throw new Error("vTicker: No state available from " + from);
+          }
+          return state;
+        },
+        isAnimatingOrSingleItem: function(state) {
+          return state.animating || this.hasSingleItem(state);
+        },
+        hasMultipleItems: function(state) {
+          return state.itemCount > 1;
+        },
+        hasSingleItem: function(state) {
+          return !internal.hasMultipleItems(state);
+        },
+        bindMousePausing: (function(_this) {
+          return function(el, state) {
+            return el.bind('mouseenter', function() {
+              if (state.isPaused) {
+                return;
+              }
+              state.pausedByCode = true;
+              internal.stopInterval.call(this);
+              return methods.pause.call(this, true);
+            }).bind('mouseleave', function() {
+              if (state.isPaused && !state.pausedByCode) {
+                return;
+              }
+              state.pausedByCode = false;
+              methods.pause.call(this, false);
+              return internal.startInterval.call(this);
+            });
+          };
+        })(this),
+        setItemLayout: function(el, state, options) {
+          var box;
+          el.css({
+            overflow: 'hidden',
+            position: 'relative'
+          }).children('ul').css({
+            position: 'absolute',
+            margin: 0,
+            padding: 0
+          }).children('li').css({
+            margin: options.margin,
+            padding: options.padding
+          });
+          if (isNaN(options.height) || options.height === 0) {
+            el.children('ul').children('li').each(function() {
+              if ($(this).height() > state.itemHeight) {
+                return state.itemHeight = $(this).height();
+              }
+            });
+            el.children('ul').children('li').each(function() {
+              return $(this).height(state.itemHeight);
+            });
+            box = options.margin + options.padding * 2;
+            return el.height((state.itemHeight + box) * options.showItems + options.margin);
+          } else {
+            return el.height(options.height);
+          }
+        },
+        defaultStateAttribs: function(el, options) {
+          return {
+            itemCount: el.children('ul').children('li').length,
+            itemHeight: 0,
+            itemMargin: 0,
+            element: el,
+            animating: false,
+            options: options,
+            isPaused: options.startPaused,
+            pausedByCode: false
+          };
+        }
+      };
+      methods = {
+        init: function(options) {
+          var clonedDefaults, el, state;
+          if (state = $(this).data('state')) {
+            methods.stop.call(this);
+          }
+          state = null;
+          clonedDefaults = jQuery.extend({}, defaults);
+          options = $.extend(clonedDefaults, options);
+          el = $(this);
+          state = internal.defaultStateAttribs(el, options);
+          $(this).data('state', state);
+          internal.setItemLayout(el, state, options);
+          if (!options.startPaused) {
+            internal.startInterval.call(this);
+          }
+          if (options.mousePause) {
+            return internal.bindMousePausing(el, state);
+          }
+        },
+        pause: function(pauseState) {
+          var el, state;
+          state = internal.getState('pause', this);
+          if (!internal.hasMultipleItems(state)) {
+            return false;
+          }
+          state.isPaused = pauseState;
+          el = state.element;
+          if (pauseState) {
+            $(this).addClass('paused');
+            return el.trigger('vticker.pause');
+          } else {
+            $(this).removeClass('paused');
+            return el.trigger('vticker.resume');
+          }
+        },
+        next: function(attribs) {
+          var state;
+          state = internal.getState('next', this);
+          if (internal.isAnimatingOrSingleItem(state)) {
+            return false;
+          }
+          internal.restartInterval.call(this);
+          return internal.moveUp(state, attribs);
+        },
+        prev: function(attribs) {
+          var state;
+          state = internal.getState('prev', this);
+          if (internal.isAnimatingOrSingleItem(state)) {
+            return false;
+          }
+          internal.restartInterval.call(this);
+          return internal.moveDown(state, attribs);
+        },
+        stop: function() {
+          var state;
+          state = internal.getState('stop', this);
+          return internal.stopInterval.call(this);
+        },
+        remove: function() {
+          var el, state;
+          state = internal.getState('remove', this);
+          internal.stopInterval.call(this);
+          el = state.element;
+          el.unbind();
+          return el.remove();
+        }
+      };
+      return $.fn.vTicker = function(method) {
+        if (methods[method]) {
+          return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        }
+        if (typeof method === 'object' || !method) {
+          return methods.init.apply(this, arguments);
+        }
+        return $.error('Method ' + method + ' does not exist on jQuery.vTicker');
+      };
+      })(jQuery);
         
         
         
         
         
         $(document).ready(function(){
-            changeImgByTime();
+        	
+        	changeImgByTime();
             getWeather();
             changeDate();
             $('#header_notice_mid').vTicker();
+    
         });
 
     </script>
@@ -371,21 +392,21 @@
     <style>
 
     @font-face {
-	font-family: "Pretendard-Bold";
-	src:url(/spring/css//fonts/2022/Pretendard-Bold.woff) format("truetype");
+   font-family: "Pretendard-Bold";
+   src:url(/spring/css//fonts/2022/Pretendard-Bold.woff) format("truetype");
     }
     }
     @font-face {
-	font-family: "Pretendard-ExtraLight";
-	src:url(/spring/css//fonts//2022/Pretendard-ExtraLight.woff) format("truetype");
+   font-family: "Pretendard-ExtraLight";
+   src:url(/spring/css//fonts//2022/Pretendard-ExtraLight.woff) format("truetype");
     }
     @font-face {
-	font-family: "Pretendard-Medium";
-	src:url(/spring/css//fonts//2022/Pretendard-Medium.woff) format("truetype");
+   font-family: "Pretendard-Medium";
+   src:url(/spring/css//fonts//2022/Pretendard-Medium.woff) format("truetype");
     }
     @font-face {
-	font-family: "Pretendard-SemiBold";
-	src:url(/spring/css//fonts//2022/Pretendard-SemiBold.woff) format("truetype");
+   font-family: "Pretendard-SemiBold";
+   src:url(/spring/css//fonts//2022/Pretendard-SemiBold.woff) format("truetype");
     }
 
     a {
@@ -414,8 +435,8 @@
         position:relative;
     }
     #header_logoBox{
-    	widht:100%;
-    	height:34px;
+       widht:100%;
+       height:34px;
     }
     #header_logo{
         height:100%;
@@ -423,10 +444,10 @@
         content:url("/spring/images/mainIndex/YBUS_logo.png")
     }
     #header_kakao{
-    	height:24px;
-    	padding:4px 0;
-    	float:right;
-   		content:url("/spring/images/mainIndex/kakao.png");
+       height:24px;
+       padding:4px 0;
+       float:right;
+         content:url("/spring/images/mainIndex/kakao.png");
     }
     #header_notice{
         width:100%;
@@ -438,21 +459,21 @@
     }
     #header_notice_left{
         position:relative;
-		padding:6px 12px 6px 7px;
-		height:24px;
+      padding:6px 12px 6px 7px;
+      height:24px;
         content:url("/spring/images/mainIndex/header_notice.png");
         float:left;
     }
     #header_notice_mid{
-    	float:left;
-    	width:83.6%;
-    	font-size:0.7em;
-    	line-height:36px;
-    	font-family: "Pretendard-SemiBold";
+       float:left;
+       width:83.6%;
+       font-size:0.7em;
+       line-height:36px;
+       font-family: "Pretendard-SemiBold";
     }
     #header_notice_right{
-    	width:9.7%;
-    	float:left;
+       width:9.7%;
+       float:left;
     }
     #container{
         width:100%;
@@ -492,8 +513,8 @@
     #container_top_weather_top_uniName{
         font-size:1em;
         letter-spacing: -0.4px;
-    	font-family: "Pretendard-Bold";
-    	color:#ffffff;
+       font-family: "Pretendard-Bold";
+       color:#ffffff;
     }
     #container_top_weather_top_date{
         font-size:0.5em;
@@ -521,7 +542,7 @@
         color:#ffffff;
     }
     #container_top_weather_bottom_weatherStatus{
-    	width:38%;
+       width:38%;
         position:relative;
         font-size:0.75em;
         float:left;
@@ -529,7 +550,7 @@
         letter-spacing: -0.3px;
         padding-top:2%;
         font-family: "Pretendard-Bold";
-    	color:#ffffff;
+       color:#ffffff;
     }
     #container_top_right{
         width:48.3%;
@@ -610,7 +631,7 @@
         border-radius:50%;
     }
     .container_bus_rayout{
-    	position:relative;
+       position:relative;
         width:31.04%;
         background-size: 100% 100%;
         background-position: center center;
@@ -618,7 +639,7 @@
         float:left;
         box-shadow: 0px 0px 15px #0F296B1F;
         border-radius: 12px;
-    	
+       
     }
     #container_mid_redBus{
         
@@ -634,7 +655,7 @@
         color: #142637;
     }
     #container_mid_yellowBus{
-		margin:0 3.4%;
+      margin:0 3.4%;
     }
     #container_mid_yellowBus_text{
         padding-top:78.72%;
@@ -857,23 +878,24 @@
         content:url("/spring/images/mainIndex/kakao.png");
     }
     </style>
+
 </head>
 <body>
+	<img src="/spring/images/team.png" class="busteam" style="width:100%;top:0;left:0;z-index:999;">
     <div id = "content">
         <div id = "header">
-        	<div id = "header_logoBox">
+           <div id = "header_logoBox">
             <div id = "header_logo" onClick="window.location.reload();"></div>
-            <div id = "header_kakao" onclick="location.href='http://pf.kakao.com/_Rxkxjxeu'"></div>
             <div style = "clear:both"></div>
             </div>
             <div id = "header_notice">
                 <div id = "header_notice_left"></div>
                 <div id = "header_notice_mid">
-                	<ul>
-					<c:forEach items="${nList}" var="ndto">
-						<li class="nContent" value="${ndto.noticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${ndto.noticeSeq}">${ndto.noticeSubject}</a></li>
-					</c:forEach>
-					</ul>
+                   <ul>
+               <c:forEach items="${nList}" var="ndto">
+                  <li class="nContent" value="${ndto.noticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${ndto.noticeSeq}">${ndto.noticeSubject}</a></li>
+               </c:forEach>
+               </ul>
                 </div>
                 <div id = "header_notice_right"></div>
                 <div style = "clear:both"></div>
@@ -917,21 +939,21 @@
             <div id = "container_mid">
                 <div id = "container_mid_blueBus" class = "container_bus_rayout" value = "18" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=18';">
                     <div id = "container_mid_blueBus_dot" class = "checkBus_box"
-                    	<c:forEach items = "${cblList}" var = "list">
-                    		<c:if test = "${list.busStopCategorySeq == 18}">
-                    			style = "background-color:#6DFA5B;"
-                    		</c:if>
-                    	</c:forEach>
+                       <c:forEach items = "${cblList}" var = "list">
+                          <c:if test = "${list.busStopCategorySeq == 18}">
+                             style = "background-color:#6DFA5B;"
+                          </c:if>
+                       </c:forEach>
                     ></div>
                     <div id = "container_mid_blueBus_text">시내버스</div>
                 </div>
                 <div id = "container_mid_yellowBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=36';">
                     <div id = "container_mid_yellowBus_dot" class = "checkBus_box"
-                    	<c:forEach items = "${cblList}" var = "list">
-                    		<c:if test = "${list.busStopCategorySeq == 36}">
-                    			style = "background-color:#6DFA5B;"
-                    		</c:if>
-                    	</c:forEach>
+                       <c:forEach items = "${cblList}" var = "list">
+                          <c:if test = "${list.busStopCategorySeq == 36}">
+                             style = "background-color:#6DFA5B;"
+                          </c:if>
+                       </c:forEach>
                     ></div>
                     <div id = "container_mid_yellowBus_text">노란버스</div>
                 </div>
@@ -948,9 +970,9 @@
                         <div id = "container_bottom_menu_sns_top"></div>
                         <div id = "container_bottom_menu_sns_bottom">자유게시판</div>
                     </div>
-                    <div id = "container_bottom_menu_notice" onclick="location.href='/spring/user/noticeList.action';">
+                    <div id = "container_bottom_menu_notice" onclick="location.href='https://www.yongin.ac.kr/cmn/sym/mnu/mpm/101080200/htmlMenuView.do'">
                         <div id = "container_bottom_menu_notice_top"></div>
-                        <div id = "container_bottom_menu_notice_bottom">공지사항</div>
+                        <div id = "container_bottom_menu_notice_bottom">용인대공지</div>
                     </div>
                     <div id = "container_bottom_menu_total">
                         <a href = "https://total.yongin.ac.kr/login.do">
@@ -959,8 +981,8 @@
                         </a>
                     </div>
                     <div id = "container_bottom_menu_yteam">
-                        <div id = "container_bottom_menu_yteam_top"></div>
-                        <div id = "container_bottom_menu_yteam_bottom">YBUS팀</div>
+                        <div id = "container_bottom_menu_yteam_top" onclick="showTeam()"></div>
+                        <div id = "container_bottom_menu_yteam_bottom" onclick="showTeam()">YBUS팀</div>
                     </div>
                     <div style="clear:both;"></div>
                 </div>
@@ -978,39 +1000,49 @@
                     <div id = "footer_tip_left_bottom">YBUS를<br>앱처럼이용하고<br>사용하고싶다면?</div>
                 </div>
                 <div id = "footer_tip_right">
-                    <div id = "footer_tip_right_top"></div>
-                    <div id = "footer_tip_right_bottom"></div>
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <ins class="adsbygoogle"
+                       style="display:block; height:110px; width:100%;overflow:scroll;max-height:110px;"
+                       data-ad-client="ca-pub-2370297300940223"
+                       data-ad-slot="9489841046"
+                       data-ad-format="auto"
+                       data-full-width-responsive="true"></ins>
+                  <script>
+                       (adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
                 </div>
                 <div style="clear:both;"></div>
             </div>
         </div>
         
         <div id = "main_footer">
-	        <div id = "logo">
-	        	<img style= "width:100%;" src="/spring/images/mainIndex/YBUS_footer.png"  onclick = "location.href='/spring/admin/adminLogin.action'">
-	        </div>
-	        <div id = "prevVersion">
-	            <span>이전 버전으로 </span>
-	        </div>
-	        <div id = "info">
-	            <div id = "info_left">
-	                <div>
-	                    <span>The UNIV BUS::YBUS made by YBUS Team</span>
-	                </div>
-	                <div>
-	                    <span>2022 All right (C) reserved.</span>
-	                </div>
-	            </div>
-	            <div id = "info_right">
-	                <div id = "info_right_gmail" onclick = "location.href='mailto:eeu4327@gmail.com'"></div>
-	                <div id = "info_right_kakao" onclick="location.href='http://pf.kakao.com/_Rxkxjxeu'"></div>
-	            </div>
-	            <div style ="clear:both;"></div>
-	        </div>
-	    </div>
+           <div id = "logo">
+              <a href= "/spring/admin/adminLogin.action">
+              <img style= "width:100%;" src="/spring/images/mainIndex/YBUS_footer.png"  >
+            </a>           
+           </div>
+           <div id = "prevVersion">
+               <span>이전 버전으로 </span>
+           </div>
+           <div id = "info">
+               <div id = "info_left">
+                   <div>
+                       <span>The UNIV BUS::YBUS made by YBUS Team</span>
+                   </div>
+                   <div>
+                       <span>2022 All right (C) reserved.</span>
+                   </div>
+               </div>
+               <div id = "info_right">
+                   <div id = "info_right_gmail" onclick = "location.href='mailto:eeu4327@gmail.com'"></div>
+                   <div id = "info_right_kakao" onclick="location.href='http://pf.kakao.com/_Rxkxjxeu'"></div>
+               </div>
+               <div style ="clear:both;"></div>
+           </div>
+       </div>
     </div>
 
-	
+   
 </body>
 </html>
  

@@ -6,7 +6,12 @@ $(document).ready(function(){
 	
 	// 누르면 버스 시간표 페이지 이동
 	$("#btnBusSchedule").click(function(){
-		location.href="/spring/busSchedule/busTimeTable.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+busStopDetailCategorySeq;
+		if( busStopCategorySeq == 37){
+         location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq=37&weekDays=normal";
+      }
+      else{
+         location.href="/spring/busSchedule/busTimeTable.action?universitySeq="+universitySeq+"&busStopCategorySeq="+busStopCategorySeq+"&busStopDetailCategorySeq="+busStopDetailCategorySeq;
+      }
 	});
 	
 	// 홈

@@ -23,6 +23,7 @@ import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.CurrBusLocationDTO;
 import com.test.spring.dto.NoticeDTO;
 import com.test.spring.dto.NoticeFileDTO;
+import com.test.spring.dto.SearchDTO;
 import com.test.spring.dto.UniversityDTO;
 import com.test.spring.notice.NoticeDAO;
 
@@ -30,7 +31,7 @@ import com.test.spring.notice.NoticeDAO;
 public class MainController {
 	
 	@Autowired // 자동으로 연결한다.
-	private MainDAO dao; // DAO 
+	private MainDAO dao; // DAO no
 	
 	@Autowired
 	private NoticeDAO noticeDao; //공지사항 dao
@@ -176,8 +177,8 @@ public class MainController {
 			//이학교에 있는 노선을 메인 화면에 띄워주어야함
 			//노선목록 들고옴.
 			//공지사항목록 들고옴.
-			
-			List<NoticeDTO> nList = dao.getAllNotice();
+			String word="";
+			List<NoticeDTO> nList = dao.getAllNotice(word);
 			List<CurrBusLocationDTO> cblList = busStopMapDao.getCurrBusStopLocation(universitySeq);
 			
 			request.setAttribute("nList", nList); // 공지사항 리스트
@@ -236,7 +237,7 @@ public class MainController {
 			//노선목록 들고옴.
 			//공지사항목록 들고옴.
 			
-			List<NoticeDTO> nList = dao.getAllNotice();
+			List<NoticeDTO> nList = dao.getAllNotice("");
 			
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getSpecipicBusStopDetailCategory(map);
 			
@@ -367,8 +368,13 @@ public class MainController {
 	 //공지사항 내용 가져옴
 	   @RequestMapping(method={RequestMethod.GET}
 	               , value="/user/noticeList.action")
-	   public String noticeList(HttpServletRequest request, HttpSession session, HttpServletResponse response ) throws IOException{
-		   List<NoticeDTO> nList = dao.getAllNotice();
+	   public String noticeList(HttpServletRequest request, HttpSession session, HttpServletResponse response,String word ) throws IOException{
+		   
+		   if(word == null) {
+			   word="";
+		   }
+		   List<NoticeDTO> nList = dao.getAllNotice(word);
+		   
 	  		request.setAttribute("nList", nList);
 	      
 	      return "user/noticeList";

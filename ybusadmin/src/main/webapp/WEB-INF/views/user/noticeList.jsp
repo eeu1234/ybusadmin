@@ -8,7 +8,10 @@
 <head>
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-     <link rel="stylesheet" href="/spring/css/reset.css">
+         <!-- import 시작 -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+   crossorigin="anonymous"></script>
     <title>YBUS::공지사항</title>
 	
     <style>
@@ -285,6 +288,28 @@
             both: clear;
         }
     </style>
+    <script>
+    $(function() {
+	/* 검색 */
+	$("#searchInput").keydown(function (key) {
+		 
+        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+			//검색 index 초기화
+        	index = 0;        	
+        	
+	        var word = $(this).val();//검색어 가져옴
+	        
+	        search(word);//ajax
+        }
+ 
+	    });
+    });
+    function search(word){
+    	location.href="/spring/user/noticeList.action?word="+word;
+
+    }
+    </script>
+    
 </head>
 <body>
     <div id="header">
@@ -307,8 +332,8 @@
 		<!-- 게시글 반복-->
 		<div class="contentsBox">
 			<div class="menu_active">공지사항</div>
-			<div class="menu">자주 묻는 질문</div>
-			<div class="menu">도움말</div>
+<!-- 			<div class="menu">자주 묻는 질문</div>
+			<div class="menu">도움말</div> -->
 			<div class="clear"></div>
 		</div>
 		

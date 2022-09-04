@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
@@ -10,17 +10,28 @@
   <title>운행시간표</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <link rel="stylesheet" href="/spring/css/2022css/busStopHeader.css">
+  <script type="text/javascript" src="/spring/js/getPageHeaderButtons.js"></script>
 
   <script>
+        
+      //BusStopMapController에서 가져온 Seq값들
+      let universitySeq = '${universityDto.universitySeq}';
+      let busStopCategorySeq = '${busStopCategorySeq}';
+      let busStopDetailCategorySeq = '${busStopDetailCategorySeq}';
+      let busStopDetailCategoryName = '${bsdcList[0].busStopDetailCategoryName}';
+      let cityCirculationSeq = '${bsdcList[0].busStopDetailCategorySeq}';
+      let YeokbukDistrictSeq = '${bsdcList[1].busStopDetailCategorySeq}';
+  
+  
         var now = new Date(); // 시간을 받아오는 객체 생성
         var hour = now.getHours(); // 시
         var minute = now.getMinutes(); // 분
         var busType_code = 0;  //셀렉트 박스의 정보에 따라 어느 버스인지 파악하는 변수
 
         var busAddress = [
-	        ['url("/spring/images/busSchedule/blue_1.png")','url("/spring/images/busSchedule/blue_2.png")','url("/spring/images/busSchedule/blue_3.png")'],
-	        ['url("/spring/images/busSchedule/yellow_1.png")','url("/spring/images/busSchedule/yellow_2.png")','url("/spring/images/busSchedule/yellow_3.png")'],
-	        ['url("/spring/images/busSchedule/red_1.png")','url("/spring/images/busSchedule/red_2.png")','url("/spring/images/busSchedule/red_3.png")']
+           ['url("/spring/images/busSchedule/blue_1.png")','url("/spring/images/busSchedule/blue_2.png")','url("/spring/images/busSchedule/blue_3.png")'],
+           ['url("/spring/images/busSchedule/yellow_1.png")','url("/spring/images/busSchedule/yellow_2.png")','url("/spring/images/busSchedule/yellow_3.png")'],
+           ['url("/spring/images/busSchedule/red_1.png")','url("/spring/images/busSchedule/red_2.png")','url("/spring/images/busSchedule/red_3.png")']
         ];  // 이미지경로를 담고 있는 배열.
         
 
@@ -54,19 +65,19 @@
                     break;
                 }
                 else{
-                	spot = 0;
+                   spot = 0;
                 }
             }
-			if(spot != 0){
-	            $(timeList[spot]).children(".footer_timeTable_box_schedule_top").css('color','#142637');
-	            $(timeList[spot]).children(".footer_timeTable_box_schedule_bottom").css('background-image','url("/spring/images/busSchedule/순환코스(해당시간)_박스.png")');
-	
-	            // 회색 긴줄에 네이비 칠해주는 작업
-	            $(timeList[spot]).parent().css('border-left','3px solid #142637');
-			}else if(spot == 0 || ${slist.timeList.size() == 0 }){
-				$('<div id="noticeIcon"></div>').prependTo('#noticeIconZone');
-				$('#busNoticeContents').text('지금은 버스운행 시간이 아닙니다.');
-			}
+         if(spot != 0){
+               $(timeList[spot]).children(".footer_timeTable_box_schedule_top").css('color','#142637');
+               $(timeList[spot]).children(".footer_timeTable_box_schedule_bottom").css('background-image','url("/spring/images/busSchedule/순환코스(해당시간)_박스.png")');
+   
+               // 회색 긴줄에 네이비 칠해주는 작업
+               $(timeList[spot]).parent().css('border-left','3px solid #142637');
+         }else if(spot == 0 || ${slist.timeList.size() == 0 }){
+            $('<div id="noticeIcon"></div>').prependTo('#noticeIconZone');
+            $('#busNoticeContents').text('지금은 버스운행 시간이 아닙니다.');
+         }
 
         }
 
@@ -95,25 +106,25 @@
         }
         
         function schedule(flag){
-        	
-        	var seq = $("#container_selectBus").val();
-        	var detail_seq = $("#container_selectWay").val();
-        	var weekDays = $("#container_selectDay").val();
-        	if(flag == 1){
-        		if(seq == 37){
-	        		location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq="+seq;
-	        	}else{
-	        		location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
-	        	}
-        	}else{
-	        	location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&busStopDetaliCategorySeq="+detail_seq+"&weekDays="+weekDays;
-        	}
+           
+           var seq = $("#container_selectBus").val();
+           var detail_seq = $("#container_selectWay").val();
+           var weekDays = $("#container_selectDay").val();
+           if(flag == 1){
+              if(seq == 37){
+                 location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq="+seq;
+              }else{
+                 location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
+              }
+           }else{
+              location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&busStopDetaliCategorySeq="+detail_seq+"&weekDays="+weekDays;
+           }
         }
-		
+      
         $(document).ready(function(){
             var busType = $("#container_selectBus").val();
             checkBus_Logo(busType);
-        	checkTime_Logo();
+           checkTime_Logo();
             changeBox();
             countChild();
             $("#container_selectBus").change(function(){
@@ -126,7 +137,7 @@
                 schedule();
             });
             $("#container_selectDay").change(function(){
-				schedule();
+            schedule();
             });
             
             
@@ -134,8 +145,8 @@
             window.onpageshow = function(event) {
             if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
             // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
-            		window.location.reload();
-            	}
+                  window.location.reload();
+               }
             }
             
         });
@@ -146,13 +157,13 @@
 
   <style>
         @font-face {
-			font-family: "Pretendard-Bold";
-			src:url(/spring/css/fonts/2022/Pretendard-Bold.woff) format("truetype");
-	    }
-	    @font-face {
-			font-family: "Pretendard-Medium";
-			src:url(/spring/css/fonts/2022/Pretendard-Medium.woff) format("truetype");
-	    }
+         font-family: "Pretendard-Bold";
+         src:url(/spring/css/fonts/2022/Pretendard-Bold.woff) format("truetype");
+       }
+       @font-face {
+         font-family: "Pretendard-Medium";
+         src:url(/spring/css/fonts/2022/Pretendard-Medium.woff) format("truetype");
+       }
 
         html,body{
             width: 100%;
@@ -203,14 +214,14 @@
             float:left;
         }
         #container1{
-            width:60.18%;
-            margin-left:35.21%;
+            width:75.18%;
+            margin-left:20.21%;
             margin-right:4.61%;
             margin-top:3.074%;
             margin-bottom:3.074%;
         }
         #container_selectBus{
-            width:32%;
+            width:27%;
             height:26px;
             box-shadow: 0px 0px 15px #0F296B1F;
             border-radius: 13px;
@@ -218,11 +229,11 @@
             font-family: "Pretendard-Bold";
             color:#142637;
             border:0;
-			outline:0;
-			font-size:0.9em;
+         outline:0;
+         font-size:0.9em;
         }
         #container_selectWay{
-            width:32%;
+            width:42%;
             height:26px;
             box-shadow: 0px 0px 15px #0F296B1F;
             border-radius: 13px;
@@ -230,11 +241,11 @@
             font-family: "Pretendard-Bold";
             color:#142637;
             border:0;
-			outline:0;
-			font-size:0.9em;
+         outline:0;
+         font-size:0.9em;
         }
         #container_selectDay{
-            width:30%;
+            width:27%;
             height:26px;
             box-shadow: 0px 0px 15px #0F296B1F;
             border-radius: 13px;
@@ -242,8 +253,8 @@
             font-family: "Pretendard-Bold";
             color:#142637;
             border:0;
-			outline:0;
-			font-size:0.9em;
+         outline:0;
+         font-size:0.9em;
         }
         #footer{
             width:81.534%;
@@ -261,11 +272,11 @@
             overflow:hidden;
         }
         #notBusTime{
-        	font-size:1.1em;
-        	font-family: "Pretendard-Medium";
-        	text-align:center;
-        	padding: 7% 0;
-        	letter-spacing:2px;
+           font-size:1.1em;
+           font-family: "Pretendard-Medium";
+           text-align:center;
+           padding: 7% 0;
+           letter-spacing:2px;
         }
         .footer_timeTable_box_left{
             width:14.14%;
@@ -348,16 +359,28 @@
   <div id="header">
     <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
        <div id="hedaerTop">
-		<div id="headerTopContents">
-			<div id="button_Home_Zone">
-				<div id="button_Home" onclick="location.href='/spring/user/seoulBus.action'">
-					
-				</div>
-			</div>
-		    <div id="busTypeZone">
-		    	<div id = "busType">버스 시간표</div>
-		    </div>
-		</div>
+      <div id="headerTopContents">
+         <div id="button_Home_Zone">
+            <div id="button_Home" onclick="location.href='/spring/index.action'">
+               
+            </div>
+         </div>
+          <div id="busTypeZone">
+             <div id = "busType">버스 시간표</div>
+          </div>
+          <div id="buttonsZone">
+                 <div id="buttons">
+                     <div id="btnBusScheduleZone">
+                         <div id="btnBusSchedule">
+                         </div>
+                     </div>
+                     <div id="btnRouteMapZone">
+                         <div id="btnRouteMap">
+                         </div>
+                     </div>
+                 </div>  
+             </div>
+      </div>
        </div>
        <div id="busStopNotification">
            <div id="busStopNotice" >
@@ -373,12 +396,12 @@
   <select id = "container_selectBus">
 
     <c:forEach items = "${clist}" var = "category">
-    	<option value="${category.busStopCategorySeq}"  <c:if test="${busStopCategorySeq == category.busStopCategorySeq}">selected</c:if>>${category.busStopCategory}</option>    	
+       <option value="${category.busStopCategorySeq}"  <c:if test="${busStopCategorySeq == category.busStopCategorySeq}">selected</c:if>>${category.busStopCategory}</option>       
     </c:forEach>
   </select>
   <select id = "container_selectWay">
-  	<c:forEach items = "${dlist}" var = "category">
-    	<option value="${category.busStopDetailCategorySeq}" <c:if test="${busStopDetaliCategorySeq == category.busStopDetailCategorySeq}">selected</c:if>>${category.busStopDetailCategoryName}</option>    	
+     <c:forEach items = "${dlist}" var = "category">
+       <option value="${category.busStopDetailCategorySeq}" <c:if test="${busStopDetaliCategorySeq == category.busStopDetailCategorySeq}">selected</c:if>>${category.busStopDetailCategoryName}</option>       
     </c:forEach>
   </select>
   <select id = "container_selectDay">
@@ -392,54 +415,54 @@
 <div id = "footer">
   <div id = "footer_timeTable">
   
-	<c:choose>
-		<c:when test = "${slist.timeList.size() == 0}">
-			<div id = "notBusTime">운행예정인버스가 없습니다.</div>
-		</c:when>
-		<c:otherwise>
-		  	<c:forEach items = "${slist.timeList}" var = "time" varStatus = "out">
-		  		<c:choose>
-		  			<c:when test = "${out.index % 2 eq 0 }">
-		  				<div class = "grayBox">
-		  					<div class = "footer_timeTable_box_left">
-		        				<div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
-		      				</div>
-		  					<div class = "footer_timeTable_box_right">
-						 		<div id = "${out.count}" class = "footer_timeTable_box_right_box">
-						 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
-		          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
-		           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
-		          						<div class = "footer_timeTable_box_schedule_bottom">${fn:split(time.busStopDetaliCategoryName,'-')[0]}</div>
-		        					</div>
-		        				</c:forEach>	
-		       					</div>		
-		   					</div>
-		      				<div style="clear:both;"></div>
-		      			</div>
-		  			
-		  			</c:when >
-		  			<c:when test = "${out.index % 2 eq 1}">
-		  				<div class = "whiteBox">
-		  					<div class = "footer_timeTable_box_left">
-		        				<div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
-		      				</div>
-		  					<div class = "footer_timeTable_box_right">
-						 		<div id = "${out.count}" class = "footer_timeTable_box_right_box">
-						 		<c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
-		          					<div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
-		           						<div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
-		          						<div class = "footer_timeTable_box_schedule_bottom">${fn:split(time.busStopDetaliCategoryName,'-')[0]}</div>
-		        					</div>
-		        				</c:forEach>	
-		       					</div>		
-		   					</div>
-		      				<div style="clear:both;"></div>
-		      			</div>
-		  			</c:when>
-		      	</c:choose>
-		  	  </c:forEach>
-	  	  </c:otherwise>
-  	  </c:choose>
+   <c:choose>
+      <c:when test = "${slist.timeList.size() == 0}">
+         <div id = "notBusTime">운행예정인버스가 없습니다.</div>
+      </c:when>
+      <c:otherwise>
+           <c:forEach items = "${slist.timeList}" var = "time" varStatus = "out">
+              <c:choose>
+                 <c:when test = "${out.index % 2 eq 0 }">
+                    <div class = "grayBox">
+                       <div class = "footer_timeTable_box_left">
+                          <div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
+                        </div>
+                       <div class = "footer_timeTable_box_right">
+                         <div id = "${out.count}" class = "footer_timeTable_box_right_box">
+                         <c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
+                               <div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
+                                   <div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
+                                  <div class = "footer_timeTable_box_schedule_bottom">${fn:split(time.busStopDetaliCategoryName,'-')[0]}</div>
+                             </div>
+                          </c:forEach>   
+                            </div>      
+                        </div>
+                        <div style="clear:both;"></div>
+                     </div>
+                 
+                 </c:when >
+                 <c:when test = "${out.index % 2 eq 1}">
+                    <div class = "whiteBox">
+                       <div class = "footer_timeTable_box_left">
+                          <div class = "footer_timeTable_box_hour">${fn:split(time.busTime,':')[0]} </div>
+                        </div>
+                       <div class = "footer_timeTable_box_right">
+                         <div id = "${out.count}" class = "footer_timeTable_box_right_box">
+                         <c:forEach items = "${time.busTimeHourMin}" var = "timeArray" varStatus = "in">
+                               <div id = "${fn:split(timeArray,':')[0]}_${fn:split(timeArray,':')[1]}" class = "footer_timeTable_box_schedule">
+                                   <div class = "footer_timeTable_box_schedule_top">${fn:split(timeArray,':')[1]}</div>
+                                  <div class = "footer_timeTable_box_schedule_bottom">${fn:split(time.busStopDetaliCategoryName,'-')[0]}</div>
+                             </div>
+                          </c:forEach>   
+                            </div>      
+                        </div>
+                        <div style="clear:both;"></div>
+                     </div>
+                 </c:when>
+               </c:choose>
+             </c:forEach>
+          </c:otherwise>
+       </c:choose>
   </div>
   
   

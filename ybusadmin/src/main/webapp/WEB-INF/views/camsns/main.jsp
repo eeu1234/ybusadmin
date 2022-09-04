@@ -152,8 +152,8 @@
 		.contentsBox{
 			position:relative;
 			width:90%;
-            height:21%;
-			padding-top:4%;
+            height:161.4px;
+			padding-top:20px;
             background-color:white;
             border-radius:10px;
             box-shadow: 5px 10px 30px #e0e0e0;
@@ -164,7 +164,7 @@
 		.content_category{
 			position:relative;
 			width:14%;
-            height:10.5%;
+            height:16px;
 			margin-left:5%;
 			margin-right:5%;
 			text-align:center;
@@ -259,15 +259,13 @@
 			font-family : 'Pretendard-SemiBold';
 			position:relative;
 			width:90%;
-            height:57%;
+            height:79.4px;
+            margin:12px 5%;
 			text-align:left;
-			margin-top:2%;
-			margin-left:5%;
-			margin-right:5%;
 		}
 		.postTitle{
 			float:left;
-			width:93%;
+			width:85%;
 			font-size:1em;
 			font-family : 'Pretendard-Bold';
 			color:#00264D;
@@ -276,6 +274,8 @@
 		.postShare{
 			position:relative;
 			height:25%;	
+			width:10%;
+			float:right;
 			text-align:right;
 		}	
 		.postShareImg{
@@ -288,11 +288,14 @@
 			color:#B4B4B4;
 		}
         .postContents{
-			padding-top:5%;
-			padding-bottom:5%;
+			padding-top:15.2px;
+			padding-bottom:15.2px;
 			font-size:0.8em;
 			color:#142637;
 			font-family : 'Pretendard-Medium';
+			height:15.2px;
+			display:block;
+			overflow:hidden;
 			
 		}
 		.postContents > p {
@@ -304,12 +307,12 @@
 		
 		.content_bottom{
 			width:90%;
-			padding-top:3%;
+			height:30px;
+			padding-top:12px;
 			padding-left:5%;
 			padding-right:5%;
 			background-color:#FAFAFC;
 			border-radius: 0 0 10px 10px;
-			height:21%;
 			font-size:0.75em;
 			color: #142637;
 		}
@@ -359,139 +362,84 @@
 		.clear {
             both: clear;
         }
+        .backBlue {
+			background:url("/spring/images/camsns/backBlue.png");
+			background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+		}
+		
+		.backRed {
+			background:url("/spring/images/camsns/backRed.png");
+			background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+		}
+		
+		.backYellow {
+			background:url("/spring/images/camsns/backYellow.png");
+			background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+		}
+		
+		.backGreen {
+			background:url("/spring/images/camsns/backGreen.png");
+			background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+		}
+		
+		.backSkyBlue {
+			background:url("/spring/images/camsns/backSkyBlue.png");
+			background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+		}
     </style>
-<script>
-var index = 0; //글 5개씩 넘기기 위한 변수
-var cntList = "${cntList}";// 총 글 갯수
-var flag = false;//마지막 글 이후 ajax 요청 안하기위한 flag
-var alertFlag =false;//마지막글 alert 창 1번만띄우는 flag
+    <script>
+    
+    $(function() {
 
+    	
+    	
+    	/* 검색 */
+    	$("#searchInput").keydown(function (key) {
+    		 
+            if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+    			//검색 index 초기화
+            	index = 0;        	
+            	
+    	        var word = $(this).val();//검색어 가져옴
+    	        search(word);//ajax
+            }
+     
+        });
 
-$(function() {
-	if(cntList ==0){ $("#contentArea").html("글이 존재하지 않습니다.");}
-	
-	
-	/* 검색 */
-	$("#searchInput").keydown(function (key) {
-		 
-        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
-			//검색 index 초기화
-        	index = 0;        	
-        	
-	        var word = $(this).val();//검색어 가져옴
-	        $("#contentsBox").html("");//기존 자료 초기화
-	        search(word);//ajax
-        }
- 
-    });
-
-
-	share();//공유버튼인식
-	
-
-})//onload
-
-function share(){
-	/* 카카오톡 글 url 보내기 */
-	$(".shareBtn")
-			.click(
-					function() {
-						var name = $(this).attr('name');
-						
-						var boardSeq = $(this).val();
-						var hostUrl = "http://ybus.kr";
-						var shareUrl = "/spring/camsns/snsboard/snsboardview.action?boardSeq="	+ boardSeq;
-						var url = hostUrl +shareUrl
-						
-						//함수실행
-						sendLink(url,name);
-						
-					})
-}
-
-//검색
-function search(word){
-	location.href="/spring/camsns/snsMain.action?word="+word;
-	
-	/*
-	$.ajax({
-		type : "GET",
-		url : "/spring/camsns/snsMain.action",
-		dataType: "json",
-		data : "word=" + word ,
+    	
+		//url복사버튼
+		function clip(){
+			var url = '';
+			var textarea = document.createElement("textarea");
+			document.body.appendChild(textarea);
+			url = window.document.location.href;
+			textarea.value = url;
+			textarea.select();
+			document.execCommand("copy");
+			document.body.removeChild(textarea);
+			alert("URL이 복사되었습니다.")
+		}
 		
-		success: function(result){
-			
-			if (result.length != 0) {
-			
-				$.each(result, function(intValue, currentElement) {
-					
-						//console.log(intValue);
-						//console.log(currentElement);
-						//categoryType,boardSeq,boardCotent,boardRegdate,boardSubject
-						//console.log(currentElement.boardCategoryName);
-						//console.log(currentElement.boardCategoryName);
-						var html ="";
-						
-						
-						html += '<div class="area">';
-						html += '<div class="contentHeader '+currentElement.category+'">';
-						html += '<div class="contentNum">#'+currentElement.boardSeq+'</div>';
-						html += '<div class="title">'+currentElement.boardSubject+'</div>';
-						html += '<div class="shareArea">';
-						html += '<button value="'+currentElement.boardSeq+'"'+'name="'+currentElement.boardSeq+'"';
-						html += 'class="shareBtn glyphicon glyphicon-share-alt '+currentElement.category+' ">';
-						html += '</button>';
-						html += '</div>';
-						html += '<div class="clear"></div>';
-						html += '</div>';
-						html += '<div class="content">';
-						html += '<div class="contentRegdate">'+currentElement.boardRegdate+' </div>';
-				
-
-					 
-						html += '<div class="contentPic">';
-						
-						
-						 $.each(currentElement.fileList, function(key, file) {
-								html += '	<img src="/spring/images/camsns/board/'+file.fileName+'" /> ';
-							
-							}); 
-						
-						
-						
-						
-						html += '</div>';
-					
-						
-						html += currentElement.boardContent;
-						html += '</div>';
-						html += '<div class="comment">';
-						html += '<button class="showComment" onclick="location.href=\'/spring/camsns/snsboard/snsboardview.action?boardSeq='+currentElement.boardSeq+'\'">댓글 보기</button>';
-						html += '</div>';
-						html += '</div>';
-						html += '</div>';
-						
-
-						$("#contentArea").append(html);
-					
-
-				});
-				
-			}else{//if(result!=0)
-				$("#loading").hide();//값이없을경우
-				$("#contentArea").html("결과가 없습니다.");
-			}
-		},//sucess
-	    error: function(xhr, textStatus, error) {
-		        alert('Error' + error);
-	    }
-	
 		
-	});//ajax
-	*/
-}
-</script>
+		//검색
+		function search(word){
+			location.href="/spring/camsns/snsMain.action?word="+word;
+		}
+
+
+    })//onload
+
+    </script>
 </head>
 <body>
 
@@ -539,17 +487,17 @@ function search(word){
 			<!-- 게시글 반복-->
 			<div class="contentsBox">
 				<!-- 글번호-->
-				<div class="content_category">
-					<div class="postNo">#${boardDtoList.snsboardSeq}</div>
+				<div class="content_category" onclick = "location.href='/spring/camsns/snsboard/snsboardview.action?boardSeq=${boardDtoList.snsboardSeq}'">
+					<div class="postNo ${boardDtoList.categoryType}">#${boardDtoList.snsboardSeq}</div>
 				</div>
 				
 				<!-- 글 제목-->
 				<div class="content_title">
-					<div class="postTitle">${boardDtoList.snsboardSubject}
+					<div class="postTitle" onclick="location.href='/spring/camsns/snsboard/snsboardview.action?boardSeq=${boardDtoList.snsboardSeq}'">${boardDtoList.snsboardSubject}
 					<div class="postDate">${boardDtoList.snsboardRegdate}</div>
 					</div>
 					<div class="postShare">
-						<img src="/spring/images/camsns/postShare.png" value="${boardDtoList.snsboardSeq}" name="${boardDtoList.snsboardSeq}" class="postShareImg shareBtn ${boardDtoList.categoryType}">
+						<img src="/spring/images/camsns/postShare.png" value="${boardDtoList.snsboardSeq}" name="${boardDtoList.snsboardSeq}" class="postShareImg shareBtn" onclick="clip(); return false;">
 					</div>
 					<div class="clear"></div>
 					<div class="postContents">
@@ -558,7 +506,7 @@ function search(word){
 				</div>
 				
 				<!-- 글 하단 -->
-				<div class="content_bottom">
+				<div class="content_bottom" onclick = "location.href='/spring/camsns/snsboard/snsboardview.action?boardSeq=${boardDtoList.snsboardSeq}'">
 					<div class="comment_preview">
 						<c:if test="${boardDtoList.commentFirst == null}"><div class="txt_padding">댓글이 없습니다</div></c:if>
 						<c:if test="${boardDtoList.commentFirst != null}"><div class="img_padding"><img src="/spring/images/camsns/new.png"></div><div class="txt_padding">${boardDtoList.commentFirst}</div></c:if>
@@ -582,33 +530,5 @@ function search(word){
 
 
 
-
-<script type="text/javascript">
-//<![CDATA[
-// 사용할 앱의 JavaScript 키를 설정해 주세요.
-/* Kakao.init('497e3896cc14549676d2ada05a95e0fd'); */
-
-
-
-
-
-
-  function sendLink(url,name) {
-  Kakao.Link.sendTalkLink({
-    label: '#'+name+'번째 이야기', // 공유할 메세지의 제목을 설정
-			 image: {
-    src: 'http://mud-kage.kakao.co.kr/14/dn/btqfJfuXWcY/P7iGH1pyo5w9X1pp8lf9Pk/o.jpg',
-    width: '150',
-    height: '150'
-  } // 이건 썸네일을 설정 하는 겁니다.
-			,
-  webButton: {
-    text: '글 보기',
-     url : url // 각각의 포스팅 본문의 링크를 거는 코드입니다. 
-  }
-  });
-}
-//]]>
-</script>
 </body>
 </html>

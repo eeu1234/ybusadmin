@@ -33,6 +33,13 @@ let cityCirculationSeq = '${bsdcList[0].busStopDetailCategorySeq}';
 let YeokbukDistrictSeq = '${bsdcList[1].busStopDetailCategorySeq}';
 
 $(document).ready(function(){
+	
+	if(busStopCategorySeq == 18){
+	      $(".busBox").css("background-image", "url('/spring/images/2022busStop/Box_BlueBus.png')");      
+	   }
+	   else if(busStopCategorySeq == 36){
+	      $(".busBox").css("background-image", "url('/spring/images/2022busStop/Box_YellowBus.png')");      
+	   }
 
 	// 정류장 로드뷰 이동
 	$(".busStopStatus").click(function(){
@@ -208,7 +215,7 @@ function moveMap(){
 													${cbldto.businfoName}
 												</div>
 												<div class="busRefreshTime">
-													<!-- 15:57 갱신 -->
+													
 												</div>
 											</div>
 										</div>

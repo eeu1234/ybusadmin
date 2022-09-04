@@ -13,8 +13,7 @@
    crossorigin="anonymous"></script>
    <!-- ck에디터 -->
 <script src="/spring/util/ckeditor/ckeditor.js"></script>
-   
-	
+
     <style>
 		@font-face {
 		font-family: "Pretendard-Bold";
@@ -206,6 +205,17 @@
 			background-color: #FAFAFC;
 			border-radius:10px;
 		}
+		
+		#selectCate{
+			width:100%;
+			height:100%;
+			min-height:28px;
+			border:transparent;
+			background-color:transparent;
+			font-size:0.7em;
+		    color : #142637;
+			font-weight:bold;
+		}
 		#titleBox{
 			height:11%;
 		}
@@ -383,7 +393,7 @@
             </div>
             
                 <div id="btnType">
-                   <input type="button" value="취소" id="writeCancel" 	onclick="location.href='/spring/camsns/snsMain.action?universitySeq=1'" />
+                   <input type="button" value="취소" id="writeCancel" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=1'" />
                    <div id = "writeBlank"></div>
                    <input type="button" value="완료" id="writeConfirm" />
                    <div class="clear"></div>
@@ -398,6 +408,12 @@
         <div id="searchContainer">
             <div id="searchBox">
                 <div id="search">
+          			<select name="categoryVal" id="selectCate">
+							<option value="">- 카테고리 선택 -</option>
+							<c:forEach items="${categoryDtoList}" var="categorydto">
+								<option value="${categorydto.categorySeq}">${categorydto.categoryName}</option>
+							</c:forEach>
+					</select> 
 					<div class="search_inputBox" id="titleBox">
 					   <input type="text" id="titleInput" name="subject"  maxlength="10" placeholder="제목">
 					</div>

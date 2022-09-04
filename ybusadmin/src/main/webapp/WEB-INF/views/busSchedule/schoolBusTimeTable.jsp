@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/spring/css/2022css/busStopHeader.css">
 
     <script>
+      
         var now = new Date(); // 시간을 받아오는 객체 생성
         var hour = now.getHours(); // 시
         var minute = now.getMinutes(); // 분
@@ -36,50 +37,50 @@
         }
         
         function changBoxColor(){
-        	var scheduleList = $(".added_box_container_right");
-        	var nowTime = (hour * 60) + minute;
-        	var mainTimeList = [];
-        	var spot = 0;
-        	
-        	for(var i = 0; i<scheduleList.length; i++){  // 시간을 mianTimeList에 담는 작업
-        		var	timeList = $(scheduleList[i]).find('.added_box_container_right_schedule_top'); //시간을 담고
-        		var timeList_pro = [];
-        		for(var j = 0; j<timeList.length; j++){
-        			var time_divide = $(timeList[j]).text().split(':'); //해당시간을 시와 분으로 쪼개둠
-    				var time_ToMin = Number(time_divide[0]*60) + Number(time_divide[1]); //분단위로 시간을 변환
-    				timeList_pro.push(time_ToMin); // 시간을 리스트에 넣기
-        		}
-        		mainTimeList.push(timeList_pro); // 모은 리스트를 메인 리스트에 넣기
-        	}
-        	
-        	for(var i = 0; i<mainTimeList.length; i++){	
-        		for(var j = 0; j<mainTimeList[i].length; j++){
-        			if(mainTimeList[i][j] > nowTime){
-        				spot = j;
-        				var top = $(scheduleList[i]).find('.added_box_container_right_schedule_top')[spot];
-        				var bottom = $(scheduleList[i]).find('.added_box_container_right_schedule_bottom');
-        				$(top).css('color','#142637');
-        				$(bottom).css('background-image','url("/spring/images/busSchedule/순환코스(해당시간)_박스.png")');
-        			}	
-        		}
-        	}
-        	if(nowTime > pickMax(mainTimeList)){
-        		$('<div id="noticeIcon"></div>').prependTo('#noticeIconZone');
-				$('#busNoticeContents').text('지금은 버스운행 시간이 아닙니다.');
-        	}
-        	
+           var scheduleList = $(".added_box_container_right");
+           var nowTime = (hour * 60) + minute;
+           var mainTimeList = [];
+           var spot = 0;
+           
+           for(var i = 0; i<scheduleList.length; i++){  // 시간을 mianTimeList에 담는 작업
+              var   timeList = $(scheduleList[i]).find('.added_box_container_right_schedule_top'); //시간을 담고
+              var timeList_pro = [];
+              for(var j = 0; j<timeList.length; j++){
+                 var time_divide = $(timeList[j]).text().split(':'); //해당시간을 시와 분으로 쪼개둠
+                var time_ToMin = Number(time_divide[0]*60) + Number(time_divide[1]); //분단위로 시간을 변환
+                timeList_pro.push(time_ToMin); // 시간을 리스트에 넣기
+              }
+              mainTimeList.push(timeList_pro); // 모은 리스트를 메인 리스트에 넣기
+           }
+           
+           for(var i = 0; i<mainTimeList.length; i++){   
+              for(var j = 0; j<mainTimeList[i].length; j++){
+                 if(mainTimeList[i][j] > nowTime){
+                    spot = j;
+                    var top = $(scheduleList[i]).find('.added_box_container_right_schedule_top')[spot];
+                    var bottom = $(scheduleList[i]).find('.added_box_container_right_schedule_bottom');
+                    $(top).css('color','#142637');
+                    $(bottom).css('background-image','url("/spring/images/busSchedule/순환코스(해당시간)_박스.png")');
+                 }   
+              }
+           }
+           if(nowTime > pickMax(mainTimeList)){
+              $('<div id="noticeIcon"></div>').prependTo('#noticeIconZone');
+            $('#busNoticeContents').text('지금은 버스운행 시간이 아닙니다.');
+           }
+           
         }
-		
+      
         function pickMax(list){
-        	var max = 0;
-        	for(var i = 0; i<list.length; i++){
-        		for(var j = 0; j<list[i].length;j++){
-        			if(max <= list[i][j]){
-        				max = list[i][j];
-        			}
-        		}
-        	}
-        	return max;
+           var max = 0;
+           for(var i = 0; i<list.length; i++){
+              for(var j = 0; j<list[i].length;j++){
+                 if(max <= list[i][j]){
+                    max = list[i][j];
+                 }
+              }
+           }
+           return max;
         }
         
         
@@ -100,18 +101,18 @@
             });
             
             $("#container_selectBus").change(function(){
-            	var weekDays = $("#container_selectDay").val();
-            	var seq = $("#container_selectBus").val();
-				if(seq != 37){
-					location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
-				}
-			});
+               var weekDays = $("#container_selectDay").val();
+               var seq = $("#container_selectBus").val();
+            if(seq != 37){
+               location.href="/spring/busSchedule/busTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
+            }
+         });
             
             $("#container_selectDay").change(function(){
-            	var weekDays = $("#container_selectDay").val();
-            	var seq = $("#container_selectBus").val();
-            	location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
-        	});
+               var weekDays = $("#container_selectDay").val();
+               var seq = $("#container_selectBus").val();
+               location.href="/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq="+seq+"&weekDays="+weekDays;
+           });
         });
 
 
@@ -122,13 +123,13 @@
 
     <style>
         @font-face {
-			font-family: "Pretendard-Bold";
-			src:url(/spring/css/fonts/2022/Pretendard-Bold.woff) format("truetype");
-	    }
-	    @font-face {
-			font-family: "Pretendard-Medium";
-			src:url(/spring/css/fonts/2022/Pretendard-Medium.woff) format("truetype");
-	    }
+         font-family: "Pretendard-Bold";
+         src:url(/spring/css/fonts/2022/Pretendard-Bold.woff) format("truetype");
+       }
+       @font-face {
+         font-family: "Pretendard-Medium";
+         src:url(/spring/css/fonts/2022/Pretendard-Medium.woff) format("truetype");
+       }
 
         html,body{
             width: 100%;
@@ -376,16 +377,28 @@
  <div id="header">
     <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
        <div id="hedaerTop">
-		<div id="headerTopContents">
-			<div id="button_Home_Zone">
-				<div id="button_Home" onclick="location.href='/spring/user/seoulBus.action'">
-					
-				</div>
-			</div>
-		    <div id="busTypeZone">
-		    	<div id = "busType">버스시간표</div>
-		    </div>
-		</div>
+      <div id="headerTopContents">
+         <div id="button_Home_Zone">
+            <div id="button_Home" onclick="location.href='/spring/index.action'">
+               
+            </div>
+         </div>
+          <div id="busTypeZone">
+             <div id = "busType">버스 시간표</div>
+          </div>
+          <div id="buttonsZone">
+              <div id="buttons">
+                  <div id="btnBusScheduleZone" style = "display:none;" onClick="window.location.reload();">
+                         <div id="btnBusSchedule">
+                         </div>
+                     </div>
+                     <div id="btnRouteMapZone" onClick="location.href='/spring/getSchoolBusStopLine.action';" style="padding-right:0;">
+                         <div id="btnRouteMap">
+                         </div>
+                     </div>
+              </div>
+          </div>
+      </div>
        </div>
        <div id="busStopNotification">
            <div id="busStopNotice" >
@@ -402,7 +415,7 @@
 <div id = "container1">
     <select id = "container_selectBus">
         <c:forEach items = "${clist}" var = "category">
-    	<option value="${category.busStopCategorySeq}"  <c:if test="${busStopCategorySeq == category.busStopCategorySeq}">selected</c:if>>${category.busStopCategory}</option>    	
+       <option value="${category.busStopCategorySeq}"  <c:if test="${busStopCategorySeq == category.busStopCategorySeq}">selected</c:if>>${category.busStopCategory}</option>       
     </c:forEach>
     </select>
     <select id = "container_selectDay">
@@ -418,36 +431,36 @@
         
         
         <c:forEach  items = "${dlist}" var = "dlist" varStatus = "out">
-			<c:if test = "${not empty slist[out.index].timeList[0].busTime}">
-		        <div class = "whiteBox_charge" >
-			        <div class = "busCharge_left">${dlist.busStopDetailCategoryName}</div>
-			        <div class = "busCharge_mid"></div>
-			        <div class = "busCharge_right">${dlist.buspee}</div>
-			    	<div style="clear:both;"></div>
-			    </div>
-		    </c:if>
-		    <div class = "added_box">
-		        <c:forEach items = "${slist}" var = "slist" varStatus = "in">
-			        <c:if test="${out.count == in.count }">
-	        			<c:forEach items = "${slist.timeList}" var = "timelist">
-   						            <div class = "added_box_container">
-						                <div class = "added_box_container_left">
-						                    <span>${timelist.courseName}</span>
-						                </div>
-						                <div class = "added_box_container_right">
-						                <c:forEach items = "${timelist.busTimeHourMin}" var = "timeHourMin">
-						                    <div class = "added_box_container_right_schedule">
-					                        	<div class = "added_box_container_right_schedule_top">${timeHourMin}</div>
-					                        	<div class = "added_box_container_right_schedule_bottom">${fn:split(dlist.busStopDetailCategoryName,'(')[0]}</div>
-					                    	</div>
-					                    </c:forEach>
-					                	</div>
-					                	<div style="clear:both;"></div>
-					            	</div>
-			        	</c:forEach>
-			        </c:if>	
-        		</c:forEach>
-		 	</div>
+         <c:if test = "${not empty slist[out.index].timeList[0].busTime}">
+              <div class = "whiteBox_charge" >
+                 <div class = "busCharge_left">${dlist.busStopDetailCategoryName}</div>
+                 <div class = "busCharge_mid"></div>
+                 <div class = "busCharge_right">${dlist.buspee}</div>
+                <div style="clear:both;"></div>
+             </div>
+          </c:if>
+          <div class = "added_box">
+              <c:forEach items = "${slist}" var = "slist" varStatus = "in">
+                 <c:if test="${out.count == in.count }">
+                    <c:forEach items = "${slist.timeList}" var = "timelist">
+                                 <div class = "added_box_container">
+                                  <div class = "added_box_container_left">
+                                      <span>${timelist.courseName}</span>
+                                  </div>
+                                  <div class = "added_box_container_right">
+                                  <c:forEach items = "${timelist.busTimeHourMin}" var = "timeHourMin">
+                                      <div class = "added_box_container_right_schedule">
+                                          <div class = "added_box_container_right_schedule_top">${timeHourMin}</div>
+                                          <div class = "added_box_container_right_schedule_bottom">${fn:split(dlist.busStopDetailCategoryName,'(')[0]}</div>
+                                      </div>
+                                   </c:forEach>
+                                  </div>
+                                  <div style="clear:both;"></div>
+                              </div>
+                    </c:forEach>
+                 </c:if>   
+              </c:forEach>
+          </div>
         </c:forEach>
         
         

@@ -223,7 +223,7 @@
 			
 		}
 		#leftFooter{width:20%;padding-left:7%;}
-		#midFooter{width:45%;}
+		#midFooter{width:45%; height:15.2px; text-align:center;}
 		#rightFooter{width:20%;padding-right:7%;text-align:right;}
 	
 		.clear {
@@ -251,7 +251,7 @@
         <div id="infoPage">
             <div id="txtBox">
                 <div id="txtType">
-                    공지사항
+                    <img src="/spring/images/camsns/backBtn.png" style="height:20px;width:auto;margin-right:3%;" onclick="location.href='/spring/user/noticeList.action'" />공지사항
                 </div>
             </div>
             <div id="btnBox">
@@ -286,9 +286,12 @@
 			</div>
 			<div id="footerContents">
 				<div id="btnFooterGroup">
-					<div class="footerBtn" id="leftFooter"><c:if test="${not empty prevNoticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${prevNoticeSeq}" class="aTitle"><  이전글</a></c:if></div>
-					<div class="footerBtn" id="midFooter"></div>
-					<div class="footerBtn" id="rightFooter"><c:if test="${not empty afterNoticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${afterNoticeSeq}" class="aTitle">다음글  ></a></c:if></div>
+					<div class="footerBtn" id="leftFooter"><c:if test="${not empty afterNoticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${afterNoticeSeq}" class="aTitle"><  이전글</a></c:if></div>
+					<div class="footerBtn" id="midFooter" onclick = "location.href='/spring/user/noticeList.action';">
+						<img style = "height:15.2px;" src = "/spring/images/mainImage/list_icon.png"> 
+						<span style = "position:relative;bottom:15%;">목록으로</span>
+					</div>
+					<div class="footerBtn" id="rightFooter"><c:if test="${not empty prevNoticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${prevNoticeSeq}" class="aTitle">다음글  ></a></c:if></div>
 					<div class="clear"></div>
 				</div>
 			</div>

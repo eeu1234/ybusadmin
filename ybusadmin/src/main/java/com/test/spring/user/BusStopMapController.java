@@ -94,7 +94,9 @@ public class BusStopMapController {
 			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 			request.setAttribute("apList", apList);
 			request.setAttribute("bsdto", bsdto);
-			    
+			System.out.println("*******************************");
+			System.out.println(busStopCategorySeq);
+			System.out.println(busStopSeq);
 		 } catch (Exception e) {
 		    session.invalidate();
 		    try {
@@ -105,6 +107,7 @@ public class BusStopMapController {
 		       // TODO: handle exception
 		    }
 		 }
+		
 		
 		return "user/getBusStopRoadView";
 	}

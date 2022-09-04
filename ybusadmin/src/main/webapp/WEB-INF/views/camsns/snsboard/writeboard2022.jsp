@@ -125,13 +125,15 @@ table tr td:nth-child(1) {
 			<table class="table table-striped">
 
 				<tr>
-					<td colspan="2"><select name="categoryVal" id=""
+					<td colspan="2">
+					<select name="categoryVal" id=""
 						class="form-control">
 							<option value="">- 카테고리 선택 -</option>
 							<c:forEach items="${categoryDtoList}" var="categorydto">
 								<option value="${categorydto.categorySeq}">${categorydto.categoryName}</option>
 							</c:forEach>
-					</select> <br></td>
+					</select> 
+					<br></td>
 				</tr>
 
 				<tr>

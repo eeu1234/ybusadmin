@@ -17,8 +17,12 @@
 			INNER JOIN UNIVERSITY B ON A.UNIVERSITYSEQ = B.UNIVERSITYSEQ WHERE A.UNIVERSITYSEQ = #{universitySeq} and busStopCategoryStat = 'show' limit 0,3
 	</select>
 	
-	<select id="getAllNotice" resultType="com.test.spring.dto.NoticeDTO">
+	<select id="getAllNotice" resultType="com.test.spring.dto.NoticeDTO" parameterType="map">
 		SELECT NOTICESEQ AS noticeSeq, NOTICESUBJECT AS noticeSubject, NOTICEREGDATE as noticeRegdate, NOTICEREADCOUNT as noticeReadCount FROM NOTICE where NOTICESTATUS = 'show'
+		<if test="word != null">
+		AND (NOTICESUBJECT like CONCAT('%',#{word},'%') OR NOTICECONTENT like CONCAT('%',#{word},'%'))
+		</if>
+		ORDER BY noticeRegdate DESC
 	</select>
 	
 	<select id="getUniversitySeq" parameterType="String" resultType="com.test.spring.dto.UniversityDTO">

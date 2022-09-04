@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
@@ -12,62 +12,62 @@
     <link rel="stylesheet" href="/spring/css/2022css/busStopHeader.css">
 
     <script>
-	    var now = new Date(); // 시간을 받아오는 객체 생성
-	    var hour = now.getHours(); // 시
-	    var minute = now.getMinutes(); // 분
-	    var busAddress = ['url("/spring/images/busSchedule/red_1.png")','url("/spring/images/busSchedule/red_2.png")','url("/spring/images/busSchedule/red_3.png")'];
-	
-	
-	    function checkTime_Logo(){ // 시간에 따른 메인 로고 변경 함수
-	
-	        if( hour > 7 && hour < 17){
-	            $('#hedaerTop').css('background-image',busAddress[0]);
-	        }
-	        else if(hour > 16 && hour < 20){
-	            $('#hedaerTop').css('background-image',busAddress[1]);
-	        }
-	        else if(hour > 19 || hour < 7){
-	            $('#hedaerTop').css('background-image',busAddress[2]);
-	        }
-	    }
-	
-	    function checkBorder(){
-	        var box = $('.added_box');
-	        for(var i = 0; i<box.length; i++){
-	            $(box[i]).children().last().css('border-bottom','0px solid black');
-	        }
-	    }
-	
-	
-	
-	
-	
-	    $(document).ready(function(){
-	        checkTime_Logo();
-	        checkBorder();
-	        $('.whiteBox').click(function(){
-	            $(this).next(".added_box").stop().slideToggle(300);
-	            $(this).toggleClass('on').siblings().removeClass('on');
-	            $(this).next(".added_box").siblings(".added_box").slideUp(300);
-	
-	        });
-	        
-	        $(".added_box_container").click(function(){
-	    		location.href="/spring/getBusStopRoadView.action?university=1&busStopcategorySeq=37&busStopSeq="+$(this).attr("busStopSeq");
-	    	});
-	    });
+       var now = new Date(); // 시간을 받아오는 객체 생성
+       var hour = now.getHours(); // 시
+       var minute = now.getMinutes(); // 분
+       var busAddress = ['url("/spring/images/busSchedule/red_1.png")','url("/spring/images/busSchedule/red_2.png")','url("/spring/images/busSchedule/red_3.png")'];
+   
+   
+       function checkTime_Logo(){ // 시간에 따른 메인 로고 변경 함수
+   
+           if( hour > 7 && hour < 17){
+               $('#hedaerTop').css('background-image',busAddress[0]);
+           }
+           else if(hour > 16 && hour < 20){
+               $('#hedaerTop').css('background-image',busAddress[1]);
+           }
+           else if(hour > 19 || hour < 7){
+               $('#hedaerTop').css('background-image',busAddress[2]);
+           }
+       }
+   
+       function checkBorder(){
+           var box = $('.added_box');
+           for(var i = 0; i<box.length; i++){
+               $(box[i]).children().last().css('border-bottom','0px solid black');
+           }
+       }
+   
+   
+   
+   
+   
+       $(document).ready(function(){
+           checkTime_Logo();
+           checkBorder();
+           $('.whiteBox').click(function(){
+               $(this).next(".added_box").stop().slideToggle(300);
+               $(this).toggleClass('on').siblings().removeClass('on');
+               $(this).next(".added_box").siblings(".added_box").slideUp(300);
+   
+           });
+           
+           $(".added_box_container").click(function(){
+             location.href="/spring/getBusStopRoadView.action?university=1&busStopCategorySeq=37&busStopSeq="+$(this).attr("busStopSeq");
+          });
+       });
 
     </script>
     
-	<style>
-	 @font-face {
-			font-family: "Pretendard-Bold";
-			src:url(/spring/css/fonts/2022/Pretendard-Bold.woff) format("truetype");
-	    }
-	    @font-face {
-			font-family: "Pretendard-Medium";
-			src:url(/spring/css/fonts/2022/Pretendard-Medium.woff) format("truetype");
-	    }
+   <style>
+    @font-face {
+         font-family: "Pretendard-Bold";
+         src:url(/spring/css/fonts/2022/Pretendard-Bold.woff) format("truetype");
+       }
+       @font-face {
+         font-family: "Pretendard-Medium";
+         src:url(/spring/css/fonts/2022/Pretendard-Medium.woff) format("truetype");
+       }
 
         html,body{
             width: 100%;
@@ -216,58 +216,58 @@
     </style>
 </head>
 <body>
-	<!-- <div id = "header">
-	    <div id = "header_top">
-	        <div id = "header_top_text">
-	            <span style = "float:left;margin-right:10px;"><img src="/spring/images/2022busStop/ButtonHome_White.png" style="height:30px;"></span>
-	            <span style = "float:left;">통학 버스</span>
-	            <div id = "header_top_text_box_schedule" onclick="location.href='/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq=37&weekDays=normal';"></div>
-	        </div>
-	    </div>
-	    <div id = "header_bottom">
-	        <div id = "header_bottom_layout">
-	            <div id = "header_bottom_text">
-	                <img id = "header_bottom_logo"  src="/spring/images/busSchedule/안내_아이콘.png">
-	                <span style="position:relative; bottom:25%;">통학버스는 실시간 조회 서비스를 제공하지 않습니다.</span>
-	            </div>
-	        </div>
-	    </div>
-	</div> -->
-	
-	
-	
-	
-	<div id="header">
-	    <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
+   <!-- <div id = "header">
+       <div id = "header_top">
+           <div id = "header_top_text">
+               <span style = "float:left;margin-right:10px;"><img src="/spring/images/2022busStop/ButtonHome_White.png" style="height:30px;"></span>
+               <span style = "float:left;">통학 버스</span>
+               <div id = "header_top_text_box_schedule" onclick="location.href='/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq=37&weekDays=normal';"></div>
+           </div>
+       </div>
+       <div id = "header_bottom">
+           <div id = "header_bottom_layout">
+               <div id = "header_bottom_text">
+                   <img id = "header_bottom_logo"  src="/spring/images/busSchedule/안내_아이콘.png">
+                   <span style="position:relative; bottom:25%;">통학버스는 실시간 조회 서비스를 제공하지 않습니다.</span>
+               </div>
+           </div>
+       </div>
+   </div> -->
+   
+   
+   
+   
+   <div id="header">
+       <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
         <div id="hedaerTop">
-			<div id="headerTopContents">
-				<div id="button_Home_Zone">
-					<div id="button_Home" onclick="location.href='/spring/user/seoulBus.action'">
-						
-					</div>
-				</div>
-			    <div id="busTypeZone">
-			    	<div id = "busType">통학버스</div>
-			    </div>
-			    <div id="buttonsZone">
-			        <div id="buttons">
-    			        <div id="btnBusScheduleZone" onclick="location.href='/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq=37&weekDays=normal';">
-			                <div id="btnBusSchedule">
-			                </div>
-			            </div>
-			            <div id="btnRouteMapZone">
-			                <div id="btnRouteMap" style = "background:none;" >
-			                </div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
+         <div id="headerTopContents">
+            <div id="button_Home_Zone">
+               <div id="button_Home" onclick="location.href='/spring/index.action'">
+                  
+               </div>
+            </div>
+             <div id="busTypeZone">
+                <div id = "busType">통학 버스</div>
+             </div>
+             <div id="buttonsZone">
+                 <div id="buttons">
+                     <div id="btnBusScheduleZone" onclick="location.href='/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq=37&weekDays=normal';">
+                         <div id="btnBusSchedule">
+                         </div>
+                     </div>
+                     <div id="btnRouteMapZone">
+                         <div id="btnRouteMap" style = "background:none;" >
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
         </div>
         <div id="busStopNotification">
             <div id="busStopNotice" >
                 <div id="noticeIconZone" class="busNotice">
                     <div id="noticeIcon">
-                    	<!-- css background에 이미지 들어있음 -->
+                       <!-- css background에 이미지 들어있음 -->
                     </div>
                 </div>
                 <div id="busNoticeContents" class="busNotice">
@@ -277,27 +277,27 @@
             </div>
         </div>
     </div>
-	
-	
-	
-	
-	<div id = "footer">
-		<c:forEach items = "${dlist}" var = "dlist" varStatus = "out">
-			<div class = "whiteBox" >
-				<div class = "whiteBox_left">${dlist.busStopDetailCategoryName}</div>
-				<div class = "whiteBox_right"></div>
-				<div style="clear:both;"></div>
-			</div>
-			<div class = "added_box">
-				<c:forEach items = "${busStopList}" var = "busStopList" varStatus = "in">
-					<c:if test="${dlist.busStopDetailCategoryName == busStopList.busStopDetailCategoryName }">
-						<div class = "added_box_container" busStopSeq='${busStopList.busStopSeq}' >
-							${busStopList.busStop}
-						</div>
-					</c:if>
-				</c:forEach>
-			</div>	
-		</c:forEach>
-	</div>
+   
+   
+   
+   
+   <div id = "footer">
+      <c:forEach items = "${dlist}" var = "dlist" varStatus = "out">
+         <div class = "whiteBox" >
+            <div class = "whiteBox_left">${dlist.busStopDetailCategoryName}</div>
+            <div class = "whiteBox_right"></div>
+            <div style="clear:both;"></div>
+         </div>
+         <div class = "added_box">
+            <c:forEach items = "${busStopList}" var = "busStopList" varStatus = "in">
+               <c:if test="${dlist.busStopDetailCategoryName == busStopList.busStopDetailCategoryName }">
+                  <div class = "added_box_container" busStopSeq='${busStopList.busStopSeq}' >
+                     ${busStopList.busStop}
+                  </div>
+               </c:if>
+            </c:forEach>
+         </div>   
+      </c:forEach>
+   </div>
 </body>
 </html>

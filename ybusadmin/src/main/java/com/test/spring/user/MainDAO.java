@@ -30,9 +30,12 @@ public class MainDAO {
 	}
 
 
-	public List<NoticeDTO> getAllNotice() { // 테이블의 데이터를 다 가져옴
+	public List<NoticeDTO> getAllNotice(String word) { // 테이블의 데이터를 다 가져옴
 		// TODO Auto-generated method stub
-		return sql.selectList("mainIndex.getAllNotice");
+		if(word == null) {word ="";}
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("word", word);// 검색어
+		return sql.selectList("mainIndex.getAllNotice",map);
 	}
 
 
