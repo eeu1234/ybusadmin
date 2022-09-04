@@ -93,7 +93,7 @@ function moveMap(){
         <div id="hedaerTop">
 			<div id="headerTopContents">
 				<div id="button_Home_Zone">
-					<div id="button_Home">
+					<div id="button_Home" onclick="location.href='/spring/user/seoulBus.action'">
 						
 					</div>
 				</div>

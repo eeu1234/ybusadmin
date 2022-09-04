@@ -291,7 +291,7 @@
         <div id="infoPage">
             <div id="txtBox">
                 <div id="txtType">
-                    공지사항
+                    <img src="/spring/images/camsns/backBtn.png" style="height:20px;width:auto;margin-right:3%;" onclick="location.href='/spring/index.action'" />공지사항
                 </div>
             </div>
             <div id="btnBox">

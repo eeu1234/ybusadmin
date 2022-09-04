@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cambus</title>
+<title>YBUS</title>
 
 
 <!-- 모바일용웹 -->
@@ -40,14 +40,10 @@
 
 
 <style>
-@font-face {
-	font-family: "notoFont-medium";
-	src: url(/spring/css/fonts/NotoSansCJKkr-Medium.woff) format("truetype");
-}
 
 @font-face {
-	font-family: "notoFont-bold";
-	src: url(/spring/css/fonts/NotoSansCJKsc-Bold.woff) format("truetype");
+font-family: "Pretendard-Bold";
+src:url(/spring/css//fonts/2022/Pretendard-Bold.woff) format("truetype");
 }
 
 body, p, div, li, ul, span, img {
@@ -80,49 +76,13 @@ body, html {
 	max-width: 480px;
 	height: 568px;
 	margin: 0 auto;
-	background-color: yellow;
+	background-color:#FAFAFC;
 }
 
-#top {
-	position: fixed;
-	max-width: 480px;
-	width: 100%;
-	height: 25%;
-	z-index: 3;
-}
-
-#header {
-	position: relative;
-	width: 100%;
-	height: 50px;
-	background-color: #003d4f;
-	text-align: center;
-	color: white;
-	background-color: #003d4f;
-}
-
-#infoPage {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background-color: #003d4f;
-}
-
-#txtLogo {
-	position: relative;
-	width: 60%;
-	height: 80%;
-	padding-top: 3.5%;
-	margin: 0 auto;
-	font-weight: bold;
-}
-
-#logo {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	width: auto;
+#title{
+	font-family: "Pretendard-Bold";
+	font-size:1.5em;
+	padding:15% 0 1% 5%;
 }
 
 #btnArea {
@@ -168,8 +128,6 @@ body, html {
 	height: 90%;
 	margin: 0;
 	padding: 0;
-	padding-top:12%;
-
 	background-color: white;
 }
 /* 아이폰5 */
@@ -397,28 +355,14 @@ function moveMap(){
 </head>
 <body>
 	<div id="container">
-		<div id="top">
-			<div id="header">
-				<div id="infoPage">
-					<input type="button" value="<" style="color:white;position: absolute; font-size:1.5em;left: 3%;margin-top:2.5%; width: 8%; height: 50%;  background-color: transparent !important; border-color: transparent;"	onclick="location.href='/spring/mainIndex.action';" />
-					<div id="txtLogo">
-					
-					How to Add
-					
-					</div>
-					<img src="/spring/images/logo/${universityDto.universityImg}" id="logo" onerror="this.style.display='none'"/>
-				</div>
-			</div>
-
-			
+		<div id = "title">
+		<span onclick="location.href='/spring/index.action'"> < </span>
+		<span>HOW TO ADD</span>
 		</div>
 		<div id="contents">
 			<div id="lineArea">
-				<img src="/spring/images/info.jpg" id="infoImg">
-				
+				<img src="/spring/images/info.png" id="infoImg">
 			</div>
-			<!-- lineArea  -->
-
 		</div>
 		
 	</div>

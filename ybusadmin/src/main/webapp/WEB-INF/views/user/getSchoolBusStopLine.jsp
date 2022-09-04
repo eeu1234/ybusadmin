@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
     <title>운행시간표</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/spring/css/2022css/busStopHeader.css">
 
     <script>
 	    var now = new Date(); // 시간을 받아오는 객체 생성
@@ -20,13 +21,13 @@
 	    function checkTime_Logo(){ // 시간에 따른 메인 로고 변경 함수
 	
 	        if( hour > 7 && hour < 17){
-	            $('#header_top').css('background-image',busAddress[0]);
+	            $('#hedaerTop').css('background-image',busAddress[0]);
 	        }
 	        else if(hour > 16 && hour < 20){
-	            $('#header_top').css('background-image',busAddress[1]);
+	            $('#hedaerTop').css('background-image',busAddress[1]);
 	        }
 	        else if(hour > 19 || hour < 7){
-	            $('#header_top').css('background-image',busAddress[2]);
+	            $('#hedaerTop').css('background-image',busAddress[2]);
 	        }
 	    }
 	
@@ -215,7 +216,7 @@
     </style>
 </head>
 <body>
-	<div id = "header">
+	<!-- <div id = "header">
 	    <div id = "header_top">
 	        <div id = "header_top_text">
 	            <span style = "float:left;margin-right:10px;"><img src="/spring/images/2022busStop/ButtonHome_White.png" style="height:30px;"></span>
@@ -231,7 +232,55 @@
 	            </div>
 	        </div>
 	    </div>
-	</div>
+	</div> -->
+	
+	
+	
+	
+	<div id="header">
+	    <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
+        <div id="hedaerTop">
+			<div id="headerTopContents">
+				<div id="button_Home_Zone">
+					<div id="button_Home" onclick="location.href='/spring/user/seoulBus.action'">
+						
+					</div>
+				</div>
+			    <div id="busTypeZone">
+			    	<div id = "busType">통학버스</div>
+			    </div>
+			    <div id="buttonsZone">
+			        <div id="buttons">
+    			        <div id="btnBusScheduleZone" onclick="location.href='/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq=37&weekDays=normal';">
+			                <div id="btnBusSchedule">
+			                </div>
+			            </div>
+			            <div id="btnRouteMapZone">
+			                <div id="btnRouteMap" style = "background:none;" >
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+        </div>
+        <div id="busStopNotification">
+            <div id="busStopNotice" >
+                <div id="noticeIconZone" class="busNotice">
+                    <div id="noticeIcon">
+                    	<!-- css background에 이미지 들어있음 -->
+                    </div>
+                </div>
+                <div id="busNoticeContents" class="busNotice">
+                    통학버스는 위치조회 서비스를 제공하지 않습니다.
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+    </div>
+	
+	
+	
+	
 	<div id = "footer">
 		<c:forEach items = "${dlist}" var = "dlist" varStatus = "out">
 			<div class = "whiteBox" >

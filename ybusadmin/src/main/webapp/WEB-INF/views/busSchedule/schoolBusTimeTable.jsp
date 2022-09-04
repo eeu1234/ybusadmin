@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
     <title>운행시간표</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/spring/css/2022css/busStopHeader.css">
 
     <script>
         var now = new Date(); // 시간을 받아오는 객체 생성
@@ -24,13 +25,13 @@
         function checkTime_Logo(){ // 시간에 따른 메인 로고 변경 함수
 
             if( hour > 7 && hour < 17){
-                $('#header_top').css('background-image',busAddress[0]);
+                $('#hedaerTop').css('background-image',busAddress[0]);
             }
             else if(hour > 16 && hour < 20){
-                $('#header_top').css('background-image',busAddress[1]);
+                $('#hedaerTop').css('background-image',busAddress[1]);
             }
             else if(hour > 19 || hour < 7){
-                $('#header_top').css('background-image',busAddress[2]);
+                $('#hedaerTop').css('background-image',busAddress[2]);
             }
         }
         
@@ -63,8 +64,8 @@
         		}
         	}
         	if(nowTime > pickMax(mainTimeList)){
-        		$('<img id = "header_bottom_logo"  src="/spring/images/busSchedule/안내_아이콘.png">').prependTo('#header_bottom_text');
-				$('#notice_text').text('지금은 버스운행 시간이 아닙니다.');
+        		$('<div id="noticeIcon"></div>').prependTo('#noticeIconZone');
+				$('#busNoticeContents').text('지금은 버스운행 시간이 아닙니다.');
         	}
         	
         }
@@ -177,7 +178,7 @@
             font-size:0.75em;
             float:left;
         }
-        #container{
+        #container1{
             width:45.18%;
             margin-left:50.21%;
             margin-right:4.61%;
@@ -356,7 +357,7 @@
     </style>
 </head>
 <body>
-<div id = "header">
+<!-- <div id = "header">
     <div id = "header_top">
         <div id = "header_top_text">
             <span>버스 시간표</span>
@@ -369,8 +370,36 @@
             </div>
         </div>
     </div>
-</div>
-<div id = "container">
+</div> -->
+
+
+ <div id="header">
+    <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
+       <div id="hedaerTop">
+		<div id="headerTopContents">
+			<div id="button_Home_Zone">
+				<div id="button_Home" onclick="location.href='/spring/user/seoulBus.action'">
+					
+				</div>
+			</div>
+		    <div id="busTypeZone">
+		    	<div id = "busType">버스시간표</div>
+		    </div>
+		</div>
+       </div>
+       <div id="busStopNotification">
+           <div id="busStopNotice" >
+               <div id="noticeIconZone" class="busNotice">
+               </div>
+               <div id="busNoticeContents" class="busNotice"></div>
+               <div style="clear: both"></div>
+           </div>
+       </div>
+   </div>
+
+
+
+<div id = "container1">
     <select id = "container_selectBus">
         <c:forEach items = "${clist}" var = "category">
     	<option value="${category.busStopCategorySeq}"  <c:if test="${busStopCategorySeq == category.busStopCategorySeq}">selected</c:if>>${category.busStopCategory}</option>    	
