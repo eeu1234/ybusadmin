@@ -94,11 +94,6 @@ function moveMap(){
 	    <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
         <div id="hedaerTop">
 			<div id="headerTopContents">
-				<div id="button_Home_Zone">
-					<div id="button_Home">
-						
-					</div>
-				</div>
 			    <div id="busTypeZone">
 			    
 			    	<c:choose>
@@ -118,8 +113,13 @@ function moveMap(){
 							</div>
 						</c:otherwise>
 					</c:choose>
-					
+
 			    </div>
+			    <div id="button_Home_Zone">
+					<div id="button_Home">
+						
+					</div>
+				</div>
 			    <div id="buttonsZone">
 			        <div id="buttons">
     			        <div id="btnBusScheduleZone">

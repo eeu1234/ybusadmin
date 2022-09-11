@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cambus</title>
+<title>학교갈땐::YBUS</title>
 
 <%@include file="/inc/userAsset.jsp" %>
 

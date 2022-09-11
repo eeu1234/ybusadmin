@@ -358,7 +358,7 @@
 				</c:if>
 				<c:forEach items="${clist}" var="cdto">
 					<div class="mainComment">
-					<div class="commentWriter">관리자</div>
+					<div class="commentWriter">익명</div>
 					<div class="commentContents">
 					<c:if test="${cdto.snscommentFilename != null}">
 					 	<c:if test="${cdto.snscommentFilename != ''}"> 

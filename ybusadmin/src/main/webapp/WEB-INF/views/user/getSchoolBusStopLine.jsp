@@ -16,8 +16,7 @@
        var hour = now.getHours(); // 시
        var minute = now.getMinutes(); // 분
        var busAddress = ['url("/spring/images/busSchedule/red_1.png")','url("/spring/images/busSchedule/red_2.png")','url("/spring/images/busSchedule/red_3.png")'];
-   
-   
+
        function checkTime_Logo(){ // 시간에 따른 메인 로고 변경 함수
    
            if( hour > 7 && hour < 17){
@@ -37,11 +36,7 @@
                $(box[i]).children().last().css('border-bottom','0px solid black');
            }
        }
-   
-   
-   
-   
-   
+
        $(document).ready(function(){
            checkTime_Logo();
            checkBorder();
@@ -233,22 +228,21 @@
            </div>
        </div>
    </div> -->
-   
-   
-   
-   
+
    <div id="header">
        <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
         <div id="hedaerTop">
          <div id="headerTopContents">
-            <div id="button_Home_Zone">
+             <div id="busTypeZone">
+	             <div id = "busType">
+	             	통학 버스
+	             </div>
+             </div>
+             <div id="button_Home_Zone">
                <div id="button_Home" onclick="location.href='/spring/index.action'">
                   
                </div>
             </div>
-             <div id="busTypeZone">
-                <div id = "busType">통학 버스</div>
-             </div>
              <div id="buttonsZone">
                  <div id="buttons">
                      <div id="btnBusScheduleZone" onclick="location.href='/spring/busSchedule/schoolBusTimeTable.action?busStopCategorySeq=37&weekDays=normal';">
@@ -277,10 +271,7 @@
             </div>
         </div>
     </div>
-   
-   
-   
-   
+
    <div id = "footer">
       <c:forEach items = "${dlist}" var = "dlist" varStatus = "out">
          <div class = "whiteBox" >
@@ -299,5 +290,18 @@
          </div>   
       </c:forEach>
    </div>
+   <div style="position:relative;width:100%;margin:0 auto;margin-top:15px;">
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-2370297300940223"
+		     data-ad-slot="9489841046"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true">
+	     </ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
 </body>
 </html>

@@ -353,44 +353,48 @@
   </div>
 </div> -->
 
-
-
-
-  <div id="header">
-    <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
-       <div id="hedaerTop">
-      <div id="headerTopContents">
-         <div id="button_Home_Zone">
-            <div id="button_Home" onclick="location.href='/spring/index.action'">
-               
-            </div>
-         </div>
-          <div id="busTypeZone">
-             <div id = "busType">버스 시간표</div>
-          </div>
-          <div id="buttonsZone">
-                 <div id="buttons">
-                     <div id="btnBusScheduleZone">
-                         <div id="btnBusSchedule">
-                         </div>
-                     </div>
-                     <div id="btnRouteMapZone">
-                         <div id="btnRouteMap">
-                         </div>
-                     </div>
-                 </div>  
-             </div>
-      </div>
-       </div>
-       <div id="busStopNotification">
-           <div id="busStopNotice" >
-               <div id="noticeIconZone" class="busNotice">
-               </div>
-               <div id="busNoticeContents" class="busNotice"></div>
-               <div style="clear: both"></div>
-           </div>
-       </div>
-   </div>
+<div id="header">
+	<input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
+	<div id="hedaerTop">
+		<div id="headerTopContents">
+			<div id="busTypeZone">
+				<div id = "busType">
+					버스 시간표
+				</div>
+			</div>
+			<div id="button_Home_Zone">
+				<div id="button_Home" onclick="location.href='/spring/index.action'">
+			
+				</div>
+			</div>
+			<div id="buttonsZone">
+				<div id="buttons">
+					<div id="btnBusScheduleZone">
+							<div id="btnBusSchedule">
+							</div>
+					</div>
+					<div id="btnRouteMapZone">
+						<div id="btnRouteMap">
+						</div>
+					</div>
+				</div>  
+			</div>
+		</div>
+	</div>
+	<div id="busStopNotification">
+		<div id="busStopNotice" >
+			<div id="noticeIconZone" class="busNotice">
+				<div id="noticeIcon" style="display:none;">
+					<!-- css background에 이미지 들어있음 -->
+				</div>
+			</div>
+			<div id="busNoticeContents" class="busNotice">
+				<!-- 통학버스는 위치조회 서비스를 제공하지 않습니다. -->
+			</div>
+			<div style="clear: both"></div>
+		</div>
+	</div>
+</div>
     
 <div id = "container1">
   <select id = "container_selectBus">
@@ -468,7 +472,19 @@
   
   
   </div>
-
+<div style="position:relative;width:100%;margin:0 auto;margin-top:15px;">
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-2370297300940223"
+		     data-ad-slot="9489841046"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true">
+	     </ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
 
 
 </body>

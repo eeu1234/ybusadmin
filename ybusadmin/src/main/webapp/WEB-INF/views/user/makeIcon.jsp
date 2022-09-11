@@ -136,138 +136,22 @@ body, html {
  padding-top:15%;
  } 
 }
-/* 정류장 타임라인 틀 시작 */
-#lineArea {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-
-.busStop {
-	position: relative;
-	width: 100%;
-	height: 50px;
-	background-color: white;
-	border-bottom: 2px solid #b2b2b2;
-}
-
-
-/* 정류장 선 */
-.way {
-	position: relative;
-	float: left;
-	width: 35%;
-	height: 100%;
-}
-/* 타임라인 시작 정류장  */
-#startPoint {
-	position: absolute;
-/* 	background-image: url("./images/timeLine/startPoint.png");
-	background-repeat: no-repeat;
-	background-size: cover;
- */	width: 100%;
-	height: 100%;
-}
-/* 타임라인 마지막 정류장  */
-#endPoint {
-	position: absolute;
-	top: 0;
-	left: 0;
-	/* background-image: url("./images/timeLine/endPoint.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-	 */width: 100%;
-	height: 100%;
-}
-/* 상행선*/
-.upLine {
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	width: 100%;
-	height: 100%;
-}
-/* 하행선 */
-.downLine {
-	position: absolute;
-	top: 0;
-	left: 0;
+#txtType{
+    position: relative;
+    font-weight: bold;
+    color : #142637;
+    text-align: left;
+    font-size: 2em;
+	padding-top:5.5%;
+	padding-bottom:5.5%;
+	font-family: "Pretendard-Bold";
+	height:35px;
+	width:90%;
+	padding-left:5%;
+	padding-right:5%;
 	
-	width: 100%;
-	height: 100%;
+			
 }
-/* 회차  */
-.turnLine {
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	width: 100%;
-	height: 100%;
-}
-
-
-#turnPoint {
-	position: absolute;
-	top: 0;
-	left: 0;
-/* 	background-image: url("./images/timeLine/turnPoint.png");
-	background-repeat: no-repeat;
-	background-size: cover; */
-	width: 100%;
-	height: 100%;
-}
-.lineImg{
-	width:auto;
-	height:105%;
-	float:right;
-	margin-right:25%;
-	z-index:10;
-	
-}
-
-
-
-.stopName {
-	
-	float: left;
-	width: 65%;
-	height: 100%;
-}
-
-.txtName {
-	margin-top: 6%;
-}
-
-/* 버스 아이콘 관련 시작 */
-.busIcon {
-	position: relative;
-	width: 50%;
-	height: 90%;
-	float: left;
-	padding-top:4%;
-}
-
-.busNum {
-	position: relative;
-	float: left;
-	width: 50%;
-	height: 90%;
-	text-align: right;
-	padding-top:4%;
-	
-}
-
-.busTxt {
-	position: absolute;
-	width: 50%;
-	height: 30%;
-	font-size: 0.3em;
-	padding-top: 20%;
-	padding-left: 22px;
-}
-
 #footer {
 	position: relative;
 	width: 95%;
@@ -277,40 +161,6 @@ body, html {
 	color: #272727;
 	font-size: 0.5em;
 	padding-left:5%;
-}
-#changeMap{
-	position:absolute;
-	 width:auto;
-	 height:80%;
-	 margin:0;
-	 padding:0;
-	 margin-right:17%;
-	 top:10%;
-	 right:0;
-	 cursor:pointer;
-	 
-}#refreshBtn{
-	position:absolute;
-	 width:auto;
-	 height:80%;
-	 margin:0;
-	 padding:0;
-	 margin-right:5%;
-	 top:10%;
-	 right:0;
-	 cursor:pointer;
-}
-
-#detailLocationSel{
-
-	 width:50%;
-	 height:80%;
-	 margin:0;
-	 padding:0;
-	 margin-right:5%;
-	 margin-top:1%;
-
-
 }
 
 #top{
@@ -355,10 +205,13 @@ function moveMap(){
 </head>
 <body>
 	<div id="container">
-		<div id = "title">
-		<span onclick="location.href='/spring/index.action'"> < </span>
-		<span>HOW TO ADD</span>
-		</div>
+		
+	 		<div id="txtType">
+				<div style="float:left;height:38px;">자유게시판</div>
+				<div style="float:left;height:38px;margin-left:5px;padding-left:2px;"><img src="/spring/images/mainIndex/home_btn_navy.png" style="height:35px;width:auto;" onclick="location.href='/spring/index.action'" /></div>
+				<div class="clear"></div> 
+			</div>
+		
 		<div id="contents">
 			<div id="lineArea">
 				<img src="/spring/images/info.png" id="infoImg">

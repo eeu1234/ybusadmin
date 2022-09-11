@@ -99,11 +99,7 @@ function moveMap(){
 	    <input type="hidden" id="busStopCategorySeq" value="${busStopCategorySeq}">
         <div id="hedaerTop">
 			<div id="headerTopContents">
-				<div id="button_Home_Zone">
-					<div id="button_Home" onclick="location.href='/spring/user/seoulBus.action'">
-						
-					</div>
-				</div>
+				
 			    <div id="busTypeZone">
 			    
 			    	<c:choose>
@@ -125,6 +121,12 @@ function moveMap(){
 					</c:choose>
 					
 			    </div>
+			    <div id="button_Home_Zone">
+					<div id="button_Home" onclick="location.href='/spring/user/seoulBus.action'">
+						
+					</div>
+				</div>
+			    
 			    <div id="buttonsZone">
 			        <div id="buttons">
     			        <div id="btnBusScheduleZone">
@@ -209,16 +211,20 @@ function moveMap(){
 									
 								<c:forEach items='${cblList}' var='cbldto'>
 									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
-										<div class="busBox">
-											<div class="busStatus">
-												<div class="busNumber">
-													${cbldto.businfoName}
-												</div>
-												<div class="busRefreshTime">
-													
+									
+										<div class="busBoxZone">
+											<div class="busBox">
+												<div class="busStatus">
+													<div class="busNumber">
+														${cbldto.businfoName}
+													</div>
+													<div class="busRefreshTime">
+														<!-- 15:57 갱신 -->
+													</div>
 												</div>
 											</div>
 										</div>
+									
 									</c:if>
 								</c:forEach>
 								
@@ -260,18 +266,20 @@ function moveMap(){
 			                    </div>
 																	
 								<c:forEach items='${cblList}' var='cbldto'>
-								<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
-								
-									<div class="busBox">
-										<div class="busStatus">
-											<div class="busNumber">
-												${cbldto.businfoName}
-											</div>
-											<div class="busRefreshTime">
-												<!-- 15:57 갱신 -->
+									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
+									
+										<div class="busBoxZone">
+											<div class="busBox">
+												<div class="busStatus">
+													<div class="busNumber">
+														${cbldto.businfoName}
+													</div>
+													<div class="busRefreshTime">
+														<!-- 15:57 갱신 -->
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
 									
 									</c:if>
 								</c:forEach>
@@ -346,16 +354,20 @@ function moveMap(){
 								</c:if>
 								<c:forEach items='${cblList}' var='cbldto'>
 									<c:if test="${cbldto.busStopSeq==dto.busStopSeq}">
-										<div class="busBox">
-											<div class="busStatus">
-												<div class="busNumber">
-													${cbldto.businfoName}
-												</div>
-												<div class="busRefreshTime">
-													<!-- 15:57 갱신 -->
+									
+										<div class="busBoxZone">
+											<div class="busBox">
+												<div class="busStatus">
+													<div class="busNumber">
+														${cbldto.businfoName}
+													</div>
+													<div class="busRefreshTime">
+														<!-- 15:57 갱신 -->
+													</div>
 												</div>
 											</div>
 										</div>
+											
 									</c:if>
 								</c:forEach>
 								

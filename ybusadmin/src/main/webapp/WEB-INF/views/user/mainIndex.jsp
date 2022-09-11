@@ -7,26 +7,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!--구글 애드센스-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2370297300940223"
+     crossorigin="anonymous"></script>
     
     <link rel="apple-touch-icon" href="/spring/images/ico/favicon.ico">
     <link rel="icon" href="/spring/images/ico/favicon.ico" type="image/x-icon" sizes="16x16">
     
     <script>
-	    $(document).ready(function(){
-	    	setTimeout(function() {
-	    		  $('.busteam').fadeOut('fast');
-	    		}, 4000); // <-- time in milliseconds
-	    		
-	    		
-	    	$('.busTeam').css("display","inline");	
-	   	});
-    
-    	function showTeam(){
-    			
-    		setTimeout(function() {
-	    		  $('.busteam').fadeOut('fast');
-    		}, 4000); // <-- time in milliseconds
-		};
         var img = {
             redBus:['url(/spring/images/mainIndex/redBus_1.png)','url(/spring/images/mainIndex/redBus_2.png)','url(/spring/images/mainIndex/redBus_3.png)'],
             yellowBus:['url(/spring/images/mainIndex/yellowBus_1.png)','url(/spring/images/mainIndex/yellowBus_2.png)','url(/spring/images/mainIndex/yellowBus_3.png)'],
@@ -65,6 +53,15 @@
                 $('#container_mid_blueBus').css('background-image',img.blueBus[2]);
             }
         }
+        function weatherComment(code){
+        	if(code == "ThunderStorm"){return "소나기";}
+        	else if(code == "Drizzle"){return "이슬비";}
+        	else if(code == "Rain"){return "비";}
+        	else if(code == "Snow"){return "눈";}
+        	else if(code == "Atmosphere"){return "안개";}
+        	else if(code == "Clouds"){return "구름";}
+        	else if(code == "Clear"){return "맑음";}
+        }
         
         function getWeather() {
            var url = 'http://api.openweathermap.org/data/2.5/weather?lat=${universityDto.universityLatitude}&lon=${universityDto.universityLongitude}&APPID=62790597231fb6fa089bb576c8f8b650&units=metric&lang=kr';
@@ -77,7 +74,7 @@
              success: function (data) {
                 var temp = parseInt(data.main.temp);
                 var waetherIcon = data.weather[0].icon;
-                var status = data.weather[0].description;
+                var status = weatherComment(data.weather[0].main);
                 $("#container_top_weather_bottom_temperature").text(temp+'°');
                 $("#container_top_weather_bottom_weatherIcon").css("content","url('/spring/images/mainIndex/"+waetherIcon+".png')")
              $("#container_top_weather_bottom_weatherStatus").text(status);   
@@ -526,6 +523,7 @@
         width:100%;
         height:33.6%;
         position:relative;
+        right:4%;
     }
     #container_top_weather_bottom_weatherIcon{
         height:100%;
@@ -537,7 +535,6 @@
         font-size:1.9em;
         float:left;
         letter-spacing: -1.6px;
-        right:8%;
         font-family: "Pretendard-Bold";
         color:#ffffff;
     }
@@ -546,7 +543,7 @@
         position:relative;
         font-size:0.75em;
         float:left;
-        right:5.5%;
+        right:-4%;
         letter-spacing: -0.3px;
         padding-top:2%;
         font-family: "Pretendard-Bold";
@@ -881,7 +878,6 @@
 
 </head>
 <body>
-	<img src="/spring/images/team.png" class="busteam" style="width:100%;top:0;left:0;z-index:999;">
     <div id = "content">
         <div id = "header">
            <div id = "header_logoBox">
@@ -937,6 +933,7 @@
                 <div style="clear:both"></div>
             </div>
             <div id = "container_mid">
+            	<div id = "container_bottom_title">실시간 위치</div>
                 <div id = "container_mid_blueBus" class = "container_bus_rayout" value = "18" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=18';">
                     <div id = "container_mid_blueBus_dot" class = "checkBus_box"
                        <c:forEach items = "${cblList}" var = "list">
@@ -955,7 +952,7 @@
                           </c:if>
                        </c:forEach>
                     ></div>
-                    <div id = "container_mid_yellowBus_text">노란버스</div>
+                    <div id = "container_mid_yellowBus_text">노랑버스</div>
                 </div>
                 <div id = "container_mid_redBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getSchoolBusStopLine.action';">
                     <div id = "container_mid_redBus_dot" class = "checkBus_box" style = "background-color:gray;"></div>
@@ -997,25 +994,25 @@
                     <div class = "footer_tip_blank"></div>
                     <div id = "footer_tip_left_top">YBUS 이용 팁</div>
                     <div class = "footer_tip_blank"></div>
-                    <div id = "footer_tip_left_bottom">YBUS를<br>앱처럼이용하고<br>사용하고싶다면?</div>
+                    <div id = "footer_tip_left_bottom">YBUS를<br>앱처럼<br>사용하고싶다면?</div>
                 </div>
                 <div id = "footer_tip_right">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                  <ins class="adsbygoogle"
-                       style="display:block; height:110px; width:100%;overflow:scroll;max-height:110px;"
-                       data-ad-client="ca-pub-2370297300940223"
-                       data-ad-slot="9489841046"
-                       data-ad-format="auto"
-                       data-full-width-responsive="true"></ins>
-                  <script>
-                       (adsbygoogle = window.adsbygoogle || []).push({});
-                  </script>
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2370297300940223"
+					     crossorigin="anonymous"></script>
+					<!-- 메인페이지 쪽 광고 -->
+					<ins class="adsbygoogle"
+					     style="display:inline-block;width:100%;height:110px;overflow:scroll"
+					     data-ad-client="ca-pub-2370297300940223"
+					     data-ad-slot="2200350134"></ins>
+					<script>
+					     (adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
                 </div>
                 <div style="clear:both;"></div>
             </div>
         </div>
-        
-        <div id = "main_footer">
+    </div>
+    <div id = "main_footer">
            <div id = "logo">
               <a href= "/spring/admin/adminLogin.action">
               <img style= "width:100%;" src="/spring/images/mainIndex/YBUS_footer.png"  >
@@ -1040,7 +1037,6 @@
                <div style ="clear:both;"></div>
            </div>
        </div>
-    </div>
 
    
 </body>

@@ -78,7 +78,7 @@
             width: 100%;
             height:100%;
             margin: 0 auto;
-            margin-top:6%;
+            margin-top:5%;
         }
 
         #header {
@@ -163,7 +163,6 @@
 			position:relative;
 			height:7%;
 			padding-top:6.5%;
-			margin-bottom:10%;
 		}
         #searchBox{
 			position:relative;
