@@ -15,6 +15,7 @@
     <link rel="icon" href="/spring/images/ico/favicon.ico" type="image/x-icon" sizes="16x16">
     
     <script>
+	
         var img = {
             redBus:['url(/spring/images/mainIndex/redBus_1.png)','url(/spring/images/mainIndex/redBus_2.png)','url(/spring/images/mainIndex/redBus_3.png)'],
             yellowBus:['url(/spring/images/mainIndex/yellowBus_1.png)','url(/spring/images/mainIndex/yellowBus_2.png)','url(/spring/images/mainIndex/yellowBus_3.png)'],
@@ -379,7 +380,15 @@
         	changeImgByTime();
             getWeather();
             changeDate();
-            $('#header_notice_mid').vTicker();
+            $('#header_notice_mid').vTicker();  
+            
+            $('#container_bottom_menu_yteam').click(function(){
+            	$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+            	$('.busteam').fadeIn('fast');
+            	setTimeout(function() {
+  	    		  $('.busteam').fadeOut('fast');
+  				}, 4000); // <-- time in milliseconds
+            });
     
         });
 
@@ -833,7 +842,7 @@
     }
     #footer_tip_right_bottom{
     }
-        #main_footer{
+    #main_footer{
         width:90%;
         padding:0 5%;
         background-color:gray;
@@ -878,6 +887,7 @@
 
 </head>
 <body>
+	<img src="/spring/images/team.png" class="busteam" style="width:100%;top:0;left:0;z-index:999;display:none;">	
     <div id = "content">
         <div id = "header">
            <div id = "header_logoBox">
@@ -933,7 +943,7 @@
                 <div style="clear:both"></div>
             </div>
             <div id = "container_mid">
-            	<div id = "container_bottom_title">실시간 위치</div>
+            <div id = "container_bottom_title">실시간 위치</div>
                 <div id = "container_mid_blueBus" class = "container_bus_rayout" value = "18" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=18';">
                     <div id = "container_mid_blueBus_dot" class = "checkBus_box"
                        <c:forEach items = "${cblList}" var = "list">

@@ -100,7 +100,7 @@
         #txtBox {
             position: relative;
             float:left;
-            width: 45%;
+            width: 50%;
             
         }
         #btnBox {
@@ -113,7 +113,7 @@
             position: relative;
             color : #142637;
             text-align: left;
-            font-size: 1.8em;
+            font-size: 1.9em;
 			padding-top:0.5%;
 			padding-bottom:0.5%;
 			font-family : 'Pretendard-Bold';
@@ -315,7 +315,9 @@
         <div id="infoPage">
             <div id="txtBox">
                 <div id="txtType">
-                    <img src="/spring/images/camsns/backBtn.png" style="height:20px;width:auto;margin-right:3%;" onclick="location.href='/spring/index.action'" />공지사항
+              		<div style="float:left;width:65%;height:38px;">공지사항</div>
+					<div style="float:left;height:38px;"><img src="/spring/images/mainIndex/home_btn_navy.png" style="height:35px;width:auto;" onclick="location.href='/spring/index.action'" /></div>
+					<div class="clear"></div> 
                 </div>
             </div>
             <div id="btnBox">

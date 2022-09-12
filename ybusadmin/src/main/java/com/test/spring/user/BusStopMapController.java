@@ -171,6 +171,13 @@ public class BusStopMapController {
 			BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);//지정된 노선의 맵 중앙
 			List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);//지정된 정류장
 			List<CurrBusLocationDTO> cblList = dao.getCurrBusStopLocation(map);//현재 버스 위치
+			
+			for(int i = 0; i< cblList.size(); i++){
+				
+				cblList.get(i).setLocationTime(cblList.get(i).getLocationTime().substring(11, 16)+" 갱신");
+				
+			}
+
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
 			UniversityDTO unidto = dao.getUniversityArea(universitySeq);
 			/*

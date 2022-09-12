@@ -45,6 +45,14 @@
 font-family: "Pretendard-Bold";
 src:url(/spring/css//fonts/2022/Pretendard-Bold.woff) format("truetype");
 }
+@font-face {
+font-family: "Pretendard-SemiBold";
+src:url(/spring/css//fonts//2022/Pretendard-SemiBold.woff) format("truetype");
+}
+@font-face {
+font-family: "Pretendard-Medium";
+src:url(/spring/css//fonts//2022/Pretendard-Medium.woff) format("truetype");
+}
 
 body, p, div, li, ul, span, img {
 	margin: 0;
@@ -61,11 +69,6 @@ body, html {
 	width: 100%;
 	max-width: 480px;
 	height: 100%;
-	font-family: 'notoFont-bold';
-	color: #222;
-	background-color: white;
-	overflow-x: hidden;
-	height: 100%;
 	margin: 0 auto;
 	/* -webkit-overflow-scrolling: touch; 터치부드럽게 상단고정해더가 늦게움직이는현상발생*/
 }
@@ -74,7 +77,6 @@ body, html {
 	position: relative;
 	width: 100%;
 	max-width: 480px;
-	height: 568px;
 	margin: 0 auto;
 	background-color:#FAFAFC;
 }
@@ -130,6 +132,48 @@ body, html {
 	padding: 0;
 	background-color: white;
 }
+#main_footer{
+    width:90%;
+    padding:0 5%;
+    background-color:gray;
+    color:white;
+}
+#logo{
+    width:23.2%;
+    padding:7.2% 0;
+}
+#prevVersion{
+    font-family:"Pretendard-semiBold";
+    font-size:0.7em;
+}
+#info{
+    width:100%;
+    padding-top:12.8px;
+    padding-bottom:25.6px;
+    font-family:"Pretendard-Medium";
+    font-size:0.7em;
+    letter-spacing:-0.5px;
+}
+#info_left{
+    width:80%;
+    float:left;
+}
+#info_right{
+    width:20%;
+    float:left;
+}
+#info_right_gmail{
+    width:45%;
+    margin-right:10%;
+    float:left;
+    content:url("/spring/images/mainIndex/gmail_logo.png");
+}
+#info_right_kakao{
+    width:45%;
+    float:left;
+    content:url("/spring/images/mainIndex/kakao.png");
+}
+
 /* 아이폰5 */
 @media(max-width:320px) { 
  #contents{
@@ -175,6 +219,7 @@ body, html {
 #logo{
 	opacity:0.6;
 }
+
 </style>
 
 <script>
@@ -217,7 +262,31 @@ function moveMap(){
 				<img src="/spring/images/info.png" id="infoImg">
 			</div>
 		</div>
-		
 	</div>
+	<div id = "main_footer">
+           <div id = "logo">
+              <a href= "/spring/admin/adminLogin.action">
+              <img style= "width:100%;" src="/spring/images/mainIndex/YBUS_footer.png"  >
+            </a>           
+           </div>
+           <div id = "prevVersion">
+               <span>이전 버전으로 </span>
+           </div>
+           <div id = "info">
+               <div id = "info_left">
+                   <div>
+                       <span>The UNIV BUS::YBUS made by YBUS Team</span>
+                   </div>
+                   <div>
+                       <span>2022 All right (C) reserved.</span>
+                   </div>
+               </div>
+               <div id = "info_right">
+                   <div id = "info_right_gmail" onclick = "location.href='mailto:eeu4327@gmail.com'"></div>
+                   <div id = "info_right_kakao" onclick="location.href='http://pf.kakao.com/_Rxkxjxeu'"></div>
+               </div>
+               <div style ="clear:both;"></div>
+           </div>
+       </div>
 </body>
 </html>
