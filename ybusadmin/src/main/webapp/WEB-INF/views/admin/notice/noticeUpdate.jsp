@@ -210,10 +210,10 @@ $(document).ready(function() {
   	//제목 제한
 	$('#subject').on('keyup', function() {
 
-			if ($(this).val().length > 15) {
+			if ($(this).val().length > 25) {
 				
-				$(this).val($(this).val().substring(0, 15));
-				alert("글자수가 초과하였습니다(공백포함 15자입니다.)");
+				$(this).val($(this).val().substring(0, 25));
+				alert("글자수가 초과하였습니다(공백포함 25자입니다.)");
 			}
 	});
 	 

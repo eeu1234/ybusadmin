@@ -80,9 +80,8 @@
             width: 100%;
             text-align: center;
             color: white;
-	
-
-        }
+		}
+        
         #infoPage {
             position: relative;
 			width:90%;
@@ -90,18 +89,21 @@
 			padding-left:5%;
 			padding-right:5%;
         }
+        
         #txtBox {
             position: relative;
             float:left;
             width: 50%;
             
         }
+        
         #btnBox {
             position: relative;
             float:right;
             width: 46%;
             text-align:center;
 		}
+		
         #txtType{
             position: relative;
             color : #142637;
@@ -110,9 +112,8 @@
 			padding-top:0.5%;
 			padding-bottom:0.5%;
 			font-family : 'Pretendard-Bold';
-
-			
-        }
+		}
+        
         #btnType{
             position: relative;
             font-weight: bold;
@@ -120,9 +121,7 @@
             text-align: right;            
 			padding-bottom:3%;
         }
-
-
-
+        
         #writeBtn{
 			outline:0;
 			border: 0;
@@ -136,9 +135,8 @@
 			padding-bottom:5.2%;
 			padding-top:5.2%;
 			padding-left:6%;
-			
-			
-        }
+		}
+        
         #miniLogo{
 			padding-top:3px;
 			padding-left:4px;
@@ -156,9 +154,7 @@
 			background-color:white;
             border-radius:15px;
             box-shadow: 5px 10px 30px #e0e0e0;
-			
-			
-        }
+		}
 
         #titleBox{
 			position:relative;
@@ -169,9 +165,7 @@
 			padding-top:4%;
 
 			margin:0 auto;
-
         }
-
 
         #title{
 			position:relative;
@@ -181,7 +175,8 @@
 			font-family : 'Pretendard-Bold'; 
 			font-size : 1.15em;
 			color:#00264D;
-        }      
+        }
+        
 		#titleInfo{
 			padding-top:3px;
 			padding-bottom:6%;
@@ -189,8 +184,8 @@
 			font-family: "Pretendard-Medium";
 			font-size:0.8em;
 			border-bottom: 1px solid #B4B4B4;
-			
 		}
+		
 		#contentsBox{
 			height:74%;
 			margin:3%;
@@ -198,9 +193,16 @@
 			margin-bottom:5%;	
 			word-break: break-word;
 		}
+		
 		#imgBox{
-			width:80%;
+			width: 100%;
+			text-align: center;
 		}
+		
+		#imgBox > img {
+			width: 100%;
+		}
+		
 		#footerContents{
 			width:100%;
 			height:10%;
@@ -212,6 +214,7 @@
 			width:100%;
 			height:100%;
 		}
+		
 		.footerBtn{
 			float:left;
 			height:100%;
@@ -220,8 +223,8 @@
 			color:#142637;
 			font-family : 'Pretendard-Bold'; 
 			font-size : 0.8em;
-			
 		}
+		
 		#leftFooter{width:20%;padding-left:7%;}
 		#midFooter{width:45%; height:15.2px; text-align:center;}
 		#rightFooter{width:20%;padding-right:7%;text-align:right;}
