@@ -1,11 +1,11 @@
 @font-face {
 	font-family: "notoFont-medium";
-	src: url(/spring/css/fonts/NotoSansCJKkr-Medium.woff) format("truetype");
+	src: url(/spring/css/fonts/NotoSansCJKkr-Medium.subset.woff2) format("truetype");
 }
 
 @font-face {
 	font-family: "notoFont-bold";
-	src: url(/spring/css/fonts/NotoSansCJKsc-Bold.woff) format("truetype");
+	src: url(/spring/css/fonts/NotoSansCJKsc-Bold.subset.woff2) format("truetype");
 }
 
 img {

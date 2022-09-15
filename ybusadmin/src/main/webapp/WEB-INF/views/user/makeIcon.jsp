@@ -43,15 +43,15 @@
 
 @font-face {
 font-family: "Pretendard-Bold";
-src:url(/spring/css//fonts/2022/Pretendard-Bold.woff) format("truetype");
+src:url(/spring/css/2022css/2022/Pretendard-Bold.subset.woff2) format("truetype");
 }
 @font-face {
 font-family: "Pretendard-SemiBold";
-src:url(/spring/css//fonts//2022/Pretendard-SemiBold.woff) format("truetype");
+src:url(/spring/css/2022css/2022/Pretendard-SemiBold.subset.woff2) format("truetype");
 }
 @font-face {
 font-family: "Pretendard-Medium";
-src:url(/spring/css//fonts//2022/Pretendard-Medium.woff) format("truetype");
+src:url(/spring/css/2022css/2022/Pretendard-Medium.subset.woff2) format("truetype");
 }
 
 body, p, div, li, ul, span, img {
@@ -65,12 +65,12 @@ img {
 }
 
 body, html {
-	position: relative;
 	width: 100%;
-	max-width: 480px;
-	height: 100%;
-	margin: 0 auto;
-	/* -webkit-overflow-scrolling: touch; 터치부드럽게 상단고정해더가 늦게움직이는현상발생*/
+    height: 100%;
+    max-width: 600px;
+    min-width: 375px;
+    margin: 0 auto;
+    background-color: #fafafc;
 }
 
 #container {
@@ -222,37 +222,12 @@ body, html {
 
 </style>
 
-<script>
-$(document).ready(function(){
-	$(".stopName").click(function(){
-		
-		location.href="/spring/getBusStopRoadView.action?busStopSeq="+$(this).attr("busStopSeq");
-	});
-	
-	$("#detailLocationSel").change(function(){
-		var bsdcSeq = $(this).val();
-		location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
-	});
-});
-
-function refresh(){
-	var bsdcSeq = $("#detailLocationSel").val();
-	location.href="/spring/getBusStopLine.action?busStopDetailCategorySeq="+bsdcSeq;
-}
-
-function moveMap(){
-	var bsdcSeq = $("#detailLocationSel").val();
-	location.href="/spring/getBusStopLocation.action?busStopDetailCategorySeq="+bsdcSeq;
-}
-	
-</script>
-
 </head>
 <body>
 	<div id="container">
 		
 	 		<div id="txtType">
-				<div style="float:left;height:38px;">자유게시판</div>
+				<div style="float:left;height:38px;">앱처럼 사용하기</div>
 				<div style="float:left;height:38px;margin-left:5px;padding-left:2px;"><img src="/spring/images/mainIndex/home_btn_navy.png" style="height:35px;width:auto;" onclick="location.href='/spring/index.action'" /></div>
 				<div class="clear"></div> 
 			</div>

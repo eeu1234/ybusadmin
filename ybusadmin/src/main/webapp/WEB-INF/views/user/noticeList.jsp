@@ -17,20 +17,19 @@
     <style>
 		@font-face {
 		font-family: "Pretendard-Bold";
-		src:url(/spring/css/fonts/Pretendard-Bold.woff) format("truetype");
-		}
+		src:url(/spring/css/2022css/2022/Pretendard-Bold.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-ExtraLight";
-		src:url(/spring/css/fonts/Pretendard-ExtraLight.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-ExtraLight.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-Medium";
-		src:url(/spring/css/fonts/Pretendard-Medium.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-Medium.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-SemiBold";
-		src:url(/spring/css/fonts/Pretendard-SemiBold.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-SemiBold.subset.woff2) format("truetype");
 		}
         body, html, p, ul, img, span, div, a {
             margin: 0;
@@ -100,7 +99,7 @@
         #txtBox {
             position: relative;
             float:left;
-            width: 50%;
+            width: 45%;
             
         }
         #btnBox {
@@ -113,7 +112,7 @@
             position: relative;
             color : #142637;
             text-align: left;
-            font-size: 1.9em;
+            font-size: 1.8em;
 			padding-top:0.5%;
 			padding-bottom:0.5%;
 			font-family : 'Pretendard-Bold';
@@ -315,9 +314,7 @@
         <div id="infoPage">
             <div id="txtBox">
                 <div id="txtType">
-              		<div style="float:left;width:65%;height:38px;">공지사항</div>
-					<div style="float:left;height:38px;"><img src="/spring/images/mainIndex/home_btn_navy.png" style="height:35px;width:auto;" onclick="location.href='/spring/index.action'" /></div>
-					<div class="clear"></div> 
+                    <img src="/spring/images/camsns/backBtn.png" style="height:20px;width:auto;margin-right:3%;" onclick="location.href='/spring/index.action'" />공지사항
                 </div>
             </div>
             <div id="btnBox">

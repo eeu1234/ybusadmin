@@ -57,11 +57,11 @@
    <style>
     @font-face {
          font-family: "Pretendard-Bold";
-         src:url(/spring/css/fonts/2022/Pretendard-Bold.woff) format("truetype");
+         src:url(/spring/css/2022css/2022/Pretendard-Bold.subset.woff2) format("truetype");
        }
        @font-face {
          font-family: "Pretendard-Medium";
-         src:url(/spring/css/fonts/2022/Pretendard-Medium.woff) format("truetype");
+         src:url(/spring/css/2022css/2022/Pretendard-Medium.subset.woff2) format("truetype");
        }
 
         html,body{

@@ -220,7 +220,6 @@ function moveMap(){
 													</div>
 													<div class="busRefreshTime">
 														<!-- 15:57 갱신 -->
-														${cbldto.locationTime}
 													</div>
 												</div>
 											</div>
@@ -277,7 +276,6 @@ function moveMap(){
 													</div>
 													<div class="busRefreshTime">
 														<!-- 15:57 갱신 -->
-														${cbldto.locationTime}
 													</div>
 												</div>
 											</div>
@@ -365,7 +363,6 @@ function moveMap(){
 													</div>
 													<div class="busRefreshTime">
 														<!-- 15:57 갱신 -->
-														${cbldto.locationTime}
 													</div>
 												</div>
 											</div>
