@@ -41,6 +41,11 @@ public class BusScheduleDAO {
 		return sql.selectList("timeTable.getBusSchedule2", sdto);
 	}
 	
+	public String getLastUpdateBusTime() {
+		
+		return sql.selectOne("timeTable.getLastUpdateBusTime");
+		
+	}
 	
 	
 }

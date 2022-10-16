@@ -187,6 +187,7 @@ public class MainController {
 			String universityName = dao.getUniversityDtoSeq(universitySeq).getUniversityName(); // 음 대학교 이름을 불러오는거임. 
 			universityDto.setUniversityName(universityName);
 			
+			
 			request.setAttribute("universityDto", universityDto); // 날씨 api를 위해 필요
 			
 			return "user/mainIndex";

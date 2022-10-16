@@ -51,4 +51,5 @@ public class MainDAO {
 		// TODO Auto-generated method stub
 		return sql.selectList("mainIndex.getAllUniversity");
 	}
+	
 }

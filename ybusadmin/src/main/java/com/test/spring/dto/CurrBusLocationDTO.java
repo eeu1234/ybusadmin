@@ -12,6 +12,7 @@ public class CurrBusLocationDTO {
 	String businfoSeq;
 	//영광//
 	String busStopCategorySeq;
+	private int timeGAP;
 	
 	
 	//영광
@@ -75,6 +76,12 @@ public class CurrBusLocationDTO {
 	}
 	public void setBusStopSeq(String busStopSeq) {
 		this.busStopSeq = busStopSeq;
+	}
+	public int getTimeGAP() {
+		return timeGAP;
+	}
+	public void setTimeGAP(int timeGAP) {
+		this.timeGAP = timeGAP;
 	}
 	
 	

@@ -13,6 +13,7 @@ import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.CurrBusLocationDTO;
 import com.test.spring.dto.UniversityDTO;
+import com.test.spring.dto.PredictBusTimeDTO;
 
 @Repository
 public class BusStopMapDAO {
@@ -101,6 +102,9 @@ public class BusStopMapDAO {
 		// TODO Auto-generated method stub
 		return sql.selectOne("busStop.getSpecipicAvgBusStopLanLon",map);
 	}
-	
+	//영광 버스 예정시간 리스트 가져오기
+	public List<PredictBusTimeDTO> getPredicBusTime(){
+		return sql.selectList("busStop.getPredictBusTime");
+	}//영광끝
 	
 }

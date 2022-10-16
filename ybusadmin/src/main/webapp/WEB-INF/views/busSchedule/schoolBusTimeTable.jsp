@@ -64,24 +64,9 @@
                  }   
               }
            }
-           if(nowTime > pickMax(mainTimeList)){
-              $('<div id="noticeIcon"></div>').prependTo('#noticeIconZone');
-            $('#busNoticeContents').text('지금은 버스운행 시간이 아닙니다.');
-           }
            
         }
-      
-        function pickMax(list){
-           var max = 0;
-           for(var i = 0; i<list.length; i++){
-              for(var j = 0; j<list[i].length;j++){
-                 if(max <= list[i][j]){
-                    max = list[i][j];
-                 }
-              }
-           }
-           return max;
-        }
+
         
         
         
@@ -405,7 +390,7 @@
 				</div>
 			</div>
 			<div id="busNoticeContents" class="busNotice">
-				<!-- 통학버스는 위치조회 서비스를 제공하지 않습니다. -->
+				마지막 업데이트: ${lastUpdateBusTime}
 			</div>
 			<div style="clear: both"></div>
 		</div>

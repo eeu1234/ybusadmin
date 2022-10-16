@@ -74,9 +74,6 @@
    
                // 회색 긴줄에 네이비 칠해주는 작업
                $(timeList[spot]).parent().css('border-left','3px solid #142637');
-         }else if(spot == 0 || ${slist.timeList.size() == 0 }){
-            $('<div id="noticeIcon"></div>').prependTo('#noticeIconZone');
-            $('#busNoticeContents').text('지금은 버스운행 시간이 아닙니다.');
          }
 
         }
@@ -389,7 +386,7 @@
 				</div>
 			</div>
 			<div id="busNoticeContents" class="busNotice">
-				<!-- 통학버스는 위치조회 서비스를 제공하지 않습니다. -->
+				마지막 업데이트: ${lastUpdateBusTime}
 			</div>
 			<div style="clear: both"></div>
 		</div>

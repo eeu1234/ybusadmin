@@ -87,7 +87,7 @@
    
    <!-- 돌고있는 버스 타임라인에 보여주기 -->
    <select id="getCurrBusStopLocation3" parameterType="map" resultType="com.test.spring.dto.CurrBusLocationDTO">
-   		SELECT Y.*, D.BUSINFONAME, D.BUSINFONUM, D.BUSINFOSTAT, D.BUSSTOPCATEGORYSEQ, D.BUSSTOPDETAILCATEGORYSEQ FROM	(SELECT X.*, C.DEVICEBUSSTAT, C.BUSINFOSEQ FROM
+   		SELECT Y.*, D.BUSINFONAME, D.BUSINFONUM, D.BUSINFOSTAT, D.BUSSTOPCATEGORYSEQ, D.BUSSTOPDETAILCATEGORYSEQ, TIME_TO_SEC(TIMEDIFF(NOW(),LOCATIONTIME))/60 as timeGAP FROM	(SELECT X.*, C.DEVICEBUSSTAT, C.BUSINFOSEQ FROM
 			(SELECT A.*,B.DEVICETEL, B.UNIVERSITYSEQ FROM (SELECT ODBYLO.* FROM(
 				SELECT * FROM LOCATION
 				WHERE BUSSTOPSEQ IS NOT NULL AND LOCATIONTIME > DATE_FORMAT(DATE_ADD(now(),INTERVAL -10 MINUTE),'%Y-%m-%d %H:%i:%s')
@@ -190,5 +190,11 @@
                            WHERE universitySeq = #{universitySeq} AND BUSSTOPCATEGORYSEQ=#{busStopCategorySeq} and busStopDetailCategoryStat ='show' and busStopCategoryStat = 'show'
                            	ORDER BY busStopOrder
    </select>
-    
+    <!-- 영광 도착예정시간 -->
+    <select id="getPredictBusTime" resultType="com.test.spring.dto.PredictBusTimeDTO">
+		SELECT S_BUSSTOPSEQ as s_busstopseq, S_BUSSTOPNAME as s_busstopname, A_BUSSTOPSEQ as a_busstopseq, A_BUSSTOPNAME as a_busstopname, AVG(timestampdiff(second, S_TIME, A_TIME))/60 as avgTime, count(timestampdiff(second, S_TIME, A_TIME)) AS datacnt
+		FROM cambusdb.V_ETA 
+		GROUP BY S_BUSSTOPSEQ, S_BUSSTOPNAME, A_BUSSTOPSEQ, A_BUSSTOPNAME 
+		ORDER BY DATACNT DESC;
+   </select>
 </mapper>

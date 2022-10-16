@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -220,6 +221,7 @@ function moveMap(){
 													</div>
 													<div class="busRefreshTime">
 														<!-- 15:57 갱신 -->
+														${cbldto.locationTime}
 													</div>
 												</div>
 											</div>
@@ -276,6 +278,7 @@ function moveMap(){
 													</div>
 													<div class="busRefreshTime">
 														<!-- 15:57 갱신 -->
+														${cbldto.locationTime}
 													</div>
 												</div>
 											</div>
@@ -363,6 +366,7 @@ function moveMap(){
 													</div>
 													<div class="busRefreshTime">
 														<!-- 15:57 갱신 -->
+														${cbldto.locationTime}
 													</div>
 												</div>
 											</div>
@@ -382,12 +386,25 @@ function moveMap(){
 
 										</div>
 										<div class="Estimated-Time-Remaining">
+												<c:forEach items = "${cblList}" var  = "cbl" >
+													<c:if test = "${status.index - 1 >= 0 }">
+														<c:if test = "${bsList[status.index-1].busStopSeq eq cbl.busStopSeq}">
+															<c:forEach items = "${predictTimeList}" var = "ptlDTO">
+																<c:if test = "${ptlDTO.s_busstopseq == cbl.busStopSeq && ptlDTO.a_busstopseq == bsList[status.index].busStopSeq}">
+																		${fn:split(ptlDTO.avgTime- cbl.timeGAP,'.')[0]}분
+																</c:if>
+															</c:forEach>
+														</c:if>
+													</c:if>
+												</c:forEach>
+												
+												
 											<!-- 5분 남음 -->
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>  
 						<div style="clear: both;"></div>
 						
 					</c:otherwise>
