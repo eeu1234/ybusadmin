@@ -448,7 +448,7 @@
         <div id="infoPage">
             <div id="txtBox">
                 <div id="txtType">
-					<div style="float:left;width:70%;height:38px;">자유게시판</div>
+					<div style="float:left;width:75%;height:38px;">자유게시판</div>
 					<div style="float:left;height:38px;"><img src="/spring/images/mainIndex/home_btn_navy.png" style="padding-top:2px;height:35px;width:auto;" onclick="location.href='/spring/index.action'" /></div>
 					<div class="clear"></div> 
                 </div>
