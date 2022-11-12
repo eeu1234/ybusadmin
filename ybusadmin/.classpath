@@ -37,7 +37,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/eeu12/.m2/repository/org/apache/commons/commons-lang3/3.0/commons-lang3-3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/eeu12/.m2/repository/org/apache/commons/commons-lang3/3.0/commons-lang3-3.0-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
