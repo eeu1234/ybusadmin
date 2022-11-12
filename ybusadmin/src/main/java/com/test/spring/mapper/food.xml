@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="food">
+
+	<!-- 메뉴 조회 -->
+	<select id="getFoodList" parameterType="String" resultType="com.test.spring.dto.FoodDTO">
+		SELECT *
+			FROM MENU
+	</select>
+	
+	<!-- 메뉴 삽입 -->
+	<insert id = "adFood" parameterType = "java.util.HashMap">
+		INSERT INTO MENU (menuLocation, menuCorner, date, menu1, menu2, menu3, menu4, menu5, menuFlag, workDate, worker)
+		 VALUES (*{}, *{}, *{}, *{}, *{}, *{}, *{}, *{}, *{}, *{}, *{});
+	</insert>
+	
+	<!-- 메뉴 수정 -->
+	<update id = "updateFood" parameterType="java.util.HashMap">
+		UPDATE MENU SET BUSSTOPCATEGORYSEQ = #{category} WHERE BUSINFOSEQ = #{}
+	</update>
+	
+	<!-- 메뉴 삭제 -->
+	<delete id = "deleteFood" parameterType="String">
+		DELETE FROM MENU WHERE date = #{} AND MENULOCATION = #{} AND MENUCORNER = #{}
+	</delete>
+	
+	
+
+
+</mapper>
