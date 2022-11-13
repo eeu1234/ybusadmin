@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset=UTF-8">
-<title>CAMBUS :: 대학선택</title>
+<title>YBUS :: 학식메뉴</title>
  <link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
 <style>
 #universitySearch{

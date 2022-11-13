@@ -14,16 +14,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.test.spring.dto.AdminUniversityDTO;
 import com.test.spring.dto.UniversityDTO;
+import com.test.spring.admin.busSchedule.AdminBusScheduleDAO;
 import com.test.spring.admin.food.AdminFoodDAO;
 
 
 @Controller("adminFoodController")
 public class AdminFoodController {
+	
+
+	@Autowired
+	private AdminFoodDAO dao;
+	
 
 	@RequestMapping(method = {RequestMethod.GET}, value = "/admin/adminFoodList.action")
 	public String adminMain(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 	
-		return "/admin/adminFoodList";
+		System.out.println("hi");
+		
+		
+		return "food/adminFoodList";
 	}
 	
 	
