@@ -129,6 +129,7 @@ public class MainController {
 			session.setAttribute("universityDto", universityDTO);
 			
 			
+			
 			try{
 				if(oldVersion==null){
 					

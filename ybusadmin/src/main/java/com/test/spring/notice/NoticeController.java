@@ -237,7 +237,6 @@ public class NoticeController {
    @RequestMapping(method = { RequestMethod.POST }, value = "/admin/notice/noticeAddOk.action")
    @Transactional
    public String noticeAddOk(HttpServletRequest request, HttpSession session, HttpServletResponse response
-
          , String subject, String content) {
 
       try {

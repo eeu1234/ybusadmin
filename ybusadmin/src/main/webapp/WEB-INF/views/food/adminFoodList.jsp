@@ -35,7 +35,42 @@
 			<th>조회수</th>
 			<th>최종 수정일</th>
 			<th>수정자</th>
+		</tr>
+		
+		<c:if test="${empty foodInfo || foodInfo.size() == 0}">
+				<tr>
+					<td colspan="5">게시물이 존재하지 않습니다.</td>
+				</tr>
+			</c:if>
+
+					<c:forEach items="${foodInfo}" var="dto" varStatus="stat">
+					<tr>
+						<td>${dto.menuSeq}</td>
+						<td>${dto.date}</td>
+						<td>${dto.menuCorner}</td>
+						<td>${dto.workDate}</td>
+						<td>${dto.worker}</td>
+						
+						<%-- <c:if test="${adto.adminLevel == '9999'}">
+						<td>
+							<div id="btnSel">
+							<form method="POST" action="/spring/admin/notice/noticeUpdate.action">
+								<input type="submit" value="수정" class="btn btn-warning" id="btnEdit"/>
+								<input type="hidden" value="${dto.noticeSeq}" name="seq">
+							</form>
+							
+	
+								<input type="button" value="삭제" onclick="noticeDelete(${dto.noticeSeq});" class="btn btn-danger" id="btnDel"/>
+							
+							</div>
+						</td>
+						</c:if> --%>
+					</tr>
+					</c:forEach>
 	</table>
+	<div id="pageBar" style="text-align: center;">
+			${pageBar}
+	</div>
 	
 	
 	<!-- content 몸통부분 -->

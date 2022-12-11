@@ -40,7 +40,7 @@
 
 		               var list = $(data).find("item");
 
-		               $(list).each(function(index,item){
+		               $(list).each(function(index,item)
 		            	  name = $(item).find("name").text();
 		            	  $(".nav .noDeco").text(name);
 		               });
@@ -72,7 +72,7 @@ function search(){
 		$("#searchForm").submit();
 	}
 	
-}
+}		
 
 </script>
 </head>

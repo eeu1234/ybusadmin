@@ -6,12 +6,7 @@
 
 	<!-- 메뉴 조회 -->
 	<select id="getFoodList" parameterType="String" resultType="com.test.spring.dto.FoodDTO">
-		SELECT *
-			FROM MENU
+		SELECT * FROM MENU WHERE menuLocation=#{menuLocation};
 	</select>
 	
-
-	
-
-
 </mapper>
