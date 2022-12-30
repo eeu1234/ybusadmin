@@ -146,7 +146,7 @@
 <script>
 	function openCloseToc() {
 		console.log( );
-		 $('#toc-content').show();
+		 $('#toc-content').hide();
 		if($('#toc-content'.css('display')) == 'block' ) {
 			
 		}
