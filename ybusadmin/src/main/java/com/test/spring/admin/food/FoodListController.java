@@ -23,7 +23,7 @@ public class FoodListController {
 	
 
 	@RequestMapping(method = {RequestMethod.GET}, value = "/getFoodList.action")
-	public String adminMain(HttpServletRequest request,HttpSession session,HttpServletResponse response){
+	public String getFoodList(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		
 //		try {
 //			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
@@ -53,6 +53,41 @@ public class FoodListController {
 		
 		
 		return "user/getFoodList";
+	
+		
+	}
+	
+	@RequestMapping(method = {RequestMethod.GET}, value = "/getFoodCornerList.action")
+	public String getFoodCornerList(HttpServletRequest request,HttpSession session,HttpServletResponse response){
+		
+//		try {
+//			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+//			
+//			List<FoodDTO> foodInfo = dao.foodList();
+//			
+//			request.setAttribute("foodInfo", foodInfo);
+//
+//			
+//			
+//	         
+//	         
+//	      } catch (Exception e) {
+//	         session.invalidate();
+//
+//	         try {
+//	            
+//	            response.sendRedirect("/spring/admin/adminLogin.action");
+//
+//	         } catch (Exception e2) {
+//	            // TODO: handle exception
+//
+//	         }
+//	         return null;
+//	      }
+		
+		
+		
+		return "user/getFoodCornerList";
 	
 		
 	}

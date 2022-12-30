@@ -34,203 +34,35 @@ table tr th{
 	<table id="tbl1" class="table table-striped" style="text-align:center;">
 		<tr>
 			<th class="centerd">코너</th>
-			<th>**월 **일</th>
-			<th>**월 **일</th>
-			<th>**월 **일</th>
-			<th>**월 **일</th>
-			<th>**월 **일</th>
+			<th>A</th>
+			<th>B</th>
+			<th>C</th>
+			<th>D</th>
 		</tr>
+		
 		<tr>
-			<th style="vertical-align: middle;">코너A</th>
+			<th style="vertical-align: middle;">${dto.date}</th>
+			<c:forEach items="${foodInfo}" var="dto" varStatus="stat">
+			
 			<th>
 				<div>
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
+				
+					<a>${dto.menu1}</a><br>
+					<a>${dto.menu2}</a><br>
+					<a>${dto.menu3}</a><br>
+					<a>${dto.menu4}</a><br>
+					<a>${dto.menu5}</a>
+				
 				</div>
 			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th><th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
+			</c:forEach>
 		</tr>
-		<tr>
-			<th style="vertical-align: middle;">코너A</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th><th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-		</tr>
-		<tr>
-			<th style="vertical-align: middle;">코너A</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th><th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-		</tr>
-		<tr>
-			<th style="vertical-align: middle;">코너A</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
-			<th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th><th>
-				<div style="text-align: center;">
-					<a>메뉴1</a><br>
-					<a>메뉴2</a><br>
-					<a>menu3</a><br>
-					<a>menu4</a><br>
-					<a>menu5</a>
-				</div>
-			</th>
+		
+			
 		</tr>
 	</table>
 	
-	<button style="float:right; width:200px; height:50px; margin:10px;"><h1 style="margin:0px;">목록</h1></button>
+	<button style="float:right; width:200px; height:50px; margin:10px;"><h1 style="margin:0px;" onclick="hisory.back()">목록</h1></button>
 	<button style="float:right; width:200px; height:50px; margin:10px;"><h1 style="margin:0px;">수정</h1></button>
 			
 	

@@ -16,6 +16,8 @@
           google_ad_client: "ca-pub-2370297300940223",
           enable_page_level_ads: true
      });
+     
+     
 </script>
 
 	<meta charset="UTF-8">
@@ -74,16 +76,41 @@
     }
     #btnstl{
     	width: 80%;
-    	height: 10%;
+    	height: 12.5%;
     	margin: 20px;
     	font-size: 20px;
     	font-weight: bold;
     	border: white;
     	border-radius: 10px;
-    	background-color: #00006EF;
+    	background-color: #0000067;
+    	color: white;
+    	cursor: pointer;
+    }
+    #btn_open{
+    	width: 80%;
+    	height: 30%;
+    	margin: 20px;
+    	font-size: 20px;
+    	font-weight: bold;
+    	border: white;
+    	border-radius: 10px;
+    	background-color: #124123;
     	color: white;
     }
-    
+    #btn_open:hover{
+    	width: 80%;
+    	height: 30%;
+    	margin: 20px;
+    	font-size: 20px;
+    	font-weight: bold;
+    	border: white;
+    	border-radius: 10px;
+    	background-color: #124123;
+    	color: white;
+    }
+    #toc-content{
+    	display: none;
+    }
     </style>
     
 </head>
@@ -103,13 +130,35 @@
 		
 	</div>
 	
-	<div id="content" style="background-color: white; height:500px; text-align: center; ">
-		<button id="btnstl">11월 11일 월요일</button>
-		<button id="btnstl">11월 12일 화요일</button>
-		<button id="btnstl">11월 13일 수요일</button>
-		<button id="btnstl">11월 14일 목요일</button>
-		<button id="btnstl">11월 15일 금요일</button>
+	<div id="content" style="background-color: white; height: 70%; text-align: center; display: flex">
+		<div style="background-color: red; height: 90.8%; width: 90.8%; margin: auto; border-radius: 10px;">
+			<h2> 11월 11일 월요일 </h2>
+			<button id="btnstl" onclick="openCloseToc()">코너A</button>
+				<ol id="toc-content">
+					<li>메뉴1</li>
+				</ol>
+			<button id="btnstl">코너B</button>
+			<button id="btnstl">코너C</button>
+			<button id="btnstl">코너D</button>
+		</div>
 	</div>
-
+	
+<script>
+	function openCloseToc() {
+		console.log( );
+		 $('#toc-content').show();
+		if($('#toc-content'.css('display')) == 'block' ) {
+			
+		}
+		
+		/*
+		 if(document.getElementById('toc-content').style.display === 'block') {
+			 document.getElementById('toc-content').style.display = 'none';
+		 } else {
+			 document.getElementById('toc-content').style.display = 'block';
+		 }
+		*/
+	}
+</script>
 </body>
 </html>

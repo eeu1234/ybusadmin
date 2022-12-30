@@ -50,7 +50,7 @@
 							<td><input type="submit" value="${dto.date}" name="date">
 							</td>
 						</form>
-						<td>${dto.menuFlag}</td>
+						<td>${dto.menuCorner}</td>
 						<td>${dto.workDate}</td>
 						<td>${dto.worker}</td>
 						

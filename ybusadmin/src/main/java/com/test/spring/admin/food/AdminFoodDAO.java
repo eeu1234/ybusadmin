@@ -24,9 +24,9 @@ public class AdminFoodDAO {
 	}
 	
 	// 날짜별 조회
-	public List<FoodDTO> getDayFoodList(String mseq) {
+	public List<FoodDTO> getFoodListByDate(String date) {
 		// TODO Auto-generated method stub
-		return sql.selectList("food.getDayFoodList", mseq);
+		return sql.selectList("food.getFoodListByDate", date);
 	}
 	
 	public int getTotal(SearchDTO where){

@@ -50,7 +50,7 @@
 		<form id="location" action="/spring/admin/adminFoodList.action" method="GET">
 			<select name="menuLocation" id="menuLocation" class="form-control">
 				<option value="9999">식당을 선택해주세요</option>
-	 			<option value="인성관" onclik="move();">인성관</option>
+	 			<option value="인성관">인성관</option>
 	 			<option value="환과대">환과대</option>
 	 			<option value="생활관">생활관</option>
 			</select>

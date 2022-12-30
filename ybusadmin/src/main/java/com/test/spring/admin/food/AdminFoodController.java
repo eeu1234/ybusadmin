@@ -159,7 +159,6 @@ public class AdminFoodController {
 			
 			session.setAttribute("foodInfo", foodInfo);
 
-			System.out.println("이거 프린트 되나 ???");
 			
 			return "food/adminFoodList";
 	         
@@ -183,33 +182,70 @@ public class AdminFoodController {
 	}
 	
 	@RequestMapping(method = {RequestMethod.GET}, value = "/admin/adminFoodDetail.action")
-	public String adminFoodDetail(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
+	public String adminFoodDetail(HttpServletRequest request,HttpSession session,HttpServletResponse response, String date) {
 		
-		try {
-			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
-			
-//			List<FoodDTO> foodInfo = dao.getDayFoodList();
-			
-//			request.setAttribute("foodInfo", foodInfo);
-
-	         
-	         
-	      } catch (Exception e) {
-	         session.invalidate();
-
-	         try {
-	            
-	            response.sendRedirect("/spring/admin/adminLogin.action");
-
-	         } catch (Exception e2) {
-	            // TODO: handle exception
-
-	         }
-	         return null;
-	      }
 		
+		AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+		System.out.println(date);
+		List<FoodDTO> foodInfo = dao.getFoodListByDate(date);
+		
+		
+		request.setAttribute("foodInfo", foodInfo);
+
 		return "food/adminFoodDetailView";
+		
+		
+//		try {
+//			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+//			
+//			List<FoodDTO> foodInfo = dao.getFoodListByDate(date);
+//			System.out.println(date);
+//			
+//			request.setAttribute("foodInfo", foodInfo);
+//
+//			return "food/adminFoodDetailView";
+//	         
+//	      } catch (Exception e) {
+//	         session.invalidate();
+//
+//	         try {
+//	            
+//	            response.sendRedirect("/spring/admin/adminLogin.action");
+//
+//	         } catch (Exception e2) {
+//	            // TODO: handle exception
+//
+//	         }
+//	         return null;
+//	      }
+		
+		
 	}
+	
+//		// 학식정보 추가하기
+//	   @RequestMapping(method = { RequestMethod.GET }, value = "/admin/notice/noticeAdd.action")
+//	   @Transactional
+//	   public String noticeAdd(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
+//	      try {
+//
+//	         // 내용
+//
+//	         return "admin/notice/noticeAdd";
+//	      } catch (Exception e) {
+//	         session.invalidate();
+//
+//	         try {
+//
+//	            response.sendRedirect("/spring/admin/adminLogin.action");
+//
+//	         } catch (Exception e2) {
+//	            // TODO: handle exception
+//
+//	         }
+//	         return null;
+//	      }
+//
+//	   }
 	
 	
 	
