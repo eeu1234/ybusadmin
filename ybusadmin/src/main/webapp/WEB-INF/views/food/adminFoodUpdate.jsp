@@ -34,6 +34,10 @@
 	
 }
 
+#input{
+	margin: auto;
+}
+
 
 </style>
 
@@ -44,21 +48,12 @@
 	<%@include file="/inc/top.jsp"%>
 	<% 
 	String date = request.getParameter("date");
-	String location = request.getParameter("menuLocation");
 	String[] dayOfWeek = {"월", "화", "수", "목", "금"};
 	%>
 	
 	<h1 class="menuTitle">학식 정보 관리</h1>
-	<h1 id="category" style="float:right; width:200px; height:50px; margin:15px; text-align:center;"><%= location %></h1>	
+	<h1 id="category" style="float:right; width:200px; height:50px; margin:15px; text-align:center;">인성관</h1>	
 	
-	<c:if test="${empty foodInfo[0] || foodInfo[0].size() == 0}">
-		
-		<h1>게시물이 존재하지 않습니다.</h1>
-	
-	</c:if>
-	
-		    
-	<c:if test="${foodInfo[0].size() != 0}">
 		<div style="float: left; width: 99%; margin: 5px;">
 			<div id="col" style="width: 10%;">
 				
@@ -80,50 +75,34 @@
 			
 			<c:forEach items="${foodInfo}" var="dto" varStatus="var">
 			<div id="col" style="width:18%;">
-				<h3 id="row" style="height:4%;">${dto[0].date}
-				<c:if test="${dto[0].dayOfWeek eq '1'}">(월)</c:if>
-				<c:if test="${dto[0].dayOfWeek eq '2'}">(화)</c:if>
-				<c:if test="${dto[0].dayOfWeek eq '3'}">(수)</c:if>
-				<c:if test="${dto[0].dayOfWeek eq '4'}">(목)</c:if>
-				<c:if test="${dto[0].dayOfWeek eq '5'}">(금)</c:if>
-				</h3>
-					
-						<c:forEach items="${dto}" var="food" varStatus="var">
+				<h3 id="row" style="height:4%;">date</h3>
+					<c:forEach items="${dto}" var="food" varStatus="var">
 						<div id="row" style="flex-direction: column;">
-							<h4>${food.menu1}</h4>
-							<h4>${food.menu2}</h4>
-							<h4>${food.menu3}</h4>
-							<h4>${food.menu4}</h4>
-							<h4>${food.menu5}</h4>
+						<form method="GET" action="/spring/admin/adminFoodUpdateCheck.action">
+							<input type="hidden" value="${food.date}" name="date">
+							<input type="hidden" value="${food.menuCorner}" name="date">
+							<input type="hidden" value="${food.menuLocation}" name="date">
+							<input id="input" type="text" value="${food.menu1}" name="date">
+							<input id="input" type="text" value="${food.menu2}" name="date">
+							<input id="input" type="text" value="${food.menu3}" name="date">
+							<input id="input" type="text" value="${food.menu4}" name="date">
+							<input id="input" type="text" value="${food.menu5}" name="date">
+							<input id="input" type="submit" value="submit">
+						</form>
 						</div>
-						</c:forEach>
+					</c:forEach>
 					
 			</div>
 			</c:forEach>
 		</div>
-		</c:if>
 		
 	
 	
-	
-	<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;" onclick="back()">목록</h2></button>
-	<form method="GET" action="/spring/admin/adminFoodUpdate.action">
-							<td>
-							<input type="hidden" value="<%= location %>" name="menuLocation">
-							<input type="hidden" value="<%= date%>" name="date">
-							<input style="float:right; width:120px; height:50px; margin:10px; font-size:30px; font-weight: 500;" type="submit" value="수정">
-							</td>
-						</form>
-	<!-- <button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;">수정</h2></button> -->
+	<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;">수정</h2></button>
 			
 	
 	
 	<!-- content 몸통부분 -->
-
-<script>
-function back(){
-	history.back()
-}
-</script>
+	
 </body>
 </html>

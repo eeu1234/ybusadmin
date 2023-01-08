@@ -6,7 +6,7 @@
 
 	<!-- 메뉴 조회 -->
 	<select id="getFoodList" parameterType="String" resultType="com.test.spring.dto.FoodDTO">
-		SELECT menuSeq, date, menuFlag, workDate, worker FROM MENU WHERE menuLocation=#{menuLocation} group by date;
+		SELECT menuSeq, date, menuLocation, dayOfWeek, workDate, worker FROM MENU WHERE menuLocation=#{menuLocation} group by date;
 	</select>
 	
 	<!-- 날짜 조회 -->
@@ -14,6 +14,17 @@
 		SELECT * FROM MENU WHERE date=#{date};
 	</select>
 	
+	<!-- 일주일 단위로 조  -->
+	<select id="getFoodListByWeek" parameterType="String" resultType="com.test.spring.dto.FoodDTO">
+		SELECT * FROM MENU 
+		WHERE menuLocation=#{menuLocation} AND date=DATE_ADD(#{date}, INTERVAL #{num} DAY);
+	</select>
+	
+	<!-- Update Menu -->
+	<update id="foodUpdate" parameterType="map">
+    	UPDATE MENU SET menu1=#{menu1}, menu2=#{menu2}, menu3=#{menu3}, menu4=#{menu4}, menu5=#{menu5}
+    		WHERE date = #{date} and menuCorner=#{menuCorner} and menuLocation=#{menuLocation};
+    </update>
 	
 	
 </mapper>

@@ -10,7 +10,7 @@ public class FoodDTO {
 	private String menu3;
 	private String menu4;
 	private String menu5;
-	private String menuFlag;
+	private String dayOfWeek;
 	private String workDate;
 	private String worker;
 	
@@ -68,11 +68,11 @@ public class FoodDTO {
 	public void setMenu5(String menu5) {
 		this.menu5 = menu5;
 	}
-	public String getMenuFlag() {
-		return menuFlag;
+	public String getDayOfWeek() {
+		return dayOfWeek;
 	}
-	public void setMenuFlag(String menuFlag) {
-		this.menuFlag = menuFlag;
+	public void setDayOfWeek(String dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
 	}
 	public String getWorkDate() {
 		return workDate;
