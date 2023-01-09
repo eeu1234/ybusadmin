@@ -27,32 +27,32 @@ import com.test.spring.dto.SearchDTO;
 import com.test.spring.dto.UniversityDTO;
 import com.test.spring.notice.NoticeDAO;
 
-@Controller("MainController") // 스프링 문법
+@Controller("MainController") // �뒪�봽留� 臾몃쾿
 public class MainController {
 	
-	@Autowired // 자동으로 연결한다.
+	@Autowired // �옄�룞�쑝濡� �뿰寃고븳�떎.
 	private MainDAO dao; // DAO no
 	
 	@Autowired
-	private NoticeDAO noticeDao; //공지사항 dao
+	private NoticeDAO noticeDao; //怨듭��궗�빆 dao
 	
 	@Autowired
-	private BusStopMapDAO busStopMapDao; // 현재 버스가 돌아다니는지 확인하는 dao
+	private BusStopMapDAO busStopMapDao; // �쁽�옱 踰꾩뒪媛� �룎�븘�떎�땲�뒗吏� �솗�씤�븯�뒗 dao
 	
 	
-	@RequestMapping(method={RequestMethod.GET}, value="/index.action") // 스프링 기본 구분 컨트롤러 머리 족에 들어가는 .
-	public void index(HttpServletRequest request,HttpSession session,HttpServletResponse response) { // 요청 응답 둘다 가능... 세션 로그인정보같은... 
+	@RequestMapping(method={RequestMethod.GET}, value="/index.action") // �뒪�봽留� 湲곕낯 援щ텇 而⑦듃濡ㅻ윭 癒몃━ 議깆뿉 �뱾�뼱媛��뒗 .
+	public void index(HttpServletRequest request,HttpSession session,HttpServletResponse response) { // �슂泥� �쓳�떟 �몮�떎 媛��뒫... �꽭�뀡 濡쒓렇�씤�젙蹂닿컳��... 
 		try {
 	        
-	        //내용
+	        //�궡�슜
 			
 		
 			String urlStr = request.getParameter("fromUrl");
 			UniversityDTO universityDto;
-			//도메인에 따른 universitySeq를 가져옴
+			//�룄硫붿씤�뿉 �뵲瑜� universitySeq瑜� 媛��졇�샂
 								
 			if(session.getAttribute("universityDto") == null){ 
-				//도메인에 따른 universitySeq를 가져옴
+				//�룄硫붿씤�뿉 �뵲瑜� universitySeq瑜� 媛��졇�샂
 		
 				universityDto = dao.getUniversitySeq(urlStr);
 				
@@ -129,6 +129,7 @@ public class MainController {
 			session.setAttribute("universityDto", universityDTO);
 			
 			
+			
 			try{
 				if(oldVersion==null){
 					
@@ -163,7 +164,7 @@ public class MainController {
 		
 		try {
 			
-	         //내용
+	         //�궡�슜
 			universityDto = (UniversityDTO) session.getAttribute("universityDto");
 			
 			if(universityDto==null){ 
@@ -174,20 +175,21 @@ public class MainController {
 			}
 			
 			
-			//이학교에 있는 노선을 메인 화면에 띄워주어야함
-			//노선목록 들고옴.
-			//공지사항목록 들고옴.
+			//�씠�븰援먯뿉 �엳�뒗 �끂�꽑�쓣 硫붿씤 �솕硫댁뿉 �쓣�썙二쇱뼱�빞�븿
+			//�끂�꽑紐⑸줉 �뱾怨좎샂.
+			//怨듭��궗�빆紐⑸줉 �뱾怨좎샂.
 			String word="";
 			List<NoticeDTO> nList = dao.getAllNotice(word);
 			List<CurrBusLocationDTO> cblList = busStopMapDao.getCurrBusStopLocation(universitySeq);
 			
-			request.setAttribute("nList", nList); // 공지사항 리스트
-			request.setAttribute("cblList", cblList); // 현재 위치
+			request.setAttribute("nList", nList); // 怨듭��궗�빆 由ъ뒪�듃
+			request.setAttribute("cblList", cblList); // �쁽�옱 �쐞移�
 			
-			String universityName = dao.getUniversityDtoSeq(universitySeq).getUniversityName(); // 음 대학교 이름을 불러오는거임. 
+			String universityName = dao.getUniversityDtoSeq(universitySeq).getUniversityName(); // �쓬 ���븰援� �씠由꾩쓣 遺덈윭�삤�뒗嫄곗엫. 
 			universityDto.setUniversityName(universityName);
 			
-			request.setAttribute("universityDto", universityDto); // 날씨 api를 위해 필요
+			
+			request.setAttribute("universityDto", universityDto); // �궇�뵪 api瑜� �쐞�빐 �븘�슂
 			
 			return "user/mainIndex";
 			
@@ -215,7 +217,7 @@ public class MainController {
 		try {
 			
 			
-			//내용
+			//�궡�슜
 			universityDto = (UniversityDTO) session.getAttribute("universityDto");
 			
 			if(universityDto==null){
@@ -233,9 +235,9 @@ public class MainController {
 			HashMap<String,String> map = new HashMap<String,String>();
 			map.put("busStopCategorySeq", busStopCategorySeq);
 			map.put("universitySeq", universitySeq);
-			//이학교에 있는 노선을 메인 화면에 띄워주어야함
-			//노선목록 들고옴.
-			//공지사항목록 들고옴.
+			//�씠�븰援먯뿉 �엳�뒗 �끂�꽑�쓣 硫붿씤 �솕硫댁뿉 �쓣�썙二쇱뼱�빞�븿
+			//�끂�꽑紐⑸줉 �뱾怨좎샂.
+			//怨듭��궗�빆紐⑸줉 �뱾怨좎샂.
 			
 			List<NoticeDTO> nList = dao.getAllNotice("");
 			
@@ -282,7 +284,7 @@ public class MainController {
 		
 		try {
 	         
-	         //내용
+	         //�궡�슜
 	         
 	         
 			
@@ -321,7 +323,7 @@ public class MainController {
 	
 
 	
-	//공지사항 내용 가져옴
+	//怨듭��궗�빆 �궡�슜 媛��졇�샂
 	   @RequestMapping(method={RequestMethod.GET}
 	               , value="/user/noticeView.action")
 	   public String noticeContent(HttpServletRequest request, HttpSession session, HttpServletResponse response
@@ -330,7 +332,7 @@ public class MainController {
 	      
 		  String seq = noticeSeq;
 	   
-	      // 공지사항 게시글 정보 가져오기
+	      // 怨듭��궗�빆 寃뚯떆湲� �젙蹂� 媛��졇�삤湲�
 	      NoticeDTO noticeContent = noticeDao.notice(seq);
 	      String prevNoticeSeq = noticeDao.prevNoticeSeq(seq);
 	      String afterNoticeSeq =noticeDao.afterNoticeSeq(seq);
@@ -352,7 +354,7 @@ public class MainController {
 	      request.setAttribute("noticeContent", noticeContent);
 	      request.setAttribute("prevNoticeSeq", prevNoticeSeq);
 	      request.setAttribute("afterNoticeSeq", afterNoticeSeq);
-	      //readcount 값 바꾸기, 조회수 추가
+	      //readcount 媛� 諛붽씀湲�, 議고쉶�닔 異붽�
 	      if(session.getAttribute("readcount")==null 
 	               || session.getAttribute("readcount").equals("n")){
 	    	  noticeDao.addReadCount(seq);
@@ -365,7 +367,7 @@ public class MainController {
 	      return "user/noticeView";
 	   }
 	   
-	 //공지사항 내용 가져옴
+	 //怨듭��궗�빆 �궡�슜 媛��졇�샂
 	   @RequestMapping(method={RequestMethod.GET}
 	               , value="/user/noticeList.action")
 	   public String noticeList(HttpServletRequest request, HttpSession session, HttpServletResponse response,String word ) throws IOException{
@@ -380,7 +382,7 @@ public class MainController {
 	      return "user/noticeList";
 	   }
 	   
-	   //애널리틱스용 서울버스
+	   //�븷�꼸由ы떛�뒪�슜 �꽌�슱踰꾩뒪
 	   @RequestMapping(method={RequestMethod.GET}
 	   , value="/user/seoulBus.action")
 	   public String seoulBus(HttpServletRequest request, HttpSession session, HttpServletResponse response
@@ -393,25 +395,15 @@ public class MainController {
 	   
 	   
 	   
-	   //용인대학교 학식 크롤링 
-	   @RequestMapping(method={RequestMethod.GET}, value="/user/yiuFood.action")
+	   //
+	   @RequestMapping(method={RequestMethod.GET}, value="/food.action")
 	   public String yiuFood(HttpServletRequest request, HttpSession session, HttpServletResponse response,String universitySeq,String searchValue
 			  ) throws IOException{
 		   
 		   UniversityDTO udto = (UniversityDTO) session.getAttribute("universityDto");
 		   
 		
-		if(searchValue == null) {
-			
-		}else{
-			//용인대 학식 파싱
-			org.jsoup.nodes.Document doc = Jsoup.connect("http://mt.yongin.ac.kr/life/menu?searchValue="+searchValue).get();
-			Elements table = doc.select(".tableType1");
-		//	System.out.println(table.toString());
-			response.setCharacterEncoding("utf-8");
-			response.getWriter().print(table.toString().replace("(메뉴는 식자재 수급사정 상 변동될 수 있음을 양해부탁드립니다. 원산지는 식당 내 게시된 메뉴표를 참조하여 주시기 바랍니다.)", ""));
-			return null;
-		}
+
 		
 		
 		
@@ -423,43 +415,7 @@ public class MainController {
 		
 		   return "user/foodYiu";
 	   }
-	   //명지대학교 학식 크롤링 
-	   @RequestMapping(method={RequestMethod.GET}, value="/user/mjuFood.action")
-	   public String mjuFood(HttpServletRequest request, HttpSession session, HttpServletResponse response, String searchValue,String typeValue
-			   ) throws IOException{
-		   
-		   UniversityDTO udto = (UniversityDTO) session.getAttribute("universityDto");
-		   
-		   
-		   if(searchValue == null) {
-			   
-		   }
-		   else{
-			   //명지대 학식 파싱
-			   org.jsoup.nodes.Document doc = Jsoup.connect("http://www.mju.ac.kr/mbs/mjukr/jsp/restaurant/restaurant.jsp?configIdx="+typeValue+"&id=mjukr_="+searchValue).get();
-			   System.out.println(searchValue+"///////////////////////"+typeValue);
-			   Elements table = doc.select(".sub");
-			   System.out.println(table.toString());
-			   response.setCharacterEncoding("utf-8");
-			   response.getWriter().print(table.toString());
-			   return null;
-		   }
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   return "user/foodMju";
-	   }
-	   
+	  
 	   
 	   
 

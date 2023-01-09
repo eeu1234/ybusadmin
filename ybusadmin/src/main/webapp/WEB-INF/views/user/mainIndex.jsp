@@ -7,26 +7,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!--구글 애드센스-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2370297300940223"
+     crossorigin="anonymous"></script>
     
     <link rel="apple-touch-icon" href="/spring/images/ico/favicon.ico">
     <link rel="icon" href="/spring/images/ico/favicon.ico" type="image/x-icon" sizes="16x16">
     
     <script>
-	    $(document).ready(function(){
-	    	setTimeout(function() {
-	    		  $('.busteam').fadeOut('fast');
-	    		}, 4000); // <-- time in milliseconds
-	    		
-	    		
-	    	$('.busTeam').css("display","inline");	
-	   	});
-    
-    	function showTeam(){
-    			
-    		setTimeout(function() {
-	    		  $('.busteam').fadeOut('fast');
-    		}, 4000); // <-- time in milliseconds
-		};
+	
         var img = {
             redBus:['url(/spring/images/mainIndex/redBus_1.png)','url(/spring/images/mainIndex/redBus_2.png)','url(/spring/images/mainIndex/redBus_3.png)'],
             yellowBus:['url(/spring/images/mainIndex/yellowBus_1.png)','url(/spring/images/mainIndex/yellowBus_2.png)','url(/spring/images/mainIndex/yellowBus_3.png)'],
@@ -65,6 +54,15 @@
                 $('#container_mid_blueBus').css('background-image',img.blueBus[2]);
             }
         }
+        function weatherComment(code){
+        	if(code == "ThunderStorm"){return "소나기";}
+        	else if(code == "Drizzle"){return "이슬비";}
+        	else if(code == "Rain"){return "비";}
+        	else if(code == "Snow"){return "눈";}
+        	else if(code == "Atmosphere"){return "안개";}
+        	else if(code == "Clouds"){return "구름";}
+        	else if(code == "Clear"){return "맑음";}
+        }
         
         function getWeather() {
            var url = 'http://api.openweathermap.org/data/2.5/weather?lat=${universityDto.universityLatitude}&lon=${universityDto.universityLongitude}&APPID=62790597231fb6fa089bb576c8f8b650&units=metric&lang=kr';
@@ -77,7 +75,7 @@
              success: function (data) {
                 var temp = parseInt(data.main.temp);
                 var waetherIcon = data.weather[0].icon;
-                var status = data.weather[0].description;
+                var status = weatherComment(data.weather[0].main);
                 $("#container_top_weather_bottom_temperature").text(temp+'°');
                 $("#container_top_weather_bottom_weatherIcon").css("content","url('/spring/images/mainIndex/"+waetherIcon+".png')")
              $("#container_top_weather_bottom_weatherStatus").text(status);   
@@ -382,7 +380,15 @@
         	changeImgByTime();
             getWeather();
             changeDate();
-            $('#header_notice_mid').vTicker();
+            $('#header_notice_mid').vTicker();  
+            
+            $('#container_bottom_menu_yteam').click(function(){
+            	$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+            	$('.busteam').fadeIn('fast');
+            	setTimeout(function() {
+  	    		  $('.busteam').fadeOut('fast');
+  				}, 4000); // <-- time in milliseconds
+            });
     
         });
 
@@ -393,20 +399,19 @@
 
     @font-face {
    font-family: "Pretendard-Bold";
-   src:url(/spring/css//fonts/2022/Pretendard-Bold.woff) format("truetype");
-    }
+   src:url(/spring/css/2022css/2022/Pretendard-Bold.subset.woff2) format("truetype");
     }
     @font-face {
    font-family: "Pretendard-ExtraLight";
-   src:url(/spring/css//fonts//2022/Pretendard-ExtraLight.woff) format("truetype");
+   src:url(/spring/css/2022css/2022/Pretendard-ExtraLight.subset.woff2) format("truetype");
     }
     @font-face {
    font-family: "Pretendard-Medium";
-   src:url(/spring/css//fonts//2022/Pretendard-Medium.woff) format("truetype");
+   src:url(/spring/css/2022css/2022/Pretendard-Medium.subset.woff2) format("truetype");
     }
     @font-face {
    font-family: "Pretendard-SemiBold";
-   src:url(/spring/css//fonts//2022/Pretendard-SemiBold.woff) format("truetype");
+   src:url(/spring/css/2022css/2022/Pretendard-SemiBold.subset.woff2) format("truetype");
     }
 
     a {
@@ -526,6 +531,7 @@
         width:100%;
         height:33.6%;
         position:relative;
+        right:4%;
     }
     #container_top_weather_bottom_weatherIcon{
         height:100%;
@@ -537,7 +543,6 @@
         font-size:1.9em;
         float:left;
         letter-spacing: -1.6px;
-        right:8%;
         font-family: "Pretendard-Bold";
         color:#ffffff;
     }
@@ -546,7 +551,7 @@
         position:relative;
         font-size:0.75em;
         float:left;
-        right:5.5%;
+        right:-4%;
         letter-spacing: -0.3px;
         padding-top:2%;
         font-family: "Pretendard-Bold";
@@ -698,12 +703,33 @@
         box-shadow: 0px 0px 15px #0F296B1F;
         border-radius: 12px;
     }
+    .container_bottom_menu{
+    	width:17%;
+    }
     #container_bottom_menu_sns{
         position:relative;
-        width:19.74%;
-        margin-left:4.2%;
-        margin-right:4.2%;
+        margin-left:0%;
+        margin-right:0%;
         float:left;
+    }
+    #container_bottom_menu_food{
+        position:relative;
+        margin-left:6%; 
+        margin-right:0%;
+        float:left;
+    }    
+   	 #container_bottom_menu_food_top{
+        width:28.59%;
+        content:url("/spring/images/mainIndex/another_icon_food.png");
+        margin:auto;
+        padding-bottom:17.16%;
+    }
+    #container_bottom_menu_food_bottom{
+        font-size:12px;
+        letter-spacing: -0.3px;
+        text-align: center;
+        font-family: "Pretendard-SemiBold";
+        color: #142637;
     }
     #container_bottom_menu_sns_top{
         width:28.59%;
@@ -719,8 +745,7 @@
         color: #142637;
     }
     #container_bottom_menu_notice{
-        width:19.74%;
-        margin-right:4.2%;
+        margin-right:0%;
         float:left;
     }
     #container_bottom_menu_notice_top{
@@ -737,8 +762,8 @@
         color: #142637;
     }
     #container_bottom_menu_total{
-        width:19.74%;
-        margin-right:4.2%;
+        margin-left:1%;
+        margin-right:1%;
         float:left;
     }
     #container_bottom_menu_total_top{
@@ -755,8 +780,7 @@
         color: #142637;
     }
     #container_bottom_menu_yteam{
-        width:19.74%;
-        margin-right:4.2%;
+       
         float:left;
     }
     #container_bottom_menu_yteam_top{
@@ -836,7 +860,7 @@
     }
     #footer_tip_right_bottom{
     }
-        #main_footer{
+    #main_footer{
         width:90%;
         padding:0 5%;
         background-color:gray;
@@ -881,7 +905,7 @@
 
 </head>
 <body>
-	<img src="/spring/images/team.png" class="busteam" style="width:100%;top:0;left:0;z-index:999;">
+	<img src="/spring/images/team.png" class="busteam" style="width:100%;top:0;left:0;z-index:999;display:none;">	
     <div id = "content">
         <div id = "header">
            <div id = "header_logoBox">
@@ -937,6 +961,7 @@
                 <div style="clear:both"></div>
             </div>
             <div id = "container_mid">
+            <div id = "container_bottom_title">실시간 위치</div>
                 <div id = "container_mid_blueBus" class = "container_bus_rayout" value = "18" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=18';">
                     <div id = "container_mid_blueBus_dot" class = "checkBus_box"
                        <c:forEach items = "${cblList}" var = "list">
@@ -955,7 +980,7 @@
                           </c:if>
                        </c:forEach>
                     ></div>
-                    <div id = "container_mid_yellowBus_text">노란버스</div>
+                    <div id = "container_mid_yellowBus_text">노랑버스</div>
                 </div>
                 <div id = "container_mid_redBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getSchoolBusStopLine.action';">
                     <div id = "container_mid_redBus_dot" class = "checkBus_box" style = "background-color:gray;"></div>
@@ -966,21 +991,25 @@
             <div id = "container_bottom">
                 <div id = "container_bottom_title">더보기</div>
                 <div id = "container_bottom_menu">
-                    <div id = "container_bottom_menu_sns" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">
-                        <div id = "container_bottom_menu_sns_top"></div>
-                        <div id = "container_bottom_menu_sns_bottom">자유게시판</div>
+                    <div id = "container_bottom_menu_food" class="container_bottom_menu" onclick="location.href='/spring/food.action?universitySeq=${universityDto.universitySeq}';">
+                        <div id = "container_bottom_menu_food_top"></div>
+                        <div id = "container_bottom_menu_food_bottom">식단표</div>
                     </div>
-                    <div id = "container_bottom_menu_notice" onclick="location.href='https://www.yongin.ac.kr/cmn/sym/mnu/mpm/101080200/htmlMenuView.do'">
+                    <div id = "container_bottom_menu_notice" class="container_bottom_menu" onclick="location.href='https://www.yongin.ac.kr/cmn/sym/mnu/mpm/101080200/htmlMenuView.do'">
                         <div id = "container_bottom_menu_notice_top"></div>
                         <div id = "container_bottom_menu_notice_bottom">용인대공지</div>
                     </div>
-                    <div id = "container_bottom_menu_total">
+                    <div id = "container_bottom_menu_total" class="container_bottom_menu">
                         <a href = "https://total.yongin.ac.kr/login.do">
                             <div id = "container_bottom_menu_total_top"></div>
                             <div id = "container_bottom_menu_total_bottom">종합정보시스템</div>
                         </a>
                     </div>
-                    <div id = "container_bottom_menu_yteam">
+                    <div id = "container_bottom_menu_sns" class="container_bottom_menu" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">
+                        <div id = "container_bottom_menu_sns_top"></div>
+                        <div id = "container_bottom_menu_sns_bottom">자유게시판</div>
+                    </div>                    
+                    <div id = "container_bottom_menu_yteam" class="container_bottom_menu">
                         <div id = "container_bottom_menu_yteam_top" onclick="showTeam()"></div>
                         <div id = "container_bottom_menu_yteam_bottom" onclick="showTeam()">YBUS팀</div>
                     </div>
@@ -997,25 +1026,25 @@
                     <div class = "footer_tip_blank"></div>
                     <div id = "footer_tip_left_top">YBUS 이용 팁</div>
                     <div class = "footer_tip_blank"></div>
-                    <div id = "footer_tip_left_bottom">YBUS를<br>앱처럼이용하고<br>사용하고싶다면?</div>
+                    <div id = "footer_tip_left_bottom">YBUS를<br>앱처럼<br>사용하고싶다면?</div>
                 </div>
                 <div id = "footer_tip_right">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                  <ins class="adsbygoogle"
-                       style="display:block; height:110px; width:100%;overflow:scroll;max-height:110px;"
-                       data-ad-client="ca-pub-2370297300940223"
-                       data-ad-slot="9489841046"
-                       data-ad-format="auto"
-                       data-full-width-responsive="true"></ins>
-                  <script>
-                       (adsbygoogle = window.adsbygoogle || []).push({});
-                  </script>
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2370297300940223"
+					     crossorigin="anonymous"></script>
+					<!-- 메인페이지 쪽 광고 -->
+					<ins class="adsbygoogle"
+					     style="display:inline-block;width:100%;height:110px;overflow:scroll"
+					     data-ad-client="ca-pub-2370297300940223"
+					     data-ad-slot="2200350134"></ins>
+					<script>
+					     (adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
                 </div>
                 <div style="clear:both;"></div>
             </div>
         </div>
-        
-        <div id = "main_footer">
+    </div>
+    <div id = "main_footer">
            <div id = "logo">
               <a href= "/spring/admin/adminLogin.action">
               <img style= "width:100%;" src="/spring/images/mainIndex/YBUS_footer.png"  >
@@ -1040,9 +1069,7 @@
                <div style ="clear:both;"></div>
            </div>
        </div>
-    </div>
-
-   
+          
 </body>
 </html>
  

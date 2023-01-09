@@ -1,292 +1,438 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
-    
-
-
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!-- 모바일용웹 -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
-
-
-<meta name="mobile-web-app-capable" content="yes">
-
-<!-- 안드로이드 홈화면추가시 상단 주소창 제거 -->
-<meta name="mobile-web-app-capable" content="yes">
-<link rel="icon" href="/spring/images/ico/favicon.ico">
-<!-- ios홈화면추가시 상단 주소창 제거 -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<!-- ico 아이콘-->
-<link rel="apple-touch-icon" href="/mobile/Image/favicon.ico">
-
-<!--모바일 스플래스 //아이폰용-->
-<link rel="apple-touch-startup-image" href="images/loading_yongin.png">
-
-
-<script
-	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"
-	integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- import 시작 -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
 	crossorigin="anonymous"></script>
+<title>식단표</title>
 
-<!-- Analitics -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-93928507-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
-<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
-<script type="text/javascript">
-if(!wcs_add) var wcs_add = {};
-wcs_add["wa"] = "171aefb65e5675";
-wcs_do();
-</script>
-
-	
-<script>
-
-
-
-	$(function(){
-		$("#StudentHall").click(function(){
-			  $.ajax({
-			          type: 'get'
-			        , url: '/spring/user/yiuFood.action'
-			        , data : "searchValue="+'1'+"&universitySeq=${universityDto.universitySeq}"
-					, dataType : 'text'
-			        , success: function(data) {
-			        	$("#listDiv").html(data);
-			          }
-			  });	
-		})		
-})
-
-	$(function(){
-		$("#domitori").click(function(){
-			  $.ajax({
-			          type: 'get'
-			        , url: '/spring/user/yiuFood.action'
-			        , data : "searchValue="+'2'+"&universitySeq=${universityDto.universitySeq}"
-					, dataType : 'html'
-			        , success: function(data) {
-			        	$("#listDiv").html(data);
-			          }
-			  });	
-		})		
-})
-
-	$(function(){
-		$("#Hwangyeong").click(function(){
-			  $.ajax({
-		          type: 'get'
-	        	    , url: '/spring/user/yiuFood.action'
-	        	    , data : "searchValue="+'3'+"&universitySeq=${universityDto.universitySeq}"
-					, dataType : 'html'
-			        , success: function(data) {
-			        	$("#listDiv").html(data);
-			          }
-			  });	
-		})		
-});
+ <style>    
+	@font-face {
+	font-family: "Pretendard-Bold";
+	src:url(/spring/css/2022css/2022/Pretendard-Bold.subset.woff2) format("truetype");
+    }
+    }
+    @font-face {
+	font-family: "Pretendard-ExtraLight";
+	src:url(/spring/css/2022css/2022/Pretendard-ExtraLight.subset.woff2) format("truetype");
+    }
+    @font-face {
+	font-family: "Pretendard-Medium";
+	src:url(/spring/css/2022css/2022/Pretendard-Medium.subset.woff2) format("truetype");
+    }
+    @font-face {
+	font-family: "Pretendard-SemiBold";
+	src:url(/spring/css/2022css/2022/Pretendard-SemiBold.subset.woff2) format("truetype");
+    }
 	
 	
-</script>
-	
-
-<style>
-	body{
-		margin:0px;
+        body, html, p, ul, img, span, div, a {
+            margin: 0;
+            padding: 0;
+        }
 		
-	}
 
-	html {
-		width: 100%;
-		background-Color: #EB6F61;
-		font-size: 0.6em;
-		font-style: bold;
-		
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-	#jb-header {
+        body, html {
+			min-width:375px;
+			max-width:600px;
+            position: relative;
+            height: 100%;
+            width: 100%;
+            margin: 0 auto;
+            color: #222;
+            background-color: #FAFAFC;
+        }
 
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 10%;
-		background-color: white;
-		
+        .clear {
+            clear: both;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+            height:100%;
+            margin: 0 auto;
+            margin-top:6%;
+        }
+
+        #header {
+            position: relative;
+            margin-top:5%;
+            width: 100%;
+            text-align: center;
+            color: white;
 	
-	}
-	#jb-header img{
-		margin-top:20px;	
-		width:40%;
-	}
-	#jb-container {
-		position: relative;
-		top: 0;
-		left: 0;
-		width: 100%;
-		margin: 0px auto;
-		padding: 0;
-		text-align: center;
-	}
 
-	#jb-content {
-		width: 100%;
-		float: left;
-		height: 88%;
-		margin: 0px;
-	}
-	#jb-footer {
-		float: left;
-		width: 100%;
-		height: 8%;
-		background-color: black;
-		margin: 0px;
-		padding: 0px;
-	}
-	table, tr {
-		cellspacing: 0px;
-		cellpadding: 0px;
-	}
-	td.head {
-		font-style: bold;
-		text-align: center;
-	}
-	td.second {
-		width: 10px;
-		background-Color: #ffe6f2;
-		padding: 0px;
-		spacing: 0px;
-		text-align: center;
-		color: grey;
-	}
-	td {
-		color: black;
-	}
-	table {
-		width: 100%;
-		line-height: 21px;
-		border-top: 1px solid #cccccc;
-		border-left: 1px solid #cccccc;
-		border-collapse: collapse;
-	}
-	table th, table td {
-		color: #678197;
-		border-right: 1px solid #cccccc;
-		border-bottom: 1px solid #cccccc;
-		padding-top: 10px;
-		padding-bottom: 10px;
-		background-color: #FFEEF4;
-		font-style: bold;
-		font-size: 0.7em;
-	}
-	.class td:nth-child(1) {
-		font-size: 0.6em;
-	}
-}
+        }
+        #infoPage {
+            position: relative;
+			width:90%;
+			padding-top:5%;
+			padding-left:5%;
+			padding-right:5%;
+        }
+        #txtBox {
+            position: relative;
+            float:left;
+            width: 60%;
+            
+        }
+        #btnBox {
+            position: relative;
+            float:left;
+            width: 40%;
+            text-align:right;
+		}
+        #txtType{
+            position: relative;
+            font-weight: bold;
+            color : #142637;
+            text-align: left;
+            font-size: 2em;
+			padding-top:0.5%;
+			padding-bottom:0.5%;
+			font-family: "Pretendard-Bold";
 
-</style>
+			
+        }
+        #btnType{	
+            position: relative;
+            float:right;
+            text-align: right;    
+            text-align:center;
+            width:65%;
+            height:15px;
+            padding-top:5%;
+            padding-bottom:8%;
+            background-color:#142637;
+            color:white;
+            font-size:0.8em;
+            border-radius: 50px;
+			        
+        }
 
-<script>/*
-		$(function(){
-		$('input').click(function(){
-				setTimeout(function(){
-					$td = $('tr>td');
-					
-					for(var i=0;i<$td.length;i++){
-						console.log($td[i].attr('class',className));
-						//var td = $td[i].attr('class');
-						if(td == null){
-							console.log(td);
-						}
-					}
-					
-				},1000);
-				
-		})
-	
-	})*/	
-</script>
 
-<style>
-#listDiv {
-	width: 100%;
-	height: auto;
-	min-height: 100%;
-	background-color: #EB6F61;
-	margin: 0 auto;
-	margin-top: 20%;
-}
+        #selectBtn{
+			border:0;
+			outline:0;
+            postion : relative;
+             background-color:#142637;
+             color : white;
+             font-family : 'Pretendard-SemiBold';
+             font-weight: bold;	
+            
 
-#StudentHall, #domitori, #Hwangyeong {
-	width: 90%;
-	height: 12%; /*--버튼 크기---*/
-	background-size: cover;
-	background-repeat: no-repeat;
-	margin:0 auto;
-	margin-top: 1%;
-	max-width: 500px;
-	max-height: 80px;
-}
+        }
 
-#StudentHall {
-	background-image: url("/spring/images/food/insung_dining.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-}
+        #searchContainer{
+			position:relative;
+            width:100%;
+			padding-top:1%;
+            margin: 0 auto;
+        }
+		#contentsContainer{
+			position:relative;
+			padding-top:5%;
+			padding-bottom:3.5%;
+			
+		}
+        #searchBox{
+			position:relative;
+			width:80%;
+            height:80%;
+			padding:3% 5%;
+            background-color:white;
+            border-radius:15px;
+            box-shadow: 5px 10px 30px #e0e0e0;
+			margin:0 auto;
 
-#domitori {
-	background-image: url("/spring/images/food/domitory_dining.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-}
+        }
+        #menuBox{
+			position:relative;
+			width:80%;
+			padding:1% 5%;
+			padding-bottom:10%;
+            background-color:white;
+            border-radius:15px;
+            box-shadow: 5px 10px 30px #e0e0e0;
+			margin:0 auto;
+			margin-top:25px;
 
-#Hwangyeong {
-	background-image: url("/spring/images/food/hawn_dining.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-}
-</style>
+        }
+       	#menuContainer{
+			position:relative;
+			width:100%;
+            background-color:#72bdd6;
+            border-radius:15px;
+            box-shadow: 5px 10px 30px #e0e0e0;
+			margin:0 auto;
+			margin-top:25px;
+			padding-bottom:10%;
+
+        }
+        
+		.contentsBox{
+			position:relative;
+			width:90%;
+            height:161.4px;
+			padding-top:20px;
+            background-color:white;
+            border-radius:10px;
+            box-shadow: 5px 10px 30px #e0e0e0;
+			margin:0 auto;
+			margin-bottom:5%;
+			
+		}
+		.content_category{
+			position:relative;
+			width:14%;
+            height:16px;
+			margin-left:5%;
+			margin-right:5%;
+			text-align:center;
+		}
+        #search{
+			position:relative;
+			margin: 0 auto;
+            background-color: #FAFAFC;
+            border-radius:30px;
+			padding:2% 0;
+        }      
+		#searchNotice{
+			position:relative;
+			margin: 0 auto;
+            height: 35%;        
+			padding-top:3%;			
+        }
+		#searchInput{
+			width:100%;
+			height:100%;
+			font-family : 'Pretendard-Medium';
+		}	
+		#searchInput::placeholder {
+			width:100%;
+			height:100%;
+			color: #142637;
+			font-family : 'Pretendard-Medium';
+		}
+		.search_iconBox{
+			float:left;
+			width:18px;
+			padding:1.5px 1.3% 1.5px 3.3%;
+		}
+		.search_iconBox_notice{
+			postion:relative;
+			float:left;
+			width:10%;
+			text-align:center;
+			
+		}
+		.search_inputBox{
+			float:left;
+			width:86%;
+		}
+		
+		#search_icon{
+			width:100%;
+		}		 
+		#notice_icon{
+			width:45%;
+			margin:0 auto;
+		}
+		#searchInput{
+			border:transparent;
+			background-color:transparent;
+			font-size:1em;
+		    color : #142637;
+			font-weight:bold;
+			
+		}
+		#searchInputBoxNotice{
+			
+			padding-top:0.5%;
+			border:transparent;
+			background-color:transparent;
+			font-size:0.8em;
+		    color : #767676;
+			font-family : 'Pretendard-Medium';
+			
+		}
+		#dateBox{
+			position:relative;
+			width:100%;
+			text-align:center;
+			color:white;
+			font-family : 'Pretendard-Medium';
+			padding-top:20px;
+			margin-bottom:40px;
+			padding-left:10%;
+			padding-right:10%;
+			
+		}
+		.moveBtn{
+			float:left;
+			width:10%;
+		}
+		#dateContents{
+			float:left;
+			width:60%;
+		}
+		#cornerContainer{
+			position:relative;
+			width:80%;
+			padding-left:10%;
+			padding-right:10%;
+		}
+		.cornerBox{
+			width:100%;
+			background-color:white;
+			border-radius:15px;
+		}
+		.corner{
+			position:relative;
+			width:100%;
+			height:45px;
+			text-align:center;
+			color:#142637;
+			font-family : 'Pretendard-Medium';
+			font-weight:bold;
+			font-size:1.5em;
+			background-color:white;
+			margin-top:20px;
+			padding-top:13px;
+			border-radius:15px;
+           
+		}
+		.corner_active{
+			position:relative;
+			width:100%;
+			height:45px;
+			text-align:center;
+			color:#142637;
+			font-family : 'Pretendard-Medium';
+			font-weight:bold;
+			font-size:1.5em;
+			background-color:white;
+			margin-top:20px;
+			padding-top:13px;
+			border-radius:15px;
+			box-shadow: 0px 10px 10px #e0e0e0;
+           
+		}
+		
+		.cornerDetail{
+			width:100%;
+			text-align:center;
+			background-color:#fafafc;
+			border-radius:15px;
+			padding:5px 0;
+		}
+		.detailMenu{
+			width:100%;
+			text-align:center;
+			font-family : 'Pretendard-Medium';
+			font-weight:bold;
+			color:#142637;
+			padding:10px 0;		
+		}
+    </style>
+    <script>
+    
+    $(function() {
+
+    	
+
+    })//onload
+
+    </script>
 </head>
-
 <body>
-	<div id="jb-container">
-		<div id="jb-header">
-			<img src="/spring/images/mainImage/mainLogo.png">
+
+
+ <div id="header">
+        <div id="infoPage">
+            <div id="txtBox">
+                <div id="txtType">
+					<div style="float:left;width:40%;height:38px;">식단표</div>
+					<div style="float:left;height:38px;"><img src="/spring/images/mainIndex/home_btn_navy.png" style="padding-top:2px;height:35px;width:auto;" onclick="location.href='/spring/index.action'" /></div>
+					<div class="clear"></div> 
+                </div>
+            </div>
+            <div id="btnBox">
+                <div id="btnType">
+                <img style="height:70%" src="/spring/images/mainIndex/totalService_white.png">
+                   <select id="selectBtn">
+                   	<option value="인성관">인성관</option>
+                   	<option value="기숙사">기숙사</option>
+                   	<option value="환과대">환과대</option>
+                   </select>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id="container">
+        <div id="searchContainer">
+            <div id="searchBox">
+                <div id="search">
+					<div class="search_iconBox">
+						<img src='/spring/images/mainImage/pin_icon.png' id="search_icon">
+					</div>
+					<div class="search_inputBox">
+					   <span id="searchInput">인성관 1층 입구 앞</span>
+					</div>
+					<div class="clear"></div>
+                </div>
+            </div>
+            <div id="menuBox">
+                <div id="menuContainer">
+					<div id="dateBox">
+						<div class="moveBtn"><</div>  
+						<div id="dateContents">10월 31일 월요일</div>
+						<div class="moveBtn">></div>
+						<div class="clear"></div>
+					</div>
+	                <div id="cornerContainer">
+	                	<div class="cornerBox">
+	                		<div id="cornerA" class="corner">코너 A</div>
+                		</div>
+                		<div class="cornerBox">
+	                		<div id="cornerB" class="corner">코너 B</div>
+	                	</div>
+	                	<div class="cornerBox">
+	                		<div id="cornerC" class="corner">코너 C</div>
+                		</div>
+	                	<div class="cornerBox">
+		                	<div id="cornerD" class="corner_active">코너 D</div>
+		                	<div class="cornerDetail">
+		                		<p class="detailMenu">1++ 한우</p>
+		                		<p class="detailMenu">냉면</p>
+		                		<p class="detailMenu">단무지</p>
+		                		<p class="detailMenu">초밥</p>
+		                	</div>
+	                	</div>
+                	</div>
+                </div>
+
+            </div>
+        </div>
+		<div id="contentsContainer">
+			
+			
 		</div>
-		<div id="jb-content">
-			<div style="position:relative;text-align:center;">
-				<img src="/spring/images/food/icon_food.png" style="height:auto;width:100%;">
-			</div>
-			<!--학생회관-->
-			<div style="position:relative;">
-				<input type="button" id="StudentHall" />
-				<input type="button" id="domitori" /> 
-				<input type="button" id="Hwangyeong" />
-			</div>
-			<div id="listDiv"></div>
+		
+
+    </div>
 
 
-			<div id="footer" style="background-color: black; z-index: 900;">
-				<img src="/spring/images/food/bottom_bar.png"
-					style="width: 100%; height: 10%;&gt;
-			&lt;/div&gt;
-		&lt;/div&gt;
-		&lt;div style="clear:both;">
 
-			</div>
 </body>
-
 </html>
-
-
-
