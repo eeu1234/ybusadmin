@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="food">
+
+	<!-- 메뉴 조회 -->
+	<select id="getFoodList" parameterType="String" resultType="com.test.spring.dto.FoodDTO">
+		SELECT menuSeq, date, menuLocation, dayOfWeek, workDate, worker FROM MENU WHERE menuLocation=#{menuLocation} group by date;
+	</select>
+	
+	<!-- 날짜 조회 -->
+	<select id="getFoodListByDate" parameterType="map" resultType="com.test.spring.dto.FoodDTO">
+		SELECT * FROM MENU WHERE menuLocation=#{menuLocation} AND date=#{date};
+	</select>
+	
+	<!-- 일주일 단위로 조  -->
+	<select id="getFoodListByWeek" parameterType="String" resultType="com.test.spring.dto.FoodDTO">
+		SELECT * FROM MENU 
+		WHERE menuLocation=#{menuLocation} AND date=DATE_ADD(#{date}, INTERVAL #{num} DAY);
+	</select>
+	
+	<!-- Insert Menu -->
+	<insert id="foodAdd" parameterType="com.test.spring.dto.FoodDTO">
+    	INSERT INTO MENU (menuLocation, menuCorner, date, menu1, menu2, menu3, menu4, menu5, dayOfWeek, workDate, worker)
+    	 VALUES (#{menuLocation},#{menuCorner},#{date},#{menu1},#{menu2},#{menu3},#{menu4},#{menu5},DAYOFWEEK(#{date}),now(),'정명곤');
+    </insert>
+	<!-- Update Menu -->
+	<update id="foodUpdate" parameterType="map">
+    	UPDATE MENU SET menu1=#{menu1}, menu2=#{menu2}, menu3=#{menu3}, menu4=#{menu4}, menu5=#{menu5}
+    		WHERE date = #{date} and menuCorner=#{menuCorner} and menuLocation=#{menuLocation};
+    </update>
+	
+	
+</mapper>

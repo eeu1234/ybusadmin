@@ -24,6 +24,7 @@ import com.test.spring.dto.BusStopDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.CurrBusLocationDTO;
 import com.test.spring.dto.UniversityDTO;
+import com.test.spring.dto.PredictBusTimeDTO;
 
 /*******************************************
  * @author 이대원
@@ -171,21 +172,30 @@ public class BusStopMapController {
 			BusStopAvgLatLonDTO avgBSdto = dao.getSpecipicAvgBusStopLatLon(map);//지정된 노선의 맵 중앙
 			List<BusStopDTO> bsList= dao.getSpecipicBusStop(map);//지정된 정류장
 			List<CurrBusLocationDTO> cblList = dao.getCurrBusStopLocation(map);//현재 버스 위치
+			
+			for(int i = 0; i< cblList.size(); i++){
+				
+				cblList.get(i).setLocationTime(cblList.get(i).getLocationTime().substring(11, 16)+" 갱신");
+				
+			}
+			
 			List<BusStopDetailCategoryDTO> bsdcList = dao.getAllBusStopDetailCategory(map);
 			UniversityDTO unidto = dao.getUniversityArea(universitySeq);
+			List<PredictBusTimeDTO> predictTimeList = dao.getPredicBusTime();
 			/*
 			for(int i =0; i<bsList.size(); i++){
 				System.out.println("bsList"+i+"bsOrder"+bsList.get(i).getBusStopOrder());
 			}
 			*/
-			
+
 			request.setAttribute("busStopCategorySeq", busStopCategorySeq);
 			request.setAttribute("busStopDetailCategorySeq", busStopDetailCategorySeq);
 			request.setAttribute("bsdcList", bsdcList);
 			request.setAttribute("cblList", cblList);
 			request.setAttribute("avgBSdto", avgBSdto);
 			request.setAttribute("unidto", unidto);
-			request.setAttribute("bsList", bsList);    
+			request.setAttribute("bsList", bsList); 
+			request.setAttribute("predictTimeList",predictTimeList);
 		 } catch (Exception e) {
 		    session.invalidate();
 		    try {

@@ -185,6 +185,7 @@ public class BusScheduleController {
 		request.setAttribute("weekDays", bsdto.getWeekDays());
 		request.setAttribute("busStopDetaliCategorySeq",bsdto.getBusStopDetailCategorySeq());
 	    request.setAttribute("busStopCategorySeq", bsdto.getBusStopCategorySeq());
+	    request.setAttribute("lastUpdateBusTime", dao.getLastUpdateBusTime());
 
 		return "busSchedule/busTimeTable";
 		
@@ -319,6 +320,7 @@ public class BusScheduleController {
 		
 		request.setAttribute("weekDays", bsdto.getWeekDays());
 		request.setAttribute("busStopCategorySeq", busStopCategorySeq);
+		request.setAttribute("lastUpdateBusTime", dao.getLastUpdateBusTime());
 		
 		
 		return "busSchedule/schoolBusTimeTable";

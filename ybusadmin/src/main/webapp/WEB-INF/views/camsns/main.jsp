@@ -15,20 +15,20 @@
  <style>    
 	@font-face {
 	font-family: "Pretendard-Bold";
-	src:url(/spring/css/fonts/Pretendard-Bold.woff) format("truetype");
+	src:url(/spring/css/2022css/2022/Pretendard-Bold.subset.woff2) format("truetype");
     }
     }
     @font-face {
 	font-family: "Pretendard-ExtraLight";
-	src:url(/spring/css/fonts/Pretendard-ExtraLight.woff) format("truetype");
+	src:url(/spring/css/2022css/2022/Pretendard-ExtraLight.subset.woff2) format("truetype");
     }
     @font-face {
 	font-family: "Pretendard-Medium";
-	src:url(/spring/css/fonts/Pretendard-Medium.woff) format("truetype");
+	src:url(/spring/css/2022css/2022/Pretendard-Medium.subset.woff2) format("truetype");
     }
     @font-face {
 	font-family: "Pretendard-SemiBold";
-	src:url(/spring/css/fonts/Pretendard-SemiBold.woff) format("truetype");
+	src:url(/spring/css/2022css/2022/Pretendard-SemiBold.subset.woff2) format("truetype");
     }
 	
 	
@@ -134,7 +134,7 @@
         }
 		#contentsContainer{
 			position:relative;
-			padding-top:3.5%;
+			padding-top:5%;
 			padding-bottom:3.5%;
 			
 		}
@@ -448,7 +448,9 @@
         <div id="infoPage">
             <div id="txtBox">
                 <div id="txtType">
-                    <img src="/spring/images/camsns/backBtn.png" style="height:20px;width:auto;" onclick="location.href='/spring/index.action'" /> 자유게시판
+					<div style="float:left;width:75%;height:38px;">자유게시판</div>
+					<div style="float:left;height:38px;"><img src="/spring/images/mainIndex/home_btn_navy.png" style="padding-top:2px;height:35px;width:auto;" onclick="location.href='/spring/index.action'" /></div>
+					<div class="clear"></div> 
                 </div>
             </div>
             <div id="btnBox">

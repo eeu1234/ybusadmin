@@ -17,20 +17,19 @@
     <style>
 		@font-face {
 		font-family: "Pretendard-Bold";
-		src:url(/spring/css/fonts/Pretendard-Bold.woff) format("truetype");
-		}
+		src:url(/spring/css/2022css/2022/Pretendard-Bold.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-ExtraLight";
-		src:url(/spring/css/fonts/Pretendard-ExtraLight.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-ExtraLight.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-Medium";
-		src:url(/spring/css/fonts/Pretendard-Medium.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-Medium.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-SemiBold";
-		src:url(/spring/css/fonts/Pretendard-SemiBold.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-SemiBold.subset.woff2) format("truetype");
 		}
         body, html, p, ul, img, span, div, a {
             margin: 0;
@@ -78,7 +77,7 @@
             width: 100%;
             height:100%;
             margin: 0 auto;
-            margin-top:6%;
+            margin-top:5%;
         }
 
         #header {
@@ -163,7 +162,6 @@
 			position:relative;
 			height:7%;
 			padding-top:6.5%;
-			margin-bottom:10%;
 		}
         #searchBox{
 			position:relative;

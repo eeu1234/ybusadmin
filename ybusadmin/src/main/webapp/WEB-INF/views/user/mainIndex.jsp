@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -704,7 +706,7 @@
         border-radius: 12px;
     }
     .container_bottom_menu{
-    	width:17%;
+    	width:18.7%;
     }
     #container_bottom_menu_sns{
         position:relative;
@@ -714,7 +716,7 @@
     }
     #container_bottom_menu_food{
         position:relative;
-        margin-left:6%; 
+        margin-left:2.3%; 
         margin-right:0%;
         float:left;
     }    
@@ -905,6 +907,10 @@
 
 </head>
 <body>
+<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+%>
 	<img src="/spring/images/team.png" class="busteam" style="width:100%;top:0;left:0;z-index:999;display:none;">	
     <div id = "content">
         <div id = "header">
@@ -973,13 +979,13 @@
                     <div id = "container_mid_blueBus_text">시내버스</div>
                 </div>
                 <div id = "container_mid_yellowBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=36';">
-                    <div id = "container_mid_yellowBus_dot" class = "checkBus_box"
+                    <div id = "container_mid_yellowBus_dot" class = "checkBus_box">
                        <c:forEach items = "${cblList}" var = "list">
                           <c:if test = "${list.busStopCategorySeq == 36}">
                              style = "background-color:#6DFA5B;"
                           </c:if>
                        </c:forEach>
-                    ></div>
+                    </div>
                     <div id = "container_mid_yellowBus_text">노랑버스</div>
                 </div>
                 <div id = "container_mid_redBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getSchoolBusStopLine.action';">
@@ -991,7 +997,7 @@
             <div id = "container_bottom">
                 <div id = "container_bottom_title">더보기</div>
                 <div id = "container_bottom_menu">
-                    <div id = "container_bottom_menu_food" class="container_bottom_menu" onclick="location.href='/spring/food.action?universitySeq=${universityDto.universitySeq}';">
+                    <div id = "container_bottom_menu_food" class="container_bottom_menu" onclick="location.href='/spring/food.action?universitySeq=${universityDto.universitySeq}&menuLocation=인성관&date=<%= sf.format(nowTime) %>';">
                         <div id = "container_bottom_menu_food_top"></div>
                         <div id = "container_bottom_menu_food_bottom">식단표</div>
                     </div>

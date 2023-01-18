@@ -11,20 +11,19 @@
     <style>
 		@font-face {
 		font-family: "Pretendard-Bold";
-		src:url(/spring/css/fonts/Pretendard-Bold.woff) format("truetype");
-		}
+		src:url(/spring/css/2022css/2022/Pretendard-Bold.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-ExtraLight";
-		src:url(/spring/css/fonts/Pretendard-ExtraLight.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-ExtraLight.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-Medium";
-		src:url(/spring/css/fonts/Pretendard-Medium.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-Medium.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-SemiBold";
-		src:url(/spring/css/fonts/Pretendard-SemiBold.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-SemiBold.subset.woff2) format("truetype");
 		}
         body, html, p, ul, img, span, div, a {
             margin: 0;
@@ -93,7 +92,7 @@
         #txtBox {
             position: relative;
             float:left;
-            width: 45%;
+            width: 50%;
             
         }
         #btnBox {
@@ -106,7 +105,7 @@
             position: relative;
             color : #142637;
             text-align: left;
-            font-size: 1.8em;
+            font-size: 1.9em;
 			padding-top:0.5%;
 			padding-bottom:0.5%;
 			font-family : 'Pretendard-Bold';
@@ -251,7 +250,9 @@
         <div id="infoPage">
             <div id="txtBox">
                 <div id="txtType">
-                    <img src="/spring/images/camsns/backBtn.png" style="height:20px;width:auto;margin-right:3%;" onclick="location.href='/spring/user/noticeList.action'" />공지사항
+              		<div style="float:left;width:80%;height:38px;">자유게시판</div>
+					<div style="float:left;height:38px;"><img src="/spring/images/mainIndex/home_btn_navy.png" style="height:35px;width:auto;" onclick="location.href='/spring/index.action'" /></div>
+					<div class="clear"></div> 
                 </div>
             </div>
             <div id="btnBox">
@@ -288,8 +289,8 @@
 				<div id="btnFooterGroup">
 					<div class="footerBtn" id="leftFooter"><c:if test="${not empty afterNoticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${afterNoticeSeq}" class="aTitle"><  이전글</a></c:if></div>
 					<div class="footerBtn" id="midFooter" onclick = "location.href='/spring/user/noticeList.action';">
-						<img style = "height:15.2px;" src = "/spring/images/mainImage/list_icon.png"> 
-						<span style = "position:relative;bottom:15%;">목록으로</span>
+						<img style = "height:10.2px;margin-bottom:0px" src = "/spring/images/mainImage/list_icon.png"> 
+						<span style = "position:relative;">목록으로</span>
 					</div>
 					<div class="footerBtn" id="rightFooter"><c:if test="${not empty prevNoticeSeq}"><a href="/spring/user/noticeView.action?noticeSeq=${prevNoticeSeq}" class="aTitle">다음글  ></a></c:if></div>
 					<div class="clear"></div>

@@ -18,9 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.test.spring.admin.food.AdminFoodDAO;
 import com.test.spring.dto.BusStopCategoryDTO;
 import com.test.spring.dto.BusStopDetailCategoryDTO;
 import com.test.spring.dto.CurrBusLocationDTO;
+import com.test.spring.dto.FoodDTO;
 import com.test.spring.dto.NoticeDTO;
 import com.test.spring.dto.NoticeFileDTO;
 import com.test.spring.dto.SearchDTO;
@@ -35,6 +37,9 @@ public class MainController {
 	
 	@Autowired
 	private NoticeDAO noticeDao; //怨듭��궗�빆 dao
+	
+	@Autowired
+	private AdminFoodDAO foodDao;
 	
 	@Autowired
 	private BusStopMapDAO busStopMapDao; // �쁽�옱 踰꾩뒪媛� �룎�븘�떎�땲�뒗吏� �솗�씤�븯�뒗 dao
@@ -397,23 +402,21 @@ public class MainController {
 	   
 	   //
 	   @RequestMapping(method={RequestMethod.GET}, value="/food.action")
-	   public String yiuFood(HttpServletRequest request, HttpSession session, HttpServletResponse response,String universitySeq,String searchValue
+	   public String yiuFoodList(HttpServletRequest request, HttpSession session, HttpServletResponse response,
+			   String universitySeq,
+			   String menuLocation,
+			   String date
 			  ) throws IOException{
 		   
 		   UniversityDTO udto = (UniversityDTO) session.getAttribute("universityDto");
 		   
-		
-
-		
-		
-		
+		   List<FoodDTO> foodList = foodDao.getFoodListByDate(menuLocation, date);
+		   System.out.println(foodList);
+		   request.setAttribute("foodList", foodList);
 		
 		
 		
-			
-		
-		
-		   return "user/foodYiu";
+		   return "user/getFoodCornerList";
 	   }
 	  
 	   

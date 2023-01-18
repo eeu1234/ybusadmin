@@ -106,6 +106,10 @@
 				
 						</ul>
 					</li>
+					
+				<li class="dropdown" style="background-color:#252900;"><a href="/spring/admin/adminFoodLocationSelect.action">학식 관리
+					</a>
+				</li>
 				
 				
 				

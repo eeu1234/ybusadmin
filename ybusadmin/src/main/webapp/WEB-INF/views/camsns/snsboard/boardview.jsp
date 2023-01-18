@@ -16,20 +16,20 @@
     <style>
 		@font-face {
 		font-family: "Pretendard-Bold";
-		src:url(/spring/css//fonts/2022/Pretendard-Bold.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-Bold.subset.woff2) format("truetype");
 		}
 		}
 		@font-face {
 		font-family: "Pretendard-ExtraLight";
-		src:url(/spring/css//fonts/2022/Pretendard-ExtraLight.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-ExtraLight.subset.woff2) format("truetype");
 		}
 		@font-face {
 		font-family: "Pretendard-Medium";
-		src:url(/spring/css//fonts/2022/Pretendard-Medium.woff) format("truetype"); 
+		src:url(/spring/css/2022css/2022/Pretendard-Medium.subset.woff2) format("truetype"); 
 		}
 		@font-face {
 		font-family: "Pretendard-SemiBold";
-		src:url(/spring/css//fonts/2022/Pretendard-SemiBold.woff) format("truetype");
+		src:url(/spring/css/2022css/2022/Pretendard-SemiBold.subset.woff2) format("truetype");
 		}
         body, html, p, ul, img, span, div, a {
             margin: 0;
@@ -358,7 +358,7 @@
 				</c:if>
 				<c:forEach items="${clist}" var="cdto">
 					<div class="mainComment">
-					<div class="commentWriter">관리자</div>
+					<div class="commentWriter">익명</div>
 					<div class="commentContents">
 					<c:if test="${cdto.snscommentFilename != null}">
 					 	<c:if test="${cdto.snscommentFilename != ''}"> 

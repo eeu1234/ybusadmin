@@ -41,7 +41,10 @@
 						WHERE BS.BUSSTOPDETAILCATEGORYSEQ = #{busStopCategorySeq} AND WEEKDAYS = #{weekDays}
 							ORDER BY BUSTIME ASC;
 	</select>
-	
+	<!-- 시간표 마지막 업데이트 시간 가져오기  -->
+    <select id="getLastUpdateBusTime" resultType="string">
+		SELECT LEFT(MAX(BUSUPDATETIME), 16) as busupdatetime FROM BUSSCHEDULE;
+	</select>
 </mapper>
 
 
