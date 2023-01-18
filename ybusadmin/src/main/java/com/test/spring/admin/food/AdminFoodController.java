@@ -2,6 +2,7 @@ package com.test.spring.admin.food;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.test.spring.dto.AdminUniversityDTO;
 import com.test.spring.dto.BusCategoryInfoDTO;
@@ -108,6 +111,79 @@ public class AdminFoodController {
 		
 	}
 	
+	// 학식정보 추가
+	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/adminFoodInsert.action")
+	@Transactional
+	public String adminFoodInsert(HttpServletRequest request, HttpSession session, HttpServletResponse response, String menuLocation, String date) {
+	   try {
+
+	    	 AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+
+
+	         return "food/adminFoodInsert";
+	      } catch (Exception e) {
+	         session.invalidate();
+
+	         try {
+
+	            response.sendRedirect("/spring/admin/adminLogin.action");
+
+	         } catch (Exception e2) {
+	            // TODO: handle exception
+
+	         }
+	         return null;
+	      }
+
+	   }
+	
+	@RequestMapping(method = {RequestMethod.GET}, value = "/admin/adminFoodInsertCheck.action")
+	public String adminFoodInsertCheck(HttpServletRequest request,HttpSession session,HttpServletResponse response, 
+			String[] date,
+			String[] menuCorner,
+			String[] menuLocation,
+			String[] menu1,
+			String[] menu2,
+			String[] menu3,
+			String[] menu4,
+			String[] menu5 ) {
+		
+		
+		try {
+			
+			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+			
+			for (int i = 0; i < 20; i++) {
+				int result = dao.foodInsert(date[i], menuCorner[i], menuLocation[i]
+						, menu1[i]
+						, menu2[i]
+						, menu3[i]
+						, menu4[i]
+						, menu5[i]);
+			      
+		         request.setAttribute("result", result);
+			}
+			
+	        
+	       
+			return "food/adminFoodInsertOk";
+	      } catch (Exception e) {
+	         session.invalidate();
+
+	         try {
+	            
+	            response.sendRedirect("/spring/admin/adminLogin.action");
+
+	         } catch (Exception e2) {
+	            // TODO: handle exception
+
+	         }
+	         return null;
+	      }
+		
+		
+	}
+	
 	// 학식정보 수정
 	@RequestMapping(method = { RequestMethod.GET }, value = "/admin/adminFoodUpdate.action")
 	@Transactional
@@ -146,15 +222,29 @@ public class AdminFoodController {
 	   
 	   @RequestMapping(method = {RequestMethod.GET}, value = "/admin/adminFoodUpdateCheck.action")
 		public String adminFoodUpdateCheck(HttpServletRequest request,HttpSession session,HttpServletResponse response, 
-				String[] date, String menuLocation, String menuCorner, String menu1, String menu2, String menu3, String menu4, String menu5) {
+				String[] date,
+				String[] menuCorner,
+				String[] menuLocation,
+				String[] menu1,
+				String[] menu2,
+				String[] menu3,
+				String[] menu4,
+				String[] menu5 ) {
 			
 			
 			try {
 				
 				AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
 				
-				for (int i = 0; i < 5; i++) {
-					System.out.println(date[i]);
+				for (int i = 0; i < 20; i++) {
+					int result = dao.foodUpdate(date[i], menuCorner[i], menuLocation[i]
+							, menu1[i]
+							, menu2[i]
+							, menu3[i]
+							, menu4[i]
+							, menu5[i]);
+				      
+			         request.setAttribute("result", result);
 				}
 				
 		        
@@ -176,6 +266,17 @@ public class AdminFoodController {
 			
 			
 		}
+	   
+	   // 자동완성
+	   @RequestMapping(value = "/ajax/autocomplete.do")
+		public @ResponseBody Map<String, Object> autocomplete (@RequestParam Map<String, Object> paramMap) throws Exception{
+
+			List<Map<String, Object>> resultList = service.autocomplete(paramMap);
+			paramMap.put("resultList", resultList);
+
+			return paramMap;
+		}
+	   
 	
 	
 	

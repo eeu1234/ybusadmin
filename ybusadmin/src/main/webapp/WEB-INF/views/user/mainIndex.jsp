@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -703,12 +705,33 @@
         box-shadow: 0px 0px 15px #0F296B1F;
         border-radius: 12px;
     }
+    .container_bottom_menu{
+    	width:18.7%;
+    }
     #container_bottom_menu_sns{
         position:relative;
-        width:19.74%;
-        margin-left:4.2%;
-        margin-right:4.2%;
+        margin-left:0%;
+        margin-right:0%;
         float:left;
+    }
+    #container_bottom_menu_food{
+        position:relative;
+        margin-left:2.3%; 
+        margin-right:0%;
+        float:left;
+    }    
+   	 #container_bottom_menu_food_top{
+        width:28.59%;
+        content:url("/spring/images/mainIndex/another_icon_food.png");
+        margin:auto;
+        padding-bottom:17.16%;
+    }
+    #container_bottom_menu_food_bottom{
+        font-size:12px;
+        letter-spacing: -0.3px;
+        text-align: center;
+        font-family: "Pretendard-SemiBold";
+        color: #142637;
     }
     #container_bottom_menu_sns_top{
         width:28.59%;
@@ -724,8 +747,7 @@
         color: #142637;
     }
     #container_bottom_menu_notice{
-        width:19.74%;
-        margin-right:4.2%;
+        margin-right:0%;
         float:left;
     }
     #container_bottom_menu_notice_top{
@@ -742,8 +764,8 @@
         color: #142637;
     }
     #container_bottom_menu_total{
-        width:19.74%;
-        margin-right:4.2%;
+        margin-left:1%;
+        margin-right:1%;
         float:left;
     }
     #container_bottom_menu_total_top{
@@ -760,8 +782,7 @@
         color: #142637;
     }
     #container_bottom_menu_yteam{
-        width:19.74%;
-        margin-right:4.2%;
+       
         float:left;
     }
     #container_bottom_menu_yteam_top{
@@ -886,6 +907,10 @@
 
 </head>
 <body>
+<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+%>
 	<img src="/spring/images/team.png" class="busteam" style="width:100%;top:0;left:0;z-index:999;display:none;">	
     <div id = "content">
         <div id = "header">
@@ -954,13 +979,13 @@
                     <div id = "container_mid_blueBus_text">시내버스</div>
                 </div>
                 <div id = "container_mid_yellowBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=36';">
-                    <div id = "container_mid_yellowBus_dot" class = "checkBus_box"
+                    <div id = "container_mid_yellowBus_dot" class = "checkBus_box">
                        <c:forEach items = "${cblList}" var = "list">
                           <c:if test = "${list.busStopCategorySeq == 36}">
                              style = "background-color:#6DFA5B;"
                           </c:if>
                        </c:forEach>
-                    ></div>
+                    </div>
                     <div id = "container_mid_yellowBus_text">노랑버스</div>
                 </div>
                 <div id = "container_mid_redBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getSchoolBusStopLine.action';">
@@ -972,21 +997,25 @@
             <div id = "container_bottom">
                 <div id = "container_bottom_title">더보기</div>
                 <div id = "container_bottom_menu">
-                    <div id = "container_bottom_menu_sns" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">
-                        <div id = "container_bottom_menu_sns_top"></div>
-                        <div id = "container_bottom_menu_sns_bottom">자유게시판</div>
+                    <div id = "container_bottom_menu_food" class="container_bottom_menu" onclick="location.href='/spring/food.action?universitySeq=${universityDto.universitySeq}&menuLocation=인성관&date=<%= sf.format(nowTime) %>';">
+                        <div id = "container_bottom_menu_food_top"></div>
+                        <div id = "container_bottom_menu_food_bottom">식단표</div>
                     </div>
-                    <div id = "container_bottom_menu_notice" onclick="location.href='https://www.yongin.ac.kr/cmn/sym/mnu/mpm/101080200/htmlMenuView.do'">
+                    <div id = "container_bottom_menu_notice" class="container_bottom_menu" onclick="location.href='https://www.yongin.ac.kr/cmn/sym/mnu/mpm/101080200/htmlMenuView.do'">
                         <div id = "container_bottom_menu_notice_top"></div>
                         <div id = "container_bottom_menu_notice_bottom">용인대공지</div>
                     </div>
-                    <div id = "container_bottom_menu_total">
+                    <div id = "container_bottom_menu_total" class="container_bottom_menu">
                         <a href = "https://total.yongin.ac.kr/login.do">
                             <div id = "container_bottom_menu_total_top"></div>
                             <div id = "container_bottom_menu_total_bottom">종합정보시스템</div>
                         </a>
                     </div>
-                    <div id = "container_bottom_menu_yteam">
+                    <div id = "container_bottom_menu_sns" class="container_bottom_menu" onclick="location.href='/spring/camsns/snsMain.action?universitySeq=${universityDto.universitySeq}';">
+                        <div id = "container_bottom_menu_sns_top"></div>
+                        <div id = "container_bottom_menu_sns_bottom">자유게시판</div>
+                    </div>                    
+                    <div id = "container_bottom_menu_yteam" class="container_bottom_menu">
                         <div id = "container_bottom_menu_yteam_top" onclick="showTeam()"></div>
                         <div id = "container_bottom_menu_yteam_bottom" onclick="showTeam()">YBUS팀</div>
                     </div>

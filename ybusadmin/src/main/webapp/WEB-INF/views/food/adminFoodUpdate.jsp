@@ -48,6 +48,7 @@
 	<%@include file="/inc/top.jsp"%>
 	<% 
 	String date = request.getParameter("date");
+	String location = request.getParameter("menuLocation");
 	String[] dayOfWeek = {"월", "화", "수", "목", "금"};
 	%>
 	
@@ -73,36 +74,40 @@
 					
 			</div>
 			
+			<form method="GET" action="/spring/admin/adminFoodUpdateCheck.action">
 			<c:forEach items="${foodInfo}" var="dto" varStatus="var">
 			<div id="col" style="width:18%;">
-				<h3 id="row" style="height:4%;">date</h3>
+				<h3 id="row" style="height:4%;">${dto[0].date}</h3>
 					<c:forEach items="${dto}" var="food" varStatus="var">
 						<div id="row" style="flex-direction: column;">
-						<form method="GET" action="/spring/admin/adminFoodUpdateCheck.action">
 							<input type="hidden" value="${food.date}" name="date">
-							<input type="hidden" value="${food.menuCorner}" name="date">
-							<input type="hidden" value="${food.menuLocation}" name="date">
-							<input id="input" type="text" value="${food.menu1}" name="date">
-							<input id="input" type="text" value="${food.menu2}" name="date">
-							<input id="input" type="text" value="${food.menu3}" name="date">
-							<input id="input" type="text" value="${food.menu4}" name="date">
-							<input id="input" type="text" value="${food.menu5}" name="date">
-							<input id="input" type="submit" value="submit">
-						</form>
+							<input type="hidden" value="${food.menuCorner}" name="menuCorner">
+							<input type="hidden" value="${food.menuLocation}" name="menuLocation">
+							<input id="input" type="text" value="${food.menu1}" name="menu1">
+							<input id="input" type="text" value="${food.menu2}" name="menu2">
+							<input id="input" type="text" value="${food.menu3}" name="menu3">
+							<input id="input" type="text" value="${food.menu4}" name="menu4">
+							<input id="input" type="text" value="${food.menu5}" name="menu5">
+							
 						</div>
 					</c:forEach>
-					
 			</div>
 			</c:forEach>
+			<button type="submit" style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;">수정</h2></button>
+			</form>
+			<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;" onclick="location.href='/spring/admin/adminFoodList.action?menuLocation=<%= location %>';">목록</h2></button>
 		</div>
 		
 	
 	
-	<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;">수정</h2></button>
+	
 			
-	
-	
-	<!-- content 몸통부분 -->
-	
+<script>
+function inputValueChange(){
+    var str = document.getElementsByName("menu1").value;
+    console.log(str);
+    
+}
+</script>	
 </body>
 </html>

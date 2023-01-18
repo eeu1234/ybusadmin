@@ -13,15 +13,11 @@
 	
 </style>
 <script>
-<% 
-String date = request.getParameter("date");
-String location = request.getParameter("menuLocation");
-String[] dayOfWeek = {"월", "화", "수", "목", "금"};
-%>
+
 $(document).ready(function(){
 	<c:if test="${result == 1}">
 		alert("수정 완료");
-		location.href='/spring/admin/adminFoodDetail.action?menuLocation=<%=location%>&date=<%=date%>';
+		history.back();
 	</c:if>
 	<c:if test="${result == 0}">
 		alert("수정 실패");

@@ -54,8 +54,16 @@
 	<c:if test="${empty foodInfo[0] || foodInfo[0].size() == 0}">
 		
 		<h1>게시물이 존재하지 않습니다.</h1>
+		<form method="GET" action="/spring/admin/adminFoodInsert.action">
+							<td>
+							<input type="hidden" value="<%= location %>" name="menuLocation">
+							<input type="hidden" value="<%= date%>" name="date">
+							<input style="float:right; width:120px; height:50px; margin:10px; font-size:30px; font-weight: 500;" type="submit" value="추가">
+							</td>
+						</form>
+						<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;" onclick="location.href='/spring/admin/adminFoodList.action?menuLocation=<%= location %>';">목록</h2></button>
 	
-	</c:if>
+	 	</c:if>
 	
 		    
 	<c:if test="${foodInfo[0].size() != 0}">
@@ -81,11 +89,11 @@
 			<c:forEach items="${foodInfo}" var="dto" varStatus="var">
 			<div id="col" style="width:18%;">
 				<h3 id="row" style="height:4%;">${dto[0].date}
-				<c:if test="${dto[0].dayOfWeek eq '1'}">(월)</c:if>
-				<c:if test="${dto[0].dayOfWeek eq '2'}">(화)</c:if>
-				<c:if test="${dto[0].dayOfWeek eq '3'}">(수)</c:if>
-				<c:if test="${dto[0].dayOfWeek eq '4'}">(목)</c:if>
-				<c:if test="${dto[0].dayOfWeek eq '5'}">(금)</c:if>
+				<c:if test="${dto[0].dayOfWeek eq '2'}">(월)</c:if>
+				<c:if test="${dto[0].dayOfWeek eq '3'}">(화)</c:if>
+				<c:if test="${dto[0].dayOfWeek eq '4'}">(수)</c:if>
+				<c:if test="${dto[0].dayOfWeek eq '5'}">(목)</c:if>
+				<c:if test="${dto[0].dayOfWeek eq '6'}">(금)</c:if>
 				</h3>
 					
 						<c:forEach items="${dto}" var="food" varStatus="var">
@@ -101,20 +109,22 @@
 			</div>
 			</c:forEach>
 		</div>
-		</c:if>
-		
-	
-	
-	
-	<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;" onclick="back()">목록</h2></button>
-	<form method="GET" action="/spring/admin/adminFoodUpdate.action">
+		<form method="GET" action="/spring/admin/adminFoodUpdate.action">
 							<td>
 							<input type="hidden" value="<%= location %>" name="menuLocation">
 							<input type="hidden" value="<%= date%>" name="date">
 							<input style="float:right; width:120px; height:50px; margin:10px; font-size:30px; font-weight: 500;" type="submit" value="수정">
 							</td>
-						</form>
-	<!-- <button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;">수정</h2></button> -->
+		</form>
+		<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;" onclick="location.href='/spring/admin/adminFoodList.action?menuLocation=<%= location %>';">목록</h2></button>
+		</c:if>
+		
+	
+	
+	
+	
+	
+	
 			
 	
 	

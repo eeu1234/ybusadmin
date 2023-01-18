@@ -10,8 +10,8 @@
 	</select>
 	
 	<!-- 날짜 조회 -->
-	<select id="getFoodListByDate" parameterType="String" resultType="com.test.spring.dto.FoodDTO">
-		SELECT * FROM MENU WHERE date=#{date};
+	<select id="getFoodListByDate" parameterType="map" resultType="com.test.spring.dto.FoodDTO">
+		SELECT * FROM MENU WHERE menuLocation=#{menuLocation} AND date=#{date};
 	</select>
 	
 	<!-- 일주일 단위로 조  -->
@@ -20,6 +20,11 @@
 		WHERE menuLocation=#{menuLocation} AND date=DATE_ADD(#{date}, INTERVAL #{num} DAY);
 	</select>
 	
+	<!-- Insert Menu -->
+	<insert id="foodAdd" parameterType="com.test.spring.dto.FoodDTO">
+    	INSERT INTO MENU (menuLocation, menuCorner, date, menu1, menu2, menu3, menu4, menu5, dayOfWeek, workDate, worker)
+    	 VALUES (#{menuLocation},#{menuCorner},#{date},#{menu1},#{menu2},#{menu3},#{menu4},#{menu5},DAYOFWEEK(#{date}),now(),'정명곤');
+    </insert>
 	<!-- Update Menu -->
 	<update id="foodUpdate" parameterType="map">
     	UPDATE MENU SET menu1=#{menu1}, menu2=#{menu2}, menu3=#{menu3}, menu4=#{menu4}, menu5=#{menu5}
