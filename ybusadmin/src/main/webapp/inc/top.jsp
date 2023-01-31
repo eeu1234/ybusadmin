@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div id="topInc">
+<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+	
+%>
+
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -107,7 +115,9 @@
 						</ul>
 					</li>
 					
-				<li class="dropdown" style="background-color:#252900;"><a href="/spring/admin/adminFoodLocationSelect.action">학식 관리
+				<li class="dropdown" style="background-color:#252900;">
+					<a href="/spring/admin/adminFoodDetail.action?menuLocation=인성관&date=<%= sf.format(nowTime) %>"> 
+					학식 관리
 					</a>
 				</li>
 				

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.time.LocalDate" %> 
@@ -9,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!-- import 시작 -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
 	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
@@ -129,13 +130,13 @@
         #selectBtn{
 			border:0;
 			outline:0;
-            postion : relative;
-             background-color:#142637;
-             color : white;
-             font-family : 'Pretendard-SemiBold';
-             font-weight: bold;	
-            
-
+            background-color:#142637;
+            color : white;
+            font-family : 'Pretendard-SemiBold';
+            font-weight: bold;
+            -webkit-appearance: none;
+            margin-right: auto;
+            height: 120%;
         }
 
         #searchContainer{
@@ -273,7 +274,7 @@
 		}
 		#dateBox{
 			position:relative;
-			width:100%;
+			width:80%;
 			text-align:center;
 			color:white;
 			font-family : 'Pretendard-Medium';
@@ -290,7 +291,7 @@
 		}
 		#dateContents{
 			float:left;
-			width:60%;
+			width:80%;
 			font-weight: bold;
 		}
 		#cornerContainer{
@@ -353,7 +354,7 @@
 			font-family : 'Pretendard-Medium';
 			font-weight:bold;
 			color:#142637;
-			padding:10px 0;
+			padding:1% 0;
 			
 		}
 		.down
@@ -395,6 +396,7 @@
 
 
 <% 
+	String[] weekDay = {"일요일","월요일","화요일","수요일","목요일","금요일","토요일", "일요일"};
 	String date = request.getParameter("date");
 	String universitySeq = request.getParameter("universitySeq");
 	String[] dateArr = date.split("-");
@@ -408,15 +410,20 @@
         <div id="infoPage">
             <div id="txtBox">
                 <div id="txtType">
-					<div style="float:left;width:50%;height:38px; text-align:center;">식단표</div>
+					<div style="float:left;width:45%;height:38px; text-align:center;">식단표</div>
 					<div style="float:left;height:38px;"><img src="/spring/images/mainIndex/home_btn_navy.png" style="padding-top:2px;height:35px;width:auto;" onclick="location.href='/spring/index.action'" /></div>
 					<div class="clear"></div> 
                 </div>
             </div>
             <div id="btnBox">
             <form id="location" method="GET" action="/spring/food.action">
-                <div id="btnType">
-                <img style="height: 80%;" src="/spring/images/mainIndex/totalService_white.png">
+            
+                <div id="btnType" style="text-align:center;">
+                <div style="height: 100%; display:flex; justify-content: space-between;">
+                
+                	<img style="height: 85%; margin-top: 2.5%; margin-right: 2.5%; margin-left: auto;" src="/spring/images/mainIndex/totalService_white.png">
+                
+                
                 	<input type="hidden" value="<%=universitySeq%>" name="universitySeq">
                 	<input type="hidden" value="<%=date%>" name="date">
                    <select name="menuLocation" id="selectBtn">
@@ -437,6 +444,8 @@
                    	<option value="환과대" selected>환과대</option>
                    	</c:if>
                    </select>
+                   </div>
+                   
                 </div>
                  </form>
             </div>
@@ -471,59 +480,94 @@
             <div id="menuBox">
                 <div id="menuContainer">
 					<div id="dateBox">
-						<div class="moveBtn" onclick="location.href=AddDays(-1);"><</div>  
-						<div id="dateContents"><%= dateArr[1] %>월 <%= dateArr[2]%>일
-						<c:set var="dow" value="<%=dayOfWeek.getValue()%>"/>
-						<c:if test="${dow eq 1}">월요일</c:if>
-						<c:if test="${dow eq 2}">화요일</c:if>
-						<c:if test="${dow eq 3}">수요일</c:if>
-						<c:if test="${dow eq 4}">목요일</c:if>
-						<c:if test="${dow eq 5}">금요일</c:if>
-						<c:if test="${dow eq 6}">토요일</c:if>
-						<c:if test="${dow eq 7}">일요일</c:if>
-					</div>
+					<c:set var="dow" value="<%=dayOfWeek.getValue()%>"/>
+					<c:choose>
+						<c:when test="${dow eq 1}">
+						<div class="moveBtn" style="color: #DCDCDC"><</div>  
+							<div id="dateContents"><%= dateArr[1] %>월 <%= dateArr[2]%>일 월요일 </div>
 						<div class="moveBtn" onclick="location.href=AddDays(1);">></div>
+						</c:when>
+						<c:when test="${dow eq 5}">
+						<div class="moveBtn" onclick="location.href=AddDays(-1);"><</div>  
+							<div id="dateContents"><%= dateArr[1] %>월 <%= dateArr[2]%>일 금요일 </div>
+						<div class="moveBtn" style="color: #DCDCDC">></div>
+						</c:when>
+						<c:otherwise>
+						<div class="moveBtn" onclick="location.href=AddDays(-1);"><</div>  
+							<div id="dateContents"><%= dateArr[1] %>월 <%= dateArr[2]%>일 <%= weekDay[dayOfWeek.getValue()] %> </div>
+						<div class="moveBtn" onclick="location.href=AddDays(1);">></div>
+						</c:otherwise>
+						
+					</c:choose>
 						<div class="clear"></div>
 					</div>
 	                <div id="cornerContainer">
 	                	<div class="cornerBox">
 	                		<div id="cornerA" class="corner" onclick="dp_menu(0)">코너 A</div>
-	                		<div class="cornerDetail">
-		                		<a class="detailMenu">${foodList[0].menu1}</a><br>
-		                		<a class="detailMenu">${foodList[0].menu2}</a><br>
-		                		<a class="detailMenu">${foodList[0].menu3}</a><br>
-		                		<a class="detailMenu">${foodList[0].menu4}</a><br>
-		                		<a class="detailMenu">${foodList[0].menu5}</a>
+	                		<div class="cornerDetail down">
+	                		<c:choose>
+	                			<c:when test="${empty foodList or empty foodList[0].menu1}">
+		                		<div class="detailMenu"><h3 style="color: gray;">정보가 없습니다.</h3></div>
+		                		</c:when>
+		                		<c:otherwise>
+		                		<div class="detailMenu" style="color: #ED4040">${foodList[0].menu1}</div>
+		                		<div class="detailMenu">${foodList[0].menu2}</div>
+		                		<div class="detailMenu">${foodList[0].menu3}</div>
+		                		<div class="detailMenu">${foodList[0].menu4}</div>
+		                		<div class="detailMenu">${foodList[0].menu5}</div>
+		                		</c:otherwise>
+		                	</c:choose>
 		                	</div>
                 		</div>
                 		<div class="cornerBox">
 	                		<div id="cornerB" class="corner" onclick="dp_menu(1)">코너 B</div>
 	                		<div class="cornerDetail">
-		                		<a class="detailMenu">${foodList[1].menu1}</a><br>
-		                		<a class="detailMenu">${foodList[1].menu2}</a><br>
-		                		<a class="detailMenu">${foodList[1].menu3}</a><br>
-		                		<a class="detailMenu">${foodList[1].menu4}</a><br>
-		                		<a class="detailMenu">${foodList[1].menu5}</a>
+		                		<c:choose>
+	                			<c:when test="${empty foodList or empty foodList[1].menu1}">
+		                		<div class="detailMenu"><h3 style="color: gray;">정보가 없습니다.</h3></div>
+		                		</c:when>
+		                		<c:otherwise>
+		                		<div class="detailMenu" style="color: #ED4040">${foodList[1].menu1}</div>
+		                		<div class="detailMenu">${foodList[1].menu2}</div>
+		                		<div class="detailMenu">${foodList[1].menu3}</div>
+		                		<div class="detailMenu">${foodList[1].menu4}</div>
+		                		<div class="detailMenu">${foodList[1].menu5}</div>
+		                		</c:otherwise>
+		                	</c:choose>
 		                	</div>
 	                	</div>
 	                	<div class="cornerBox">
 	                		<div id="cornerC" class="corner" onclick="dp_menu(2)">코너 C</div>
 	                		<div class="cornerDetail">
-		                		<a class="detailMenu">${foodList[2].menu1}</a><br>
-		                		<a class="detailMenu">${foodList[2].menu2}</a><br>
-		                		<a class="detailMenu">${foodList[2].menu3}</a><br>
-		                		<a class="detailMenu">${foodList[2].menu4}</a><br>
-		                		<a class="detailMenu">${foodList[2].menu5}</a>
+		                		<c:choose>
+	                			<c:when test="${empty foodList or empty foodList[2].menu1}">
+		                		<div class="detailMenu"><h3 style="color: gray;">정보가 없습니다.</h3></div>
+		                		</c:when>
+		                		<c:otherwise>
+		                		<div class="detailMenu" style="color: #ED4040">${foodList[2].menu1}</div>
+		                		<div class="detailMenu">${foodList[2].menu2}</div>
+		                		<div class="detailMenu">${foodList[2].menu3}</div>
+		                		<div class="detailMenu">${foodList[2].menu4}</div>
+		                		<div class="detailMenu">${foodList[2].menu5}</div>
+		                		</c:otherwise>
+		                	</c:choose>
 		                	</div>
                 		</div>
 	                	<div class="cornerBox">
 		                	<div id="cornerD" class="corner" onclick="dp_menu(3)">코너 D</div>		                	
 		                	<div class="cornerDetail">
-		                		<a class="detailMenu">${foodList[3].menu1}</a><br>
-		                		<a class="detailMenu">${foodList[3].menu2}</a><br>
-		                		<a class="detailMenu">${foodList[3].menu3}</a><br>
-		                		<a class="detailMenu">${foodList[3].menu4}</a><br>
-		                		<a class="detailMenu">${foodList[3].menu5}</a>
+		                		<c:choose>
+	                			<c:when test="${empty foodList or empty foodList[3].menu1}">
+		                		<div class="detailMenu"><h3 style="color: gray;">정보가 없습니다.</h3></div>
+		                		</c:when>
+		                		<c:otherwise>
+		                		<div class="detailMenu" style="color: #ED4040">${foodList[3].menu1}</div>
+		                		<div class="detailMenu">${foodList[3].menu2}</div>
+		                		<div class="detailMenu">${foodList[3].menu3}</div>
+		                		<div class="detailMenu">${foodList[3].menu4}</div>
+		                		<div class="detailMenu">${foodList[3].menu5}</div>
+		                		</c:otherwise>
+		                	</c:choose>
 		                	</div>
 	                	</div>
                 	</div>
@@ -541,6 +585,7 @@
 
 
 <script>
+
 function dp_menu(num) {
 	  document.getElementsByClassName('cornerDetail')[num].classList.toggle('down');
 	  
@@ -551,7 +596,15 @@ function dp_menu(num) {
 	  } else {
 	    document.getElementsByClassName('cornerDetail')[num].style.overflow = 'hidden'
 	  } 
+}
+
+function like(){
+	document.getElementsByClassName("detailMenu")[0].style.backgroundColor = "gray";
+	
+	document.getElementsByClassName("detailMenu")[0].onclick = function() {
+		this.style.backgroundColor = "red";
 	}
+}
 	
 function AddDays(day) {
 	var universitySeq = '<%=universitySeq%>';
@@ -559,11 +612,34 @@ function AddDays(day) {
 	var date = '<%=date%>';
     var result = new Date(date);
    
+    
     result.setDate(result.getDate() + day);
-    var resultDate = result.getFullYear()+'-'+result.getMonth()+1+'-'+result.getDate();
+    
+    
+    var resultDate = result.getFullYear()+'-'+(result.getMonth()+1)+'-'+result.getDate();
+    
     var link = "/spring/food.action?universitySeq="+universitySeq+"&menuLocation="+location+"&date="+resultDate;
     return link
 }
+<%-- function DayBefore(day) {
+	var universitySeq = '<%=universitySeq%>';
+	var location = '<%=location%>';
+	var date = '<%=date%>';
+    var result = new Date(date);
+
+    if (result.getDay() === 1) {
+    	result.setDate(result.getDate() + day);
+    	result.setDate(result.getDate() + day);
+    	result.setDate(result.getDate() + day);
+    } else {
+    	result.setDate(result.getDate() + day);
+    }
+
+    var resultDate = result.getFullYear()+'-'+(result.getMonth()+1)+'-'+result.getDate();
+    
+    var link = "/spring/food.action?universitySeq="+universitySeq+"&menuLocation="+location+"&date="+resultDate;
+    return link
+} --%>
 </script>
 </body>
 </html>

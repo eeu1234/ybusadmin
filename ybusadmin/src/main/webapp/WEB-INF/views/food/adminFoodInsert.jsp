@@ -69,7 +69,7 @@
 	<h1 class="menuTitle">학식 정보 관리</h1>
 	<h1 id="category" style="float:right; width:200px; height:50px; margin:15px; text-align:center;"><%= location %></h1>
 	
-		<div style="float: left; width: 99%; margin: 5px;">
+		<div style="float: left; width: 99%; min-width: 1080px; margin: 5px;">
 			<div id="col" style="width: 10%;">
 				
 				<h3 id="row" style="height:4%">코너/날짜</h3>
@@ -110,10 +110,13 @@
 					<% cal.add(Calendar.DATE, 1);%>
 			</div>
 			</c:forEach>
+			</div>
+			
 			<button type="submit" style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;">수정</h2></button>
 			</form>
 			<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;" onclick="location.href='/spring/admin/adminFoodList.action?menuLocation=<%= location %>';">목록</h2></button>
-		</div>
+		
+		
 		
 	
 	

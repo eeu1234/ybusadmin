@@ -30,6 +30,10 @@
     	UPDATE MENU SET menu1=#{menu1}, menu2=#{menu2}, menu3=#{menu3}, menu4=#{menu4}, menu5=#{menu5}
     		WHERE date = #{date} and menuCorner=#{menuCorner} and menuLocation=#{menuLocation};
     </update>
-	
+    
+    <!-- AutoFill -->
+	<select id="wordSearchShow" parameterType="String" resultType="com.test.spring.dto.FoodDTO">
+		SELECT DISTINCT ${menu} FROM MENU WHERE ${menu} like CONCAT(#{value},'%');
+	</select>
 	
 </mapper>

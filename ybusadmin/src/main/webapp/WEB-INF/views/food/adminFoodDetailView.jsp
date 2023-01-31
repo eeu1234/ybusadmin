@@ -7,6 +7,17 @@
 <meta charset=UTF-8">
 <title>CAMBUS :: 대학선택</title>
  <link rel="stylesheet" type="text/css" href="/spring/css/bacisTheme.css" />
+ <link rel="stylesheet" href="/spring/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/spring/css/rome.css">`
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+	<script src="/spring/js/bootstrap.min.js"></script>
+	<script src="/spring/js/rome.js"></script>
+	<script src="/spring/js/main.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js" integrity="sha512-L4qpL1ZotXZLLe8Oo0ZyHrj/SweV7CieswUODAAPN/tnqN3PA1P+4qPu5vIryNor6HQ5o22NujIcAZIfyVXwbQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
 #universitySearch{
 	width:50%;
@@ -34,6 +45,13 @@
 	
 }
 
+.sel {
+	display: flex;
+	width: 80%;
+	height: 40%;
+	margin: 1%;
+}
+
 
 </style>
 
@@ -49,9 +67,29 @@
 	%>
 	
 	<h1 class="menuTitle">학식 정보 관리</h1>
-	<h1 id="category" style="float:right; width:200px; height:50px; margin:15px; text-align:center;"><%= location %></h1>	
+	<div style="width:100%; float:left;">	
+        <div style="float: right; width: 50%; height: 8%;">
+        	<form method="GET" action="/spring/admin/adminFoodDetail.action">
+        	<div style="width: 80%; margin: 0;float: left;">
+					<select name="menuLocation" id="menuLocation" class="sel" style="margin-left:auto">
+					<option value="9999">식당을 선택해주세요</option>
+	 				<option value="인성관">인성관</option>
+	 				<option value="환과대">환과대</option>
+	 				<option value="생활관">생활관</option>
+					</select>
+          			<input type="text" id="date-picker" autocomplete='off' aria-label="Search" placeholder="Select date" aria-describedby="basic-addon2" th:value="|${year}-${month}-${day}|" name="date" class="sel" style="margin-left:auto">
+          	</div>
+          	<div style="width: 10%; margin: 0; float: left;">
+          		<input style="float: right; margin:10px;" type="submit" value="확인">
+          	</div>
+          			
+          	</form>  
+     	</div>     
+    </div>
 	
 	<c:if test="${empty foodInfo[0] || foodInfo[0].size() == 0}">
+		<div style="width:100%; float:left;">
+		
 		
 		<h1>게시물이 존재하지 않습니다.</h1>
 		<form method="GET" action="/spring/admin/adminFoodInsert.action">
@@ -60,13 +98,15 @@
 							<input type="hidden" value="<%= date%>" name="date">
 							<input style="float:right; width:120px; height:50px; margin:10px; font-size:30px; font-weight: 500;" type="submit" value="추가">
 							</td>
-						</form>
-						<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;" onclick="location.href='/spring/admin/adminFoodList.action?menuLocation=<%= location %>';">목록</h2></button>
-	
+		</form>
+						
+		</div>
 	 	</c:if>
+	 	
 	
 		    
 	<c:if test="${foodInfo[0].size() != 0}">
+	<div style="float: left; width: 100%; min-width: 1080px;">
 		<div style="float: left; width: 99%; margin: 5px;">
 			<div id="col" style="width: 10%;">
 				
@@ -109,6 +149,7 @@
 			</div>
 			</c:forEach>
 		</div>
+		</div>
 		<form method="GET" action="/spring/admin/adminFoodUpdate.action">
 							<td>
 							<input type="hidden" value="<%= location %>" name="menuLocation">
@@ -116,24 +157,27 @@
 							<input style="float:right; width:120px; height:50px; margin:10px; font-size:30px; font-weight: 500;" type="submit" value="수정">
 							</td>
 		</form>
-		<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;" onclick="location.href='/spring/admin/adminFoodList.action?menuLocation=<%= location %>';">목록</h2></button>
 		</c:if>
 		
 	
 	
-	
-	
-	
-	
-			
-	
-	
 	<!-- content 몸통부분 -->
-
 <script>
-function back(){
-	history.back()
-}
+$(document).ready(function() {
+    $('#date-picker').datepicker({
+        format: "yyyy-m-dd",
+        minViewMode: 0,
+        daysOfWeekDisabled: "0,2,3,4,5,6",
+        daysOfWeekHighlighted: "1",
+        language: "ko",
+        autoclose: true
+    })
+
+    $('#get-history').on('click', function() {
+        const dateArr = $('#date-picker').val().split('-')
+        location.href = '/history?year=' + dateArr[0] + '&month=' + dateArr[1]
+    })
+})
 </script>
 </body>
 </html>

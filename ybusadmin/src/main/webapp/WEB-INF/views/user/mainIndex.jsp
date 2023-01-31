@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.text.SimpleDateFormat" %>  
 <!DOCTYPE html>
 <html lang="en">
@@ -910,6 +911,7 @@
 <%
 	Date nowTime = new Date();
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+	
 %>
 	<img src="/spring/images/team.png" class="busteam" style="width:100%;top:0;left:0;z-index:999;display:none;">	
     <div id = "content">

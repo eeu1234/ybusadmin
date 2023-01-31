@@ -1,6 +1,13 @@
 package com.test.spring.admin.food;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+import org.json.JSONObject;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,55 +43,26 @@ public class AdminFoodController {
 	@Autowired
 	private AdminFoodDAO dao;
 	
-	
-	@RequestMapping(method = {RequestMethod.GET}, value = "/admin/adminFoodLocationSelect.action")
-	public String locationSelect(HttpServletRequest request,HttpSession session,HttpServletResponse response) {
-		return "food/adminFoodLocationSelectView";
-	}
-	
 
-	@RequestMapping(method = {RequestMethod.GET}, value = "/admin/adminFoodList.action")
-	public String adminFood(HttpServletRequest request,HttpSession session,HttpServletResponse response, String menuLocation){
-		System.out.println("Location" + menuLocation);
-		
-		
-		try {
-			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
-			
-			List<FoodDTO> foodInfo = dao.foodList(menuLocation);
-			
-			session.setAttribute("foodInfo", foodInfo);
-
-			
-			return "food/adminFoodList";
-	         
-	      } catch (Exception e) {
-	         session.invalidate();
-
-	         try {
-	            
-	            response.sendRedirect("/spring/admin/adminLogin.action");
-
-	         } catch (Exception e2) {
-	            // TODO: handle exception
-
-	         }
-	         return null;
-	      }
-		
-		
-	
-		
-	}
-	
 	@RequestMapping(method = {RequestMethod.GET}, value = "/admin/adminFoodDetail.action")
-	public String adminFoodDetail(HttpServletRequest request,HttpSession session,HttpServletResponse response, String menuLocation, String date) {
+	public String adminFoodDetail(HttpServletRequest request,HttpSession session,HttpServletResponse response, String date, String menuLocation) {
 		
 		
 		try {
 			
 			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
-			
+			Calendar cal = Calendar.getInstance();
+			DateFormat df = new SimpleDateFormat("yyyy-M-dd");
+			Date newDate = df.parse(date);
+	        cal.setTime(newDate);
+	        System.out.println("current: " + df.format(cal.getTime()));
+	        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+	        while (dayOfWeek != 2) {
+	        	cal.add(Calendar.DATE, -1);
+	        	dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+	        }
+	        date = df.format(cal.getTime());
+	        System.out.println("current: " + df.format(cal.getTime()));
 
 			List<List<FoodDTO>> foodInfo = new ArrayList<List<FoodDTO>>();
 			
@@ -268,13 +249,62 @@ public class AdminFoodController {
 		}
 	   
 	   // 자동완성
-	   @RequestMapping(value = "/ajax/autocomplete.do")
-		public @ResponseBody Map<String, Object> autocomplete (@RequestParam Map<String, Object> paramMap) throws Exception{
-
-			List<Map<String, Object>> resultList = service.autocomplete(paramMap);
-			paramMap.put("resultList", resultList);
-
-			return paramMap;
+	   @RequestMapping(method = {RequestMethod.GET}, value = "/admin/wordSearchShow.action", produces="application/json; charset=utf8")
+		public void wordSearchShow(HttpServletRequest request, HttpSession session, HttpServletResponse response, String value) throws IOException {
+		   
+		   List<String> resultList = new ArrayList<String>();
+		   for (int i = 1; i < 6; i++) {
+			   List<FoodDTO> foodList = dao.wordSearchShow(value, "menu"+Integer.toString(i));
+			   if (foodList.size() != 0) {
+				   if (i == 1) {
+					   for(FoodDTO food : foodList) {
+							String str = food.getMenu1();
+							resultList.add(str);
+						}
+				   } else if (i == 2) {
+					   for(FoodDTO food : foodList) {
+							String str = food.getMenu2();
+							resultList.add(str);
+						}
+				   } else if (i == 3) {
+					   for(FoodDTO food : foodList) {
+							String str = food.getMenu3();
+							resultList.add(str);
+						}
+				   } else if (i == 4) {
+					   for(FoodDTO food : foodList) {
+							String str = food.getMenu4();
+							resultList.add(str);
+						}
+				   } else if (i == 5) {
+					   for(FoodDTO food : foodList) {
+							String str = food.getMenu5();
+							resultList.add(str);
+						}
+				   }
+				   
+			   }
+		   }
+			
+			JSONArray jsonArr = new JSONArray();
+			JSONObject jsonObj = null; 
+			
+			if (resultList != null) {
+				for(String string : resultList) {
+					jsonObj = new JSONObject();
+					jsonObj.put("value", string);
+					jsonArr.add(jsonObj);
+				}
+			}
+			
+			System.out.println(jsonArr.toString());
+			
+			response.setCharacterEncoding("UTF-8");
+		    PrintWriter pw = response.getWriter(); 
+		    pw.print(jsonArr); 
+		    pw.flush(); 
+		    pw.close();
+			
 		}
 	   
 	

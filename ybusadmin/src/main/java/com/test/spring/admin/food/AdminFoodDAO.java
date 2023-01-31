@@ -89,6 +89,15 @@ public class AdminFoodDAO {
 	      return result;
 	         
 	   }
+	   
+	   // 자동완성
+	   public List<FoodDTO> wordSearchShow(String value, String menu) {
+		   HashMap<String, String> map = new HashMap<String, String>();
+		   map.put("menu", menu);
+		   map.put("value", value);
+		   
+		   return sql.selectList("food.wordSearchShow", map);
+	   }
 
 
 }
