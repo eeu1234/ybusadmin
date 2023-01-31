@@ -49,20 +49,18 @@ public class AdminFoodController {
 		
 		
 		try {
-			
 			AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
+			
 			Calendar cal = Calendar.getInstance();
 			DateFormat df = new SimpleDateFormat("yyyy-M-dd");
 			Date newDate = df.parse(date);
 	        cal.setTime(newDate);
-	        System.out.println("current: " + df.format(cal.getTime()));
 	        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 	        while (dayOfWeek != 2) {
 	        	cal.add(Calendar.DATE, -1);
 	        	dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 	        }
 	        date = df.format(cal.getTime());
-	        System.out.println("current: " + df.format(cal.getTime()));
 
 			List<List<FoodDTO>> foodInfo = new ArrayList<List<FoodDTO>>();
 			
@@ -73,7 +71,7 @@ public class AdminFoodController {
 			System.out.println(foodInfo);
 			request.setAttribute("foodInfo", foodInfo);
 
-			return "food/adminFoodDetailView";
+			return "food/adminFoodUpdate";
 	         
 	      } catch (Exception e) {
 	         session.invalidate();
@@ -99,7 +97,7 @@ public class AdminFoodController {
 	   try {
 
 	    	 AdminUniversityDTO adto = (AdminUniversityDTO)session.getAttribute("adto");
-
+	    	 			
 
 	         return "food/adminFoodInsert";
 	      } catch (Exception e) {

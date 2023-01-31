@@ -54,20 +54,29 @@
 
 	<%@include file="/inc/top.jsp"%>
 	<% 
-	Calendar cal = Calendar.getInstance();
-	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	Date nDate = null;
 	String date = request.getParameter("date");
+	Calendar cal = Calendar.getInstance();
+	DateFormat df = new SimpleDateFormat("yyyy-M-dd");
+	Date newDate = df.parse(date);
+    cal.setTime(newDate);
+    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+    while (dayOfWeek != 2) {
+    	cal.add(Calendar.DATE, -1);
+    	dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+    }
+    date = df.format(cal.getTime());
+	
+	Date nDate = null;
+	
 	nDate = df.parse(date);
 	cal.setTime(nDate);
 	int i = 0;
 	String location = request.getParameter("menuLocation");
-	String[] dayOfWeek = {"월", "화", "수", "목", "금"};
 	String[] corner = {"A", "B", "C", "D"};
 	%>
 	
 	<h1 class="menuTitle">학식 정보 관리</h1>
-	<h1 id="category" style="float:right; width:200px; height:50px; margin:15px; text-align:center;"><%= location %></h1>
+	<h1 id="category" style="float:right; width:200px; height:50px; margin:15px; text-align:center;">등록</h1>
 	
 		<div style="float: left; width: 99%; min-width: 1080px; margin: 5px;">
 			<div id="col" style="width: 10%;">
@@ -98,11 +107,11 @@
 							<input type="hidden" value="<%=df.format(cal.getTime()) %>" name="date">
 							<input type="hidden" value="<%=corner[i]%>" name="menuCorner">
 							<input type="hidden" value="<%= location %>" name="menuLocation">
-							<input id="input" type="text" value="" name="menu1">
-							<input id="input" type="text" value="" name="menu2">
-							<input id="input" type="text" value="" name="menu3">
-							<input id="input" type="text" value="" name="menu4">
-							<input id="input" type="text" value="" name="menu5">
+							<input class = "input" id="input" type="text" value="" name="menu1">
+							<input class = "input" id="input" type="text" value="" name="menu2">
+							<input class = "input" id="input" type="text" value="" name="menu3">
+							<input class = "input" id="input" type="text" value="" name="menu4">
+							<input class = "input" id="input" type="text" value="" name="menu5">
 							
 						</div>
 						<%i++; %>
@@ -112,9 +121,9 @@
 			</c:forEach>
 			</div>
 			
-			<button type="submit" style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;">수정</h2></button>
+			<button type="submit" style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;">등록</h2></button>
 			</form>
-			<button style="float:right; width:120px; height:50px; margin:10px;"><h2 style="margin:5px;" onclick="location.href='/spring/admin/adminFoodList.action?menuLocation=<%= location %>';">목록</h2></button>
+			
 		
 		
 		
@@ -123,25 +132,28 @@
 	
 			
 <script>
-/* $('#autoComplete').autocomplete({
+$('.input').autocomplete({
 	source : function(request, response) { //source: 입력시 보일 목록
 	     $.ajax({
-	           url : "/ajax/autocomplete.do"   
-	         , type : "POST"
+	           url : "/spring/admin/wordSearchShow.action"   
+	         , type : "GET"
 	         , dataType: "JSON"
-	         , data : {value: request.term}	// 검색 키워드
-	         , success : function(data){ 	// 성공
-	             response(
-	                 $.map(data.resultList, function(item) {
+	         , data : {
+	        	 value: request.term
+	        	 }	// 검색 키워드
+	         , success : function(data){  // 성공
+	        	 console.log(data);
+	        	 response(
+	                 $.map(data, function(item) {
 	                     return {
-	                    	     label : item.SEARCH_WORD    	// 목록에 표시되는 값
-	                           , value : item.SEARCH_WORD 		// 선택 시 input창에 표시되는 값
-	                           , idx : item.SEQ // index
+	                    	     label : item.value,   	// 목록에 표시되는 값
+	                    	     value : item.value 		// 선택 시 input창에 표시되는 값
 	                     };
 	                 })
 	             );    //response
 	         }
-	         ,error : function(){ //실패
+	         ,error : function(data){ //실패
+	        	 
 	             alert("오류가 발생했습니다.");
 	         }
 	     });
@@ -157,7 +169,7 @@
 			console.log(ui.item.label);
 			console.log(ui.item.idx);
 	 }
-}); */
+});
 </script>	
 </body>
 </html>
