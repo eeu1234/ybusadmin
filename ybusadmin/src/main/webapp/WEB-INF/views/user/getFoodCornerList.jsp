@@ -483,14 +483,14 @@
 					<c:set var="dow" value="<%=dayOfWeek.getValue()%>"/>
 					<c:choose>
 						<c:when test="${dow eq 1}">
-						<div class="moveBtn" style="color: #DCDCDC"><</div>  
+						<div class="moveBtn" style="color: #DCDCDC">　</div>  
 							<div id="dateContents"><%= dateArr[1] %>월 <%= dateArr[2]%>일 월요일 </div>
 						<div class="moveBtn" onclick="location.href=AddDays(1);">></div>
 						</c:when>
 						<c:when test="${dow eq 5}">
 						<div class="moveBtn" onclick="location.href=AddDays(-1);"><</div>  
 							<div id="dateContents"><%= dateArr[1] %>월 <%= dateArr[2]%>일 금요일 </div>
-						<div class="moveBtn" style="color: #DCDCDC">></div>
+						<div class="moveBtn" style="color: #DCDCDC">　</div>
 						</c:when>
 						<c:otherwise>
 						<div class="moveBtn" onclick="location.href=AddDays(-1);"><</div>  
@@ -605,12 +605,19 @@ function like(){
 		this.style.backgroundColor = "red";
 	}
 }
+
+function convertDateForIos(date) {
+    var arr = date.split(/[- :]/);
+    date = new Date(arr[0], arr[1]-1, arr[2]);
+    return date;
+}
 	
 function AddDays(day) {
 	var universitySeq = '<%=universitySeq%>';
 	var location = '<%=location%>';
 	var date = '<%=date%>';
-    var result = new Date(date);
+	
+    var result = convertDateForIos(date);
    
     
     result.setDate(result.getDate() + day);

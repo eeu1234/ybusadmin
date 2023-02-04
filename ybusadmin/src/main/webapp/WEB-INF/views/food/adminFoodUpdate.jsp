@@ -76,7 +76,8 @@ z-index: 100;
 	%>
 	
 	<h1 class="menuTitle">학식 정보 관리</h1>
-	<div style="width:100%; float:left;">	
+	<div style="width:100%; float:left;">
+	<div style="width:50%; float:left;"><h1 style="margin-left: 3%;"> <%= location %></h1></div>
         <div style="float: right; width: 50%; height: 8%;">
         	<form method="GET" action="/spring/admin/adminFoodDetail.action">
         	<div style="width: 80%; margin: 0;float: left;">
@@ -86,7 +87,7 @@ z-index: 100;
 	 				<option value="환과대">환과대</option>
 	 				<option value="생활관">생활관</option>
 					</select>
-          			<input type="text" id="date-picker" autocomplete='off' aria-label="Search" placeholder="Select date" aria-describedby="basic-addon2" th:value="|${year}-${month}-${day}|" name="date" class="sel" style="margin-left:auto">
+          			<input type="text" id="date-picker" autocomplete='off' aria-label="Search" placeholder="Select date" aria-describedby="basic-addon2" value="<%= date %>" name="date" class="sel" style="margin-left:auto">
           	</div>
           	<div style="width: 10%; margin: 0; float: left;">
           		<input style="float: right; margin:10px;" type="submit" value="확인">
