@@ -61,6 +61,7 @@ public class AdminFoodController {
 	        	cal.add(Calendar.DATE, -1);
 	        	dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 	        }
+	        
 	        date = df.format(cal.getTime());
 
 			List<List<FoodDTO>> foodInfo = new ArrayList<List<FoodDTO>>();

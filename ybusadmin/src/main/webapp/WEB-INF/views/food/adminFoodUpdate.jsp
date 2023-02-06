@@ -82,7 +82,6 @@ z-index: 100;
         	<form method="GET" action="/spring/admin/adminFoodDetail.action">
         	<div style="width: 80%; margin: 0;float: left;">
 					<select name="menuLocation" id="menuLocation" class="sel" style="margin-left:auto">
-					<option value="9999">식당을 선택해주세요</option>
 	 				<option value="인성관">인성관</option>
 	 				<option value="환과대">환과대</option>
 	 				<option value="생활관">생활관</option>
