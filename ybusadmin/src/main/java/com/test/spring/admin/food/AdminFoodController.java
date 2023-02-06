@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -250,7 +251,7 @@ public class AdminFoodController {
 	   @RequestMapping(method = {RequestMethod.GET}, value = "/admin/wordSearchShow.action", produces="application/json; charset=utf8")
 		public void wordSearchShow(HttpServletRequest request, HttpSession session, HttpServletResponse response, String value) throws IOException {
 		   
-		   List<String> resultList = new ArrayList<String>();
+		   HashSet<String> resultList = new HashSet<String>();
 		   for (int i = 1; i < 6; i++) {
 			   List<FoodDTO> foodList = dao.wordSearchShow(value, "menu"+Integer.toString(i));
 			   if (foodList.size() != 0) {
