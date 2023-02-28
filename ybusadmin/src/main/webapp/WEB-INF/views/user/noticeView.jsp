@@ -198,7 +198,10 @@
 			word-break: break-word;
 		}
 		#imgBox{
-			width:80%;
+			width:100%;
+		}
+		.showImg{
+			width:100%;
 		}
 		#footerContents{
 			width:100%;
@@ -280,7 +283,7 @@
 			</c:forEach>
 			<c:forEach items="${noticeContent.filelist}" var="dto">
 				<c:if test="${dto.noticeFileType=='png'||dto.noticeFileType=='jpg'||dto.noticeFileType=='jpeg'||dto.noticeFileType=='gif'||dto.noticeFileType=='bmp'||dto.noticeFileType=='PNG'||dto.noticeFileType=='JPG'||dto.noticeFileType=='JPEG'||dto.noticeFileType=='GIF'||dto.noticeFileType=='BMP'}">
-					<a href="/spring/images/notice/${dto.noticeFileName}"><div id="imgBox"><img id="showImg" name="showImg" src="/spring/images/notice/${dto.noticeFileName}"></div></a>
+					<a href="/spring/images/notice/${dto.noticeFileName}"><div id="imgBox"><img class="showImg" name="showImg" src="/spring/images/notice/${dto.noticeFileName}"></div></a>
 				</c:if>
 			</c:forEach>
 				${noticeContent.noticeContent}
