@@ -391,7 +391,7 @@ function moveMap(){
 														<c:if test = "${bsList[status.index-1].busStopSeq eq cbl.busStopSeq}">
 															<c:forEach items = "${predictTimeList}" var = "ptlDTO">
 																<c:if test = "${ptlDTO.s_busstopseq == cbl.busStopSeq && ptlDTO.a_busstopseq == bsList[status.index].busStopSeq}">
-																		${fn:split(ptlDTO.avgTime- cbl.timeGAP,'.')[0]}분
+																		<%-- ${fn:split(ptlDTO.avgTime- cbl.timeGAP,'.')[0]}분 --%>
 																</c:if>
 															</c:forEach>
 														</c:if>

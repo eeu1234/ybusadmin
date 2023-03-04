@@ -981,13 +981,13 @@
                     <div id = "container_mid_blueBus_text">시내버스</div>
                 </div>
                 <div id = "container_mid_yellowBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getBusStopLine.action?universitySeq=${universityDto.universitySeq}&busStopCategorySeq=36';">
-                    <div id = "container_mid_yellowBus_dot" class = "checkBus_box">
+                    <div id = "container_mid_yellowBus_dot" class = "checkBus_box"
                        <c:forEach items = "${cblList}" var = "list">
                           <c:if test = "${list.busStopCategorySeq == 36}">
                              style = "background-color:#6DFA5B;"
                           </c:if>
                        </c:forEach>
-                    </div>
+                    ></div>
                     <div id = "container_mid_yellowBus_text">노랑버스</div>
                 </div>
                 <div id = "container_mid_redBus" class = "container_bus_rayout" value = "36" onclick = "location.href='/spring/getSchoolBusStopLine.action';">
@@ -1023,7 +1023,7 @@
                     </div>
                     <div style="clear:both;"></div>
                 </div>
-                <div id = "container_bottom_adver"></div>
+                <div id = "container_bottom_adver" onclick="location.href='https://twoleebubu.com'"></div>
                 <div style="clear:both;"></div>
             </div>
         </div>
