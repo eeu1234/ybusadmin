@@ -1023,7 +1023,7 @@
                     </div>
                     <div style="clear:both;"></div>
                 </div>
-                <div id = "container_bottom_adver" onclick="location.href='https://twoleebubu.com'"></div>
+                <div id = "container_bottom_adver" onclick="location.href='https://town.daangn.com/bp/1407416'"></div>
                 <div style="clear:both;"></div>
             </div>
         </div>
