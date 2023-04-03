@@ -503,7 +503,13 @@
 					</div>
 	                <div id="cornerContainer">
 	                	<div class="cornerBox">
+	                	<c:set var="loc" value="<%= location %>" />
+	                	<c:if test="${loc eq '생활관'}">
+	                		<div id="cornerA" class="corner" onclick="dp_menu(0)">조식</div>
+	                	</c:if>
+	                	<c:if test="${loc eq '환과대' || loc eq '인성관'}">
 	                		<div id="cornerA" class="corner" onclick="dp_menu(0)">코너 A</div>
+	                	</c:if>
 	                		<div class="cornerDetail down">
 	                		<c:choose>
 	                			<c:when test="${empty foodList or empty foodList[0].menu1}">
@@ -520,7 +526,12 @@
 		                	</div>
                 		</div>
                 		<div class="cornerBox">
-	                		<div id="cornerB" class="corner" onclick="dp_menu(1)">코너 B</div>
+	                	<c:if test="${loc eq '생활관'}">
+	                		<div id="cornerA" class="corner" onclick="dp_menu(1)">중식</div>
+	                	</c:if>
+	                	<c:if test="${loc eq '환과대' || loc eq '인성관'}">
+	                		<div id="cornerA" class="corner" onclick="dp_menu(1)">코너 B</div>
+	                	</c:if>
 	                		<div class="cornerDetail">
 		                		<c:choose>
 	                			<c:when test="${empty foodList or empty foodList[1].menu1}">
@@ -537,7 +548,12 @@
 		                	</div>
 	                	</div>
 	                	<div class="cornerBox">
-	                		<div id="cornerC" class="corner" onclick="dp_menu(2)">코너 C</div>
+	                	<c:if test="${loc eq '생활관'}">
+	                		<div id="cornerC" class="corner" onclick="dp_menu(2)">석식</div>
+	                	</c:if>
+	                	<c:if test="${loc eq '환과대' || loc eq '인성관'}">
+	                	<div id="cornerC" class="corner" onclick="dp_menu(2)">코너 C</div>
+	                	</c:if>
 	                		<div class="cornerDetail">
 		                		<c:choose>
 	                			<c:when test="${empty foodList or empty foodList[2].menu1}">
@@ -554,7 +570,12 @@
 		                	</div>
                 		</div>
 	                	<div class="cornerBox">
-		                	<div id="cornerD" class="corner" onclick="dp_menu(3)">코너 D</div>		                	
+		                	<c:if test="${loc eq '생활관'}">
+	                		<div id="cornerC" class="corner" onclick="dp_menu(3)">추가식</div>
+	                	</c:if>
+	                	<c:if test="${loc eq '환과대' || loc eq '인성관'}">
+	                	<div id="cornerC" class="corner" onclick="dp_menu(3)">코너 D</div>     
+	                	</c:if>           	
 		                	<div class="cornerDetail">
 		                		<c:choose>
 	                			<c:when test="${empty foodList or empty foodList[3].menu1}">

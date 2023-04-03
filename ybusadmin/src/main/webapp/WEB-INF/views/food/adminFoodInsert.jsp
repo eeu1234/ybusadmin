@@ -76,7 +76,7 @@
 	%>
 	
 	<h1 class="menuTitle">학식 정보 관리</h1>
-	<h1 id="category" style="float:right; width:200px; height:50px; margin:15px; text-align:center;">등록</h1>
+	<h1 id="category" style="float:right; width:200px; height:50px; margin:15px; text-align:center;"><%= location %></h1>
 	
 		<div style="float: left; width: 99%; min-width: 1080px; margin: 5px;">
 			<div id="col" style="width: 10%;">

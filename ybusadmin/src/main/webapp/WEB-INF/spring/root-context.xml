@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 						http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/tx
 						http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
@@ -8,24 +9,27 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- org.springframework.jdbc.datasource.DriverManagerDataSource -->
 
- 
 
-	 <bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource"> 
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> 
-		<!-- <property name="url" value="jdbc:mysql://220.66.67.245:6612/cambusdb" /> -->
-		<property name="url" value="jdbc:mysql://eeu1234.iptime.org:3306/cambusdb" />
-		<property name="username" value="cbsadmin" /> 
-		<property name="password" value="Thskxk4889!"/> </bean>
-	<!--<bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://192.168.9.20:3306/cambusdb" />
+
+	<bean id="dataSourceMySQL"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://220.66.67.245:6612/cambusdb" />
+		<!-- <property name="url" value="jdbc:mysql://eeu1234.iptime.org:3306/cambusdb" 
+			/> -->
 		<property name="username" value="cbsadmin" />
-		<property name="password" value="Thskxk4889" />
+		<property name="password" value="Thskxk4889!" />
 	</bean>
- -->
+	<!--<bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> <property 
+		name="url" value="jdbc:mysql://192.168.9.20:3306/cambusdb" /> <property name="username" 
+		value="cbsadmin" /> <property name="password" value="Thskxk4889" /> </bean> -->
 
 	<!-- log4j -->
-	<bean id="log4jSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	<bean id="log4jSource"
+		class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<constructor-arg ref="dataSourceMySQL"></constructor-arg>
 		<property name="logFormatter">
 			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
@@ -35,13 +39,16 @@
 		</property>
 	</bean>
 
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="log4jSource" />
-		<property name="mapperLocations" value="classpath*:com/test/spring/mapper/**/*.xml"></property>
+		<property name="mapperLocations"
+			value="classpath*:com/test/spring/mapper/**/*.xml"></property>
 		<property name="configLocation" value="/WEB-INF/config.xml" />
 	</bean>
 
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
@@ -51,10 +58,12 @@
 	</bean>
 
 	<!-- 자바 파일에서 어노테이션 선언을 사용해서 트랜잭션 처리 -->
-	<tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+	<tx:annotation-driven
+		transaction-manager="transactionManager"></tx:annotation-driven>
 
 	<!-- 자바 파일에서 어노테이션 선언을 사용해서 트랜잭션 처리 -->
-	<tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+	<tx:annotation-driven
+		transaction-manager="transactionManager"></tx:annotation-driven>
 
 
 
