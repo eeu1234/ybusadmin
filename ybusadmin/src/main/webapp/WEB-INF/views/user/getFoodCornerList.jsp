@@ -15,6 +15,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
 	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
 	crossorigin="anonymous"></script>
+	
 <title>식단표</title>
 
  <style>    
@@ -668,6 +669,23 @@ function AddDays(day) {
     var link = "/spring/food.action?universitySeq="+universitySeq+"&menuLocation="+location+"&date="+resultDate;
     return link
 } --%>
+</script>
+<!-- Analitics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-93928507-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+if(!wcs_add) var wcs_add = {};
+wcs_add["wa"] = "171aefb65e5675";
+wcs_do();
 </script>
 </body>
 </html>
