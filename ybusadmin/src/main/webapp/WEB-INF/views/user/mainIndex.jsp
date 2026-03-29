@@ -56,7 +56,7 @@
 					img.scheduleBack[0]);
 			$('#container_mid_redBus').css('background-image', img.redBus[0]);
 			$('#container_mid_yellowBus').css('background-image',
-					img.yellowBus[0]);
+					img.blueBus[0]);
 			$('#container_mid_blueBus').css('background-image', img.blueBus[0]);
 		} else if (hour > 16 && hour < 20) {
 			$('#container_top_weather').css('background-image',
@@ -67,7 +67,7 @@
 					img.scheduleBack[1]);
 			$('#container_mid_redBus').css('background-image', img.redBus[1]);
 			$('#container_mid_yellowBus').css('background-image',
-					img.yellowBus[1]);
+					img.blueBus[1]);
 			$('#container_mid_blueBus').css('background-image', img.blueBus[1]);
 		} else if (hour > 19 || hour < 7) {
 			$('#container_top_weather').css('background-image',
@@ -78,7 +78,7 @@
 					img.scheduleBack[2]);
 			$('#container_mid_redBus').css('background-image', img.redBus[2]);
 			$('#container_mid_yellowBus').css('background-image',
-					img.yellowBus[2]);
+					img.blueBus[2]);
 			$('#container_mid_blueBus').css('background-image', img.blueBus[2]);
 		}
 	}
