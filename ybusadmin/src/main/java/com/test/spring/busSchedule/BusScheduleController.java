@@ -39,18 +39,20 @@ public class BusScheduleController {
 		
 		
 		UniversityDTO adto = null;
-		
+
 		if(session.getAttribute("universityDto") == null){
 				try {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/selectUniversity.action");
 					dispatcher.forward(request, response);
+					return null;
 				} catch (Exception e) {
 					System.out.println(e.toString());
+					return null;
 				}
 		}else{
 			 adto = (UniversityDTO)session.getAttribute("universityDto");
 		}
-		
+
 		//학교 seq 가져오기
 		String universitySeq = adto.getUniversitySeq();
 		
@@ -199,23 +201,20 @@ public class BusScheduleController {
 			,String weekDays){
 		
 		UniversityDTO adto = null;
-		
+
 		if(session.getAttribute("universityDto") == null){
 				try {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/selectUniversity.action");
 					dispatcher.forward(request, response);
+					return null;
 				} catch (Exception e) {
 					System.out.println(e.toString());
+					return null;
 				}
-		
-			
 		}else{
 			 adto = (UniversityDTO)session.getAttribute("universityDto");
 		}
-		
-		
-		
-		
+
 		//학교 seq 가져오기
 		String universitySeq = adto.getUniversitySeq();
 		

@@ -161,31 +161,39 @@
             float:left;
         }
         #container1{
-            width:45.18%;
-            margin-left:50.21%;
+            width:90%;
+            margin-left:4.61%;
             margin-right:4.61%;
             margin-top:3.074%;
             margin-bottom:3.074%;
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
         }
         #container_selectBus{
-            width:51.95%;
+            width:120px;
             height:26px;
             box-shadow: 0px 0px 15px #0F296B1F;
             border-radius: 13px;
             text-align: center;
             font-family: "Pretendard-Bold";
             color:#142637;
-
+            border:0;
+            outline:0;
+            font-size:0.75em;
         }
         #container_selectDay{
-            width:41.38%;
+            width:70px;
             height:26px;
             box-shadow: 0px 0px 15px #0F296B1F;
             border-radius: 13px;
-            margin-left:3%;
+            margin-left:5px;
             text-align: center;
             font-family: "Pretendard-Bold";
             color:#142637;
+            border:0;
+            outline:0;
+            font-size:0.75em;
         }
         #footer{
             width:81.534%;

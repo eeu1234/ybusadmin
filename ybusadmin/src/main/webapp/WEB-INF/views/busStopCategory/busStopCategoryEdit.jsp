@@ -88,7 +88,7 @@ html, body {
 			<tr>
 				<td>그룹키</td>
 				<td>
-					<input type="text" name="groupbusHashkey" class="form-control" value="${bscdto.groupbusHashkey}">
+					<input type="text" name="groupbusHash" class="form-control" value="${bscdto.groupbusHash}">
 				</td>
 			</tr>				
 		</table>

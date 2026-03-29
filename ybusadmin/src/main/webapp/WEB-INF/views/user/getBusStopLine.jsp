@@ -106,17 +106,17 @@ function moveMap(){
 			    	<c:choose>
 						<c:when test="${busStopCategorySeq == 18}">
 							<div id="busType">
-							    시내 버스
+							    시내순환셔틀
 							</div>
 						</c:when>
 						<c:when test="${busStopCategorySeq == 36}">
 							<div id="busType">
-							    노랑 버스
+							    시청역순환셔틀
 							</div>
 						</c:when>
 						<c:otherwise>
 							<div id="busType">
-							    통학 버스
+							    광역노선통학버스
 							</div>
 						</c:otherwise>
 					</c:choose>

@@ -235,7 +235,7 @@
          <div id="headerTopContents">
              <div id="busTypeZone">
 	             <div id = "busType">
-	             	통학 버스
+	             	광역노선통학버스
 	             </div>
              </div>
              <div id="button_Home_Zone">
@@ -265,7 +265,7 @@
                     </div>
                 </div>
                 <div id="busNoticeContents" class="busNotice">
-                    통학버스는 위치조회 서비스를 제공하지 않습니다.
+                    광역노선통학버스는 위치조회 서비스를 제공하지 않습니다.
                 </div>
                 <div style="clear: both"></div>
             </div>

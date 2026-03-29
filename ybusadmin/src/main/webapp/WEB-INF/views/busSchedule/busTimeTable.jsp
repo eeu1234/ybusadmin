@@ -218,7 +218,7 @@
             margin-bottom:3.074%;
         }
         #container_selectBus{
-            width:27%;
+            width:40%;
             height:26px;
             box-shadow: 0px 0px 15px #0F296B1F;
             border-radius: 13px;
@@ -227,10 +227,10 @@
             color:#142637;
             border:0;
          outline:0;
-         font-size:0.9em;
+         font-size:0.75em;
         }
         #container_selectWay{
-            width:42%;
+            width:35%;
             height:26px;
             box-shadow: 0px 0px 15px #0F296B1F;
             border-radius: 13px;
@@ -239,10 +239,10 @@
             color:#142637;
             border:0;
          outline:0;
-         font-size:0.9em;
+         font-size:0.75em;
         }
         #container_selectDay{
-            width:27%;
+            width:20%;
             height:26px;
             box-shadow: 0px 0px 15px #0F296B1F;
             border-radius: 13px;
@@ -251,7 +251,7 @@
             color:#142637;
             border:0;
          outline:0;
-         font-size:0.9em;
+         font-size:0.75em;
         }
         #footer{
             width:81.534%;
