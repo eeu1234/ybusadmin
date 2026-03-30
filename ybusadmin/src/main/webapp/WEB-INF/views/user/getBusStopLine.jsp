@@ -36,10 +36,10 @@ let YeokbukDistrictSeq = '${bsdcList[1].busStopDetailCategorySeq}';
 $(document).ready(function(){
 	
 	if(busStopCategorySeq == 18){
-	      $(".busBox").css("background-image", "url('/spring/images/2022busStop/Box_BlueBus.png')");      
+	      $(".busBox").css("background-image", "url('/spring/images/2022busStop/Box_BlueBus.png')");
 	   }
 	   else if(busStopCategorySeq == 36){
-	      $(".busBox").css("background-image", "url('/spring/images/2022busStop/Box_YellowBus.png')");      
+	      $(".busBox").css("background-image", "url('/spring/images/2022busStop/Box_BlueBus.png')");
 	   }
 
 	// 정류장 로드뷰 이동
